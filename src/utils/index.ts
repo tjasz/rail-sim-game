@@ -6,3 +6,4 @@ export {
   initializeTrains,
   initializeDay 
 } from './tripGeneration';
+export { calculateRoute, calculateAllRoutes } from './pathfinding';

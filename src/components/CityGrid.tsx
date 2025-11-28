@@ -107,16 +107,27 @@ export function CityGrid({
         )}
         
         {/* Draw citizens */}
-        {Array.from(citizens.values()).map(citizen => (
-          <circle
-            key={citizen.id}
-            cx={citizen.currentPosition.x * cellSize + cellSize / 2}
-            cy={citizen.currentPosition.y * cellSize + cellSize / 2}
-            r={3}
-            fill={citizen.isHappy ? '#00ff00' : '#ff0000'}
-            opacity="0.7"
-          />
-        ))}
+        {Array.from(citizens.values()).map(citizen => {
+          // Color based on state
+          let fill = '#666';
+          if (citizen.state === 'waiting-at-origin') fill = '#999';
+          else if (citizen.state === 'walking-to-station') fill = '#3498db';
+          else if (citizen.state === 'waiting-at-station') fill = '#f39c12';
+          else if (citizen.state === 'riding-train') fill = '#9b59b6';
+          else if (citizen.state === 'walking-to-destination') fill = '#2ecc71';
+          else if (!citizen.isHappy) fill = '#e74c3c';
+          
+          return (
+            <circle
+              key={citizen.id}
+              cx={citizen.currentPosition.x * cellSize + cellSize / 2}
+              cy={citizen.currentPosition.y * cellSize + cellSize / 2}
+              r={3}
+              fill={fill}
+              opacity="0.8"
+            />
+          );
+        })}
       </svg>
     </div>
   );

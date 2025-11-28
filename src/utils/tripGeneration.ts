@@ -11,6 +11,7 @@ import type {
   Line
 } from '../models';
 import { calculateDistance } from './simulation';
+import { calculateRoute } from './pathfinding';
 
 /**
  * Generate the trip matrix for a day based on population and demand distributions
@@ -79,11 +80,13 @@ export function generateTripMatrix(
 }
 
 /**
- * Create citizens based on the trip matrix
+ * Create citizens based on the trip matrix with routes
  */
 export function createCitizensFromTripMatrix(
   tripMatrix: TripMatrix,
   neighborhoods: Neighborhood[],
+  config: CityConfig,
+  railNetwork: RailNetwork,
   startTime: number = 0
 ): Map<string, Citizen> {
   const citizens = new Map<string, Citizen>();
@@ -97,6 +100,28 @@ export function createCitizensFromTripMatrix(
     if (!originNeighborhood) return;
     
     destinations.forEach((count, destId) => {
+      const destNeighborhood = neighborhoodMap.get(destId);
+      if (!destNeighborhood) return;
+      
+      // Calculate route for this O-D pair (same for all citizens on this trip)
+      const segments = calculateRoute(
+        originNeighborhood.position,
+        destNeighborhood.position,
+        config,
+        railNetwork,
+        config.walkingSpeed,
+        config.trainSpeed
+      );
+      
+      const totalEstimatedTime = segments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
+      
+      // Calculate walking-only time for comparison
+      const walkingDistance = calculateDistance(
+        originNeighborhood.position,
+        destNeighborhood.position
+      );
+      const walkingOnlyTime = walkingDistance / config.walkingSpeed;
+      
       // Create 'count' citizens for this O-D pair
       for (let i = 0; i < count; i++) {
         const citizenId = `citizen-${citizenCounter++}`;
@@ -112,6 +137,11 @@ export function createCitizensFromTripMatrix(
           currentPosition: { ...originNeighborhood.position },
           isHappy: true, // Assume happy until proven otherwise
           tripStartTime: startTime + randomStartDelay,
+          route: {
+            segments,
+            totalEstimatedTime,
+            walkingOnlyTime,
+          },
         };
         
         citizens.set(citizenId, citizen);
@@ -291,10 +321,12 @@ export function initializeDay(
   // Generate trip matrix
   const tripMatrix = generateTripMatrix(config.neighborhoods, population, day);
   
-  // Create citizens from trip matrix
+  // Create citizens from trip matrix with routes
   const citizens = createCitizensFromTripMatrix(
     tripMatrix,
     config.neighborhoods,
+    config,
+    railNetwork,
     startTime
   );
   

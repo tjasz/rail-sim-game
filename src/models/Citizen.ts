@@ -50,6 +50,7 @@ export interface WaitSegment {
 export interface RideSegment {
   type: 'ride';
   lineId: string;
+  lineDirection: 'forward' | 'backward';
   fromStationId: string;
   toStationId: string;
   estimatedTime: number; // in minutes

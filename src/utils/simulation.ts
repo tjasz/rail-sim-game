@@ -300,8 +300,7 @@ export function updateCitizens(
           if (trainStationId !== citizen.currentStationId) return false;
           
           // Check if train is going toward destination station
-          // (simplified - assumes train will eventually reach the station)
-          return true;
+          return train.direction === nextSegment.lineDirection;
         });
         
         if (suitableTrains.length > 0) {

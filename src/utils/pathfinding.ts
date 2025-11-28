@@ -81,6 +81,7 @@ interface GraphEdge {
   cost: number;
   stationId?: string;
   lineId?: string;
+  lineDirection?: 'forward' | 'backward';
   viaStation?: string; // if this edge uses a train line
 }
 
@@ -158,6 +159,7 @@ function buildCityGraph(
           cost,
           stationId: otherStationId,
           lineId: line.id,
+          lineDirection: j > i ? 'forward' : 'backward',
           viaStation: stationId,
         });
       }
@@ -265,16 +267,18 @@ function pathToRouteSegments(
     if (next.viaStation && next.stationId) {
       // Find which line connects these stations
       let lineId: string | undefined;
+      let lineDirection: 'forward' | 'backward' | undefined;
       let fromStationId = next.viaStation;
       let toStationId = next.stationId;
       
       railNetwork.lines.forEach(line => {
         if (line.stationIds.includes(fromStationId) && line.stationIds.includes(toStationId)) {
           lineId = line.id;
+          lineDirection = line.stationIds.indexOf(fromStationId) < line.stationIds.indexOf(toStationId) ? 'forward' : 'backward';
         }
       });
       
-      if (lineId) {
+      if (lineId && lineDirection) {
         const line = railNetwork.lines.get(lineId);
         const fromStation = railNetwork.stations.get(fromStationId);
         const toStation = railNetwork.stations.get(toStationId);
@@ -289,6 +293,7 @@ function pathToRouteSegments(
           segments.push({
             type: 'ride',
             lineId,
+            lineDirection,
             fromStationId,
             toStationId,
             estimatedTime,

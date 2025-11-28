@@ -8,6 +8,7 @@ interface PathNode {
   cost: number;
   previous?: PathNode;
   stationId?: string; // if this node is at a station
+  viaStation?: string;
 }
 
 /**
@@ -222,6 +223,7 @@ function findShortestPath(
           cost: newCost,
           previous: current,
           stationId: edge.stationId,
+          viaStation: edge.viaStation,
         };
         
         // Remove old entry if exists
@@ -260,10 +262,10 @@ function pathToRouteSegments(
     const next = path[i + 1];
     
     // Check if this is a train segment (both nodes have stationIds)
-    if (current.stationId && next.stationId) {
+    if (next.viaStation && next.stationId) {
       // Find which line connects these stations
       let lineId: string | undefined;
-      let fromStationId = current.stationId;
+      let fromStationId = next.viaStation;
       let toStationId = next.stationId;
       
       railNetwork.lines.forEach(line => {
@@ -340,7 +342,9 @@ export function calculateRoute(
   }
   
   // Convert to route segments
-  return pathToRouteSegments(path, railNetwork, walkingSpeed, trainSpeed);
+  const result = pathToRouteSegments(path, railNetwork, walkingSpeed, trainSpeed);
+  console.log({graph, path, result})
+  return result;
 }
 
 /**

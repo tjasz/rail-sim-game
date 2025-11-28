@@ -1,1 +1,1 @@
-export { tickSimulation, formatTime, MINUTES_PER_DAY } from './simulation';
+export { tickSimulation, rolloverToNextDay, calculateDayResult, formatTime, MINUTES_PER_DAY } from './simulation';

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   GameStats,
   NetworkStats,
@@ -8,10 +8,11 @@ import {
   LinesList,
   TrainsList,
   PassengersList,
-  StationsList
+  StationsList,
+  DayResultModal
 } from './components';
-import type { GameState } from './models';
-import { tickSimulation, formatTime, MINUTES_PER_DAY } from './utils';
+import type { GameState, DayResult } from './models';
+import { tickSimulation, calculateDayResult, formatTime, MINUTES_PER_DAY } from './utils';
 import './Game.css';
 
 interface GameProps {
@@ -22,6 +23,9 @@ interface GameProps {
 export function Game({ gameState: initialGameState, onGameStateChange }: GameProps) {
   const [gameState, setGameState] = useState<GameState>(initialGameState);
   const [activeTab, setActiveTab] = useState<'lines' | 'trains' | 'stations' | 'passengers'>('lines');
+  const [dayResult, setDayResult] = useState<DayResult | null>(null);
+  const prevDayRef = useRef<number>(initialGameState.city.currentDay);
+  const prevSimulatingRef = useRef<boolean>(initialGameState.isSimulating);
 
   // Update local state when prop changes
   useEffect(() => {
@@ -32,6 +36,23 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
   useEffect(() => {
     onGameStateChange?.(gameState);
   }, [gameState, onGameStateChange]);
+
+  // Detect day rollover and show result modal
+  useEffect(() => {
+    // Check if simulation just stopped (day ended)
+    if (prevSimulatingRef.current && !gameState.isSimulating && gameState.simulationTime >= MINUTES_PER_DAY - 1) {
+      // Day just ended, show result modal
+      const result = calculateDayResult(gameState);
+      setDayResult(result);
+    }
+    
+    // Check if day rolled over (after modal was closed)
+    if (gameState.city.currentDay !== prevDayRef.current) {
+      prevDayRef.current = gameState.city.currentDay;
+    }
+    
+    prevSimulatingRef.current = gameState.isSimulating;
+  }, [gameState.isSimulating, gameState.simulationTime, gameState.city.currentDay]);
 
   // Simulation loop
   useEffect(() => {
@@ -60,11 +81,74 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       simulationSpeed: speed,
     }));
   }, []);
-  
-  const timeOfDay = formatTime(gameState.simulationTime);
-  const dayProgress = (gameState.simulationTime / MINUTES_PER_DAY) * 100;
 
-  return (
+  const handleContinueDay = useCallback(() => {
+    setDayResult(null);
+    // Trigger day rollover by setting simulation time to trigger it
+    setGameState((prevState) => {
+      // Use rolloverToNextDay logic
+      const totalCitizens = prevState.stats.currentDayHappyCitizens + prevState.stats.currentDayUnhappyCitizens;
+      const happyCitizens = prevState.stats.currentDayHappyCitizens;
+      const unhappyCitizens = prevState.stats.currentDayUnhappyCitizens;
+      const budgetEarned = prevState.city.config.budgetBaseline + 
+        (happyCitizens * prevState.city.config.budgetBonusPerHappyCitizen);
+      
+      const updatedStats = {
+        ...prevState.stats,
+        totalDaysPlayed: prevState.stats.totalDaysPlayed + 1,
+        totalCitizensTransported: prevState.stats.totalCitizensTransported + totalCitizens,
+        totalHappyCitizens: prevState.stats.totalHappyCitizens + happyCitizens,
+        totalUnhappyCitizens: prevState.stats.totalUnhappyCitizens + unhappyCitizens,
+        currentDayHappyCitizens: 0,
+        currentDayUnhappyCitizens: 0,
+        happinessRate: 0,
+        totalMoneyEarned: prevState.stats.totalMoneyEarned + budgetEarned,
+      };
+      
+      const daysInMonth = 30;
+      const dailyGrowthRate = prevState.city.config.populationGrowthRate / daysInMonth;
+      const newPopulation = Math.floor(prevState.city.population * (1 + dailyGrowthRate));
+      
+      const newDay = prevState.city.currentDay + 1;
+      const newMonth = newDay > daysInMonth ? prevState.city.currentMonth + 1 : prevState.city.currentMonth;
+      const adjustedDay = newDay > daysInMonth ? 1 : newDay;
+      const monthlyBonus = newDay > daysInMonth ? prevState.city.config.budgetBaseline : 0;
+      
+      return {
+        ...prevState,
+        city: {
+          ...prevState.city,
+          currentDay: adjustedDay,
+          currentMonth: newMonth,
+          population: newPopulation,
+          budget: prevState.city.budget + budgetEarned + monthlyBonus,
+        },
+        stats: updatedStats,
+        simulationTime: 0,
+        isSimulating: false,
+        citizens: new Map(),
+      };
+    });
+  }, []);
+
+  const handleGameOver = useCallback(() => {
+    setDayResult(null);
+    setGameState((prevState) => ({
+      ...prevState,
+      status: 'game-over',
+    }));
+  }, []);
+
+  const handleSkipToEndOfDay = useCallback(() => {
+    setGameState((prevState) => ({
+      ...prevState,
+      simulationTime: MINUTES_PER_DAY - 1,
+      isSimulating: false,
+    }));
+  }, []);
+
+  const timeOfDay = formatTime(gameState.simulationTime);
+  const dayProgress = (gameState.simulationTime / MINUTES_PER_DAY) * 100;  return (
     <div className="game-container">
       <div className="game-header">
         <h1>Rails Game</h1>
@@ -106,6 +190,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           </div>
           <button className="btn-primary" onClick={handleStartPause}>
             {gameState.isSimulating ? '⏸ Pause' : '▶ Start Day'}
+          </button>
+          <button className="btn-secondary" onClick={handleSkipToEndOfDay} disabled={gameState.isSimulating}>
+            ⏭ Skip to End
           </button>
           <button className="btn-secondary">🔧 Build Mode</button>
         </div>
@@ -203,6 +290,15 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           </div>
         </div>
       </div>
+      
+      {/* Day Result Modal */}
+      {dayResult && (
+        <DayResultModal
+          result={dayResult}
+          onContinue={handleContinueDay}
+          onGameOver={handleGameOver}
+        />
+      )}
     </div>
   );
 }

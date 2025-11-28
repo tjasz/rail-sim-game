@@ -159,6 +159,90 @@ export function updateCitizens(
   return updatedCitizens;
 }
 
+import type { DayResult } from '../models';
+
+/**
+ * Calculate the day result from current game state
+ */
+export function calculateDayResult(gameState: GameState): DayResult {
+  const totalCitizens = gameState.stats.currentDayHappyCitizens + gameState.stats.currentDayUnhappyCitizens;
+  const happyCitizens = gameState.stats.currentDayHappyCitizens;
+  const unhappyCitizens = gameState.stats.currentDayUnhappyCitizens;
+  const happinessRate = totalCitizens > 0 ? (happyCitizens / totalCitizens) * 100 : 0;
+  const passed = happinessRate >= 50;
+  
+  const budgetEarned = gameState.city.config.budgetBaseline + 
+    (happyCitizens * gameState.city.config.budgetBonusPerHappyCitizen);
+
+  return {
+    day: gameState.city.currentDay,
+    totalCitizens,
+    happyCitizens,
+    unhappyCitizens,
+    happinessRate,
+    budgetEarned,
+    passed,
+  };
+}
+
+/**
+ * Roll over to the next day and calculate end-of-day statistics
+ */
+export function rolloverToNextDay(gameState: GameState): GameState {
+  // Calculate day statistics from current day
+  const totalCitizens = gameState.stats.currentDayHappyCitizens + gameState.stats.currentDayUnhappyCitizens;
+  const happyCitizens = gameState.stats.currentDayHappyCitizens;
+  const unhappyCitizens = gameState.stats.currentDayUnhappyCitizens;
+  const happinessRate = totalCitizens > 0 ? (happyCitizens / totalCitizens) * 100 : 0;
+  const passed = happinessRate >= 50;
+
+  // Calculate budget earned
+  const budgetEarned = gameState.city.config.budgetBaseline + 
+    (happyCitizens * gameState.city.config.budgetBonusPerHappyCitizen);
+
+  // Update statistics
+  const updatedStats = {
+    ...gameState.stats,
+    totalDaysPlayed: gameState.stats.totalDaysPlayed + 1,
+    totalCitizensTransported: gameState.stats.totalCitizensTransported + totalCitizens,
+    totalHappyCitizens: gameState.stats.totalHappyCitizens + happyCitizens,
+    totalUnhappyCitizens: gameState.stats.totalUnhappyCitizens + unhappyCitizens,
+    currentDayHappyCitizens: 0, // Reset for new day
+    currentDayUnhappyCitizens: 0, // Reset for new day
+    happinessRate: 0, // Reset for new day
+    totalMoneyEarned: gameState.stats.totalMoneyEarned + budgetEarned,
+  };
+
+  // Calculate new population (growth per month, prorated per day)
+  const daysInMonth = 30;
+  const dailyGrowthRate = gameState.city.config.populationGrowthRate / daysInMonth;
+  const newPopulation = Math.floor(gameState.city.population * (1 + dailyGrowthRate));
+
+  // Check if month rolled over
+  const newDay = gameState.city.currentDay + 1;
+  const newMonth = newDay > daysInMonth ? gameState.city.currentMonth + 1 : gameState.city.currentMonth;
+  const adjustedDay = newDay > daysInMonth ? 1 : newDay;
+
+  // Add bonus budget at month rollover
+  const monthlyBonus = newDay > daysInMonth ? gameState.city.config.budgetBaseline : 0;
+
+  return {
+    ...gameState,
+    city: {
+      ...gameState.city,
+      currentDay: adjustedDay,
+      currentMonth: newMonth,
+      population: newPopulation,
+      budget: gameState.city.budget + budgetEarned + monthlyBonus,
+    },
+    stats: updatedStats,
+    simulationTime: 0, // Reset to midnight
+    isSimulating: false, // Stop simulation
+    citizens: new Map(), // Clear citizens for new day
+    status: passed ? gameState.status : 'game-over',
+  };
+}
+
 /**
  * Advance the simulation by one tick
  */
@@ -170,11 +254,7 @@ export function tickSimulation(
 
   // Check if day is over
   if (newTime >= MINUTES_PER_DAY) {
-    return {
-      ...gameState,
-      isSimulating: false,
-      simulationTime: MINUTES_PER_DAY,
-    };
+    return rolloverToNextDay(gameState);
   }
 
   // Update trains
@@ -193,6 +273,12 @@ export function tickSimulation(
     gameState.city.config.walkingSpeed
   );
 
+  // Update current day statistics
+  const totalCitizens = updatedCitizens.size;
+  const happyCitizens = Array.from(updatedCitizens.values()).filter(c => c.isHappy).length;
+  const unhappyCitizens = totalCitizens - happyCitizens;
+  const currentHappinessRate = totalCitizens > 0 ? (happyCitizens / totalCitizens) * 100 : 0;
+
   return {
     ...gameState,
     simulationTime: newTime,
@@ -201,5 +287,11 @@ export function tickSimulation(
       trains: updatedTrains,
     },
     citizens: updatedCitizens,
+    stats: {
+      ...gameState.stats,
+      currentDayHappyCitizens: happyCitizens,
+      currentDayUnhappyCitizens: unhappyCitizens,
+      happinessRate: currentHappinessRate,
+    },
   };
 }

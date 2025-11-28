@@ -203,7 +203,8 @@ export function updateCitizens(
         updatedCitizen.state = 'walking-to-station';
       } else if (firstSegment.type === 'ride') {
         // Route starts with a train ride, go to that station
-        updatedCitizen.state = 'walking-to-station';
+        updatedCitizen.state = 'waiting-at-station';
+        updatedCitizen.currentStationId = firstSegment.fromStationId;
       }
       
       updatedCitizens.set(citizenId, updatedCitizen);

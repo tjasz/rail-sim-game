@@ -601,3 +601,84 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Trip Matrix Display */
+.trip-matrix-display {
+  padding: 0;
+}
+
+.trip-matrix-display h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
+.matrix-summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.summary-label {
+  font-weight: 600;
+  color: #7f8c8d;
+}
+
+.summary-value {
+  font-weight: bold;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.matrix-table-container {
+  overflow-x: auto;
+  margin: 0 -1rem;
+  padding: 0 1rem;
+}
+
+.trip-matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.trip-matrix-table th,
+.trip-matrix-table td {
+  padding: 0.5rem;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+}
+
+.trip-matrix-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #2c3e50;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.trip-matrix-table th:first-child {
+  text-align: left;
+  min-width: 100px;
+}
+
+.trip-matrix-table .origin-cell {
+  text-align: left;
+  font-weight: 600;
+  background: #f8f9fa;
+}
+
+.trip-matrix-table .has-trips {
+  background: #e8f5e9;
+  font-weight: 600;
+}
+
+.trip-matrix-table .total-cell {
+  background: #f8f9fa;
+  font-weight: bold;
+  color: #2c3e50;
+}

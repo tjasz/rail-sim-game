@@ -9,10 +9,17 @@ import {
   TrainsList,
   PassengersList,
   StationsList,
-  DayResultModal
+  DayResultModal,
+  TripMatrixDisplay
 } from './components';
 import type { GameState, DayResult } from './models';
-import { tickSimulation, calculateDayResult, formatTime, MINUTES_PER_DAY } from './utils';
+import { 
+  tickSimulation, 
+  calculateDayResult, 
+  formatTime, 
+  MINUTES_PER_DAY,
+  initializeDay 
+} from './utils';
 import './Game.css';
 
 interface GameProps {
@@ -22,7 +29,7 @@ interface GameProps {
 
 export function Game({ gameState: initialGameState, onGameStateChange }: GameProps) {
   const [gameState, setGameState] = useState<GameState>(initialGameState);
-  const [activeTab, setActiveTab] = useState<'lines' | 'trains' | 'stations' | 'passengers'>('lines');
+  const [activeTab, setActiveTab] = useState<'lines' | 'trains' | 'stations' | 'passengers' | 'trips'>('trips');
   const [dayResult, setDayResult] = useState<DayResult | null>(null);
   const prevDayRef = useRef<number>(initialGameState.city.currentDay);
   const prevSimulatingRef = useRef<boolean>(initialGameState.isSimulating);
@@ -84,9 +91,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
 
   const handleContinueDay = useCallback(() => {
     setDayResult(null);
-    // Trigger day rollover by setting simulation time to trigger it
+    // Trigger day rollover and initialize new day with citizens
     setGameState((prevState) => {
-      // Use rolloverToNextDay logic
+      // Calculate rollover statistics
       const totalCitizens = prevState.stats.currentDayHappyCitizens + prevState.stats.currentDayUnhappyCitizens;
       const happyCitizens = prevState.stats.currentDayHappyCitizens;
       const unhappyCitizens = prevState.stats.currentDayUnhappyCitizens;
@@ -114,6 +121,15 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       const adjustedDay = newDay > daysInMonth ? 1 : newDay;
       const monthlyBonus = newDay > daysInMonth ? prevState.city.config.budgetBaseline : 0;
       
+      // Initialize new day with citizens and trips
+      const { tripMatrix, citizens, updatedNetwork } = initializeDay(
+        prevState.city.config,
+        newPopulation,
+        adjustedDay,
+        prevState.railNetwork,
+        480 // Start at 8:00 AM
+      );
+      
       return {
         ...prevState,
         city: {
@@ -124,9 +140,11 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           budget: prevState.city.budget + budgetEarned + monthlyBonus,
         },
         stats: updatedStats,
-        simulationTime: 0,
+        simulationTime: 480, // 8:00 AM
         isSimulating: false,
-        citizens: new Map(),
+        citizens,
+        currentTripMatrix: tripMatrix,
+        railNetwork: updatedNetwork,
       };
     });
   }, []);
@@ -235,9 +253,21 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             >
               Passengers
             </button>
+            <button
+              className={`tab ${activeTab === 'trips' ? 'active' : ''}`}
+              onClick={() => setActiveTab('trips')}
+            >
+              Trips
+            </button>
           </div>
           
           <div className="panel-content">
+            {activeTab === 'trips' && (
+              <TripMatrixDisplay
+                tripMatrix={gameState.currentTripMatrix}
+                neighborhoods={gameState.city.config.neighborhoods}
+              />
+            )}
             {activeTab === 'lines' && (
               <LinesList
                 lines={gameState.railNetwork.lines}

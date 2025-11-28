@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { Game } from './Game';
 import type { GameState } from './models';
+import { initializeDay } from './utils';
 import './App.css';
 
-// Mock game state for demonstration
-const initialGameState: GameState = {
+// Base game configuration
+const baseGameState: GameState = {
   status: 'playing',
   city: {
     config: {
@@ -34,7 +36,7 @@ const initialGameState: GameState = {
           position: { x: 0, y: 1 },
           icon: 'shop',
           color: '#3498db',
-          originDemandPercent: 0,
+          originDemandPercent: 10,
           destinationDemandPercent: 20,
         },
         {
@@ -62,7 +64,7 @@ const initialGameState: GameState = {
           icon: 'home',
           color: '#9b59b6',
           originDemandPercent: 20,
-          destinationDemandPercent: 5,
+          destinationDemandPercent: 25,
         },
       ],
       initialPopulation: 100,
@@ -151,48 +153,9 @@ const initialGameState: GameState = {
     ]),
   },
   currentTripMatrix: undefined,
-  citizens: new Map([
-    [
-      'citizen-1',
-      {
-        id: 'citizen-1',
-        originNeighborhoodId: 'residential-1',
-        destinationNeighborhoodId: 'downtown',
-        state: 'waiting-at-station',
-        currentPosition: { x: 4, y: 1 },
-        isHappy: true,
-        tripStartTime: 100,
-        currentStationId: 'station-2',
-      },
-    ],
-    [
-      'citizen-2',
-      {
-        id: 'citizen-2',
-        originNeighborhoodId: 'residential-2',
-        destinationNeighborhoodId: 'downtown',
-        state: 'walking-to-station',
-        currentPosition: { x: 1, y: 3 },
-        isHappy: true,
-        tripStartTime: 95,
-      },
-    ],
-    [
-      'citizen-3',
-      {
-        id: 'citizen-3',
-        originNeighborhoodId: 'residential-1',
-        destinationNeighborhoodId: 'commercial-a',
-        state: 'riding-train',
-        currentPosition: { x: 2, y: 0 },
-        isHappy: true,
-        tripStartTime: 80,
-        currentTrainId: 'train-1',
-      },
-    ],
-  ]),
+  citizens: new Map(), // Will be populated by initializeDay
   isSimulating: false,
-  simulationTime: 22 * 60, // Start at 10:00 PM
+  simulationTime: 480, // 8:00 AM
   simulationSpeed: 1,
   stats: {
     totalDaysPlayed: 0,
@@ -211,7 +174,22 @@ const initialGameState: GameState = {
 };
 
 function App() {
-  return <Game gameState={initialGameState} />;
+  const { tripMatrix, citizens, updatedNetwork } = initializeDay(
+    baseGameState.city.config,
+    baseGameState.city.population,
+    baseGameState.city.currentDay,
+    baseGameState.railNetwork,
+    480 // 8:00 AM
+  );
+  
+  const gameState = {
+    ...baseGameState,
+    currentTripMatrix: tripMatrix,
+    citizens,
+    railNetwork: updatedNetwork,
+  };
+
+  return <Game gameState={gameState} />;
 }
 
 export default App;

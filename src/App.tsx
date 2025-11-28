@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Game } from './Game';
 import type { GameState } from './models';
 import './App.css';
@@ -212,9 +211,7 @@ const initialGameState: GameState = {
 };
 
 function App() {
-  const [gameState, setGameState] = useState<GameState>(initialGameState);
-
-  return <Game gameState={gameState} onGameStateChange={setGameState} />;
+  return <Game gameState={initialGameState} />;
 }
 
 export default App;

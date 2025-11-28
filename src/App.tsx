@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Game } from './Game';
 import type { GameState } from './models';
 import { initializeDay } from './utils';
@@ -144,6 +143,7 @@ const baseGameState: GameState = {
           lineId: 'line-1',
           currentStationIndex: 0,
           direction: 'forward',
+          position: { x: 0, y: 0 }, // Will be set by initializeDay
           passengerIds: [],
           capacity: 50,
           speed: 10,

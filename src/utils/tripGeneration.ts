@@ -241,15 +241,20 @@ export function initializeTrains(
         }
       }
       
+      // Set train position to current station
+      const currentStationId = line.stationIds[updatedTrain.currentStationIndex];
+      const currentStation = stations.get(currentStationId);
+      if (currentStation) {
+        updatedTrain.position = { ...currentStation.position };
+      }
+      
       // Calculate next station arrival time
       const nextIndex = updatedTrain.direction === 'forward'
         ? updatedTrain.currentStationIndex + 1
         : updatedTrain.currentStationIndex - 1;
       
       if (nextIndex >= 0 && nextIndex < numStations) {
-        const currentStationId = line.stationIds[updatedTrain.currentStationIndex];
         const nextStationId = line.stationIds[nextIndex];
-        const currentStation = stations.get(currentStationId);
         const nextStation = stations.get(nextStationId);
         
         if (currentStation && nextStation) {

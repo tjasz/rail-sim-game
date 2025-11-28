@@ -60,7 +60,7 @@ export function updateTrains(
   trains: Map<string, Train>,
   lines: Map<string, Line>,
   stations: Map<string, Station>,
-  _deltaMinutes: number,
+  deltaMinutes: number,
   currentTime: number
 ): Map<string, Train> {
   const updatedTrains = new Map(trains);
@@ -71,50 +71,69 @@ export function updateTrains(
       return;
     }
 
+    const updatedTrain = { ...train };
+    
+    // Determine next station
+    const nextStationIndex = train.direction === 'forward'
+      ? train.currentStationIndex + 1
+      : train.currentStationIndex - 1;
+    
+    if (nextStationIndex < 0 || nextStationIndex >= line.stationIds.length) {
+      // No next station (shouldn't happen with proper initialization)
+      updatedTrains.set(trainId, updatedTrain);
+      return;
+    }
+    
+    const nextStationId = line.stationIds[nextStationIndex];
+    const nextStation = stations.get(nextStationId);
+    
+    if (!nextStation) {
+      updatedTrains.set(trainId, updatedTrain);
+      return;
+    }
+
     // Check if train should arrive at next station
     if (train.nextStationArrivalTime && currentTime >= train.nextStationArrivalTime) {
-      // Arrive at station
-      const updatedTrain = { ...train };
+      // Arrive at station - snap to station position
+      updatedTrain.position = { ...nextStation.position };
+      updatedTrain.currentStationIndex = nextStationIndex;
 
-      // Move to next station
-      if (train.direction === 'forward') {
-        updatedTrain.currentStationIndex += 1;
-        if (updatedTrain.currentStationIndex >= line.stationIds.length - 1) {
-          // Reached end, reverse direction
-          updatedTrain.direction = 'backward';
-        }
-      } else {
-        updatedTrain.currentStationIndex -= 1;
-        if (updatedTrain.currentStationIndex <= 0) {
-          // Reached beginning, reverse direction
-          updatedTrain.direction = 'forward';
-        } else {
-        }
+      // Check if we need to reverse direction
+      if (train.direction === 'forward' && nextStationIndex >= line.stationIds.length - 1) {
+        updatedTrain.direction = 'backward';
+      } else if (train.direction === 'backward' && nextStationIndex <= 0) {
+        updatedTrain.direction = 'forward';
       }
 
       // Calculate next arrival time
-      const nextIndex =
-        updatedTrain.direction === 'forward'
-          ? updatedTrain.currentStationIndex + 1
-          : updatedTrain.currentStationIndex - 1;
+      const followingIndex = updatedTrain.direction === 'forward'
+        ? updatedTrain.currentStationIndex + 1
+        : updatedTrain.currentStationIndex - 1;
 
-      if (nextIndex >= 0 && nextIndex < line.stationIds.length) {
-        const currentStationId = line.stationIds[updatedTrain.currentStationIndex];
-        const nextStationId = line.stationIds[nextIndex];
-        const currentStation = stations.get(currentStationId);
-        const nextStation = stations.get(nextStationId);
+      if (followingIndex >= 0 && followingIndex < line.stationIds.length) {
+        const followingStationId = line.stationIds[followingIndex];
+        const followingStation = stations.get(followingStationId);
 
-        if (currentStation && nextStation) {
-          const distance = calculateDistance(currentStation.position, nextStation.position);
+        if (followingStation) {
+          const distance = calculateDistance(updatedTrain.position, followingStation.position);
           const travelTime = distance / train.speed;
           updatedTrain.nextStationArrivalTime = currentTime + travelTime + 1; // +1 for station stop
         }
       } else {
         updatedTrain.nextStationArrivalTime = undefined;
       }
-
-      updatedTrains.set(trainId, updatedTrain);
+    } else {
+      // Train is between stations - move toward next station
+      const movement = moveToward(
+        train.position,
+        nextStation.position,
+        train.speed,
+        deltaMinutes
+      );
+      updatedTrain.position = movement.position;
     }
+
+    updatedTrains.set(trainId, updatedTrain);
   });
 
   return updatedTrains;

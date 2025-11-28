@@ -1,9 +1,8 @@
-import type { Train, Line, Station } from '../models';
+import type { Train, Line } from '../models';
 
 interface TrainMarkersProps {
   trains: Map<string, Train>;
   lines: Map<string, Line>;
-  stations: Map<string, Station>;
   gridWidth: number;
   gridHeight: number;
   cellSize?: number;
@@ -12,7 +11,6 @@ interface TrainMarkersProps {
 export function TrainMarkers({ 
   trains, 
   lines, 
-  stations, 
   gridWidth, 
   gridHeight, 
   cellSize = 60 
@@ -32,12 +30,9 @@ export function TrainMarkers({
         const line = lines.get(train.lineId);
         if (!line || !line.isActive) return null;
         
-        const currentStationId = line.stationIds[train.currentStationIndex];
-        const station = stations.get(currentStationId);
-        if (!station) return null;
-        
-        const x = station.position.x * cellSize + cellSize / 2;
-        const y = station.position.y * cellSize + cellSize / 2;
+        // Use train's current position
+        const x = train.position.x * cellSize + cellSize / 2;
+        const y = train.position.y * cellSize + cellSize / 2;
         
         return (
           <g key={train.id}>

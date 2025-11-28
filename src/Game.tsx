@@ -313,7 +313,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             <TrainMarkers
               trains={gameState.railNetwork.trains}
               lines={gameState.railNetwork.lines}
-              stations={gameState.railNetwork.stations}
               gridWidth={gameState.city.config.gridWidth}
               gridHeight={gameState.city.config.gridHeight}
             />

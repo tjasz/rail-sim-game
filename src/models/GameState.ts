@@ -1,0 +1,51 @@
+import type { CityState } from './CityConfig';
+import type { RailNetwork } from './RailNetwork';
+import type { TripMatrix } from './TripMatrix';
+import type { Citizen } from './Citizen';
+
+export type GameStatus = 'menu' | 'playing' | 'paused' | 'game-over' | 'victory';
+
+export interface GameState {
+  status: GameStatus;
+  city: CityState;
+  railNetwork: RailNetwork;
+  currentTripMatrix?: TripMatrix;
+  citizens: Map<string, Citizen>;
+  
+  // Day simulation
+  isSimulating: boolean;
+  simulationTime: number; // minutes elapsed in current day
+  simulationSpeed: number; // multiplier for simulation speed
+  
+  // Statistics
+  stats: GameStats;
+}
+
+export interface GameStats {
+  totalDaysPlayed: number;
+  totalCitizensTransported: number;
+  totalHappyCitizens: number;
+  totalUnhappyCitizens: number;
+  currentDayHappyCitizens: number;
+  currentDayUnhappyCitizens: number;
+  happinessRate: number; // percentage (0-100)
+  
+  // Financial
+  totalMoneySpent: number;
+  totalMoneyEarned: number;
+  
+  // Network stats
+  totalStationsBuilt: number;
+  totalTrackMilesBuilt: number;
+  totalTrainsPurchased: number;
+}
+
+export interface DayResult {
+  day: number;
+  totalCitizens: number;
+  happyCitizens: number;
+  unhappyCitizens: number;
+  happinessRate: number;
+  budgetEarned: number;
+  passed: boolean; // true if > 50% happy
+}

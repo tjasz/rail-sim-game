@@ -31,8 +31,8 @@ function getWalkingCost(
   }
   
   // Check if either cell is water
-  const fromTile = config.tiles[from.y]?.[from.x];
-  const toTile = config.tiles[to.y]?.[to.x];
+  const fromTile = config.tiles[from.x]?.[from.y];
+  const toTile = config.tiles[to.x]?.[to.y];
   if (fromTile === 'water' || toTile === 'water') {
     return Infinity;
   }
@@ -99,7 +99,7 @@ function buildCityGraph(
   // Add walking edges for all land cells
   for (let y = 0; y < config.gridHeight; y++) {
     for (let x = 0; x < config.gridWidth; x++) {
-      if (config.tiles[y][x] === 'water') continue;
+      if (config.tiles[x]?.[y] === 'water') continue;
       
       const pos = { x, y };
       const key = posKey(pos);

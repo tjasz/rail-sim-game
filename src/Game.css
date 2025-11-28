@@ -19,11 +19,86 @@
 .game-header h1 {
   margin: 0;
   font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+/* Day and Time Display */
+.day-time-display {
+  flex: 1;
+  max-width: 400px;
+  margin: 0 2rem;
+}
+
+.day-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.day-label {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.time-label {
+  font-family: 'Courier New', monospace;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.time-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.time-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  transition: width 0.3s ease;
 }
 
 .game-controls {
   display: flex;
   gap: 1rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.speed-controls {
+  display: flex;
+  gap: 0.25rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.25rem;
+  border-radius: 4px;
+}
+
+.speed-btn {
+  padding: 0.35rem 0.6rem;
+  border: none;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+.speed-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.speed-btn.active {
+  background: #3498db;
+  font-weight: bold;
+}
+
+.speed-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .btn-primary, .btn-secondary {

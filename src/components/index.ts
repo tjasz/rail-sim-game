@@ -4,6 +4,7 @@ export { GameStats } from './GameStats';
 export { NetworkStats } from './NetworkStats';
 export { CityGrid } from './CityGrid';
 export { TrackOverlay } from './TrackOverlay';
+export { TrainMarkers } from './TrainMarkers';
 export { LinesList } from './LinesList';
 export { TrainsList } from './TrainsList';
 export { PassengersList } from './PassengersList';

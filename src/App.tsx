@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import { Game } from './Game';
 import type { GameState } from './models';
 import './App.css';
 
 // Mock game state for demonstration
-const mockGameState: GameState = {
+const initialGameState: GameState = {
   status: 'playing',
   city: {
     config: {
@@ -192,7 +193,7 @@ const mockGameState: GameState = {
     ],
   ]),
   isSimulating: false,
-  simulationTime: 120,
+  simulationTime: 480, // Start at 8:00 AM
   simulationSpeed: 1,
   stats: {
     totalDaysPlayed: 2,
@@ -211,7 +212,9 @@ const mockGameState: GameState = {
 };
 
 function App() {
-  return <Game gameState={mockGameState} />;
+  const [gameState, setGameState] = useState<GameState>(initialGameState);
+
+  return <Game gameState={gameState} onGameStateChange={setGameState} />;
 }
 
 export default App;

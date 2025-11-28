@@ -21,7 +21,7 @@ export function PassengersList({ citizens, neighborhoods, maxDisplay = 20 }: Pas
   });
   
   return (
-    <div className="passengers-list">
+    <div className="passengers-list" onContextMenu={() => console.log(citizens)}>
       <h3>Passengers ({citizens.size})</h3>
       
       <div className="passenger-summary">

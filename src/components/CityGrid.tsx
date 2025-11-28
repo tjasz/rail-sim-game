@@ -119,6 +119,7 @@ export function CityGrid({
           
           return (
             <circle
+              onContextMenu={() => console.log(citizen)}
               key={citizen.id}
               cx={citizen.currentPosition.x * cellSize + cellSize / 2}
               cy={citizen.currentPosition.y * cellSize + cellSize / 2}

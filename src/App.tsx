@@ -107,6 +107,16 @@ const baseGameState: GameState = {
           waitingCitizens: new Map(),
         },
       ],
+      [
+        'station-3',
+        {
+          id: 'station-3',
+          neighborhoodId: 'residential-3',
+          position: { x: 4, y: 4 },
+          lineIds: ['line-1'],
+          waitingCitizens: new Map(),
+        },
+      ],
     ]),
     tracks: new Map([
       [
@@ -121,6 +131,18 @@ const baseGameState: GameState = {
           lineIds: ['line-1'],
         },
       ],
+      [
+        'track-2',
+        {
+          id: 'track-2',
+          from: { x: 4, y: 1 },
+          to: { x: 4, y: 4 },
+          distance: 3.0,
+          isOverWater: false,
+          cost: 1500,
+          lineIds: ['line-1'],
+        },
+      ],
     ]),
     lines: new Map([
       [
@@ -129,7 +151,7 @@ const baseGameState: GameState = {
           id: 'line-1',
           name: 'Red Line',
           color: '#e74c3c',
-          stationIds: ['station-1', 'station-2'],
+          stationIds: ['station-1', 'station-2', 'station-3'],
           trainIds: ['train-1'],
           isActive: true,
         },

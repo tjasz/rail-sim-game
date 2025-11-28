@@ -78,20 +78,17 @@ export function updateTrains(
 
       // Move to next station
       if (train.direction === 'forward') {
-        if (train.currentStationIndex >= line.stationIds.length - 1) {
+        updatedTrain.currentStationIndex += 1;
+        if (updatedTrain.currentStationIndex >= line.stationIds.length - 1) {
           // Reached end, reverse direction
           updatedTrain.direction = 'backward';
-          updatedTrain.currentStationIndex = line.stationIds.length - 1;
-        } else {
-          updatedTrain.currentStationIndex += 1;
         }
       } else {
-        if (train.currentStationIndex <= 0) {
+        updatedTrain.currentStationIndex -= 1;
+        if (updatedTrain.currentStationIndex <= 0) {
           // Reached beginning, reverse direction
           updatedTrain.direction = 'forward';
-          updatedTrain.currentStationIndex = 0;
         } else {
-          updatedTrain.currentStationIndex -= 1;
         }
       }
 

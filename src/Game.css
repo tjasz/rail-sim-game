@@ -1,0 +1,385 @@
+/* Game Container */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f5f5f5;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #2c3e50;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.game-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.game-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+.btn-secondary {
+  background: #95a5a6;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #7f8c8d;
+}
+
+/* Game Content */
+.game-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.left-panel {
+  width: 350px;
+  background: white;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.map-panel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  overflow: auto;
+}
+
+.map-container {
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Stats */
+.game-stats, .network-stats {
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.stats-header h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.network-stats h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #7f8c8d;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.stat-item.budget .stat-value {
+  color: #27ae60;
+}
+
+.stat-value.happy {
+  color: #27ae60;
+}
+
+.stat-value.unhappy {
+  color: #e74c3c;
+}
+
+/* Tabs */
+.panel-tabs {
+  display: flex;
+  border-bottom: 2px solid #eee;
+}
+
+.tab {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tab:hover {
+  background: #f8f9fa;
+}
+
+.tab.active {
+  color: #3498db;
+  border-bottom-color: #3498db;
+  font-weight: bold;
+}
+
+/* Panel Content */
+.panel-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.empty-state {
+  text-align: center;
+  color: #95a5a6;
+  padding: 2rem;
+  font-style: italic;
+}
+
+/* Lines List */
+.lines-container, .trains-container, .stations-container, .passengers-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.line-item, .train-item, .station-item {
+  display: flex;
+  align-items: start;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 4px;
+  border-left: 4px solid transparent;
+}
+
+.line-item {
+  border-left-color: currentColor;
+}
+
+.line-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.line-info {
+  flex: 1;
+}
+
+.line-name {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.line-details, .train-details, .station-details {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  display: flex;
+  gap: 1rem;
+}
+
+.line-route {
+  font-size: 0.8rem;
+  color: #95a5a6;
+  margin-top: 0.25rem;
+}
+
+/* Trains */
+.train-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.train-id {
+  font-weight: bold;
+}
+
+.train-line {
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  color: white;
+}
+
+/* Stations */
+.station-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.station-name {
+  font-weight: bold;
+}
+
+.station-location {
+  font-size: 0.85rem;
+  color: #95a5a6;
+}
+
+.station-lines {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.line-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  color: white;
+}
+
+/* Passengers */
+.passenger-summary {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.summary-item {
+  flex: 1;
+}
+
+.happy {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.unhappy {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.state-summary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+}
+
+.state-count {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 3px;
+}
+
+.state-label {
+  color: #7f8c8d;
+}
+
+.state-value {
+  font-weight: bold;
+}
+
+.passenger-item {
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 4px;
+  border-left: 3px solid #95a5a6;
+}
+
+.passenger-item.happy {
+  border-left-color: #27ae60;
+}
+
+.passenger-item.unhappy {
+  border-left-color: #e74c3c;
+}
+
+.passenger-route {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.passenger-state {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  margin-top: 0.25rem;
+}
+
+.more-indicator {
+  text-align: center;
+  padding: 0.75rem;
+  color: #95a5a6;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* City Grid */
+.city-grid-container {
+  position: relative;
+}
+
+.city-grid {
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .left-panel {
+    width: 300px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

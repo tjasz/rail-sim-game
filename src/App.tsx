@@ -4,7 +4,7 @@ import type { GameState } from './models';
 import { initializeDay } from './utils';
 import './App.css';
 
-// Base game configuration
+// Base game configuration (without citizens - they'll be generated)
 const baseGameState: GameState = {
   status: 'playing',
   city: {
@@ -144,10 +144,10 @@ const baseGameState: GameState = {
           lineId: 'line-1',
           currentStationIndex: 0,
           direction: 'forward',
-          passengerIds: ['citizen-3', 'citizen-4'],
+          passengerIds: [],
           capacity: 50,
           speed: 10,
-          nextStationArrivalTime: 125,
+          nextStationArrivalTime: 0,
         },
       ],
     ]),
@@ -174,6 +174,7 @@ const baseGameState: GameState = {
 };
 
 function App() {
+  // Initialize the first day with citizens and positioned trains
   const { tripMatrix, citizens, updatedNetwork } = initializeDay(
     baseGameState.city.config,
     baseGameState.city.population,

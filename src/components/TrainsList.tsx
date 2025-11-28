@@ -20,7 +20,7 @@ export function TrainsList({ trains, lines, stations }: TrainsListProps) {
             const station = currentStation ? stations.get(currentStation) : null;
             
             return (
-              <div key={train.id} className="train-item">
+              <div key={train.id} className="train-item" onContextMenu={() => console.log(train)}>
                 <div className="train-header">
                   <span className="train-id">Train {train.id}</span>
                   {line && (

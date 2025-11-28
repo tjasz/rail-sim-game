@@ -3,5 +3,6 @@ export {
   generateTripMatrix, 
   createCitizensFromTripMatrix, 
   updateStationWaitingCitizens, 
+  initializeTrains,
   initializeDay 
 } from './tripGeneration';

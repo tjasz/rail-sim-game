@@ -6,8 +6,11 @@ import type {
   TripMatrix, 
   Citizen, 
   Station,
-  RailNetwork 
+  RailNetwork,
+  Train,
+  Line
 } from '../models';
+import { calculateDistance } from './simulation';
 
 /**
  * Generate the trip matrix for a day based on population and demand distributions
@@ -162,6 +165,111 @@ export function updateStationWaitingCitizens(
 }
 
 /**
+ * Initialize train positions and arrival times for the start of a day
+ */
+export function initializeTrains(
+  trains: Map<string, Train>,
+  lines: Map<string, Line>,
+  stations: Map<string, Station>,
+  currentTime: number,
+  trainSpeed: number
+): Map<string, Train> {
+  const updatedTrains = new Map<string, Train>();
+  
+  // Group trains by line
+  const trainsByLine = new Map<string, Train[]>();
+  trains.forEach(train => {
+    if (!trainsByLine.has(train.lineId)) {
+      trainsByLine.set(train.lineId, []);
+    }
+    trainsByLine.get(train.lineId)!.push(train);
+  });
+  
+  // Initialize each line's trains
+  trainsByLine.forEach((lineTrains, lineId) => {
+    const line = lines.get(lineId);
+    if (!line || !line.isActive || line.stationIds.length < 2) {
+      // Keep trains as-is if line is inactive or has insufficient stations
+      lineTrains.forEach(train => updatedTrains.set(train.id, train));
+      return;
+    }
+    
+    const numTrains = lineTrains.length;
+    const numStations = line.stationIds.length;
+    
+    lineTrains.forEach((train, idx) => {
+      let updatedTrain = { ...train };
+      
+      if (numTrains === 1) {
+        // Single train: start at beginning, going forward
+        updatedTrain.currentStationIndex = 0;
+        updatedTrain.direction = 'forward';
+      } else if (numTrains === 2) {
+        // Two trains: one at start going forward, one at end going backward
+        if (idx === 0) {
+          updatedTrain.currentStationIndex = 0;
+          updatedTrain.direction = 'forward';
+        } else {
+          updatedTrain.currentStationIndex = numStations - 1;
+          updatedTrain.direction = 'backward';
+        }
+      } else {
+        // Multiple trains: distribute evenly
+        // Split between forward and backward directions
+        const isForward = idx % 2 === 0;
+        
+        if (isForward) {
+          // Forward trains: space them evenly along the line
+          const forwardCount = Math.ceil(numTrains / 2);
+          const forwardIdx = Math.floor(idx / 2);
+          const spacing = Math.max(1, Math.floor(numStations / forwardCount));
+          updatedTrain.currentStationIndex = Math.min(
+            forwardIdx * spacing,
+            numStations - 1
+          );
+          updatedTrain.direction = 'forward';
+        } else {
+          // Backward trains: space them evenly from the end
+          const backwardCount = Math.floor(numTrains / 2);
+          const backwardIdx = Math.floor(idx / 2);
+          const spacing = Math.max(1, Math.floor(numStations / backwardCount));
+          updatedTrain.currentStationIndex = Math.max(
+            numStations - 1 - backwardIdx * spacing,
+            0
+          );
+          updatedTrain.direction = 'backward';
+        }
+      }
+      
+      // Calculate next station arrival time
+      const nextIndex = updatedTrain.direction === 'forward'
+        ? updatedTrain.currentStationIndex + 1
+        : updatedTrain.currentStationIndex - 1;
+      
+      if (nextIndex >= 0 && nextIndex < numStations) {
+        const currentStationId = line.stationIds[updatedTrain.currentStationIndex];
+        const nextStationId = line.stationIds[nextIndex];
+        const currentStation = stations.get(currentStationId);
+        const nextStation = stations.get(nextStationId);
+        
+        if (currentStation && nextStation) {
+          const distance = calculateDistance(currentStation.position, nextStation.position);
+          const travelTime = distance / trainSpeed;
+          // Add 1 minute for station stop time
+          updatedTrain.nextStationArrivalTime = currentTime + travelTime + 1;
+        }
+      } else {
+        updatedTrain.nextStationArrivalTime = undefined;
+      }
+      
+      updatedTrains.set(updatedTrain.id, updatedTrain);
+    });
+  });
+  
+  return updatedTrains;
+}
+
+/**
  * Initialize a new day with citizens and trips
  */
 export function initializeDay(
@@ -192,9 +300,19 @@ export function initializeDay(
     config.neighborhoods
   );
   
+  // Initialize train positions and arrival times
+  const updatedTrains = initializeTrains(
+    railNetwork.trains,
+    railNetwork.lines,
+    updatedStations,
+    startTime,
+    config.trainSpeed
+  );
+  
   const updatedNetwork: RailNetwork = {
     ...railNetwork,
     stations: updatedStations,
+    trains: updatedTrains,
   };
   
   return {

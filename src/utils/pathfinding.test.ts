@@ -1130,4 +1130,31 @@ describe('calculateRoute', () => {
       expect(Array.isArray(route)).toBe(true);
     });
   });
+
+  describe('Parameterized walking tests', () => {
+    it.each([
+      [{ x: 0, y: 0 }, { x: 1, y: 0 }, 20], // horizontal: 1 unit / 0.05 speed = 20 min
+      [{ x: 0, y: 0 }, { x: 0, y: 1 }, 20], // vertical: 1 unit / 0.05 speed = 20 min
+      [{ x: 0, y: 0 }, { x: 1, y: 1 }, 28.28], // diagonal: sqrt(2) / 0.05 ≈ 28.28 min
+    ])(
+      'should calculate correct time from %p to %p (expected: %f min)',
+      (origin, destination, expectedTime) => {
+        const route = calculateRoute(
+          origin,
+          destination,
+          testCityConfig,
+          testRailNetwork,
+          walkingSpeed,
+          trainSpeed,
+          stopTimePerStation
+        );
+
+        expect(Array.isArray(route)).toBe(true);
+        expect(route.length).toBe(1);
+        const segment = route[0];
+        expect(segment.type).toBe('walk');
+        expect(segment.estimatedTime).toBeCloseTo(expectedTime, 1);
+      }
+    );
+  });
 });

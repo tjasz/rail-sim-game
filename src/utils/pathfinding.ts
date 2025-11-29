@@ -12,7 +12,8 @@ interface PathNode {
 }
 
 /**
- * Calculate the cost of traveling between two adjacent grid cells by walking
+ * Calculate the cost of traveling between two adjacent grid cells by walking.
+ * Citizens can walk at 0 or 45 degree angles only.
  */
 function getWalkingCost(
   from: Position,
@@ -23,7 +24,7 @@ function getWalkingCost(
   // Check if positions are adjacent
   const dx = Math.abs(to.x - from.x);
   const dy = Math.abs(to.y - from.y);
-  if (dx + dy !== 1) return Infinity;
+  if (dx > 1 || dy > 1) return Infinity;
   
   // Check bounds
   if (to.x < 0 || to.x >= config.gridWidth || to.y < 0 || to.y >= config.gridHeight) {
@@ -105,12 +106,16 @@ function buildCityGraph(
       const key = posKey(pos);
       const edges: GraphEdge[] = [];
       
-      // Add walking to adjacent cells
+      // Add walking to adjacent cells, including diagonals
       const neighbors = [
         { x: x - 1, y },
         { x: x + 1, y },
         { x, y: y - 1 },
         { x, y: y + 1 },
+        { x: x - 1, y: y - 1 },
+        { x: x + 1, y: y - 1 },
+        { x: x - 1, y: y + 1 },
+        { x: x + 1, y: y + 1 },
       ];
       
       for (const neighbor of neighbors) {

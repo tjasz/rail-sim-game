@@ -77,7 +77,7 @@ function getTrainCost(
  * Build a graph of all possible movements in the city
  * Returns a map of position keys to arrays of {position, cost, stationId?}
  */
-interface GraphEdge {
+export interface GraphEdge {
   position: Position;
   cost: number;
   stationId?: string;
@@ -86,7 +86,7 @@ interface GraphEdge {
   viaStation?: string; // if this edge uses a train line
 }
 
-function buildCityGraph(
+export function buildCityGraph(
   config: CityConfig,
   railNetwork: RailNetwork,
   walkingSpeed: number,

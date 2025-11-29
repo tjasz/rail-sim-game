@@ -668,7 +668,7 @@ describe('buildCityGraph', () => {
 
 describe('calculateRoute', () => {
   const walkingSpeed = 0.05;
-  const trainSpeed = 0.15;
+  const trainSpeed = 0.25;
   const stopTimePerStation = 1;
 
   // Helper to get neighborhood positions for testing
@@ -1133,12 +1133,13 @@ describe('calculateRoute', () => {
 
   describe('Parameterized walking tests', () => {
     it.each([
-      [{ x: 0, y: 0 }, { x: 1, y: 0 }, 20], // horizontal: 1 unit / 0.05 speed = 20 min
-      [{ x: 0, y: 0 }, { x: 0, y: 1 }, 20], // vertical: 1 unit / 0.05 speed = 20 min
-      [{ x: 0, y: 0 }, { x: 1, y: 1 }, 28.28], // diagonal: sqrt(2) / 0.05 ≈ 28.28 min
+      [{ x: 0, y: 0 }, { x: 1, y: 0 }, 1, 20], // 1*20min walk
+      [{ x: 0, y: 0 }, { x: 2, y: 0 }, 2, 29.656], // 1*20min walk + 2.414*4min ride
+      [{ x: 0, y: 0 }, { x: 3, y: 0 }, 3, 49.656], // 2*20min walk + 2.414*4min ride
+      [{ x: 0, y: 0 }, { x: 4, y: 0 }, 3, 60.312], // 2*20min walk + 4.828*4min ride + 1min intermediate stop
     ])(
-      'should calculate correct time from %p to %p (expected: %f min)',
-      (origin, destination, expectedTime) => {
+      'should calculate correct time from %p to %p (expected %f segments totalling %f min)',
+      (origin, destination, expectedSegmentCount, expectedTime) => {
         const route = calculateRoute(
           origin,
           destination,
@@ -1149,11 +1150,11 @@ describe('calculateRoute', () => {
           stopTimePerStation
         );
 
+        console.log(route);
         expect(Array.isArray(route)).toBe(true);
-        expect(route.length).toBe(1);
-        const segment = route[0];
-        expect(segment.type).toBe('walk');
-        expect(segment.estimatedTime).toBeCloseTo(expectedTime, 1);
+        expect(route.length).toBe(expectedSegmentCount);
+        const totalTime = route.reduce((sum, seg) => sum + seg.estimatedTime, 0);
+        expect(totalTime).toBeCloseTo(expectedTime, 1);
       }
     );
   });

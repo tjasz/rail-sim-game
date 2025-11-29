@@ -405,6 +405,9 @@ export function updateCitizens(
             )?.id : null;
           
           if (trainStationId !== citizen.currentStationId) return false;
+
+          // Check if train has capacity
+          if (train.passengerIds.length >= train.capacity) return false;
           
           // Check if train is going toward destination station
           return train.direction === nextSegment.lineDirection;

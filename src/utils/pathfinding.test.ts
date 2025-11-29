@@ -171,8 +171,20 @@ const testRailNetwork: RailNetwork = {
       {
         id: 'track-2',
         from: { x: 1, y: 0 },
+        to: { x: 2, y: 0 },
+        distance: 1,
+        isOverWater: false,
+        cost: 1414,
+        lineIds: ['line-1'],
+      },
+    ],
+    [
+      'track-2b',
+      {
+        id: 'track-2',
+        from: { x: 2, y: 0 },
         to: { x: 3, y: 0 },
-        distance: 2,
+        distance: 1,
         isOverWater: false,
         cost: 1414,
         lineIds: ['line-1'],
@@ -183,8 +195,20 @@ const testRailNetwork: RailNetwork = {
       {
         id: 'track-3',
         from: { x: 3, y: 0 },
+        to: { x: 4, y: 1 },
+        distance: 1.414,
+        isOverWater: false,
+        cost: 1414,
+        lineIds: ['line-1'],
+      },
+    ],
+    [
+      'track-3b',
+      {
+        id: 'track-3b',
+        from: { x: 4, y: 1 },
         to: { x: 5, y: 2 },
-        distance: 2.828,
+        distance: 1.414,
         isOverWater: false,
         cost: 1414,
         lineIds: ['line-1'],
@@ -1137,6 +1161,7 @@ describe('calculateRoute', () => {
       [{ x: 0, y: 0 }, { x: 2, y: 0 }, 2, 29.656], // 1*20min walk + 2.414*4min ride
       [{ x: 0, y: 0 }, { x: 3, y: 0 }, 3, 49.656], // 2*20min walk + 2.414*4min ride
       [{ x: 0, y: 0 }, { x: 4, y: 0 }, 3, 60.312], // 2*20min walk + 4.828*4min ride + 1min intermediate stop
+      [{ x: 0, y: 1 }, { x: 9, y: 2 }, 1, 42.968], // 10.242*4min ride + 2*1min intermediate stop
     ])(
       'should calculate correct time from %p to %p (expected %f segments totalling %f min)',
       (origin, destination, expectedSegmentCount, expectedTime) => {

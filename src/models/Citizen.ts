@@ -53,5 +53,6 @@ export interface RideSegment {
   lineDirection: 'forward' | 'backward';
   fromStationId: string;
   toStationId: string;
+  distance: number; // in grid squares (along tracks)
   estimatedTime: number; // in minutes
 }

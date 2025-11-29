@@ -1,6 +1,6 @@
 // Pathfinding utilities for calculating optimal routes through the city
 
-import type { Position, CityConfig, RailNetwork, Station, Line } from '../models';
+import type { Position, CityConfig, RailNetwork, Station, Line, Track } from '../models';
 import { calculateDistance } from './simulation';
 
 interface PathNode {
@@ -45,6 +45,117 @@ function getWalkingCost(
 }
 
 /**
+ * Find the shortest path along tracks between two positions using BFS
+ */
+function findTrackPath(
+  from: Position,
+  to: Position,
+  lineId: string,
+  tracks: Map<string, Track>
+): number {
+  const posKey = (pos: Position) => `${pos.x},${pos.y}`;
+  const startKey = posKey(from);
+  const endKey = posKey(to);
+  
+  if (startKey === endKey) return 0;
+  
+  // Build adjacency map for tracks on this line
+  const adjacency = new Map<string, Array<{ position: Position; distance: number }>>();
+  
+  for (const track of tracks.values()) {
+    if (!track.lineIds.includes(lineId)) continue;
+    
+    const fromKey = posKey(track.from);
+    const toKey = posKey(track.to);
+    
+    // Add edges in both directions
+    if (!adjacency.has(fromKey)) adjacency.set(fromKey, []);
+    if (!adjacency.has(toKey)) adjacency.set(toKey, []);
+    
+    adjacency.get(fromKey)!.push({ position: track.to, distance: track.distance });
+    adjacency.get(toKey)!.push({ position: track.from, distance: track.distance });
+  }
+  
+  // BFS to find shortest path
+  const queue: Array<{ position: Position; distance: number }> = [{ position: from, distance: 0 }];
+  const visited = new Set<string>();
+  visited.add(startKey);
+  
+  while (queue.length > 0) {
+    const current = queue.shift()!;
+    const currentKey = posKey(current.position);
+    
+    if (currentKey === endKey) {
+      return current.distance;
+    }
+    
+    const neighbors = adjacency.get(currentKey) || [];
+    for (const neighbor of neighbors) {
+      const neighborKey = posKey(neighbor.position);
+      if (!visited.has(neighborKey)) {
+        visited.add(neighborKey);
+        queue.push({
+          position: neighbor.position,
+          distance: current.distance + neighbor.distance
+        });
+      }
+    }
+  }
+  
+  // No path found along tracks
+  return Infinity;
+}
+
+/**
+ * Calculate the distance along tracks between two stations on the same line
+ */
+function getTrackDistanceBetweenStations(
+  fromStationId: string,
+  toStationId: string,
+  line: Line,
+  stations: Map<string, Station>,
+  tracks: Map<string, Track>
+): number {
+  const fromIndex = line.stationIds.indexOf(fromStationId);
+  const toIndex = line.stationIds.indexOf(toStationId);
+  
+  if (fromIndex === -1 || toIndex === -1) return Infinity;
+  
+  const startIndex = Math.min(fromIndex, toIndex);
+  const endIndex = Math.max(fromIndex, toIndex);
+  
+  let totalDistance = 0;
+  
+  // Sum up track distances between consecutive stations
+  for (let i = startIndex; i < endIndex; i++) {
+    const currentStationId = line.stationIds[i];
+    const nextStationId = line.stationIds[i + 1];
+    
+    const currentStation = stations.get(currentStationId);
+    const nextStation = stations.get(nextStationId);
+    
+    if (!currentStation || !nextStation) return Infinity;
+    
+    // Find path along tracks between these two consecutive stations
+    const trackDistance = findTrackPath(
+      currentStation.position,
+      nextStation.position,
+      line.id,
+      tracks
+    );
+    
+    // If no track path found, fall back to straight-line distance
+    if (trackDistance === Infinity) {
+      totalDistance += calculateDistance(currentStation.position, nextStation.position);
+    } else {
+      totalDistance += trackDistance;
+    }
+  }
+  
+  return totalDistance;
+}
+
+/**
  * Calculate the cost of traveling between two stations on the same line
  */
 function getTrainCost(
@@ -52,6 +163,7 @@ function getTrainCost(
   toStationId: string,
   line: Line,
   stations: Map<string, Station>,
+  tracks: Map<string, Track>,
   trainSpeed: number,
   stopTimePerStation: number
 ): number {
@@ -60,12 +172,10 @@ function getTrainCost(
   
   if (fromIndex === -1 || toIndex === -1) return Infinity;
   
-  // Calculate distance
-  const fromStation = stations.get(fromStationId);
-  const toStation = stations.get(toStationId);
-  if (!fromStation || !toStation) return Infinity;
+  // Calculate distance along tracks
+  const distance = getTrackDistanceBetweenStations(fromStationId, toStationId, line, stations, tracks);
   
-  const distance = calculateDistance(fromStation.position, toStation.position);
+  if (distance === Infinity) return Infinity;
   
   // Calculate number of stops between (not including start and end)
   const stopsInBetween = Math.abs(toIndex - fromIndex) - 1;
@@ -156,6 +266,7 @@ export function buildCityGraph(
           otherStationId,
           line,
           railNetwork.stations,
+          railNetwork.tracks,
           trainSpeed,
           stopTimePerStation
         );
@@ -300,7 +411,14 @@ function pathToRouteSegments(
         const toStation = railNetwork.stations.get(toStationId);
         
         if (line && fromStation && toStation) {
-          const distance = calculateDistance(fromStation.position, toStation.position);
+          // Use track distance instead of straight-line distance
+          const distance = getTrackDistanceBetweenStations(
+            fromStationId,
+            toStationId,
+            line,
+            railNetwork.stations,
+            railNetwork.tracks
+          );
           const fromIndex = line.stationIds.indexOf(fromStationId);
           const toIndex = line.stationIds.indexOf(toStationId);
           const stopsInBetween = Math.abs(toIndex - fromIndex) - 1;
@@ -312,6 +430,7 @@ function pathToRouteSegments(
             lineDirection,
             fromStationId,
             toStationId,
+            distance,
             estimatedTime,
           } as RideSegment);
           

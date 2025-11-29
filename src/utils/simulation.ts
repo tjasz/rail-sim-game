@@ -57,7 +57,7 @@ export function moveToward(
  * Find a path of track waypoints between two stations
  * Uses BFS to find connected tracks that form a path
  */
-function findTrackPath(
+export function findTrackPath(
   fromStation: Station,
   toStation: Station,
   tracks: Map<string, Track>,

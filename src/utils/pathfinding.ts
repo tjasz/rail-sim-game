@@ -406,21 +406,49 @@ function pathToRouteSegments(
       });
       
       if (lineId && lineDirection) {
+        // Look ahead to merge consecutive segments on the same line in the same direction
+        let endStationId = toStationId;
+        let j = i + 1;
+        
+        while (j < path.length - 1) {
+          const nextNode = path[j + 1];
+          if (!nextNode.viaStation || !nextNode.stationId) break;
+          
+          // Check if the next segment is on the same line
+          let nextLineId: string | undefined;
+          let nextLineDirection: 'forward' | 'backward' | undefined;
+          
+          railNetwork.lines.forEach(line => {
+            if (line.stationIds.includes(nextNode.viaStation!) && line.stationIds.includes(nextNode.stationId!)) {
+              nextLineId = line.id;
+              nextLineDirection = line.stationIds.indexOf(nextNode.viaStation!) < line.stationIds.indexOf(nextNode.stationId!) ? 'forward' : 'backward';
+            }
+          });
+          
+          // If same line and same direction, extend the segment
+          if (nextLineId === lineId && nextLineDirection === lineDirection && nextNode.viaStation === endStationId) {
+            endStationId = nextNode.stationId;
+            j++;
+          } else {
+            break;
+          }
+        }
+        
         const line = railNetwork.lines.get(lineId);
         const fromStation = railNetwork.stations.get(fromStationId);
-        const toStation = railNetwork.stations.get(toStationId);
+        const endStation = railNetwork.stations.get(endStationId);
         
-        if (line && fromStation && toStation) {
+        if (line && fromStation && endStation) {
           // Use track distance instead of straight-line distance
           const distance = getTrackDistanceBetweenStations(
             fromStationId,
-            toStationId,
+            endStationId,
             line,
             railNetwork.stations,
             railNetwork.tracks
           );
           const fromIndex = line.stationIds.indexOf(fromStationId);
-          const toIndex = line.stationIds.indexOf(toStationId);
+          const toIndex = line.stationIds.indexOf(endStationId);
           const stopsInBetween = Math.abs(toIndex - fromIndex) - 1;
           const estimatedTime = (distance / trainSpeed) + (stopsInBetween * 1); // 1 min per stop
           
@@ -429,12 +457,12 @@ function pathToRouteSegments(
             lineId,
             lineDirection,
             fromStationId,
-            toStationId,
+            toStationId: endStationId,
             distance,
             estimatedTime,
           } as RideSegment);
           
-          i++;
+          i = j;
           continue;
         }
       }

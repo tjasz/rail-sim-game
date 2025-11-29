@@ -179,8 +179,20 @@ const baseGameState: GameState = {
         {
           id: 'track-2',
           from: { x: 1, y: 0 },
+          to: { x: 2, y: 0 },
+          distance: 1,
+          isOverWater: false,
+          cost: 1414,
+          lineIds: ['line-1'],
+        },
+      ],
+      [
+        'track-2b',
+        {
+          id: 'track-2',
+          from: { x: 2, y: 0 },
           to: { x: 3, y: 0 },
-          distance: 2,
+          distance: 1,
           isOverWater: false,
           cost: 1414,
           lineIds: ['line-1'],
@@ -191,8 +203,20 @@ const baseGameState: GameState = {
         {
           id: 'track-3',
           from: { x: 3, y: 0 },
+          to: { x: 4, y: 1 },
+          distance: 1.414,
+          isOverWater: false,
+          cost: 1414,
+          lineIds: ['line-1'],
+        },
+      ],
+      [
+        'track-3b',
+        {
+          id: 'track-3b',
+          from: { x: 4, y: 1 },
           to: { x: 5, y: 2 },
-          distance: 2.828,
+          distance: 1.414,
           isOverWater: false,
           cost: 1414,
           lineIds: ['line-1'],

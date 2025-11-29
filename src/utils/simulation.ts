@@ -274,6 +274,47 @@ export function updateTrainPassengers(
 }
 
 /**
+ * Update station waiting lists based on citizens waiting at stations
+ */
+export function updateStationWaitingLists(
+  stations: Map<string, Station>,
+  citizens: Map<string, Citizen>
+): Map<string, Station> {
+  const updatedStations = new Map(stations);
+  
+  // Clear all waiting lists first
+  updatedStations.forEach(station => {
+    station.waitingCitizens = new Map();
+  });
+  
+  // Add citizens who are currently waiting at stations
+  citizens.forEach(citizen => {
+    if (citizen.state === 'waiting-at-station' && citizen.currentStationId) {
+      const station = updatedStations.get(citizen.currentStationId);
+      if (!station) return;
+      
+      // Determine which line the citizen is waiting for
+      if (citizen.route && citizen.route.segments.length > 0) {
+        const nextSegment = citizen.route.segments[0];
+        if (nextSegment.type === 'ride') {
+          const lineId = nextSegment.lineId;
+          
+          // Initialize the waiting list for this line if it doesn't exist
+          if (!station.waitingCitizens.has(lineId)) {
+            station.waitingCitizens.set(lineId, []);
+          }
+          
+          // Add citizen to the waiting list
+          station.waitingCitizens.get(lineId)!.push(citizen.id);
+        }
+      }
+    }
+  });
+  
+  return updatedStations;
+}
+
+/**
  * Update citizen positions and states based on elapsed time
  */
 export function updateCitizens(
@@ -607,6 +648,12 @@ export function tickSimulation(
   
   // Update train passenger lists based on citizen states
   updatedTrains = updateTrainPassengers(updatedTrains, updatedCitizens);
+  
+  // Update station waiting lists based on citizen states
+  const updatedStations = updateStationWaitingLists(
+    gameState.railNetwork.stations,
+    updatedCitizens
+  );
 
   // Update current day statistics
   const totalCitizens = updatedCitizens.size;
@@ -620,6 +667,7 @@ export function tickSimulation(
     railNetwork: {
       ...gameState.railNetwork,
       trains: updatedTrains,
+      stations: updatedStations,
     },
     citizens: updatedCitizens,
     stats: {

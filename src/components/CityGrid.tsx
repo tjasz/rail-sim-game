@@ -53,9 +53,9 @@ export function CityGrid({
                   y={y * cellSize}
                   width={cellSize}
                   height={cellSize}
-                  fill={isWater ? '#4a90e2' : '#90ee90'}
-                  stroke="#666"
-                  strokeWidth="1"
+                  fill={isWater ? 'paleturquoise' : 'linen'}
+                  stroke="none"
+                  strokeWidth="0"
                 />
                 
                 {/* Neighborhood */}
@@ -85,6 +85,30 @@ export function CityGrid({
                         strokeWidth="2"
                       />
                     ))}
+                  </g>
+                )}
+
+                {/* Waiting passenger count badge */}
+                {station && Array.from(station.waitingCitizens.values()).reduce((sum, list) => sum + list.length, 0) > 0 && (
+                  <g>
+                    <circle
+                      cx={x * cellSize + cellSize - 12}
+                      cy={y * cellSize + 12}
+                      r="10"
+                      fill="#ff6b6b"
+                      stroke="#fff"
+                      strokeWidth="1"
+                    />
+                    <text
+                      x={x * cellSize + cellSize - 12}
+                      y={y * cellSize + 16}
+                      textAnchor="middle"
+                      fontSize="10"
+                      fill="#fff"
+                      fontWeight="bold"
+                    >
+                      {Array.from(station.waitingCitizens.values()).reduce((sum, list) => sum + list.length, 0)}
+                    </text>
                   </g>
                 )}
                 

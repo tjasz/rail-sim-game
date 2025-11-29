@@ -326,204 +326,243 @@ export function updateCitizens(
   currentTime: number
 ): Map<string, Citizen> {
   const updatedCitizens = new Map(citizens);
-  const citizensToRemove: string[] = [];
+  const updatedTrains = new Map(trains);
 
-  updatedCitizens.forEach((citizen, citizenId) => {
+  // Group citizens by state
+  const citizensByState = new Map<string, Citizen[]>();
+  updatedCitizens.forEach(citizen => {
     // Skip citizens who haven't started their trip yet
     if (currentTime < citizen.tripStartTime) {
       return;
     }
     
-    // Handle citizens at their origin who need to start
-    if (citizen.state === 'waiting-at-origin') {
-      const updatedCitizen = { ...citizen };
-      if (!citizen.route || citizen.route.segments.length === 0) {
-        // No route available - citizen is unhappy and gives up
-        updatedCitizen.isHappy = false;
-        updatedCitizen.state = 'completed';
-        citizensToRemove.push(citizenId);
-        return;
-      }
-      
-      // Start following the route
-      const firstSegment = citizen.route.segments[0];
-      if (firstSegment.type === 'walk') {
-        updatedCitizen.state = citizen.route.segments.every(segment => segment.type === 'walk') ? 'walking-to-destination' : 'walking-to-station';
-      } else if (firstSegment.type === 'ride') {
-        // Route starts with a train ride, wait at that station
-        updatedCitizen.state = 'waiting-at-station';
-        updatedCitizen.currentStationId = firstSegment.fromStationId;
-      }
-      
-      updatedCitizens.set(citizenId, updatedCitizen);
-      return;
+    const state = citizen.state;
+    if (!citizensByState.has(state)) {
+      citizensByState.set(state, []);
     }
-
-    const updatedCitizen = { ...citizen };
-
-    switch (citizen.state) {
-      case 'walking-to-station':
-      case 'walking-to-destination': {
-        // Find the target position from the current route segment
-        if (!citizen.route || citizen.route.segments.length === 0) break;
-        
-        // Find first incomplete walk segment
-        let targetSegment = null;
-        for (const segment of citizen.route.segments) {
-          if (segment.type === 'walk') {
-            targetSegment = segment;
-            break;
-          }
-        }
-        
-        if (!targetSegment || targetSegment.type !== 'walk') break;
-        
-        const target = targetSegment.to;
-        const movement = moveToward(citizen.currentPosition, target, walkingSpeed, deltaMinutes);
-        updatedCitizen.currentPosition = movement.position;
-        
-        // Check if reached target
-        if (movement.reached) {
-          // Remove this segment from route
-          updatedCitizen.route = {
-            ...citizen.route,
-            segments: citizen.route.segments.slice(1),
-          };
-          
-          // Determine next state
-          if (updatedCitizen.route.segments.length === 0) {
-            // Reached final destination!
-            updatedCitizen.state = 'at-destination';
-            updatedCitizen.tripEndTime = currentTime;
-            
-            // Check happiness based on trip time
-            const tripDuration = currentTime - citizen.tripStartTime;
-            const threshold = citizen.route.walkingOnlyTime * 1.5; // Allow 50% more time
-            updatedCitizen.isHappy = tripDuration <= threshold;
-            
-            // Mark for removal
-            citizensToRemove.push(citizenId);
-          } else {
-            const nextSegment = updatedCitizen.route.segments[0];
-            if (nextSegment.type === 'ride') {
-              // Next segment is a train ride - wait at station
-              updatedCitizen.state = 'waiting-at-station';
-              // Find which station we're at
-              const station = Array.from(stations.values()).find(
-                s => s.position.x === target.x && s.position.y === target.y
-              );
-              if (station) {
-                updatedCitizen.currentStationId = station.id;
-              }
-            } else if (nextSegment.type === 'walk') {
-              // Continue walking
-              updatedCitizen.state = citizen.state; // Stay in same walking state
-            }
-          }
-        }
-        break;
-      }
-
-      case 'waiting-at-station': {
-        // Check if a suitable train has arrived
-        if (!citizen.route || citizen.route.segments.length === 0) break;
-        if (!citizen.currentStationId) break;
-        
-        const nextSegment = citizen.route.segments[0];
-        if (nextSegment.type !== 'ride') break;
-        
-        const station = stations.get(citizen.currentStationId);
-        if (!station) break;
-        
-        // Find trains at this station going in the right direction
-        const suitableTrains = Array.from(trains.values()).filter(train => {
-          if (train.lineId !== nextSegment.lineId) return false;
-          
-          // Check if train is at this station
-          const trainStationId = train.lineId ? 
-            Array.from(stations.values()).find(s => 
-              s.position.x === train.position.x && s.position.y === train.position.y
-            )?.id : null;
-          
-          if (trainStationId !== citizen.currentStationId) return false;
-
-          // Check if train has capacity
-          if (train.passengerIds.length >= train.capacity) return false;
-          
-          // Check if train is going toward destination station
-          return train.direction === nextSegment.lineDirection;
-        });
-        
-        if (suitableTrains.length > 0) {
-          // Board the first suitable train
-          const train = suitableTrains[0];
-          updatedCitizen.state = 'riding-train';
-          updatedCitizen.currentTrainId = train.id;
-          updatedCitizen.currentPosition = { ...train.position };
-        }
-        break;
-      }
-
-      case 'riding-train': {
-        // Update position to match train
-        if (!citizen.currentTrainId) break;
-        
-        const train = trains.get(citizen.currentTrainId);
-        if (!train) break;
-        
-        updatedCitizen.currentPosition = { ...train.position };
-        
-        // Check if we've reached the destination station
-        if (!citizen.route || citizen.route.segments.length === 0) break;
-        
-        const currentSegment = citizen.route.segments[0];
-        if (currentSegment.type !== 'ride') break;
-        
-        const destStation = stations.get(currentSegment.toStationId);
-        if (!destStation) break;
-        
-        // Check if train is at destination station
-        const distance = calculateDistance(train.position, destStation.position);
-        if (distance < 0.1) {
-          // Exit train
-          updatedCitizen.state = 'walking-to-destination';
-          updatedCitizen.currentTrainId = undefined;
-          updatedCitizen.currentStationId = undefined;
-          
-          // Remove this segment from route
-          updatedCitizen.route = {
-            ...citizen.route,
-            segments: citizen.route.segments.slice(1),
-          };
-          
-          // Check if there are more segments
-          if (updatedCitizen.route.segments.length === 0) {
-            // This was the last segment - we're at destination
-            updatedCitizen.state = 'at-destination';
-            updatedCitizen.tripEndTime = currentTime;
-            
-            const tripDuration = currentTime - citizen.tripStartTime;
-            const threshold = citizen.route.walkingOnlyTime * 1.5;
-            updatedCitizen.isHappy = tripDuration <= threshold;
-            
-            citizensToRemove.push(citizenId);
-          }
-        }
-        break;
-      }
-
-      case 'at-destination':
-      case 'completed':
-        // These citizens should be removed
-        citizensToRemove.push(citizenId);
-        break;
-    }
-
-    updatedCitizens.set(citizenId, updatedCitizen);
+    citizensByState.get(state)!.push(citizen);
   });
 
-  // Remove completed citizens
-  citizensToRemove.forEach(id => updatedCitizens.delete(id));
+  // 1. Update citizens waiting at origin
+  const waitingAtOrigin = citizensByState.get('waiting-at-origin') || [];
+  for (const citizen of waitingAtOrigin) {
+    const updatedCitizen = { ...citizen };
+    
+    if (!citizen.route || citizen.route.segments.length === 0) {
+      // No route available - citizen is unhappy and gives up
+      updatedCitizen.isHappy = false;
+      updatedCitizen.state = 'completed';
+      updatedCitizens.set(citizen.id, updatedCitizen);
+      continue;
+    }
+    
+    // Start following the route
+    const firstSegment = citizen.route.segments[0];
+    if (firstSegment.type === 'walk') {
+      updatedCitizen.state = citizen.route.segments.every(segment => segment.type === 'walk') 
+        ? 'walking-to-destination' 
+        : 'walking-to-station';
+    } else if (firstSegment.type === 'ride') {
+      // Route starts with a train ride, wait at that station
+      updatedCitizen.state = 'waiting-at-station';
+      updatedCitizen.currentStationId = firstSegment.fromStationId;
+    }
+    
+    updatedCitizens.set(citizen.id, updatedCitizen);
+  }
+
+  // 2. Update walking citizens
+  const walkingCitizens = [
+    ...(citizensByState.get('walking-to-station') || []),
+    ...(citizensByState.get('walking-to-destination') || [])
+  ];
+  
+  for (const citizen of walkingCitizens) {
+    if (!citizen.route || citizen.route.segments.length === 0) continue;
+    
+    // Find first incomplete walk segment
+    let targetSegment = null;
+    for (const segment of citizen.route.segments) {
+      if (segment.type === 'walk') {
+        targetSegment = segment;
+        break;
+      }
+    }
+    
+    if (!targetSegment || targetSegment.type !== 'walk') continue;
+    
+    const updatedCitizen = { ...citizen };
+    const target = targetSegment.to;
+    const movement = moveToward(citizen.currentPosition, target, walkingSpeed, deltaMinutes);
+    updatedCitizen.currentPosition = movement.position;
+    
+    // Check if reached target
+    if (movement.reached) {
+      // Remove this segment from route
+      updatedCitizen.route = {
+        ...citizen.route,
+        segments: citizen.route.segments.slice(1),
+      };
+      
+      // Determine next state
+      if (updatedCitizen.route.segments.length === 0) {
+        // Reached final destination!
+        updatedCitizen.state = 'at-destination';
+        updatedCitizen.tripEndTime = currentTime;
+        
+        // Check happiness based on trip time
+        const tripDuration = currentTime - citizen.tripStartTime;
+        const threshold = citizen.route.walkingOnlyTime * 1.5; // Allow 50% more time
+        updatedCitizen.isHappy = tripDuration <= threshold;
+      } else {
+        const nextSegment = updatedCitizen.route.segments[0];
+        if (nextSegment.type === 'ride') {
+          // Next segment is a train ride - wait at station
+          updatedCitizen.state = 'waiting-at-station';
+          // Find which station we're at
+          const station = Array.from(stations.values()).find(
+            s => s.position.x === target.x && s.position.y === target.y
+          );
+          if (station) {
+            updatedCitizen.currentStationId = station.id;
+          }
+        } else if (nextSegment.type === 'walk') {
+          // Continue walking - state stays the same
+          updatedCitizen.state = citizen.state;
+        }
+      }
+    }
+    
+    updatedCitizens.set(citizen.id, updatedCitizen);
+  }
+
+  // 3. Update citizens riding trains - iterate over trains
+  updatedTrains.forEach(train => {
+    // Find station at train's current position
+    const trainStation = Array.from(stations.values()).find(
+      s => calculateDistance(s.position, train.position) < 0.1
+    );
+    
+    if (!trainStation) {
+      // Train not at a station - just update passenger positions
+      for (const passengerId of train.passengerIds) {
+        const citizen = updatedCitizens.get(passengerId);
+        if (citizen) {
+          const updatedCitizen = { ...citizen };
+          updatedCitizen.currentPosition = { ...train.position };
+          updatedCitizens.set(passengerId, updatedCitizen);
+        }
+      }
+      return;
+    }
+    
+    // Train is at a station - check if passengers need to exit
+    const passengersToRemove: string[] = [];
+    
+    for (const passengerId of train.passengerIds) {
+      const citizen = updatedCitizens.get(passengerId);
+      if (!citizen || !citizen.route || citizen.route.segments.length === 0) continue;
+      
+      const currentSegment = citizen.route.segments[0];
+      if (currentSegment.type !== 'ride') continue;
+      
+      // Check if this is the destination station
+      if (currentSegment.toStationId === trainStation.id) {
+        // Exit train
+        const updatedCitizen = { ...citizen };
+        updatedCitizen.currentPosition = { ...train.position };
+        updatedCitizen.currentTrainId = undefined;
+        updatedCitizen.currentStationId = undefined;
+        
+        // Remove this segment from route
+        updatedCitizen.route = {
+          ...citizen.route,
+          segments: citizen.route.segments.slice(1),
+        };
+        
+        // Check if there are more segments
+        if (updatedCitizen.route.segments.length === 0) {
+          // This was the last segment - we're at destination
+          updatedCitizen.state = 'at-destination';
+          updatedCitizen.tripEndTime = currentTime;
+          
+          const tripDuration = currentTime - citizen.tripStartTime;
+          const threshold = citizen.route.walkingOnlyTime * 1.5;
+          updatedCitizen.isHappy = tripDuration <= threshold;
+        } else {
+          updatedCitizen.state = 'walking-to-destination';
+        }
+        
+        updatedCitizens.set(passengerId, updatedCitizen);
+        passengersToRemove.push(passengerId);
+      } else {
+        // Just update position
+        const updatedCitizen = { ...citizen };
+        updatedCitizen.currentPosition = { ...train.position };
+        updatedCitizens.set(passengerId, updatedCitizen);
+      }
+    }
+    
+    // Remove exited passengers from train
+    train.passengerIds = train.passengerIds.filter(id => !passengersToRemove.includes(id));
+  });
+
+  // 4. Update citizens waiting at stations - iterate over stations
+  stations.forEach(station => {
+    // Find all trains at this station
+    const trainsAtStation = Array.from(updatedTrains.values()).filter(
+      train => calculateDistance(train.position, station.position) < 0.1
+    );
+    
+    if (trainsAtStation.length === 0) return;
+    
+    // Get waiting citizens at this station
+    const waitingCitizens = (citizensByState.get('waiting-at-station') || [])
+      .filter(c => c.currentStationId === station.id);
+    
+    // Group waiting citizens by line and direction
+    const waitingByLineAndDirection = new Map<string, Citizen[]>();
+    for (const citizen of waitingCitizens) {
+      if (!citizen.route || citizen.route.segments.length === 0) continue;
+      
+      const nextSegment = citizen.route.segments[0];
+      if (nextSegment.type !== 'ride') continue;
+      
+      const key = `${nextSegment.lineId}-${nextSegment.lineDirection}`;
+      if (!waitingByLineAndDirection.has(key)) {
+        waitingByLineAndDirection.set(key, []);
+      }
+      waitingByLineAndDirection.get(key)!.push(citizen);
+    }
+    
+    // For each train at the station, board waiting citizens
+    for (const train of trainsAtStation) {
+      const key = `${train.lineId}-${train.direction}`;
+      const waitingForThisTrain = waitingByLineAndDirection.get(key) || [];
+      
+      const availableCapacity = train.capacity - train.passengerIds.length;
+      const citizensToBoard = waitingForThisTrain.slice(0, availableCapacity);
+      
+      for (const citizen of citizensToBoard) {
+        const updatedCitizen = { ...citizen };
+        updatedCitizen.state = 'riding-train';
+        updatedCitizen.currentTrainId = train.id;
+        updatedCitizen.currentPosition = { ...train.position };
+        
+        updatedCitizens.set(citizen.id, updatedCitizen);
+        train.passengerIds.push(citizen.id);
+      }
+    }
+  });
+
+  // 5. Remove completed citizens
+  const completedStates = ['at-destination', 'completed'];
+  for (const state of completedStates) {
+    const completedCitizens = citizensByState.get(state) || [];
+    for (const citizen of completedCitizens) {
+      updatedCitizens.delete(citizen.id);
+    }
+  }
 
   return updatedCitizens;
 }

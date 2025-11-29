@@ -44,6 +44,8 @@ export function TrackOverlay({ tracks, lines, gridWidth, gridHeight, cellSize = 
               stroke="#999"
               strokeWidth="3"
               strokeDasharray="5,5"
+              strokeLinecap='round'
+              strokeLinejoin='round'
             />
           );
         }
@@ -65,6 +67,8 @@ export function TrackOverlay({ tracks, lines, gridWidth, gridHeight, cellSize = 
               y2={y2 + offsetY}
               stroke={lineColorMap.get(lineId) || '#000'}
               strokeWidth="3"
+              strokeLinecap='round'
+              strokeLinejoin='round'
             />
           );
         });

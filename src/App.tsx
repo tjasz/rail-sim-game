@@ -282,7 +282,7 @@ const baseGameState: GameState = {
           position: { x: 0, y: 0 }, // Will be set by initializeDay
           passengerIds: [],
           capacity: 10,
-          speed: 10,
+          speed: 0.15,
           nextStationArrivalTime: 0,
         },
       ],
@@ -296,7 +296,7 @@ const baseGameState: GameState = {
           position: { x: 0, y: 0 }, // Will be set by initializeDay
           passengerIds: [],
           capacity: 10,
-          speed: 10,
+          speed: 0.15,
           nextStationArrivalTime: 0,
         },
       ],
@@ -310,7 +310,7 @@ const baseGameState: GameState = {
           position: { x: 0, y: 0 }, // Will be set by initializeDay
           passengerIds: [],
           capacity: 10,
-          speed: 10,
+          speed: 0.15,
           nextStationArrivalTime: 0,
         },
       ],

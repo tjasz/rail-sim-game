@@ -1,6 +1,6 @@
 // Utility functions for game simulation
 
-import type { GameState, Citizen, Train, Line, Station } from '../models';
+import type { GameState, Citizen, Train, Line, Station, Track, Position } from '../models';
 
 export const MINUTES_PER_DAY = 24 * 60; // 1440 minutes in a day
 export const SIMULATION_TICK_MS = 50; // Update every 50ms
@@ -54,12 +54,74 @@ export function moveToward(
 }
 
 /**
+ * Find a path of track waypoints between two stations
+ * Uses BFS to find connected tracks that form a path
+ */
+function findTrackPath(
+  fromStation: Station,
+  toStation: Station,
+  tracks: Map<string, Track>,
+  lineId: string
+): Position[] {
+  // Build adjacency map of positions connected by tracks on this line
+  const adjacency = new Map<string, Position[]>();
+  const posKey = (pos: Position) => `${pos.x},${pos.y}`;
+  
+  tracks.forEach(track => {
+    if (!track.lineIds.includes(lineId)) return;
+    
+    const fromKey = posKey(track.from);
+    const toKey = posKey(track.to);
+    
+    if (!adjacency.has(fromKey)) adjacency.set(fromKey, []);
+    if (!adjacency.has(toKey)) adjacency.set(toKey, []);
+    
+    adjacency.get(fromKey)!.push(track.to);
+    adjacency.get(toKey)!.push(track.from);
+  });
+  
+  // BFS to find path
+  const startKey = posKey(fromStation.position);
+  const endKey = posKey(toStation.position);
+  
+  if (startKey === endKey) return [fromStation.position];
+  
+  const queue: { pos: Position; path: Position[] }[] = [
+    { pos: fromStation.position, path: [fromStation.position] }
+  ];
+  const visited = new Set<string>([startKey]);
+  
+  while (queue.length > 0) {
+    const { pos, path } = queue.shift()!;
+    const neighbors = adjacency.get(posKey(pos)) || [];
+    
+    for (const neighbor of neighbors) {
+      const nKey = posKey(neighbor);
+      if (visited.has(nKey)) continue;
+      
+      visited.add(nKey);
+      const newPath = [...path, neighbor];
+      
+      if (nKey === endKey) {
+        return newPath;
+      }
+      
+      queue.push({ pos: neighbor, path: newPath });
+    }
+  }
+  
+  // No path found via tracks, return direct line
+  return [fromStation.position, toStation.position];
+}
+
+/**
  * Update train positions based on elapsed time
  */
 export function updateTrains(
   trains: Map<string, Train>,
   lines: Map<string, Line>,
   stations: Map<string, Station>,
+  tracks: Map<string, Track>,
   deltaMinutes: number,
   currentTime: number
 ): Map<string, Train> {
@@ -97,6 +159,8 @@ export function updateTrains(
       // Arrive at station - snap to station position
       updatedTrain.position = { ...nextStation.position };
       updatedTrain.currentStationIndex = nextStationIndex;
+      updatedTrain.currentPath = undefined;
+      updatedTrain.currentPathIndex = undefined;
 
       // Check if we need to reverse direction
       if (train.direction === 'forward' && nextStationIndex >= line.stationIds.length - 1) {
@@ -105,7 +169,7 @@ export function updateTrains(
         updatedTrain.direction = 'forward';
       }
 
-      // Calculate next arrival time
+      // Calculate next arrival time and path
       const followingIndex = updatedTrain.direction === 'forward'
         ? updatedTrain.currentStationIndex + 1
         : updatedTrain.currentStationIndex - 1;
@@ -113,24 +177,67 @@ export function updateTrains(
       if (followingIndex >= 0 && followingIndex < line.stationIds.length) {
         const followingStationId = line.stationIds[followingIndex];
         const followingStation = stations.get(followingStationId);
+        const currentStation = stations.get(line.stationIds[updatedTrain.currentStationIndex]);
 
-        if (followingStation) {
-          const distance = calculateDistance(updatedTrain.position, followingStation.position);
-          const travelTime = distance / train.speed;
+        if (followingStation && currentStation) {
+          // Find track path between stations
+          const path = findTrackPath(currentStation, followingStation, tracks, line.id);
+          updatedTrain.currentPath = path;
+          updatedTrain.currentPathIndex = 0;
+          
+          // Calculate total distance along path
+          let totalDistance = 0;
+          for (let i = 0; i < path.length - 1; i++) {
+            totalDistance += calculateDistance(path[i], path[i + 1]);
+          }
+          
+          const travelTime = totalDistance / train.speed;
           updatedTrain.nextStationArrivalTime = currentTime + travelTime + 1; // +1 for station stop
         }
       } else {
         updatedTrain.nextStationArrivalTime = undefined;
       }
     } else {
-      // Train is between stations - move toward next station
-      const movement = moveToward(
-        train.position,
-        nextStation.position,
-        train.speed,
-        deltaMinutes
-      );
-      updatedTrain.position = movement.position;
+      // Train is between stations - follow the path
+      if (!train.currentPath || train.currentPath.length === 0) {
+        // No path defined, initialize it
+        const currentStation = stations.get(line.stationIds[train.currentStationIndex]);
+        if (currentStation && nextStation) {
+          const path = findTrackPath(currentStation, nextStation, tracks, line.id);
+          updatedTrain.currentPath = path;
+          updatedTrain.currentPathIndex = 0;
+        }
+      }
+      
+      if (updatedTrain.currentPath && updatedTrain.currentPath.length > 1) {
+        const pathIndex = train.currentPathIndex ?? 0;
+        const currentTarget = updatedTrain.currentPath[pathIndex + 1];
+        
+        if (currentTarget) {
+          // Move toward current waypoint
+          const movement = moveToward(
+            train.position,
+            currentTarget,
+            train.speed,
+            deltaMinutes
+          );
+          updatedTrain.position = movement.position;
+          
+          // If reached this waypoint, move to next
+          if (movement.reached && pathIndex + 2 < updatedTrain.currentPath.length) {
+            updatedTrain.currentPathIndex = pathIndex + 1;
+          }
+        }
+      } else {
+        // Fallback to direct movement if no path
+        const movement = moveToward(
+          train.position,
+          nextStation.position,
+          train.speed,
+          deltaMinutes
+        );
+        updatedTrain.position = movement.position;
+      }
     }
 
     updatedTrains.set(trainId, updatedTrain);
@@ -480,6 +587,7 @@ export function tickSimulation(
     gameState.railNetwork.trains,
     gameState.railNetwork.lines,
     gameState.railNetwork.stations,
+    gameState.railNetwork.tracks,
     deltaMinutes,
     newTime
   );

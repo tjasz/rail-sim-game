@@ -1,3 +1,5 @@
+import type { Position } from './types';
+
 export type TrainDirection = 'forward' | 'backward';
 
 export interface Train {
@@ -10,4 +12,6 @@ export interface Train {
   capacity: number; // maximum passengers
   speed: number; // grid squares per minute
   nextStationArrivalTime?: number; // simulation time in minutes
+  currentPath?: Position[]; // waypoints to follow to reach next station
+  currentPathIndex?: number; // current position in the path
 }

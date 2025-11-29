@@ -200,9 +200,9 @@ export function updateCitizens(
       // Start following the route
       const firstSegment = citizen.route.segments[0];
       if (firstSegment.type === 'walk') {
-        updatedCitizen.state = 'walking-to-station';
+        updatedCitizen.state = citizen.route.segments.every(segment => segment.type === 'walk') ? 'walking-to-destination' : 'walking-to-station';
       } else if (firstSegment.type === 'ride') {
-        // Route starts with a train ride, go to that station
+        // Route starts with a train ride, wait at that station
         updatedCitizen.state = 'waiting-at-station';
         updatedCitizen.currentStationId = firstSegment.fromStationId;
       }

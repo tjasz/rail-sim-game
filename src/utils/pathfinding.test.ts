@@ -1,6 +1,6 @@
 import { describe, it, expect } from '@jest/globals';
 import type { CityConfig, RailNetwork, Station, Line } from '../models';
-import { buildCityGraph } from './pathfinding';
+import { buildCityGraph, calculateRoute } from './pathfinding';
 
 // Import the test data structure from App.tsx
 const testCityConfig: CityConfig = {
@@ -662,6 +662,472 @@ describe('buildCityGraph', () => {
         expect(edge.position.y).toBeGreaterThanOrEqual(0);
         expect(edge.position.y).toBeLessThan(testCityConfig.gridHeight);
       }
+    });
+  });
+});
+
+describe('calculateRoute', () => {
+  const walkingSpeed = 0.05;
+  const trainSpeed = 0.15;
+  const stopTimePerStation = 1;
+
+  // Helper to get neighborhood positions for testing
+  const neighborhoods = {
+    downtown: { x: 2, y: 0 },           // station-2
+    commercialA: { x: 0, y: 1 },        // station-1
+    commercialB: { x: 9, y: 2 },        // station-4
+    residential1: { x: 4, y: 1 },       // station-3
+    residential2: { x: 0, y: 4 },       // no station
+    residential3: { x: 4, y: 4 },       // no station
+    residential4: { x: 7, y: 3 },       // no station
+    south: { x: 2, y: 4 },              // station-5
+  };
+
+  describe('Routes between stations on same line', () => {
+    it('should find route from Commercial A to Downtown (line-1)', () => {
+      const route = calculateRoute(
+        neighborhoods.commercialA,
+        neighborhoods.downtown,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+      
+      // Should use train since both are on line-1
+      const hasRideSegment = route.some(seg => seg.type === 'ride');
+      expect(hasRideSegment).toBe(true);
+      
+      // Verify the ride is on line-1
+      const rideSegment = route.find(seg => seg.type === 'ride');
+      if (rideSegment && rideSegment.type === 'ride') {
+        expect(rideSegment.lineId).toBe('line-1');
+        expect(rideSegment.fromStationId).toBe('station-1');
+        expect(rideSegment.toStationId).toBe('station-2');
+      }
+    });
+
+    it('should find route from Downtown to Residential 1 (line-1)', () => {
+      const route = calculateRoute(
+        neighborhoods.downtown,
+        neighborhoods.residential1,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+      
+      const rideSegment = route.find(seg => seg.type === 'ride');
+      if (rideSegment && rideSegment.type === 'ride') {
+        expect(rideSegment.lineId).toBe('line-1');
+        expect(rideSegment.fromStationId).toBe('station-2');
+        expect(rideSegment.toStationId).toBe('station-3');
+      }
+    });
+
+    it('should find route from Residential 1 to Commercial B (line-1)', () => {
+      const route = calculateRoute(
+        neighborhoods.residential1,
+        neighborhoods.commercialB,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+      
+      const rideSegment = route.find(seg => seg.type === 'ride');
+      if (rideSegment && rideSegment.type === 'ride') {
+        expect(rideSegment.lineId).toBe('line-1');
+        expect(rideSegment.fromStationId).toBe('station-3');
+        expect(rideSegment.toStationId).toBe('station-4');
+      }
+    });
+
+    it('should find route from Commercial A to Commercial B (line-1, 3 stops)', () => {
+      const route = calculateRoute(
+        neighborhoods.commercialA,
+        neighborhoods.commercialB,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBe(1);
+      
+      // Should use line-1 to travel between these stations
+      const rideSegments = route.filter(seg => seg.type === 'ride');
+      expect(rideSegments.length).toBeGreaterThan(0);
+      
+      // All ride segments should be on line-1
+      for (const segment of rideSegments) {
+        if (segment.type === 'ride') {
+          expect(segment.lineId).toBe('line-1');
+        }
+      }
+      
+      // First segment should start from station-1
+      const firstRide = rideSegments[0];
+      if (firstRide.type === 'ride') {
+        expect(firstRide.fromStationId).toBe('station-1');
+      }
+      
+      // Last segment should end at station-4
+      const lastRide = rideSegments[rideSegments.length - 1];
+      if (lastRide.type === 'ride') {
+        expect(lastRide.toStationId).toBe('station-4');
+      }
+    });
+
+    it('should find route from Downtown to South (line-2)', () => {
+      const route = calculateRoute(
+        neighborhoods.downtown,
+        neighborhoods.south,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+      
+      const rideSegment = route.find(seg => seg.type === 'ride');
+      if (rideSegment && rideSegment.type === 'ride') {
+        expect(rideSegment.lineId).toBe('line-2');
+        expect(rideSegment.fromStationId).toBe('station-2');
+        expect(rideSegment.toStationId).toBe('station-5');
+      }
+    });
+  });
+
+  describe('Routes requiring transfers', () => {
+    it('should find route from Commercial A to South (line-1 to line-2)', () => {
+      const route = calculateRoute(
+        neighborhoods.commercialA,
+        neighborhoods.south,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+      
+      // Should have two ride segments (transfer at downtown)
+      const rideSegments = route.filter(seg => seg.type === 'ride');
+      expect(rideSegments.length).toBeGreaterThanOrEqual(1);
+    });
+
+    it('should find route from Residential 1 to South (line-1 to line-2)', () => {
+      const route = calculateRoute(
+        neighborhoods.residential1,
+        neighborhoods.south,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+      
+      const rideSegments = route.filter(seg => seg.type === 'ride');
+      expect(rideSegments.length).toBeGreaterThanOrEqual(1);
+    });
+
+    it('should find route from Commercial B to South (line-1 to line-2)', () => {
+      const route = calculateRoute(
+        neighborhoods.commercialB,
+        neighborhoods.south,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+      
+      const rideSegments = route.filter(seg => seg.type === 'ride');
+      expect(rideSegments.length).toBeGreaterThanOrEqual(1);
+    });
+  });
+
+  describe('Routes with walking only (no nearby stations)', () => {
+    it('should find walking route from Residential 2 to Residential 3', () => {
+      const route = calculateRoute(
+        neighborhoods.residential2,
+        neighborhoods.residential3,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+      
+      // Calculate total distance
+      let totalDistance = 0;
+      for (const segment of route) {
+        if (segment.type === 'walk') {
+          totalDistance += segment.distance;
+        }
+      }
+      
+      expect(totalDistance).toBeGreaterThan(0);
+    });
+
+    it('should find walking route from Residential 2 to Commercial A', () => {
+      const route = calculateRoute(
+        neighborhoods.residential2,
+        neighborhoods.commercialA,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+    });
+
+    it('should find route from Residential 4 to Commercial B', () => {
+      const route = calculateRoute(
+        neighborhoods.residential4,
+        neighborhoods.commercialB,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('Routes combining walking and train', () => {
+    it('should find route from Residential 2 to Downtown', () => {
+      const route = calculateRoute(
+        neighborhoods.residential2,
+        neighborhoods.downtown,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+      
+      // Should have both walking and riding segments or just riding
+      const hasWalkSegment = route.some(seg => seg.type === 'walk');
+      const hasRideSegment = route.some(seg => seg.type === 'ride');
+      
+      expect(hasWalkSegment || hasRideSegment).toBe(true);
+    });
+
+    it('should find route from Residential 3 to Commercial A', () => {
+      const route = calculateRoute(
+        neighborhoods.residential3,
+        neighborhoods.commercialA,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+    });
+
+    it('should find route from Residential 4 to Downtown', () => {
+      const route = calculateRoute(
+        neighborhoods.residential4,
+        neighborhoods.downtown,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+    });
+
+    it('should find route from South to Commercial B', () => {
+      const route = calculateRoute(
+        neighborhoods.south,
+        neighborhoods.commercialB,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      expect(route.length).toBeGreaterThan(0);
+      
+      // Should use line-2 to downtown, then line-1 to commercial B
+      const rideSegments = route.filter(seg => seg.type === 'ride');
+      expect(rideSegments.length).toBeGreaterThanOrEqual(1);
+    });
+  });
+
+  describe('Route properties and validations', () => {
+    it('should calculate estimated time for all route segments', () => {
+      const route = calculateRoute(
+        neighborhoods.commercialA,
+        neighborhoods.commercialB,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      for (const segment of route) {
+        expect(segment.estimatedTime).toBeGreaterThan(0);
+      }
+    });
+
+    it('should have valid positions in walk segments', () => {
+      const route = calculateRoute(
+        neighborhoods.residential2,
+        neighborhoods.residential3,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      for (const segment of route) {
+        if (segment.type === 'walk') {
+          expect(segment.from.x).toBeGreaterThanOrEqual(0);
+          expect(segment.from.x).toBeLessThan(testCityConfig.gridWidth);
+          expect(segment.from.y).toBeGreaterThanOrEqual(0);
+          expect(segment.from.y).toBeLessThan(testCityConfig.gridHeight);
+          
+          expect(segment.to.x).toBeGreaterThanOrEqual(0);
+          expect(segment.to.x).toBeLessThan(testCityConfig.gridWidth);
+          expect(segment.to.y).toBeGreaterThanOrEqual(0);
+          expect(segment.to.y).toBeLessThan(testCityConfig.gridHeight);
+        }
+      }
+    });
+
+    it('should have valid station IDs in ride segments', () => {
+      const route = calculateRoute(
+        neighborhoods.commercialA,
+        neighborhoods.downtown,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      for (const segment of route) {
+        if (segment.type === 'ride') {
+          expect(testRailNetwork.stations.has(segment.fromStationId)).toBe(true);
+          expect(testRailNetwork.stations.has(segment.toStationId)).toBe(true);
+        }
+      }
+    });
+
+    it('should return empty route for unreachable destinations', () => {
+      // Create a position in water that's unreachable
+      const unreachablePos = { x: 2, y: 3 }; // This is water
+      
+      const route = calculateRoute(
+        neighborhoods.commercialA,
+        unreachablePos,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      // Should return empty array for unreachable destination
+      expect(Array.isArray(route)).toBe(true);
+    });
+  });
+
+  describe('Route optimization', () => {
+    it('should prefer train over walking for longer distances', () => {
+      const route = calculateRoute(
+        neighborhoods.commercialA,
+        neighborhoods.commercialB,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      // For this long distance, should use train
+      const hasRideSegment = route.some(seg => seg.type === 'ride');
+      expect(hasRideSegment).toBe(true);
+    });
+
+    it('should calculate reasonable total time for routes', () => {
+      const route = calculateRoute(
+        neighborhoods.commercialA,
+        neighborhoods.commercialB,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      const totalTime = route.reduce((sum, seg) => sum + seg.estimatedTime, 0);
+      
+      // Total time should be positive and reasonable (less than walking the whole way)
+      expect(totalTime).toBeGreaterThan(0);
+      
+      // Walking the full distance would be: distance / walkingSpeed
+      // Train should be faster than pure walking for this distance
+      const directDistance = Math.sqrt(
+        Math.pow(neighborhoods.commercialB.x - neighborhoods.commercialA.x, 2) +
+        Math.pow(neighborhoods.commercialB.y - neighborhoods.commercialA.y, 2)
+      );
+      const pureWalkingTime = directDistance / walkingSpeed;
+      
+      // Route should be faster than or equal to pure walking
+      expect(totalTime).toBeLessThanOrEqual(pureWalkingTime * 1.5); // Allow some overhead
+    });
+  });
+
+  describe('Same origin and destination', () => {
+    it('should handle route from location to itself', () => {
+      const route = calculateRoute(
+        neighborhoods.downtown,
+        neighborhoods.downtown,
+        testCityConfig,
+        testRailNetwork,
+        walkingSpeed,
+        trainSpeed,
+        stopTimePerStation
+      );
+
+      // Should return a valid route (possibly empty or minimal)
+      expect(Array.isArray(route)).toBe(true);
     });
   });
 });

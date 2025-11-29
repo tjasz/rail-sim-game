@@ -352,9 +352,7 @@ export function calculateRoute(
   }
   
   // Convert to route segments
-  const result = pathToRouteSegments(path, railNetwork, walkingSpeed, trainSpeed);
-  console.log({graph, path, result})
-  return result;
+  return pathToRouteSegments(path, railNetwork, walkingSpeed, trainSpeed);
 }
 
 /**

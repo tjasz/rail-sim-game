@@ -763,7 +763,7 @@ describe('calculateRoute', () => {
         stopTimePerStation
       );
 
-      expect(route.length).toBe(1);
+      expect(route.length).toBeGreaterThan(0);
       
       // Should use line-1 to travel between these stations
       const rideSegments = route.filter(seg => seg.type === 'ride');

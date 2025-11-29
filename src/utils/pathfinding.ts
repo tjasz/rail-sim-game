@@ -9,6 +9,7 @@ interface PathNode {
   previous?: PathNode;
   stationId?: string; // if this node is at a station
   viaStation?: string;
+  segmentCount?: number; // number of segments to reach this node
 }
 
 /**
@@ -178,6 +179,7 @@ export function buildCityGraph(
 
 /**
  * Find the shortest path between two positions using Dijkstra's algorithm
+ * Prefers paths with fewer segments when travel times are similar
  */
 function findShortestPath(
   from: Position,
@@ -188,15 +190,22 @@ function findShortestPath(
   const startKey = posKey(from);
   const endKey = posKey(to);
   
+  // Small penalty per segment to prefer fewer transfers/segments (0.01 time units)
+  const SEGMENT_PENALTY = 0.01;
+  
   // Priority queue (simple array-based implementation)
-  const openSet: PathNode[] = [{ position: from, cost: 0 }];
+  const openSet: PathNode[] = [{ position: from, cost: 0, segmentCount: 0 }];
   const closedSet = new Set<string>();
   const costSoFar = new Map<string, number>();
   costSoFar.set(startKey, 0);
   
   while (openSet.length > 0) {
-    // Get node with lowest cost
-    openSet.sort((a, b) => a.cost - b.cost);
+    // Get node with lowest cost (including segment penalty)
+    openSet.sort((a, b) => {
+      const aCost = a.cost + (a.segmentCount || 0) * SEGMENT_PENALTY;
+      const bCost = b.cost + (b.segmentCount || 0) * SEGMENT_PENALTY;
+      return aCost - bCost;
+    });
     const current = openSet.shift()!;
     const currentKey = posKey(current.position);
     
@@ -221,6 +230,7 @@ function findShortestPath(
       if (closedSet.has(neighborKey)) continue;
       
       const newCost = current.cost + edge.cost;
+      const newSegmentCount = (current.segmentCount || 0) + 1;
       const existingCost = costSoFar.get(neighborKey);
       
       if (existingCost === undefined || newCost < existingCost) {
@@ -231,6 +241,7 @@ function findShortestPath(
           previous: current,
           stationId: edge.stationId,
           viaStation: edge.viaStation,
+          segmentCount: newSegmentCount,
         };
         
         // Remove old entry if exists

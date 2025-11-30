@@ -29,7 +29,7 @@ const baseGameState: GameState = {
           id: 'downtown',
           name: 'Downtown',
           position: { x: 2, y: 0 },
-          icon: 'building',
+          icon: 'temaki-briefcase',
           color: '#e74c3c',
           originDemandPercent: 0,
           destinationDemandPercent: 40,

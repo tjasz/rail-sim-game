@@ -1,3 +1,4 @@
+import { iconPaths } from '../iconPaths';
 import type { CityConfig, Neighborhood, Station, Citizen } from '../models';
 
 interface CityGridProps {
@@ -60,15 +61,12 @@ export function CityGrid({
                 
                 {/* Neighborhood */}
                 {neighborhood && (
-                  <rect
-                    x={x * cellSize + 5}
-                    y={y * cellSize + 5}
-                    width={cellSize - 10}
-                    height={cellSize - 10}
+                  <path
+                    transform={`translate(${x * cellSize}, ${y * cellSize}) scale(${cellSize / 15})`}
                     fill={neighborhood.color}
-                    opacity="0.8"
-                    rx="3"
-                  />
+                    opacity="0.4"
+                    d={iconPaths[neighborhood.icon]}
+                    />
                 )}
                 
                 {/* Station indicator */}
@@ -116,7 +114,7 @@ export function CityGrid({
                 {neighborhood && (
                   <text
                     x={x * cellSize + cellSize / 2}
-                    y={y * cellSize + cellSize / 2 + 5}
+                    y={(y+1) * cellSize - 5}
                     textAnchor="middle"
                     fontSize="10"
                     fill="#000"

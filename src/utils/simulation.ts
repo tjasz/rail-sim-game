@@ -349,8 +349,8 @@ export function updateCitizens(
     const updatedCitizen = { ...citizen };
     
     if (!citizen.route || citizen.route.segments.length === 0) {
-      // No route available - citizen is unhappy and gives up
-      updatedCitizen.isHappy = false;
+      // No route available - citizen is unhappy and gives up if its destination and origin differ
+      updatedCitizen.isHappy = updatedCitizen.originNeighborhoodId === updatedCitizen.destinationNeighborhoodId;
       updatedCitizen.state = 'completed';
       updatedCitizens.set(citizen.id, updatedCitizen);
       continue;

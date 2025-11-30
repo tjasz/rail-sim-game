@@ -322,7 +322,7 @@ export function initializeDay(
   population: number,
   day: number,
   railNetwork: RailNetwork,
-  startTime: number = 480 // 8:00 AM default
+  startTime: number = 0 // Midnight default
 ): {
   tripMatrix: TripMatrix;
   citizens: Map<string, Citizen>;

@@ -658,9 +658,14 @@ export function tickSimulation(
 ): GameState {
   const newTime = gameState.simulationTime + deltaMinutes;
 
-  // Check if day is over
+  // Check if day is over - stop simulation but don't rollover yet
+  // The UI will show the day result modal and handle the rollover
   if (newTime >= MINUTES_PER_DAY) {
-    return rolloverToNextDay(gameState);
+    return {
+      ...gameState,
+      simulationTime: MINUTES_PER_DAY - 1, // Cap at end of day
+      isSimulating: false, // Stop simulation
+    };
   }
 
   // Update trains

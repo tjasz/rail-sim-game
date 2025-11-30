@@ -104,7 +104,7 @@ const baseGameState: GameState = {
       trainCapacity: 50,
     },
     currentMonth: 1,
-    currentDay: 3,
+    currentDay: 1,
     population: 100,
     budget: 8500,
   },
@@ -319,7 +319,7 @@ const baseGameState: GameState = {
   currentTripMatrix: undefined,
   citizens: new Map(), // Will be populated by initializeDay
   isSimulating: false,
-  simulationTime: 480, // 8:00 AM
+  simulationTime: 0,
   simulationSpeed: 1,
   stats: {
     totalDaysPlayed: 0,
@@ -344,7 +344,6 @@ function App() {
     baseGameState.city.population,
     baseGameState.city.currentDay,
     baseGameState.railNetwork,
-    480 // 8:00 AM
   );
   
   const gameState = {

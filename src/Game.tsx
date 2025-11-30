@@ -127,7 +127,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         newPopulation,
         adjustedDay,
         prevState.railNetwork,
-        480 // Start at 8:00 AM
       );
       
       return {
@@ -140,7 +139,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           budget: prevState.city.budget + budgetEarned + monthlyBonus,
         },
         stats: updatedStats,
-        simulationTime: 480, // 8:00 AM
+        simulationTime: 0, // Midnight
         isSimulating: false,
         citizens,
         currentTripMatrix: tripMatrix,

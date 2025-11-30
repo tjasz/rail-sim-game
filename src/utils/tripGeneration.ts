@@ -115,12 +115,22 @@ export function createCitizensFromTripMatrix(
       
       const totalEstimatedTime = segments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
       
-      // Calculate walking-only time for comparison
-      const walkingDistance = calculateDistance(
+      // Calculate walking-only time for comparison using pathfinding
+      const emptyNetwork: RailNetwork = {
+        stations: new Map(),
+        lines: new Map(),
+        tracks: new Map(),
+        trains: new Map(),
+      };
+      const walkingSegments = calculateRoute(
         originNeighborhood.position,
-        destNeighborhood.position
+        destNeighborhood.position,
+        config,
+        emptyNetwork,
+        config.walkingSpeed,
+        config.trainSpeed
       );
-      const walkingOnlyTime = walkingDistance / config.walkingSpeed;
+      const walkingOnlyTime = walkingSegments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
       
       // Create 'count' citizens for this O-D pair
       for (let i = 0; i < count; i++) {

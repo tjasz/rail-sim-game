@@ -562,15 +562,6 @@ export function updateCitizens(
     }
   });
 
-  // 5. Remove completed citizens
-  const completedStates = ['at-destination', 'completed'];
-  for (const state of completedStates) {
-    const completedCitizens = citizensByState.get(state) || [];
-    for (const citizen of completedCitizens) {
-      updatedCitizens.delete(citizen.id);
-    }
-  }
-
   return updatedCitizens;
 }
 

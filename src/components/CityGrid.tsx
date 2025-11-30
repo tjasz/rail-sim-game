@@ -137,6 +137,8 @@ export function CityGrid({
           else if (citizen.state === 'waiting-at-station') fill = '#f39c12';
           else if (citizen.state === 'riding-train') fill = '#9b59b6';
           else if (citizen.state === 'walking-to-destination') fill = '#2ecc71';
+          else if (citizen.state === 'at-destination') fill = 'none';
+          else if (citizen.state === 'completed') fill = 'none';
           else if (!citizen.isHappy) fill = '#e74c3c';
           
           return (

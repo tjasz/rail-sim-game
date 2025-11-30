@@ -111,6 +111,12 @@ function generateDailySchedule(
   const [shiftStart, shiftEnd] = shift;
   const crossesMidnight = shiftCrossesMidnight(shift);
   
+  // Helper function to add random offset of -30 to 30 minutes (in hours)
+  const addRandomOffset = (time: number): number => {
+    const offsetMinutes = Math.floor(Math.random() * 61) - 30; // -30 to 30 minutes
+    return time + (offsetMinutes / 60); // Convert minutes to hours
+  };
+  
   if (!crossesMidnight) {
     // Regular shift: start at home, go to work, optionally recreation, end at home
     
@@ -118,7 +124,7 @@ function generateDailySchedule(
     schedule.push({
       originNeighborhoodId: homeNeighborhoodId,
       destinationNeighborhoodId: workNeighborhoodId,
-      departureTime: shiftStart,
+      departureTime: addRandomOffset(shiftStart),
       purpose: 'to-work'
     });
     
@@ -132,7 +138,7 @@ function generateDailySchedule(
       schedule.push({
         originNeighborhoodId: workNeighborhoodId,
         destinationNeighborhoodId: recreationNeighborhood.id,
-        departureTime: shiftEnd,
+        departureTime: addRandomOffset(shiftEnd),
         purpose: 'recreation'
       });
       
@@ -141,7 +147,7 @@ function generateDailySchedule(
       schedule.push({
         originNeighborhoodId: recreationNeighborhood.id,
         destinationNeighborhoodId: homeNeighborhoodId,
-        departureTime: shiftEnd + recreationDuration,
+        departureTime: addRandomOffset(shiftEnd + recreationDuration),
         purpose: 'to-home'
       });
     } else {
@@ -149,7 +155,7 @@ function generateDailySchedule(
       schedule.push({
         originNeighborhoodId: workNeighborhoodId,
         destinationNeighborhoodId: homeNeighborhoodId,
-        departureTime: shiftEnd,
+        departureTime: addRandomOffset(shiftEnd),
         purpose: 'to-home'
       });
     }
@@ -166,7 +172,7 @@ function generateDailySchedule(
       schedule.push({
         originNeighborhoodId: workNeighborhoodId,
         destinationNeighborhoodId: recreationNeighborhood.id,
-        departureTime: shiftEnd,
+        departureTime: addRandomOffset(shiftEnd),
         purpose: 'recreation'
       });
       
@@ -175,7 +181,7 @@ function generateDailySchedule(
       schedule.push({
         originNeighborhoodId: recreationNeighborhood.id,
         destinationNeighborhoodId: homeNeighborhoodId,
-        departureTime: shiftEnd + recreationDuration,
+        departureTime: addRandomOffset(shiftEnd + recreationDuration),
         purpose: 'to-home'
       });
       
@@ -189,7 +195,7 @@ function generateDailySchedule(
       schedule.push({
         originNeighborhoodId: homeNeighborhoodId,
         destinationNeighborhoodId: workNeighborhoodId,
-        departureTime: leaveHomeTime,
+        departureTime: addRandomOffset(leaveHomeTime),
         purpose: 'to-work'
       });
     } else {
@@ -197,7 +203,7 @@ function generateDailySchedule(
       schedule.push({
         originNeighborhoodId: workNeighborhoodId,
         destinationNeighborhoodId: homeNeighborhoodId,
-        departureTime: shiftEnd,
+        departureTime: addRandomOffset(shiftEnd),
         purpose: 'to-home'
       });
       
@@ -208,7 +214,7 @@ function generateDailySchedule(
       schedule.push({
         originNeighborhoodId: homeNeighborhoodId,
         destinationNeighborhoodId: workNeighborhoodId,
-        departureTime: leaveHomeTime,
+        departureTime: addRandomOffset(leaveHomeTime),
         purpose: 'to-work'
       });
     }

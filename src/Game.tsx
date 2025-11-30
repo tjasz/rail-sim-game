@@ -18,7 +18,8 @@ import {
   calculateDayResult, 
   formatTime, 
   MINUTES_PER_DAY,
-  initializeDay 
+  initializeDay,
+  calculatePopulation
 } from './utils';
 import './Game.css';
 
@@ -113,9 +114,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       };
       
       const daysInMonth = 30;
-      const dailyGrowthRate = prevState.city.config.populationGrowthRate / daysInMonth;
-      const newPopulation = Math.floor(prevState.city.config.initialPopulation * Math.pow(1 + dailyGrowthRate, prevState.city.currentDay));
-      
       const newDay = prevState.city.currentDay + 1;
       const newMonth = newDay > daysInMonth ? prevState.city.currentMonth + 1 : prevState.city.currentMonth;
       const adjustedDay = newDay > daysInMonth ? 1 : newDay;
@@ -124,9 +122,14 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       // Initialize new day with citizens and trips
       const { tripMatrix, citizens, updatedNetwork } = initializeDay(
         prevState.city.config,
-        newPopulation,
         adjustedDay,
         prevState.railNetwork,
+      );
+      
+      // Calculate population from active neighborhoods
+      const newPopulation = calculatePopulation(
+        prevState.city.config.neighborhoods,
+        adjustedDay
       );
       
       return {

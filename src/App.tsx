@@ -31,8 +31,11 @@ const baseGameState: GameState = {
           position: { x: 2, y: 0 },
           icon: 'temaki-briefcase',
           color: '#e74c3c',
-          originDemandPercent: 0,
-          destinationDemandPercent: 40,
+          residents: 5,
+          proportionOfJobs: 0.60, // 60% of city jobs
+          availableShifts: [[8, 17], [9, 18]], // Retail hours
+          proportionOfRecreationalDemand: 0.2, // 20% of recreational trips
+          activationOrder: 1, // Active from day 0
         },
         {
           id: 'commercial-a',
@@ -40,8 +43,11 @@ const baseGameState: GameState = {
           position: { x: 0, y: 1 },
           icon: 'shop',
           color: '#3498db',
-          originDemandPercent: 0,
-          destinationDemandPercent: 20,
+          residents: 10,
+          proportionOfJobs: 0.15, // 15% of city jobs
+          availableShifts: [[9, 21], [10, 22]], // Retail hours
+          proportionOfRecreationalDemand: 0.4, // 40% of recreational trips
+          activationOrder: 2, // Active from day 0
         },
         {
           id: 'commercial-b',
@@ -49,8 +55,11 @@ const baseGameState: GameState = {
           position: { x: 9, y: 2 },
           icon: 'shop',
           color: '#3498db',
-          originDemandPercent: 0,
-          destinationDemandPercent: 20,
+          residents: 8,
+          proportionOfJobs: 0.15, // 15% of city jobs
+          availableShifts: [[9, 21], [10, 22]], // Retail hours
+          proportionOfRecreationalDemand: 0.3, // 30% of recreational trips
+          activationOrder: 4, // Active from day 1
         },
         {
           id: 'residential-1',
@@ -58,8 +67,11 @@ const baseGameState: GameState = {
           position: { x: 4, y: 1 },
           icon: 'home',
           color: '#2ecc71',
-          originDemandPercent: 40,
-          destinationDemandPercent: 5,
+          residents: 30,
+          proportionOfJobs: 0.05, // 5% of city jobs (small businesses)
+          availableShifts: [[8, 17]], // Standard hours
+          proportionOfRecreationalDemand: 0.0, // No recreational demand
+          activationOrder: 3, // Active from day 0
         },
         {
           id: 'residential-2',
@@ -67,8 +79,11 @@ const baseGameState: GameState = {
           position: { x: 0, y: 4 },
           icon: 'home',
           color: '#f39c12',
-          originDemandPercent: 30,
-          destinationDemandPercent: 5,
+          residents: 25,
+          proportionOfJobs: 0.05, // 5% of city jobs
+          availableShifts: [[8, 17]],
+          proportionOfRecreationalDemand: 0.0,
+          activationOrder: 5, // Active from day 2
         },
         {
           id: 'residential-3',
@@ -76,8 +91,11 @@ const baseGameState: GameState = {
           position: { x: 4, y: 4 },
           icon: 'home',
           color: '#9b59b6',
-          originDemandPercent: 20,
-          destinationDemandPercent: 5,
+          residents: 20,
+          proportionOfJobs: 0.05, // 5% of city jobs
+          availableShifts: [[8, 17]],
+          proportionOfRecreationalDemand: 0.0,
+          activationOrder: 6, // Active from day 3
         },
         {
           id: 'residential-4',
@@ -85,10 +103,14 @@ const baseGameState: GameState = {
           position: { x: 7, y: 3 },
           icon: 'home',
           color: '#9b59b6',
-          originDemandPercent: 10,
-          destinationDemandPercent: 5,
+          residents: 22,
+          proportionOfJobs: 0.05, // 5% of city jobs
+          availableShifts: [[8, 17]],
+          proportionOfRecreationalDemand: 0.0,
+          activationOrder: 7, // Active from day 4
         },
       ],
+      
       initialPopulation: 100,
       populationGrowthRate: 0.05,
       initialBudget: 10000,
@@ -104,8 +126,8 @@ const baseGameState: GameState = {
       trainCapacity: 50,
     },
     currentMonth: 1,
-    currentDay: 1,
-    population: 100,
+    currentDay: 0,
+    population: 45, // Initial: downtown (5) + commercial-a (10) + residential-1 (30) on day 0
     budget: 8500,
   },
   railNetwork: {
@@ -316,7 +338,7 @@ const baseGameState: GameState = {
       ],
     ]),
   },
-  currentTripMatrix: undefined,
+  currentTripMatrix: undefined, // Will be populated by initializeDay
   citizens: new Map(), // Will be populated by initializeDay
   isSimulating: false,
   simulationTime: 0,
@@ -341,7 +363,6 @@ function App() {
   // Initialize the first day with citizens and positioned trains
   const { tripMatrix, citizens, updatedNetwork } = initializeDay(
     baseGameState.city.config,
-    baseGameState.city.population,
     baseGameState.city.currentDay,
     baseGameState.railNetwork,
   );

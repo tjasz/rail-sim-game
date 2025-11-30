@@ -15,8 +15,8 @@ export function TripMatrixDisplay({ tripMatrix, neighborhoods }: TripMatrixDispl
     );
   }
   
-  // Get list of neighborhoods with origin demand
-  const origins = neighborhoods.filter(n => n.originDemandPercent > 0);
+  // Get list of neighborhoods that have trips originating from them
+  const origins = neighborhoods.filter(n => tripMatrix.trips.has(n.id));
   const destinations = neighborhoods;
 
   return (

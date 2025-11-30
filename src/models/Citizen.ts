@@ -1,4 +1,5 @@
 import type { Position } from './types';
+import type { Shift } from './Neighborhood';
 
 export type CitizenState = 
   | 'waiting-at-origin' 
@@ -10,8 +11,22 @@ export type CitizenState =
   | 'returning-home'
   | 'completed';
 
+export interface DailyTrip {
+  originNeighborhoodId: string;
+  destinationNeighborhoodId: string;
+  departureTime: number; // hour of day (0-23)
+  purpose: 'to-work' | 'from-work' | 'recreation' | 'to-home';
+}
+
 export interface Citizen {
   id: string;
+  homeNeighborhoodId: string;
+  workNeighborhoodId: string;
+  shift: Shift; // [startHour, endHour]
+  dailySchedule: DailyTrip[]; // planned trips for the day
+  
+  // Current trip state
+  currentTripIndex: number; // which trip in the schedule they're on
   originNeighborhoodId: string;
   destinationNeighborhoodId: string;
   state: CitizenState;

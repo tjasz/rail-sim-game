@@ -1,7 +1,7 @@
 // Export all models from a single entry point
 
 export type { Position, GridCell, TileType } from './types';
-export type { Neighborhood } from './Neighborhood';
+export type { Neighborhood, Shift } from './Neighborhood';
 export type { 
   Citizen, 
   CitizenState, 
@@ -9,7 +9,8 @@ export type {
   RouteSegment, 
   WalkSegment, 
   WaitSegment, 
-  RideSegment 
+  RideSegment,
+  DailyTrip
 } from './Citizen';
 export type { Station } from './Station';
 export type { Track } from './Track';

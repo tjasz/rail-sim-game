@@ -8,168 +8,406 @@ import type {
   Station,
   RailNetwork,
   Train,
-  Line
+  Line,
+  DailyTrip
 } from '../models';
+import type { Shift } from '../models/Neighborhood';
 import { calculateDistance } from './simulation';
 import { calculateRoute } from './pathfinding';
 
 /**
- * Generate the trip matrix for a day based on population and demand distributions
+ * Get active neighborhoods based on the current day
+ */
+export function getActiveNeighborhoods(
+  neighborhoods: Neighborhood[],
+  day: number
+): Neighborhood[] {
+  // Sort neighborhoods by activation order
+  const sorted = [...neighborhoods].sort((a, b) => a.activationOrder - b.activationOrder);
+  
+  // Start with 3 neighborhoods, add 1 each day
+  const numActive = Math.min(3 + day, sorted.length);
+  
+  return sorted.slice(0, numActive);
+}
+
+/**
+ * Calculate total population from active neighborhoods
+ */
+export function calculatePopulation(
+  neighborhoods: Neighborhood[],
+  day: number
+): number {
+  const activeNeighborhoods = getActiveNeighborhoods(neighborhoods, day);
+  return activeNeighborhoods.reduce((sum, n) => sum + n.residents, 0);
+}
+
+/**
+ * Assign a home neighborhood to a citizen based on resident counts
+ */
+function assignHomeNeighborhood(
+  activeNeighborhoods: Neighborhood[]
+): Neighborhood {
+  const totalResidents = activeNeighborhoods.reduce((sum, n) => sum + n.residents, 0);
+  const random = Math.random() * totalResidents;
+  
+  let cumulative = 0;
+  for (const neighborhood of activeNeighborhoods) {
+    cumulative += neighborhood.residents;
+    if (random <= cumulative) {
+      return neighborhood;
+    }
+  }
+  
+  return activeNeighborhoods[activeNeighborhoods.length - 1];
+}
+
+/**
+ * Assign a work neighborhood based on job proportions
+ */
+function assignWorkNeighborhood(
+  activeNeighborhoods: Neighborhood[]
+): Neighborhood {
+  const random = Math.random();
+  
+  let cumulative = 0;
+  for (const neighborhood of activeNeighborhoods) {
+    cumulative += neighborhood.proportionOfJobs;
+    if (random <= cumulative) {
+      return neighborhood;
+    }
+  }
+  
+  return activeNeighborhoods[activeNeighborhoods.length - 1];
+}
+
+/**
+ * Assign a shift from the available shifts at a work neighborhood
+ */
+function assignShift(workNeighborhood: Neighborhood): Shift {
+  const shifts = workNeighborhood.availableShifts;
+  const randomIndex = Math.floor(Math.random() * shifts.length);
+  return shifts[randomIndex];
+}
+
+/**
+ * Check if a shift crosses midnight
+ */
+function shiftCrossesMidnight(shift: Shift): boolean {
+  const [start, end] = shift;
+  return end <= start;
+}
+
+/**
+ * Generate a citizen's daily schedule based on their shift and neighborhoods
+ */
+function generateDailySchedule(
+  homeNeighborhoodId: string,
+  workNeighborhoodId: string,
+  shift: Shift,
+  activeNeighborhoods: Neighborhood[]
+): DailyTrip[] {
+  const schedule: DailyTrip[] = [];
+  const [shiftStart, shiftEnd] = shift;
+  const crossesMidnight = shiftCrossesMidnight(shift);
+  
+  if (!crossesMidnight) {
+    // Regular shift: start at home, go to work, optionally recreation, end at home
+    
+    // Trip to work
+    schedule.push({
+      originNeighborhoodId: homeNeighborhoodId,
+      destinationNeighborhoodId: workNeighborhoodId,
+      departureTime: shiftStart,
+      purpose: 'to-work'
+    });
+    
+    // Trip from work - 50% chance go straight home, 50% go to recreation
+    const goToRecreation = Math.random() < 0.5;
+    
+    if (goToRecreation) {
+      // Pick a recreational destination
+      const recreationNeighborhood = pickRecreationalDestination(activeNeighborhoods);
+      
+      schedule.push({
+        originNeighborhoodId: workNeighborhoodId,
+        destinationNeighborhoodId: recreationNeighborhood.id,
+        departureTime: shiftEnd,
+        purpose: 'recreation'
+      });
+      
+      // After 1-2 hours of recreation, go home
+      const recreationDuration = 1 + Math.floor(Math.random() * 2); // 1-2 hours
+      schedule.push({
+        originNeighborhoodId: recreationNeighborhood.id,
+        destinationNeighborhoodId: homeNeighborhoodId,
+        departureTime: shiftEnd + recreationDuration,
+        purpose: 'to-home'
+      });
+    } else {
+      // Go straight home
+      schedule.push({
+        originNeighborhoodId: workNeighborhoodId,
+        destinationNeighborhoodId: homeNeighborhoodId,
+        departureTime: shiftEnd,
+        purpose: 'to-home'
+      });
+    }
+  } else {
+    // Midnight-crossing shift: start at work, go home after shift, rest 8h, go back to work
+    
+    // Trip from work (they're already at work at day start)
+    const goToRecreation = Math.random() < 0.5;
+    
+    if (goToRecreation) {
+      // Pick a recreational destination
+      const recreationNeighborhood = pickRecreationalDestination(activeNeighborhoods);
+      
+      schedule.push({
+        originNeighborhoodId: workNeighborhoodId,
+        destinationNeighborhoodId: recreationNeighborhood.id,
+        departureTime: shiftEnd,
+        purpose: 'recreation'
+      });
+      
+      // After 1-2 hours of recreation, go home
+      const recreationDuration = 1 + Math.floor(Math.random() * 2);
+      schedule.push({
+        originNeighborhoodId: recreationNeighborhood.id,
+        destinationNeighborhoodId: homeNeighborhoodId,
+        departureTime: shiftEnd + recreationDuration,
+        purpose: 'to-home'
+      });
+      
+      // Leave home at least 8 hours before shift starts (accounting for 24h wrap)
+      const nextShiftStart = shiftStart + 24; // next day's shift
+      const leaveHomeTime = Math.max(
+        shiftEnd + recreationDuration + 8,
+        nextShiftStart
+      );
+      
+      schedule.push({
+        originNeighborhoodId: homeNeighborhoodId,
+        destinationNeighborhoodId: workNeighborhoodId,
+        departureTime: leaveHomeTime,
+        purpose: 'to-work'
+      });
+    } else {
+      // Go straight home
+      schedule.push({
+        originNeighborhoodId: workNeighborhoodId,
+        destinationNeighborhoodId: homeNeighborhoodId,
+        departureTime: shiftEnd,
+        purpose: 'to-home'
+      });
+      
+      // Leave home at least 8 hours later for next shift
+      const nextShiftStart = shiftStart + 24;
+      const leaveHomeTime = Math.max(shiftEnd + 8, nextShiftStart);
+      
+      schedule.push({
+        originNeighborhoodId: homeNeighborhoodId,
+        destinationNeighborhoodId: workNeighborhoodId,
+        departureTime: leaveHomeTime,
+        purpose: 'to-work'
+      });
+    }
+  }
+  
+  return schedule;
+}
+
+/**
+ * Pick a recreational destination based on proportions
+ */
+function pickRecreationalDestination(activeNeighborhoods: Neighborhood[]): Neighborhood {
+  const totalRecDemand = activeNeighborhoods.reduce(
+    (sum, n) => sum + n.proportionOfRecreationalDemand, 
+    0
+  );
+  
+  const random = Math.random() * totalRecDemand;
+  
+  let cumulative = 0;
+  for (const neighborhood of activeNeighborhoods) {
+    cumulative += neighborhood.proportionOfRecreationalDemand;
+    if (random <= cumulative) {
+      return neighborhood;
+    }
+  }
+  
+  return activeNeighborhoods[activeNeighborhoods.length - 1];
+}
+
+/**
+ * Generate the trip matrix for a day based on citizen schedules
  */
 export function generateTripMatrix(
-  neighborhoods: Neighborhood[],
-  population: number,
+  citizens: Map<string, Citizen>,
   day: number
 ): TripMatrix {
   const trips = new Map<string, Map<string, number>>();
   
-  // Initialize the matrix
-  neighborhoods.forEach(origin => {
-    trips.set(origin.id, new Map());
+  // Count all trips from all citizens' schedules
+  citizens.forEach(citizen => {
+    citizen.dailySchedule.forEach(trip => {
+      if (!trips.has(trip.originNeighborhoodId)) {
+        trips.set(trip.originNeighborhoodId, new Map());
+      }
+      
+      const originTrips = trips.get(trip.originNeighborhoodId)!;
+      const currentCount = originTrips.get(trip.destinationNeighborhoodId) || 0;
+      originTrips.set(trip.destinationNeighborhoodId, currentCount + 1);
+    });
   });
   
-  // For each person in the population, assign them a trip
-  for (let i = 0; i < population; i++) {
-    // Pick an origin based on origin demand percentages
-    const originRandom = Math.random() * 100;
-    let cumulativeOrigin = 0;
-    let selectedOrigin: Neighborhood | null = null;
-    
-    for (const neighborhood of neighborhoods) {
-      cumulativeOrigin += neighborhood.originDemandPercent;
-      if (originRandom <= cumulativeOrigin) {
-        selectedOrigin = neighborhood;
-        break;
-      }
-    }
-    
-    // If no origin selected (rounding errors), pick the last one
-    if (!selectedOrigin) {
-      selectedOrigin = neighborhoods[neighborhoods.length - 1];
-    }
-    
-    // Pick a destination based on destination demand percentages
-    const destRandom = Math.random() * 100;
-    let cumulativeDest = 0;
-    let selectedDest: Neighborhood | null = null;
-    
-    for (const neighborhood of neighborhoods) {
-      cumulativeDest += neighborhood.destinationDemandPercent;
-      if (destRandom <= cumulativeDest) {
-        selectedDest = neighborhood;
-        break;
-      }
-    }
-    
-    // If no destination selected, pick the last one
-    if (!selectedDest) {
-      selectedDest = neighborhoods[neighborhoods.length - 1];
-    }
-    
-    // Increment the trip count for this O-D pair
-    const originTrips = trips.get(selectedOrigin.id)!;
-    const currentCount = originTrips.get(selectedDest.id) || 0;
-    originTrips.set(selectedDest.id, currentCount + 1);
-  }
+  // Calculate total trips
+  let totalTrips = 0;
+  trips.forEach(destinations => {
+    destinations.forEach(count => {
+      totalTrips += count;
+    });
+  });
   
   return {
     date: day,
     trips,
-    totalTrips: population,
+    totalTrips,
   };
 }
 
 /**
- * Create citizens based on the trip matrix with routes
+ * Create citizens with work assignments and daily schedules
  */
-export function createCitizensFromTripMatrix(
-  tripMatrix: TripMatrix,
-  neighborhoods: Neighborhood[],
-  config: CityConfig,
-  railNetwork: RailNetwork,
-  startTime: number = 0
+export function createCitizensWithSchedules(
+  activeNeighborhoods: Neighborhood[]
 ): Map<string, Citizen> {
   const citizens = new Map<string, Citizen>();
-  const neighborhoodMap = new Map(neighborhoods.map(n => [n.id, n]));
   
-  let citizenCounter = 0;
+  // Calculate total population from active neighborhoods
+  const totalPopulation = activeNeighborhoods.reduce((sum, n) => sum + n.residents, 0);
   
-  // Iterate through the trip matrix
-  tripMatrix.trips.forEach((destinations, originId) => {
-    const originNeighborhood = neighborhoodMap.get(originId);
-    if (!originNeighborhood) return;
+  // Create a citizen for each resident
+  for (let i = 0; i < totalPopulation; i++) {
+    const citizenId = `citizen-${i}`;
     
-    destinations.forEach((count, destId) => {
-      const destNeighborhood = neighborhoodMap.get(destId);
-      if (!destNeighborhood) return;
-      
-      // Calculate route for this O-D pair (same for all citizens on this trip)
-      const segments = calculateRoute(
-        originNeighborhood.position,
-        destNeighborhood.position,
-        config,
-        railNetwork,
-        config.walkingSpeed,
-        config.trainSpeed
-      );
-      
-      const totalEstimatedTime = segments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
-      
-      // Calculate walking-only time for comparison using pathfinding
-      const emptyNetwork: RailNetwork = {
-        stations: new Map(),
-        lines: new Map(),
-        tracks: new Map(),
-        trains: new Map(),
-      };
-      const walkingSegments = calculateRoute(
-        originNeighborhood.position,
-        destNeighborhood.position,
-        config,
-        emptyNetwork,
-        config.walkingSpeed,
-        config.trainSpeed
-      );
-      const walkingOnlyTime = walkingSegments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
-      
-      // Create 'count' citizens for this O-D pair
-      for (let i = 0; i < count; i++) {
-        const citizenId = `citizen-${citizenCounter++}`;
-        
-        // Add some randomness to start times (0-60 minutes spread)
-        const randomStartDelay = Math.floor(Math.random() * 60);
-        
-        const citizen: Citizen = {
-          id: citizenId,
-          originNeighborhoodId: originId,
-          destinationNeighborhoodId: destId,
-          state: 'waiting-at-origin',
-          currentPosition: { ...originNeighborhood.position },
-          isHappy: true, // Assume happy until proven otherwise
-          tripStartTime: startTime + randomStartDelay,
-          route: {
-            segments,
-            totalEstimatedTime,
-            walkingOnlyTime,
-          },
-        };
-        
-        citizens.set(citizenId, citizen);
-      }
+    // Assign home, work, and shift
+    const homeNeighborhood = assignHomeNeighborhood(activeNeighborhoods);
+    const workNeighborhood = assignWorkNeighborhood(activeNeighborhoods);
+    const shift = assignShift(workNeighborhood);
+    
+    // Generate daily schedule
+    const dailySchedule = generateDailySchedule(
+      homeNeighborhood.id,
+      workNeighborhood.id,
+      shift,
+      activeNeighborhoods
+    );
+    
+    // Determine starting position and first trip
+    const crossesMidnight = shiftCrossesMidnight(shift);
+    const firstTrip = dailySchedule[0];
+    const startingNeighborhoodId = crossesMidnight ? workNeighborhood.id : homeNeighborhood.id;
+    const startingNeighborhood = activeNeighborhoods.find(n => n.id === startingNeighborhoodId)!;
+    
+    const citizen: Citizen = {
+      id: citizenId,
+      homeNeighborhoodId: homeNeighborhood.id,
+      workNeighborhoodId: workNeighborhood.id,
+      shift,
+      dailySchedule,
+      currentTripIndex: 0,
+      originNeighborhoodId: firstTrip.originNeighborhoodId,
+      destinationNeighborhoodId: firstTrip.destinationNeighborhoodId,
+      state: 'waiting-at-origin',
+      currentPosition: { ...startingNeighborhood.position },
+      isHappy: true,
+      tripStartTime: firstTrip.departureTime * 60, // Convert hours to minutes
+    };
+    
+    citizens.set(citizenId, citizen);
+  }
+  
+  return citizens;
+}
+
+/**
+ * Calculate routes for all citizens based on their current trip
+ */
+export function calculateCitizenRoutes(
+  citizens: Map<string, Citizen>,
+  neighborhoods: Neighborhood[],
+  config: CityConfig,
+  railNetwork: RailNetwork
+): Map<string, Citizen> {
+  const neighborhoodMap = new Map(neighborhoods.map(n => [n.id, n]));
+  const updatedCitizens = new Map<string, Citizen>();
+  
+  const emptyNetwork: RailNetwork = {
+    stations: new Map(),
+    lines: new Map(),
+    tracks: new Map(),
+    trains: new Map(),
+  };
+  
+  citizens.forEach(citizen => {
+    const originNeighborhood = neighborhoodMap.get(citizen.originNeighborhoodId);
+    const destNeighborhood = neighborhoodMap.get(citizen.destinationNeighborhoodId);
+    
+    if (!originNeighborhood || !destNeighborhood) {
+      updatedCitizens.set(citizen.id, citizen);
+      return;
+    }
+    
+    // Calculate route with rail network
+    const segments = calculateRoute(
+      originNeighborhood.position,
+      destNeighborhood.position,
+      config,
+      railNetwork,
+      config.walkingSpeed,
+      config.trainSpeed
+    );
+    
+    const totalEstimatedTime = segments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
+    
+    // Calculate walking-only time
+    const walkingSegments = calculateRoute(
+      originNeighborhood.position,
+      destNeighborhood.position,
+      config,
+      emptyNetwork,
+      config.walkingSpeed,
+      config.trainSpeed
+    );
+    const walkingOnlyTime = walkingSegments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
+    
+    updatedCitizens.set(citizen.id, {
+      ...citizen,
+      route: {
+        segments,
+        totalEstimatedTime,
+        walkingOnlyTime,
+      },
     });
   });
   
-  return citizens;
+  return updatedCitizens;
 }
 
 /**
  * Update station waiting citizens based on citizen positions and states
  */
 export function updateStationWaitingCitizens(
-  stations: Map<string, Station>,
+  stations: Map<string, Station> | undefined,
   citizens: Map<string, Citizen>,
   _neighborhoods: Neighborhood[]
 ): Map<string, Station> {
+  // Handle undefined stations
+  if (!stations) {
+    return new Map();
+  }
+  
   const updatedStations = new Map(stations);
   
   // Clear all waiting citizens
@@ -208,13 +446,18 @@ export function updateStationWaitingCitizens(
  * Initialize train positions and arrival times for the start of a day
  */
 export function initializeTrains(
-  trains: Map<string, Train>,
+  trains: Map<string, Train> | undefined,
   lines: Map<string, Line>,
   stations: Map<string, Station>,
   currentTime: number,
   trainSpeed: number
 ): Map<string, Train> {
   const updatedTrains = new Map<string, Train>();
+  
+  // Handle undefined trains
+  if (!trains) {
+    return updatedTrains;
+  }
   
   // Group trains by line
   const trainsByLine = new Map<string, Train[]>();
@@ -319,7 +562,6 @@ export function initializeTrains(
  */
 export function initializeDay(
   config: CityConfig,
-  population: number,
   day: number,
   railNetwork: RailNetwork,
   startTime: number = 0 // Midnight default
@@ -328,23 +570,28 @@ export function initializeDay(
   citizens: Map<string, Citizen>;
   updatedNetwork: RailNetwork;
 } {
-  // Generate trip matrix
-  const tripMatrix = generateTripMatrix(config.neighborhoods, population, day);
+  // Get active neighborhoods based on day
+  const activeNeighborhoods = getActiveNeighborhoods(config.neighborhoods, day);
   
-  // Create citizens from trip matrix with routes
-  const citizens = createCitizensFromTripMatrix(
-    tripMatrix,
-    config.neighborhoods,
+  // Create citizens with work assignments and daily schedules
+  const citizensWithoutRoutes = createCitizensWithSchedules(activeNeighborhoods);
+  
+  // Calculate routes for all citizens
+  const citizens = calculateCitizenRoutes(
+    citizensWithoutRoutes,
+    activeNeighborhoods,
     config,
-    railNetwork,
-    startTime
+    railNetwork
   );
+  
+  // Generate trip matrix from citizen schedules
+  const tripMatrix = generateTripMatrix(citizens, day);
   
   // Update stations with waiting citizens
   const updatedStations = updateStationWaitingCitizens(
     railNetwork.stations,
     citizens,
-    config.neighborhoods
+    activeNeighborhoods
   );
   
   // Initialize train positions and arrival times

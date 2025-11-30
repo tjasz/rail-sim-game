@@ -321,12 +321,14 @@ export function updateCitizens(
   citizens: Map<string, Citizen>,
   trains: Map<string, Train>,
   stations: Map<string, Station>,
+  neighborhoods: any[], // Array of neighborhoods from config
   deltaMinutes: number,
   walkingSpeed: number,
   currentTime: number
 ): Map<string, Citizen> {
   const updatedCitizens = new Map(citizens);
   const updatedTrains = new Map(trains);
+  const neighborhoodMap = new Map(neighborhoods.map((n: any) => [n.id, n]));
 
   // Group citizens by state
   const citizensByState = new Map<string, Citizen[]>();
@@ -562,6 +564,51 @@ export function updateCitizens(
     }
   });
 
+  // 5. Update citizens at destination - check if they need to start their next trip
+  const atDestination = citizensByState.get('at-destination') || [];
+  for (const citizen of atDestination) {
+    const updatedCitizen = { ...citizen };
+    
+    // Check if there's a next trip in their daily schedule
+    const nextTripIndex = citizen.currentTripIndex + 1;
+    
+    if (nextTripIndex < citizen.dailySchedule.length) {
+      const nextTrip = citizen.dailySchedule[nextTripIndex];
+      
+      // Check if it's time to start the next trip (convert hours to minutes)
+      const nextTripStartTime = nextTrip.departureTime * 60;
+      
+      if (currentTime >= nextTripStartTime) {
+        // Find the origin neighborhood to set position
+        const originNeighborhood = neighborhoodMap.get(nextTrip.originNeighborhoodId);
+        
+        // Time to start the next trip!
+        updatedCitizen.currentTripIndex = nextTripIndex;
+        updatedCitizen.originNeighborhoodId = nextTrip.originNeighborhoodId;
+        updatedCitizen.destinationNeighborhoodId = nextTrip.destinationNeighborhoodId;
+        updatedCitizen.state = 'waiting-at-origin';
+        updatedCitizen.tripStartTime = nextTripStartTime;
+        updatedCitizen.tripEndTime = undefined;
+        updatedCitizen.route = undefined; // Route will be recalculated
+        updatedCitizen.currentTrainId = undefined;
+        updatedCitizen.currentStationId = undefined;
+        
+        // Update position to origin neighborhood
+        if (originNeighborhood) {
+          updatedCitizen.currentPosition = { ...originNeighborhood.position };
+        }
+        
+        updatedCitizens.set(citizen.id, updatedCitizen);
+      }
+    } else {
+      // No more trips today - mark as completed
+      if (citizen.state !== 'completed') {
+        updatedCitizen.state = 'completed';
+        updatedCitizens.set(citizen.id, updatedCitizen);
+      }
+    }
+  }
+
   return updatedCitizens;
 }
 
@@ -649,6 +696,86 @@ export function rolloverToNextDay(gameState: GameState): GameState {
   };
 }
 
+import type { CityConfig } from '../models';
+import type { RailNetwork } from '../models';
+import { calculateRoute } from './pathfinding';
+
+/**
+ * Recalculate routes for citizens who need them (e.g., starting a new trip)
+ */
+function recalculateRoutesForCitizens(
+  citizens: Map<string, Citizen>,
+  config: CityConfig,
+  railNetwork: RailNetwork
+): Map<string, Citizen> {
+  const updatedCitizens = new Map<string, Citizen>();
+  const neighborhoods = config.neighborhoods;
+  const neighborhoodMap = new Map(neighborhoods.map(n => [n.id, n]));
+  
+  // Empty network for walking-only time calculation
+  const emptyNetwork: RailNetwork = {
+    stations: new Map(),
+    lines: new Map(),
+    tracks: new Map(),
+    trains: new Map(),
+  };
+  
+  citizens.forEach(citizen => {
+    // Only recalculate for citizens who need routes (waiting at origin without a route)
+    if (citizen.state === 'waiting-at-origin' && !citizen.route) {
+      const originNeighborhood = neighborhoodMap.get(citizen.originNeighborhoodId);
+      const destNeighborhood = neighborhoodMap.get(citizen.destinationNeighborhoodId);
+      
+      if (!originNeighborhood || !destNeighborhood) {
+        updatedCitizens.set(citizen.id, citizen);
+        return;
+      }
+      
+      // Calculate route with rail network
+      const segments = calculateRoute(
+        originNeighborhood.position,
+        destNeighborhood.position,
+        config,
+        railNetwork,
+        config.walkingSpeed,
+        config.trainSpeed
+      );
+      
+      const totalEstimatedTime = segments.reduce(
+        (sum: number, seg: any) => sum + seg.estimatedTime, 
+        0
+      );
+      
+      // Calculate walking-only time
+      const walkingSegments = calculateRoute(
+        originNeighborhood.position,
+        destNeighborhood.position,
+        config,
+        emptyNetwork,
+        config.walkingSpeed,
+        config.trainSpeed
+      );
+      const walkingOnlyTime = walkingSegments.reduce(
+        (sum: number, seg: any) => sum + seg.estimatedTime, 
+        0
+      );
+      
+      updatedCitizens.set(citizen.id, {
+        ...citizen,
+        route: {
+          segments,
+          totalEstimatedTime,
+          walkingOnlyTime,
+        },
+      });
+    } else {
+      updatedCitizens.set(citizen.id, citizen);
+    }
+  });
+  
+  return updatedCitizens;
+}
+
 /**
  * Advance the simulation by one tick
  */
@@ -679,13 +806,21 @@ export function tickSimulation(
   );
 
   // Update citizens
-  const updatedCitizens = updateCitizens(
+  let updatedCitizens = updateCitizens(
     gameState.citizens,
     updatedTrains,
     gameState.railNetwork.stations,
+    gameState.city.config.neighborhoods,
     deltaMinutes,
     gameState.city.config.walkingSpeed,
     newTime
+  );
+  
+  // Recalculate routes for citizens who need them (starting new trips)
+  updatedCitizens = recalculateRoutesForCitizens(
+    updatedCitizens,
+    gameState.city.config,
+    gameState.railNetwork
   );
   
   // Update train passenger lists based on citizen states

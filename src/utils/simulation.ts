@@ -490,7 +490,14 @@ export function updateCitizens(
           const threshold = citizen.route.walkingOnlyTime * 1.5;
           updatedCitizen.isHappy = tripDuration <= threshold;
         } else {
-          updatedCitizen.state = 'walking-to-destination';
+          // If next segment is a ride, wait at this station for the train
+          const nextSegment = updatedCitizen.route.segments[0];
+          if (nextSegment.type === 'ride') {
+            updatedCitizen.state = 'waiting-at-station';
+            updatedCitizen.currentStationId = nextSegment.fromStationId;
+          } else if (nextSegment.type === 'walk') {
+            updatedCitizen.state = 'walking-to-destination';
+          }
         }
         
         updatedCitizens.set(passengerId, updatedCitizen);

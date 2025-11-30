@@ -622,7 +622,7 @@ export function rolloverToNextDay(gameState: GameState): GameState {
   // Calculate new population (growth per month, prorated per day)
   const daysInMonth = 30;
   const dailyGrowthRate = gameState.city.config.populationGrowthRate / daysInMonth;
-  const newPopulation = Math.floor(gameState.city.population * (1 + dailyGrowthRate));
+  const newPopulation = Math.floor(gameState.city.config.initialPopulation * Math.pow(1 + dailyGrowthRate, gameState.city.currentDay));
 
   // Check if month rolled over
   const newDay = gameState.city.currentDay + 1;

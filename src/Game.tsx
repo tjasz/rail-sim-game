@@ -114,7 +114,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       
       const daysInMonth = 30;
       const dailyGrowthRate = prevState.city.config.populationGrowthRate / daysInMonth;
-      const newPopulation = Math.floor(prevState.city.population * (1 + dailyGrowthRate));
+      const newPopulation = Math.floor(prevState.city.config.initialPopulation * Math.pow(1 + dailyGrowthRate, prevState.city.currentDay));
       
       const newDay = prevState.city.currentDay + 1;
       const newMonth = newDay > daysInMonth ? prevState.city.currentMonth + 1 : prevState.city.currentMonth;

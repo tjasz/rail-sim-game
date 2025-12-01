@@ -474,6 +474,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               neighborhoods={gameState.city.config.neighborhoods}
               stations={gameState.railNetwork.stations}
               citizens={gameState.citizens}
+              lines={gameState.railNetwork.lines}
               cellSize={36}
             />
             <TrackOverlay

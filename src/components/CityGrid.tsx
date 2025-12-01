@@ -1,13 +1,15 @@
-import type { CityConfig, Neighborhood, Station, Citizen } from '../models';
+import type { CityConfig, Neighborhood, Station, Citizen, Line } from '../models';
 import { CitizenMarker } from './CitizenMarker';
 import { GridCell } from './GridCell';
 import { NeighborhoodMarker } from './NeighborhoodMarker';
+import { StationMarker } from './StationMarker';
 
 interface CityGridProps {
   config: CityConfig;
   neighborhoods: Neighborhood[];
   stations: Map<string, Station>;
   citizens: Map<string, Citizen>;
+  lines: Map<string, Line>;
   cellSize?: number;
 }
 
@@ -16,6 +18,7 @@ export function CityGrid({
   neighborhoods, 
   stations, 
   citizens,
+  lines,
   cellSize = 60 
 }: CityGridProps) {
   const width = config.gridWidth * cellSize;
@@ -63,44 +66,14 @@ export function CityGrid({
                 )}
                 
                 {/* Station indicator */}
-                {station && station.lineIds.length > 0 && (
-                  <g>
-                    {station.lineIds.map((lineId, idx) => (
-                      <circle
-                        key={lineId}
-                        cx={x * cellSize + cellSize / 2}
-                        cy={y * cellSize + cellSize / 2}
-                        r={15 + idx * 3}
-                        fill="none"
-                        stroke="#000"
-                        strokeWidth="2"
-                      />
-                    ))}
-                  </g>
-                )}
-
-                {/* Waiting passenger count badge */}
-                {station && Array.from(station.waitingCitizens.values()).reduce((sum, list) => sum + list.length, 0) > 0 && (
-                  <g>
-                    <circle
-                      cx={x * cellSize + cellSize - 12}
-                      cy={y * cellSize + 12}
-                      r="10"
-                      fill="#ff6b6b"
-                      stroke="#fff"
-                      strokeWidth="1"
-                    />
-                    <text
-                      x={x * cellSize + cellSize - 12}
-                      y={y * cellSize + 16}
-                      textAnchor="middle"
-                      fontSize="10"
-                      fill="#fff"
-                      fontWeight="bold"
-                    >
-                      {Array.from(station.waitingCitizens.values()).reduce((sum, list) => sum + list.length, 0)}
-                    </text>
-                  </g>
+                {station && (
+                  <StationMarker
+                    row={y}
+                    col={x}
+                    station={station}
+                    lines={lines}
+                    cellSize={cellSize}
+                  />
                 )}
               </g>
             );

@@ -38,43 +38,55 @@ const baseGameState: GameState = {
         {
           id: 'downtown',
           name: 'Downtown',
-          position: { x: 2, y: 0 },
+          position: { x: 5, y: 11 },
           icon: 'temaki-briefcase',
           color: '#e74c3c',
           residents: 5,
           proportionOfJobs: 0.60, // 60% of city jobs
-          availableShifts: [[8, 17], [9, 18]], // Retail hours
+          availableShifts: [[8, 17], [9, 18]], // Business hours
           proportionOfRecreationalDemand: 0.2, // 20% of recreational trips
           activationOrder: 1, // Active from day 0
         },
         {
-          id: 'commercial-a',
-          name: 'Commercial A',
-          position: { x: 0, y: 1 },
+          id: 'industrial',
+          name: 'Industrial',
+          position: { x: 5, y: 13 },
+          icon: 'construction',
+          color: '#e74c3c',
+          residents: 5,
+          proportionOfJobs: 0.20, // 20% of city jobs
+          availableShifts: [[8,16], [16,24], [0,8]], // Shift work hours
+          proportionOfRecreationalDemand: 0.0, // 0% of recreational trips
+          activationOrder: 1, // Active from day 0
+        },
+        {
+          id: 'northgate',
+          name: 'Northgate',
+          position: { x: 5, y: 4 },
           icon: 'shop',
           color: '#3498db',
           residents: 10,
-          proportionOfJobs: 0.15, // 15% of city jobs
-          availableShifts: [[9, 21], [10, 22]], // Retail hours
+          proportionOfJobs: 0.1, // 10% of city jobs
+          availableShifts: [[7, 15], [15, 23]], // Retail hours
           proportionOfRecreationalDemand: 0.4, // 40% of recreational trips
           activationOrder: 2, // Active from day 0
         },
         {
-          id: 'commercial-b',
-          name: 'Commercial B',
-          position: { x: 9, y: 2 },
+          id: 'u-village',
+          name: 'U Village',
+          position: { x: 7, y: 7 },
           icon: 'shop',
           color: '#3498db',
           residents: 8,
-          proportionOfJobs: 0.15, // 15% of city jobs
-          availableShifts: [[9, 21], [10, 22]], // Retail hours
+          proportionOfJobs: 0.1, // 10% of city jobs
+          availableShifts: [[7, 15], [15, 23]], // Retail hours
           proportionOfRecreationalDemand: 0.3, // 30% of recreational trips
           activationOrder: 4, // Active from day 1
         },
         {
-          id: 'residential-1',
-          name: 'Residential 1',
-          position: { x: 4, y: 1 },
+          id: 'capitol-hill',
+          name: 'Capitol Hill',
+          position: { x: 5, y: 10 },
           icon: 'home',
           color: '#2ecc71',
           residents: 30,
@@ -84,36 +96,36 @@ const baseGameState: GameState = {
           activationOrder: 3, // Active from day 0
         },
         {
-          id: 'residential-2',
-          name: 'Residential 2',
-          position: { x: 0, y: 4 },
+          id: 'ballard',
+          name: 'Ballard',
+          position: { x: 2, y: 6 },
           icon: 'home',
           color: '#f39c12',
-          residents: 25,
+          residents: 30,
           proportionOfJobs: 0.05, // 5% of city jobs
           availableShifts: [[8, 17]],
           proportionOfRecreationalDemand: 0.0,
           activationOrder: 5, // Active from day 2
         },
         {
-          id: 'residential-3',
-          name: 'Residential 3',
-          position: { x: 4, y: 4 },
+          id: 'alaska-junction',
+          name: 'Alaska Junction',
+          position: { x: 2, y: 14 },
           icon: 'home',
           color: '#9b59b6',
-          residents: 20,
+          residents: 30,
           proportionOfJobs: 0.05, // 5% of city jobs
           availableShifts: [[8, 17]],
           proportionOfRecreationalDemand: 0.0,
           activationOrder: 6, // Active from day 3
         },
         {
-          id: 'residential-4',
-          name: 'Residential 4',
-          position: { x: 7, y: 3 },
+          id: 'beacon-hill',
+          name: 'Beacon Hill',
+          position: { x: 6, y: 13 },
           icon: 'home',
           color: '#9b59b6',
-          residents: 22,
+          residents: 30,
           proportionOfJobs: 0.05, // 5% of city jobs
           availableShifts: [[8, 17]],
           proportionOfRecreationalDemand: 0.0,

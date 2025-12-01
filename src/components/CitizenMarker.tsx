@@ -1,4 +1,5 @@
 import { iconPaths } from '../iconPaths';
+import { useSelection } from '../contexts/SelectionContext';
 import type { Citizen, Neighborhood } from '../models';
 
 const CITIZEN_ICON_SIZE = 10; // in pixels
@@ -10,6 +11,8 @@ interface CitizenMarkerProps {
 }
 
 export function CitizenMarker({ citizen, neighborhoods, cellSize }: CitizenMarkerProps) {
+  const { setSelectedObject } = useSelection();
+  
   let fill = '#666';
   if (citizen.state === 'waiting-at-origin') fill = '#999';
   else if (citizen.state === 'walking-to-station') fill = '#3498db';
@@ -25,11 +28,17 @@ export function CitizenMarker({ citizen, neighborhoods, cellSize }: CitizenMarke
   const cx = citizen.currentPosition.x * cellSize + cellSize / 2 - CITIZEN_ICON_SIZE / 2;
   const cy = citizen.currentPosition.y * cellSize + cellSize / 2 - CITIZEN_ICON_SIZE / 2;
 
+  const handleClick = () => {
+    setSelectedObject(citizen);
+  };
+
   return (<path
-      onContextMenu={() => console.log(citizen)}
+      onClick={handleClick}
+      onContextMenu={(e) => { e.preventDefault(); console.log(citizen); }}
       transform={`translate(${cx}, ${cy}) scale(${CITIZEN_ICON_SIZE / 15})`}
       fill={fill}
       opacity="0.8"
       d={iconPaths[destinationNeighborhoodIcon]}
+      style={{ cursor: 'pointer' }}
       />)
 }

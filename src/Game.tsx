@@ -10,8 +10,10 @@ import {
   PassengersList,
   StationsList,
   DayResultModal,
-  TripMatrixDisplay
+  TripMatrixDisplay,
+  ObjectInspector
 } from './components';
+import { SelectionProvider } from './contexts/SelectionContext';
 import type { GameState, DayResult } from './models';
 import { 
   tickSimulation, 
@@ -329,21 +331,22 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
 
   const timeOfDay = formatTime(gameState.simulationTime);
   const dayProgress = (gameState.simulationTime / MINUTES_PER_DAY) * 100;  return (
-    <div className="game-container">
-      <div className="game-header">
-        <h1>Rails Game</h1>
-        <div className="day-time-display">
-          <div className="day-info">
-            <span className="day-label">Day {gameState.city.currentDay}</span>
-            <span className="time-label">{timeOfDay}</span>
+    <SelectionProvider>
+      <div className="game-container">
+        <div className="game-header">
+          <h1>Rails Game</h1>
+          <div className="day-time-display">
+            <div className="day-info">
+              <span className="day-label">Day {gameState.city.currentDay}</span>
+              <span className="time-label">{timeOfDay}</span>
+            </div>
+            <div className="time-progress-bar">
+              <div 
+                className="time-progress-fill" 
+                style={{ width: `${dayProgress}%` }}
+              />
+            </div>
           </div>
-          <div className="time-progress-bar">
-            <div 
-              className="time-progress-fill" 
-              style={{ width: `${dayProgress}%` }}
-            />
-          </div>
-        </div>
         <div className="game-controls">
           <div className="speed-controls">
             <button
@@ -389,6 +392,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           />
           
           <NetworkStats network={gameState.railNetwork} />
+          
+          <ObjectInspector />
           
           <div className="panel-tabs">
             <button
@@ -489,14 +494,15 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         </div>
       </div>
       
-      {/* Day Result Modal */}
-      {dayResult && (
-        <DayResultModal
-          result={dayResult}
-          onContinue={handleContinueDay}
-          onGameOver={handleGameOver}
-        />
-      )}
-    </div>
+        {/* Day Result Modal */}
+        {dayResult && (
+          <DayResultModal
+            result={dayResult}
+            onContinue={handleContinueDay}
+            onGameOver={handleGameOver}
+          />
+        )}
+      </div>
+    </SelectionProvider>
   );
 }

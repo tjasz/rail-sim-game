@@ -131,7 +131,7 @@ export function CityGrid({
         
         {/* Draw citizens */}
         {Array.from(citizens.values()).map(citizen => (
-          <CitizenMarker key={citizen.id} citizen={citizen} cellSize={cellSize} />
+          <CitizenMarker key={citizen.id} citizen={citizen} neighborhoods={neighborhoods} cellSize={cellSize} />
         ))}
       </svg>
     </div>

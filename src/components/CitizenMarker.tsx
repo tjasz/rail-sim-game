@@ -1,11 +1,15 @@
-import type { Citizen } from '../models';
+import { iconPaths } from '../iconPaths';
+import type { Citizen, Neighborhood } from '../models';
+
+const CITIZEN_ICON_SIZE = 10; // in pixels
 
 interface CitizenMarkerProps {
   citizen: Citizen;
+  neighborhoods: Neighborhood[];
   cellSize: number;
 }
 
-export function CitizenMarker({ citizen, cellSize }: CitizenMarkerProps) {
+export function CitizenMarker({ citizen, neighborhoods, cellSize }: CitizenMarkerProps) {
   let fill = '#666';
   if (citizen.state === 'waiting-at-origin') fill = '#999';
   else if (citizen.state === 'walking-to-station') fill = '#3498db';
@@ -15,15 +19,17 @@ export function CitizenMarker({ citizen, cellSize }: CitizenMarkerProps) {
   else if (citizen.state === 'at-destination') fill = 'none';
   else if (citizen.state === 'completed') fill = 'none';
   else if (!citizen.isHappy) fill = '#e74c3c';
-  return (
-    <circle
+
+  const destinationNeighborhoodIcon = neighborhoods.find(n => n.id === citizen.destinationNeighborhoodId)?.icon ?? 'circle';
+
+  const cx = citizen.currentPosition.x * cellSize + cellSize / 2 - CITIZEN_ICON_SIZE / 2;
+  const cy = citizen.currentPosition.y * cellSize + cellSize / 2 - CITIZEN_ICON_SIZE / 2;
+
+  return (<path
       onContextMenu={() => console.log(citizen)}
-      key={citizen.id}
-      cx={citizen.currentPosition.x * cellSize + cellSize / 2}
-      cy={citizen.currentPosition.y * cellSize + cellSize / 2}
-      r={3}
+      transform={`translate(${cx}, ${cy}) scale(${CITIZEN_ICON_SIZE / 15})`}
       fill={fill}
       opacity="0.8"
-    />
-  );
+      d={iconPaths[destinationNeighborhoodIcon]}
+      />)
 }

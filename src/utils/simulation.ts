@@ -414,7 +414,7 @@ export function updateCitizens(
         
         // Check happiness based on trip time
         const tripDuration = currentTime - citizen.tripStartTime;
-        const threshold = citizen.route.walkingOnlyTime * 1.05; // Allow small buffer
+        const threshold = citizen.route.walkingOnlyTime * 0.75; // Train trips should be faster than walking
         updatedCitizen.isHappy = tripDuration <= threshold;
       } else {
         const nextSegment = updatedCitizen.route.segments[0];
@@ -489,7 +489,7 @@ export function updateCitizens(
           updatedCitizen.tripEndTime = currentTime;
           
           const tripDuration = currentTime - citizen.tripStartTime;
-          const threshold = citizen.route.walkingOnlyTime * 1.05; // Allow small buffer
+          const threshold = citizen.route.walkingOnlyTime * 0.75; // Train trips should be faster than walking
           updatedCitizen.isHappy = tripDuration <= threshold;
         } else {
           // If next segment is a ride, wait at this station for the train

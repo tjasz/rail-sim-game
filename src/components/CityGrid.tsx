@@ -1,5 +1,6 @@
 import { iconPaths } from '../iconPaths';
 import type { CityConfig, Neighborhood, Station, Citizen } from '../models';
+import { CitizenMarker } from './CitizenMarker';
 
 interface CityGridProps {
   config: CityConfig;
@@ -129,30 +130,9 @@ export function CityGrid({
         )}
         
         {/* Draw citizens */}
-        {Array.from(citizens.values()).map(citizen => {
-          // Color based on state
-          let fill = '#666';
-          if (citizen.state === 'waiting-at-origin') fill = '#999';
-          else if (citizen.state === 'walking-to-station') fill = '#3498db';
-          else if (citizen.state === 'waiting-at-station') fill = '#f39c12';
-          else if (citizen.state === 'riding-train') fill = '#9b59b6';
-          else if (citizen.state === 'walking-to-destination') fill = '#2ecc71';
-          else if (citizen.state === 'at-destination') fill = 'none';
-          else if (citizen.state === 'completed') fill = 'none';
-          else if (!citizen.isHappy) fill = '#e74c3c';
-          
-          return (
-            <circle
-              onContextMenu={() => console.log(citizen)}
-              key={citizen.id}
-              cx={citizen.currentPosition.x * cellSize + cellSize / 2}
-              cy={citizen.currentPosition.y * cellSize + cellSize / 2}
-              r={3}
-              fill={fill}
-              opacity="0.8"
-            />
-          );
-        })}
+        {Array.from(citizens.values()).map(citizen => (
+          <CitizenMarker key={citizen.id} citizen={citizen} cellSize={cellSize} />
+        ))}
       </svg>
     </div>
   );

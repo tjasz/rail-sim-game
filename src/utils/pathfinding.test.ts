@@ -9,16 +9,16 @@ const testCityConfig: CityConfig = {
   gridWidth: 10,
   gridHeight: 5,
   tiles: [
-    ['land', 'land', 'water', 'land', 'land'],
-    ['land', 'land', 'water', 'land', 'land'],
-    ['land', 'water', 'water', 'water', 'land'],
-    ['land', 'land', 'water', 'land', 'land'],
-    ['land', 'land', 'land', 'land', 'land'],
-    ['land', 'land', 'land', 'land', 'land'],
-    ['land', 'land', 'land', 'land', 'land'],
-    ['land', 'land', 'land', 'land', 'land'],
-    ['land', 'land', 'land', 'land', 'land'],
-    ['land', 'land', 'land', 'land', 'land'],
+    ['l', 'l', 'w', 'l', 'l'],
+    ['l', 'l', 'w', 'l', 'l'],
+    ['l', 'w', 'w', 'w', 'l'],
+    ['l', 'l', 'w', 'l', 'l'],
+    ['l', 'l', 'l', 'l', 'l'],
+    ['l', 'l', 'l', 'l', 'l'],
+    ['l', 'l', 'l', 'l', 'l'],
+    ['l', 'l', 'l', 'l', 'l'],
+    ['l', 'l', 'l', 'l', 'l'],
+    ['l', 'l', 'l', 'l', 'l'],
   ],
   neighborhoods: [
     {
@@ -293,7 +293,7 @@ describe('buildCityGraph', () => {
   const stopTimePerStation = 1;
 
   describe('Graph Construction', () => {
-    it('should create a graph with nodes for all land tiles', () => {
+    it('should create a graph with nodes for all l tiles', () => {
       const graph = buildCityGraph(
         testCityConfig,
         testRailNetwork,
@@ -302,21 +302,21 @@ describe('buildCityGraph', () => {
         stopTimePerStation
       );
 
-      // Count expected land tiles
+      // Count expected l tiles
       let expectedLandTiles = 0;
       for (let x = 0; x < testCityConfig.gridWidth; x++) {
         for (let y = 0; y < testCityConfig.gridHeight; y++) {
-          if (testCityConfig.tiles[x][y] === 'land') {
+          if (testCityConfig.tiles[x][y] === 'l') {
             expectedLandTiles++;
           }
         }
       }
 
-      // Graph should have at least as many nodes as land tiles
+      // Graph should have at least as many nodes as l tiles
       expect(graph.size).toBeGreaterThanOrEqual(expectedLandTiles);
     });
 
-    it('should create walking edges between adjacent land tiles', () => {
+    it('should create walking edges between adjacent l tiles', () => {
       const graph = buildCityGraph(
         testCityConfig,
         testRailNetwork,
@@ -325,17 +325,17 @@ describe('buildCityGraph', () => {
         stopTimePerStation
       );
 
-      // Test a land tile at (0, 0)
+      // Test a l tile at (0, 0)
       const edges = graph.get('0,0');
       expect(edges).toBeDefined();
       expect(edges!.length).toBeGreaterThan(0);
 
-      // Should have walking edges to adjacent land tiles
+      // Should have walking edges to adjacent l tiles
       const hasWalkingEdges = edges!.some(edge => !edge.stationId);
       expect(hasWalkingEdges).toBe(true);
     });
 
-    it('should not create walking edges to water tiles', () => {
+    it('should not create walking edges to w tiles', () => {
       const graph = buildCityGraph(
         testCityConfig,
         testRailNetwork,
@@ -344,11 +344,11 @@ describe('buildCityGraph', () => {
         stopTimePerStation
       );
 
-      // Position (1, 1) is land and adjacent to water at (2, 1)
+      // Position (1, 1) is l and adjacent to w at (2, 1)
       const edges = graph.get('1,1');
       expect(edges).toBeDefined();
 
-      // Check that no walking edge goes to the water tile at (2, 1)
+      // Check that no walking edge goes to the w tile at (2, 1)
       const hasWalkingEdgeToWater = edges!.some(
         edge => edge.position.x === 2 && edge.position.y === 1 && !edge.stationId
       );
@@ -364,7 +364,7 @@ describe('buildCityGraph', () => {
         stopTimePerStation
       );
 
-      // Position (5, 3) is surrounded by land tiles
+      // Position (5, 3) is surrounded by l tiles
       const edges = graph.get('5,3');
       expect(edges).toBeDefined();
 
@@ -373,7 +373,7 @@ describe('buildCityGraph', () => {
       expect(walkingEdges.length).toBe(8);
     });
 
-    it('should create nodes for stations even if on water tiles', () => {
+    it('should create nodes for stations even if on w tiles', () => {
       const graph = buildCityGraph(
         testCityConfig,
         testRailNetwork,
@@ -382,13 +382,13 @@ describe('buildCityGraph', () => {
         stopTimePerStation
       );
 
-      // Position (2, 0) is water but has station-2
-      // The function still creates a node for stations on water (for train connectivity)
+      // Position (2, 0) is w but has station-2
+      // The function still creates a node for stations on w (for train connectivity)
       const edges = graph.get('2,0');
       expect(edges).toBeDefined();
       
-      // But verify that pure water tiles without stations have no nodes
-      // Position (2, 2) is water and has no station
+      // But verify that pure w tiles without stations have no nodes
+      // Position (2, 2) is w and has no station
       const pureWaterEdges = graph.get('2,2');
       expect(pureWaterEdges).toBeUndefined();
     });
@@ -475,7 +475,7 @@ describe('buildCityGraph', () => {
   });
 
   describe('Graph Size and Completeness', () => {
-    it('should create nodes for all land tiles', () => {
+    it('should create nodes for all l tiles', () => {
       const graph = buildCityGraph(
         testCityConfig,
         testRailNetwork,
@@ -484,22 +484,22 @@ describe('buildCityGraph', () => {
         stopTimePerStation
       );
 
-      // Count land tiles in the config
-      let landCount = 0;
+      // Count l tiles in the config
+      let lCount = 0;
       for (let x = 0; x < testCityConfig.gridWidth; x++) {
         for (let y = 0; y < testCityConfig.gridHeight; y++) {
-          if (testCityConfig.tiles[x][y] === 'land') {
-            landCount++;
+          if (testCityConfig.tiles[x][y] === 'l') {
+            lCount++;
           }
         }
       }
 
-      // Graph should have exactly as many nodes as land tiles
-      expect(graph.size).toBe(landCount);
-      expect(landCount).toBeLessThan(50); // Not all tiles are land
+      // Graph should have exactly as many nodes as l tiles
+      expect(graph.size).toBe(lCount);
+      expect(lCount).toBeLessThan(50); // Not all tiles are l
     });
 
-    it('should skip water tiles when building the graph', () => {
+    it('should skip w tiles when building the graph', () => {
       const graph = buildCityGraph(
         testCityConfig,
         testRailNetwork,
@@ -508,10 +508,10 @@ describe('buildCityGraph', () => {
         stopTimePerStation
       );
 
-      // Check that water tiles are not in the graph
+      // Check that w tiles are not in the graph
       for (let x = 0; x < testCityConfig.gridWidth; x++) {
         for (let y = 0; y < testCityConfig.gridHeight; y++) {
-          if (testCityConfig.tiles[x][y] === 'water') {
+          if (testCityConfig.tiles[x][y] === 'w') {
             const key = `${x},${y}`;
             expect(graph.has(key)).toBe(false);
           }
@@ -610,7 +610,7 @@ describe('buildCityGraph', () => {
         stopTimePerStation
       );
 
-      // Should still create walking edges for land tiles
+      // Should still create walking edges for l tiles
       expect(graph.size).toBeGreaterThan(0);
 
       // But no train edges
@@ -1095,8 +1095,8 @@ describe('calculateRoute', () => {
     });
 
     it('should return empty route for unreachable destinations', () => {
-      // Create a position in water that's unreachable
-      const unreachablePos = { x: 2, y: 3 }; // This is water
+      // Create a position in w that's unreachable
+      const unreachablePos = { x: 2, y: 3 }; // This is w
       
       const route = calculateRoute(
         neighborhoods.commercialA,

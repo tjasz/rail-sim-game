@@ -10,4 +10,4 @@ export interface GridCell {
   isWater: boolean;
 }
 
-export type TileType = 'land' | 'water';
+export type TileType = 'l' | 'w';

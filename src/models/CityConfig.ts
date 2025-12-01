@@ -6,7 +6,7 @@ export interface CityConfig {
   name: string;
   gridWidth: number;
   gridHeight: number;
-  tiles: TileType[][]; // [x][y] - 'land' or 'water'
+  tiles: TileType[][]; // [x][y] - 'l' for land or 'w' for water
   neighborhoods: Neighborhood[];
   
   // Population settings

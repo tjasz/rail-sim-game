@@ -42,7 +42,7 @@ export function CityGrid({
         {/* Draw grid cells */}
         {Array.from({ length: config.gridWidth }).map((_, x) =>
           Array.from({ length: config.gridHeight }).map((_, y) => {
-            const isWater = config.tiles[x][y] === 'water';
+            const isWater = config.tiles[x][y] === 'w';
             const neighborhood = neighborhoodMap.get(`${x},${y}`);
             const station = stationMap.get(`${x},${y}`);
             

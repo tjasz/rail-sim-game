@@ -1,6 +1,7 @@
 import { iconPaths } from '../iconPaths';
 import type { CityConfig, Neighborhood, Station, Citizen } from '../models';
 import { CitizenMarker } from './CitizenMarker';
+import { GridCell } from './GridCell';
 
 interface CityGridProps {
   config: CityConfig;
@@ -50,15 +51,7 @@ export function CityGrid({
             return (
               <g key={`${x}-${y}`}>
                 {/* Cell background */}
-                <rect
-                  x={x * cellSize}
-                  y={y * cellSize}
-                  width={cellSize}
-                  height={cellSize}
-                  fill={isWater ? 'paleturquoise' : 'linen'}
-                  stroke="none"
-                  strokeWidth="0"
-                />
+                <GridCell row={y} col={x} isWater={isWater} cellSize={cellSize} />
                 
                 {/* Neighborhood */}
                 {neighborhood && (

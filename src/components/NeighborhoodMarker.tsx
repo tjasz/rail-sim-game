@@ -18,10 +18,11 @@ export function NeighborhoodMarker({ row, col, neighborhood, cellSize }: Neighbo
   };
 
   return (
-  <g>
+  <g
+    onClick={handleClick}
+    onContextMenu={(e) => { e.preventDefault(); console.log(neighborhood); }}
+  >
     <path
-      onClick={handleClick}
-      onContextMenu={(e) => { e.preventDefault(); console.log(neighborhood); }}
       transform={`translate(${col * cellSize}, ${row * cellSize}) scale(${cellSize / 15})`}
       fill={neighborhood.color}
       opacity="0.4"

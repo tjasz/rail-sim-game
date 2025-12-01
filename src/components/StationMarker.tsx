@@ -1,6 +1,8 @@
 import { useSelection } from '../contexts/SelectionContext';
 import type { Line, Station } from '../models';
 
+const STATION_MARKER_RADIUS = 15; // in pixels
+
 interface StationMarkerProps {
   row: number;
   col: number;
@@ -11,6 +13,8 @@ interface StationMarkerProps {
 
 export function StationMarker({ row, col, station, lines, cellSize }: StationMarkerProps) {
   const { setSelectedObject } = useSelection();
+
+  const waitingPassengers = Array.from(station.waitingCitizens.values()).reduce((sum, list) => sum + list.length, 0);
   
   const handleClick = () => {
     setSelectedObject(station);
@@ -26,7 +30,7 @@ export function StationMarker({ row, col, station, lines, cellSize }: StationMar
         key={lineId}
         cx={col * cellSize + cellSize / 2}
         cy={row * cellSize + cellSize / 2}
-        r={15 + idx * 3}
+        r={STATION_MARKER_RADIUS + idx * 3}
         fill="none"
         stroke="#000"
         strokeWidth="2"
@@ -34,7 +38,7 @@ export function StationMarker({ row, col, station, lines, cellSize }: StationMar
     ))}
 
     {/* Waiting passenger count badge */}
-    {station && Array.from(station.waitingCitizens.values()).reduce((sum, list) => sum + list.length, 0) > 0 && (
+    {station && waitingPassengers > 0 && (
       <g>
         <circle
           cx={col * cellSize + cellSize - 12}
@@ -52,7 +56,7 @@ export function StationMarker({ row, col, station, lines, cellSize }: StationMar
           fill="#fff"
           fontWeight="bold"
         >
-          {Array.from(station.waitingCitizens.values()).reduce((sum, list) => sum + list.length, 0)}
+          {waitingPassengers}
         </text>
       </g>
     )}

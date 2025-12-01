@@ -1,7 +1,7 @@
-import { iconPaths } from '../iconPaths';
 import type { CityConfig, Neighborhood, Station, Citizen } from '../models';
 import { CitizenMarker } from './CitizenMarker';
 import { GridCell } from './GridCell';
+import { NeighborhoodMarker } from './NeighborhoodMarker';
 
 interface CityGridProps {
   config: CityConfig;
@@ -53,13 +53,12 @@ export function CityGrid({
                 {/* Cell background */}
                 <GridCell row={y} col={x} isWater={isWater} cellSize={cellSize} />
                 
-                {/* Neighborhood */}
                 {neighborhood && (
-                  <path
-                    transform={`translate(${x * cellSize}, ${y * cellSize}) scale(${cellSize / 15})`}
-                    fill={neighborhood.color}
-                    opacity="0.4"
-                    d={iconPaths[neighborhood.icon]}
+                  <NeighborhoodMarker
+                    row={y}
+                    col={x}
+                    neighborhood={neighborhood}
+                    cellSize={cellSize}
                     />
                 )}
                 
@@ -102,20 +101,6 @@ export function CityGrid({
                       {Array.from(station.waitingCitizens.values()).reduce((sum, list) => sum + list.length, 0)}
                     </text>
                   </g>
-                )}
-                
-                {/* Neighborhood name */}
-                {neighborhood && (
-                  <text
-                    x={x * cellSize + cellSize / 2}
-                    y={(y+1) * cellSize - 5}
-                    textAnchor="middle"
-                    fontSize="10"
-                    fill="#000"
-                    fontWeight="bold"
-                  >
-                    {neighborhood.name}
-                  </text>
                 )}
               </g>
             );

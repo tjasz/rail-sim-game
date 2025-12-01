@@ -14,7 +14,7 @@ export function CitizenMarker({ citizen, neighborhoods, cellSize }: CitizenMarke
   const { setSelectedObject } = useSelection();
   
   let fill = '#666';
-  if (citizen.state === 'waiting-at-origin') fill = '#999';
+  if (citizen.state === 'waiting-at-origin') fill = 'none';
   else if (citizen.state === 'walking-to-station') fill = '#3498db';
   else if (citizen.state === 'waiting-at-station') fill = '#f39c12';
   else if (citizen.state === 'riding-train') fill = '#9b59b6';

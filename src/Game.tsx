@@ -19,7 +19,8 @@ import {
   formatTime, 
   MINUTES_PER_DAY,
   initializeDay,
-  calculatePopulation
+  calculatePopulation,
+  calculateDistance
 } from './utils';
 import './Game.css';
 
@@ -167,6 +168,165 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     }));
   }, []);
 
+  const handlePurchaseTrain = useCallback(() => {
+    setGameState((prevState) => {
+      const trainCost = prevState.city.config.costPerTrain;
+      
+      // Check if player can afford
+      if (prevState.city.budget < trainCost) {
+        return prevState;
+      }
+      
+      // Create new train with temporary "unassigned" lineId
+      const newTrainId = `train-${Date.now()}`;
+      const newTrain = {
+        id: newTrainId,
+        lineId: 'unassigned', // Special ID for unassigned trains
+        currentStationIndex: 0,
+        direction: 'forward' as const,
+        position: { x: 0, y: 0 },
+        passengerIds: [],
+        capacity: prevState.city.config.trainCapacity,
+        speed: prevState.city.config.trainSpeed,
+      };
+      
+      const updatedTrains = new Map(prevState.railNetwork.trains);
+      updatedTrains.set(newTrainId, newTrain);
+      
+      return {
+        ...prevState,
+        city: {
+          ...prevState.city,
+          budget: prevState.city.budget - trainCost,
+        },
+        railNetwork: {
+          ...prevState.railNetwork,
+          trains: updatedTrains,
+        },
+        stats: {
+          ...prevState.stats,
+          totalTrainsPurchased: prevState.stats.totalTrainsPurchased + 1,
+          totalMoneySpent: prevState.stats.totalMoneySpent + trainCost,
+        },
+      };
+    });
+  }, []);
+
+  const handleAssignTrainToLine = useCallback((trainId: string, lineId: string) => {
+    setGameState((prevState) => {
+      const train = prevState.railNetwork.trains.get(trainId);
+      const line = prevState.railNetwork.lines.get(lineId);
+      
+      if (!train || !line) {
+        return prevState;
+      }
+      
+      // Check if line has at least 2 stations
+      if (line.stationIds.length < 2) {
+        console.warn('Cannot assign train to line with less than 2 stations');
+        return prevState;
+      }
+      
+      // Get existing trains on this line (excluding the one being assigned)
+      const existingTrainsOnLine = Array.from(prevState.railNetwork.trains.values())
+        .filter(t => t.lineId === lineId && t.id !== trainId);
+      
+      const numExistingTrains = existingTrainsOnLine.length;
+      const numStations = line.stationIds.length;
+      
+      // Initialize train properties based on existing trains
+      let stationIndex: number;
+      let direction: 'forward' | 'backward';
+      
+      if (numExistingTrains === 0) {
+        // First train on the line: start at beginning, going forward
+        stationIndex = 0;
+        direction = 'forward';
+      } else if (numExistingTrains === 1) {
+        // Second train: start at end going backward (opposite direction)
+        stationIndex = numStations - 1;
+        direction = 'backward';
+      } else {
+        // Multiple trains: distribute evenly
+        // Alternate between forward and backward directions
+        const isForward = numExistingTrains % 2 === 0;
+        
+        if (isForward) {
+          // Forward trains: space them evenly along the line
+          const forwardCount = Math.ceil((numExistingTrains + 1) / 2);
+          const forwardIdx = Math.floor(numExistingTrains / 2);
+          const spacing = Math.max(1, Math.floor(numStations / forwardCount));
+          stationIndex = Math.min(forwardIdx * spacing, numStations - 1);
+          direction = 'forward';
+        } else {
+          // Backward trains: space them evenly from the end
+          const backwardCount = Math.floor((numExistingTrains + 1) / 2);
+          const backwardIdx = Math.floor(numExistingTrains / 2);
+          const spacing = Math.max(1, Math.floor(numStations / backwardCount));
+          stationIndex = Math.max(numStations - 1 - backwardIdx * spacing, 0);
+          direction = 'backward';
+        }
+      }
+      
+      // Get current and next station
+      const currentStationId = line.stationIds[stationIndex];
+      const currentStation = prevState.railNetwork.stations.get(currentStationId);
+      
+      if (!currentStation) {
+        return prevState;
+      }
+      
+      // Calculate next station arrival time
+      const nextIndex = direction === 'forward' ? stationIndex + 1 : stationIndex - 1;
+      let nextStationArrivalTime: number | undefined;
+      
+      if (nextIndex >= 0 && nextIndex < numStations) {
+        const nextStationId = line.stationIds[nextIndex];
+        const nextStation = prevState.railNetwork.stations.get(nextStationId);
+        
+        if (nextStation) {
+          // Calculate distance and travel time
+          const distance = calculateDistance(currentStation.position, nextStation.position);
+          const travelTime = distance / train.speed;
+          // Add time per station stop from config
+          nextStationArrivalTime = prevState.simulationTime + travelTime + prevState.city.config.timePerStationStop;
+        }
+      }
+      
+      // Update train with new line assignment and calculated properties
+      const updatedTrains = new Map(prevState.railNetwork.trains);
+      updatedTrains.set(trainId, {
+        ...train,
+        lineId: lineId,
+        currentStationIndex: stationIndex,
+        direction: direction,
+        position: { x: currentStation.position.x, y: currentStation.position.y },
+        passengerIds: [], // Clear passengers when reassigning
+        nextStationArrivalTime: nextStationArrivalTime,
+        currentPath: undefined,
+        currentPathIndex: undefined,
+      });
+      
+      // Add train to line's trainIds if not already there
+      const updatedLines = new Map(prevState.railNetwork.lines);
+      const updatedLine = { ...line };
+      if (!updatedLine.trainIds.includes(trainId)) {
+        updatedLine.trainIds = [...updatedLine.trainIds, trainId];
+        updatedLine.isActive = true;
+      }
+      updatedLines.set(lineId, updatedLine);
+      
+      return {
+        ...prevState,
+        railNetwork: {
+          ...prevState.railNetwork,
+          trains: updatedTrains,
+          lines: updatedLines,
+        },
+      };
+    });
+  }, []);
+
   const timeOfDay = formatTime(gameState.simulationTime);
   const dayProgress = (gameState.simulationTime / MINUTES_PER_DAY) * 100;  return (
     <div className="game-container">
@@ -281,6 +441,10 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
                 trains={gameState.railNetwork.trains}
                 lines={gameState.railNetwork.lines}
                 stations={gameState.railNetwork.stations}
+                budget={gameState.city.budget}
+                trainCost={gameState.city.config.costPerTrain}
+                onPurchaseTrain={handlePurchaseTrain}
+                onAssignTrainToLine={handleAssignTrainToLine}
               />
             )}
             {activeTab === 'stations' && (

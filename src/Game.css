@@ -308,6 +308,49 @@
 }
 
 /* Trains */
+.trains-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+.trains-header h3 {
+  margin: 0;
+}
+
+.btn-purchase-train {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 4px;
+  background: #27ae60;
+  color: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-purchase-train:hover:not(:disabled) {
+  background: #229954;
+}
+
+.btn-purchase-train:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.train-item {
+  flex-direction: column;
+}
+
+.train-item.unassigned {
+  border-left-color: #e74c3c;
+  background: #fff5f5;
+}
+
 .train-header {
   display: flex;
   justify-content: space-between;
@@ -324,6 +367,54 @@
   border-radius: 3px;
   font-size: 0.75rem;
   color: white;
+}
+
+.train-line.unassigned-badge {
+  background: #e74c3c;
+}
+
+.train-assignment {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.train-assignment label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.line-selector {
+  padding: 0.5rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.line-selector:hover {
+  border-color: #3498db;
+}
+
+.line-selector:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.warning-text {
+  font-size: 0.85rem;
+  color: #e67e22;
+  margin: 0;
+  padding: 0.5rem;
+  background: #fef5e7;
+  border-radius: 4px;
 }
 
 /* Stations */

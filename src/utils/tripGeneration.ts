@@ -25,8 +25,8 @@ export function getActiveNeighborhoods(
   // Sort neighborhoods by activation order
   const sorted = [...neighborhoods].sort((a, b) => a.activationOrder - b.activationOrder);
   
-  // Start with 3 neighborhoods, add 1 each day
-  const numActive = Math.min(3 + day, sorted.length);
+  // Start with 8 neighborhoods, add 1 each day
+  const numActive = Math.min(8 + day, sorted.length);
   
   return sorted.slice(0, numActive);
 }

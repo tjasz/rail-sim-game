@@ -134,6 +134,28 @@ const baseGameState: GameState = {
           availableShifts: [[8, 17]],
           proportionOfRecreationalDemand: 0.0,
         },
+        {
+          id: 'bellevue',
+          name: 'Bellevue',
+          position: { x: 11, y: 10 },
+          icon: 'gift',
+          color: '#9b59b6',
+          residents: 30,
+          proportionOfJobs: 0.05, // 5% of city jobs
+          availableShifts: [[8, 17]],
+          proportionOfRecreationalDemand: 0.0,
+        },
+        {
+          id: 'redmond-tech',
+          name: 'Redmond Tech',
+          position: { x: 14, y: 8 },
+          icon: 'mobile-phone',
+          color: '#9b59b6',
+          residents: 30,
+          proportionOfJobs: 0.05, // 5% of city jobs
+          availableShifts: [[8, 17]],
+          proportionOfRecreationalDemand: 0.0,
+        },
       ],
       
       initialPopulation: 100,

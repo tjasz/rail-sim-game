@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { RailNetwork } from '../models';
 
 interface NetworkStatsProps {
@@ -5,14 +6,31 @@ interface NetworkStatsProps {
 }
 
 export function NetworkStats({ network }: NetworkStatsProps) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  
   const activeLines = Array.from(network.lines.values()).filter(line => line.isActive).length;
   const totalTrackMiles = Array.from(network.tracks.values())
     .reduce((sum, track) => sum + track.distance, 0);
   
   return (
     <div className="network-stats" onContextMenu={() => console.log(network)}>
-      <h3>Network</h3>
-      <div className="stats-grid">
+      <h3>
+        <button 
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          style={{ 
+            background: 'none', 
+            border: 'none', 
+            cursor: 'pointer',
+            marginRight: '8px',
+            padding: 0,
+            fontSize: 'inherit'
+          }}
+        >
+          {isCollapsed ? '▶' : '▼'}
+        </button>
+        Network
+      </h3>
+      {!isCollapsed && <div className="stats-grid">
         <div className="stat-item">
           <span className="stat-label">Stations</span>
           <span className="stat-value">{network.stations.size}</span>
@@ -37,7 +55,7 @@ export function NetworkStats({ network }: NetworkStatsProps) {
           <span className="stat-label">Trains</span>
           <span className="stat-value">{network.trains.size}</span>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }

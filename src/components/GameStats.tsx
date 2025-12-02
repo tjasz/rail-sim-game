@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { GameStats } from '../models';
 
 interface GameStatsProps {
@@ -9,13 +10,30 @@ interface GameStatsProps {
 }
 
 export function GameStats({ stats, budget, population, currentDay, currentMonth }: GameStatsProps) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  
   return (
     <div className="game-stats">
       <div className="stats-header">
-        <h2>Game Statistics</h2>
+        <h2>
+          <button 
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            style={{ 
+              background: 'none', 
+              border: 'none', 
+              cursor: 'pointer',
+              marginRight: '8px',
+              padding: 0,
+              fontSize: 'inherit'
+            }}
+          >
+            {isCollapsed ? '▶' : '▼'}
+          </button>
+          Game Statistics
+        </h2>
       </div>
       
-      <div className="stats-grid">
+      {!isCollapsed && <div className="stats-grid">
         <div className="stat-item">
           <span className="stat-label">Month</span>
           <span className="stat-value">{currentMonth}</span>
@@ -59,7 +77,7 @@ export function GameStats({ stats, budget, population, currentDay, currentMonth 
           <span className="stat-label">Total Transported</span>
           <span className="stat-value">{stats.totalCitizensTransported.toLocaleString()}</span>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }

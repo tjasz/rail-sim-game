@@ -1,4 +1,8 @@
-import type { CityState } from "./models";
+import type { CityState, Shift } from "./models";
+
+const BusinessShifts : Shift[] = [[7,16], [8, 17], [9, 18]];
+const RetailShifts : Shift[] = [[7, 15], [11, 19], [15, 23]];
+const ShiftWorkShifts : Shift[] = [[6,14], [14,22], [22,6]];
 
 export const SeattleConfig : CityState = {
   config: {
@@ -37,7 +41,7 @@ export const SeattleConfig : CityState = {
           color: '#e74c3c',
           residents: 22,
           proportionOfJobs: 219,
-          availableShifts: [[8, 17], [9, 18]], // Business hours
+          availableShifts: BusinessShifts,
           proportionOfRecreationalDemand: 0.2, // 20% of recreational trips
         },
         {
@@ -48,7 +52,7 @@ export const SeattleConfig : CityState = {
           color: '#e74c3c',
           residents: 9,
           proportionOfJobs: 55,
-          availableShifts: [[8, 17], [9, 18]], // Business hours
+          availableShifts: BusinessShifts,
           proportionOfRecreationalDemand: 0.3, // 30% of recreational trips
         },
         {
@@ -59,7 +63,7 @@ export const SeattleConfig : CityState = {
           color: '#e74c3c',
           residents: 20,
           proportionOfJobs: 22,
-          availableShifts: [[8, 17], [9, 18]], // Business hours
+          availableShifts: BusinessShifts,
           proportionOfRecreationalDemand: 0.0,
         },
         {
@@ -70,7 +74,7 @@ export const SeattleConfig : CityState = {
           color: '#e74c3c',
           residents: 10,
           proportionOfJobs: 55,
-          availableShifts: [[8,16], [16,24], [0,8]], // Shift work hours
+          availableShifts: ShiftWorkShifts,
           proportionOfRecreationalDemand: 0.0, // 0% of recreational trips
         },
         {
@@ -81,7 +85,7 @@ export const SeattleConfig : CityState = {
           color: '#3498db',
           residents: 15,
           proportionOfJobs: 16,
-          availableShifts: [[7, 15], [15, 23]], // Retail hours
+          availableShifts: RetailShifts,
           proportionOfRecreationalDemand: 0.4, // 40% of recreational trips
         },
         {
@@ -92,7 +96,7 @@ export const SeattleConfig : CityState = {
           color: '#3498db',
           residents: 8,
           proportionOfJobs: 38,
-          availableShifts: [[7, 15], [15, 23]], // Retail hours
+          availableShifts: RetailShifts,
           proportionOfRecreationalDemand: 0.3, // 30% of recreational trips
         },
         {
@@ -103,7 +107,7 @@ export const SeattleConfig : CityState = {
           color: '#2ecc71',
           residents: 38,
           proportionOfJobs: 168,
-          availableShifts: [[8, 17]], // Standard hours
+          availableShifts: BusinessShifts,
           proportionOfRecreationalDemand: 0.0, // No recreational demand
         },
         {
@@ -114,7 +118,7 @@ export const SeattleConfig : CityState = {
           color: '#f39c12',
           residents: 19,
           proportionOfJobs: 10,
-          availableShifts: [[8, 17]],
+          availableShifts: BusinessShifts,
           proportionOfRecreationalDemand: 0.0,
         },
         {
@@ -125,7 +129,7 @@ export const SeattleConfig : CityState = {
           color: '#9b59b6',
           residents: 15,
           proportionOfJobs: 8,
-          availableShifts: [[8, 17]],
+          availableShifts: BusinessShifts,
           proportionOfRecreationalDemand: 0.0,
         },
         {
@@ -136,7 +140,7 @@ export const SeattleConfig : CityState = {
           color: '#9b59b6',
           residents: 14,
           proportionOfJobs: 13,
-          availableShifts: [[8, 17]],
+          availableShifts: BusinessShifts,
           proportionOfRecreationalDemand: 0.0,
         },
         {
@@ -147,7 +151,7 @@ export const SeattleConfig : CityState = {
           color: '#9b59b6',
           residents: 15,
           proportionOfJobs: 96,
-          availableShifts: [[8, 17]],
+          availableShifts: BusinessShifts,
           proportionOfRecreationalDemand: 0.0,
         },
         {
@@ -158,7 +162,7 @@ export const SeattleConfig : CityState = {
           color: '#9b59b6',
           residents: 6,
           proportionOfJobs: 82,
-          availableShifts: [[8, 17]],
+          availableShifts: BusinessShifts,
           proportionOfRecreationalDemand: 0.0,
         },
       ],

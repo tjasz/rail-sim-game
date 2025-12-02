@@ -12,6 +12,7 @@ import {
   PassengersList,
   StationsList,
   DayResultModal,
+  StationAssignmentModal,
   TripMatrixDisplay,
   ObjectInspector
 } from './components';
@@ -57,6 +58,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
   const [buildStationState, setBuildStationState] = useState<BuildStationState>({
     isBuilding: false,
   });
+  const [selectedStationForAssignment, setSelectedStationForAssignment] = useState<string | null>(null);
   const prevDayRef = useRef<number>(initialGameState.city.currentDay);
   const prevSimulatingRef = useRef<boolean>(initialGameState.isSimulating);
 
@@ -580,6 +582,154 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     });
   }, [buildTrackState, gameState.city.budget]);
 
+  const handleAssignStationToLine = useCallback((stationId: string, lineId: string, trackIds: string[]) => {
+    setGameState((prevState) => {
+      const station = prevState.railNetwork.stations.get(stationId);
+      const line = prevState.railNetwork.lines.get(lineId);
+      
+      if (!station || !line) {
+        return prevState;
+      }
+
+      // Update station to include line
+      const updatedStations = new Map(prevState.railNetwork.stations);
+      updatedStations.set(stationId, {
+        ...station,
+        lineIds: [...station.lineIds, lineId],
+      });
+
+      // Find where to insert the station in the line's station list
+      // Insert it next to the station it's connected to
+      let insertIndex = line.stationIds.length;
+      for (let i = 0; i < line.stationIds.length; i++) {
+        const existingStationId = line.stationIds[i];
+        const existingStation = prevState.railNetwork.stations.get(existingStationId);
+        if (existingStation && trackIds.length > 0) {
+          // Check if this station is connected via our track path
+          const firstTrack = prevState.railNetwork.tracks.get(trackIds[0]);
+          if (firstTrack) {
+            const isConnected = 
+              (firstTrack.from.x === existingStation.position.x && firstTrack.from.y === existingStation.position.y) ||
+              (firstTrack.to.x === existingStation.position.x && firstTrack.to.y === existingStation.position.y);
+            
+            if (isConnected) {
+              insertIndex = i + 1;
+              break;
+            }
+          }
+        }
+      }
+
+      // Update line to include station
+      const updatedLines = new Map(prevState.railNetwork.lines);
+      const newStationIds = [...line.stationIds];
+      newStationIds.splice(insertIndex, 0, stationId);
+      
+      updatedLines.set(lineId, {
+        ...line,
+        stationIds: newStationIds,
+      });
+
+      // Update tracks to include line
+      const updatedTracks = new Map(prevState.railNetwork.tracks);
+      trackIds.forEach(trackId => {
+        const track = prevState.railNetwork.tracks.get(trackId);
+        if (track && !track.lineIds.includes(lineId)) {
+          updatedTracks.set(trackId, {
+            ...track,
+            lineIds: [...track.lineIds, lineId],
+          });
+        }
+      });
+
+      return {
+        ...prevState,
+        railNetwork: {
+          ...prevState.railNetwork,
+          stations: updatedStations,
+          lines: updatedLines,
+          tracks: updatedTracks,
+        },
+      };
+    });
+  }, []);
+
+  const handleUnassignStationFromLine = useCallback((stationId: string, lineId: string) => {
+    setGameState((prevState) => {
+      const station = prevState.railNetwork.stations.get(stationId);
+      const line = prevState.railNetwork.lines.get(lineId);
+      
+      if (!station || !line) {
+        return prevState;
+      }
+
+      // Update station to remove line
+      const updatedStations = new Map(prevState.railNetwork.stations);
+      updatedStations.set(stationId, {
+        ...station,
+        lineIds: station.lineIds.filter(id => id !== lineId),
+      });
+
+      // Update line to remove station
+      const updatedLines = new Map(prevState.railNetwork.lines);
+      updatedLines.set(lineId, {
+        ...line,
+        stationIds: line.stationIds.filter(id => id !== stationId),
+      });
+
+      // Note: We don't remove the line from tracks because other stations might still use them
+
+      return {
+        ...prevState,
+        railNetwork: {
+          ...prevState.railNetwork,
+          stations: updatedStations,
+          lines: updatedLines,
+        },
+      };
+    });
+  }, []);
+
+  const handleCreateNewLine = useCallback((stationId: string, lineName: string, lineColor: string) => {
+    setGameState((prevState) => {
+      const station = prevState.railNetwork.stations.get(stationId);
+      
+      if (!station) {
+        return prevState;
+      }
+
+      const newLineId = `line-${Date.now()}`;
+      const newLine = {
+        id: newLineId,
+        name: lineName,
+        color: lineColor,
+        stationIds: [stationId],
+        trainIds: [],
+        isActive: false,
+      };
+
+      // Update station to include new line
+      const updatedStations = new Map(prevState.railNetwork.stations);
+      updatedStations.set(stationId, {
+        ...station,
+        lineIds: [...station.lineIds, newLineId],
+      });
+
+      // Add new line
+      const updatedLines = new Map(prevState.railNetwork.lines);
+      updatedLines.set(newLineId, newLine);
+
+      return {
+        ...prevState,
+        railNetwork: {
+          ...prevState.railNetwork,
+          stations: updatedStations,
+          lines: updatedLines,
+        },
+      };
+    });
+  }, []);
+
   const timeOfDay = formatTime(gameState.simulationTime);
   const dayProgress = (gameState.simulationTime / MINUTES_PER_DAY) * 100;  return (
     <SelectionProvider>
@@ -796,6 +946,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               lines={gameState.railNetwork.lines}
               cellSize={36}
               onCellClick={(buildTrackState.isBuilding || buildStationState.isBuilding) ? handleMapClick : undefined}
+              onStationClick={(!buildTrackState.isBuilding && !buildStationState.isBuilding && !gameState.isSimulating) ? setSelectedStationForAssignment : undefined}
             />
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}
@@ -838,6 +989,18 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             result={dayResult}
             onContinue={handleContinueDay}
             onGameOver={handleGameOver}
+          />
+        )}
+
+        {/* Station Assignment Modal */}
+        {selectedStationForAssignment && gameState.railNetwork.stations.get(selectedStationForAssignment) && (
+          <StationAssignmentModal
+            station={gameState.railNetwork.stations.get(selectedStationForAssignment)!}
+            railNetwork={gameState.railNetwork}
+            onClose={() => setSelectedStationForAssignment(null)}
+            onAssignLine={handleAssignStationToLine}
+            onUnassignLine={handleUnassignStationFromLine}
+            onCreateNewLine={handleCreateNewLine}
           />
         )}
       </div>

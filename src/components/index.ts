@@ -13,5 +13,6 @@ export { TrainsList } from './TrainsList';
 export { PassengersList } from './PassengersList';
 export { StationsList } from './StationsList';
 export { DayResultModal } from './DayResultModal';
+export { StationAssignmentModal } from './StationAssignmentModal';
 export { TripMatrixDisplay } from './TripMatrixDisplay';
 export { ObjectInspector } from './ObjectInspector';

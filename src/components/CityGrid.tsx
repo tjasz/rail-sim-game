@@ -12,6 +12,7 @@ interface CityGridProps {
   lines: Map<string, Line>;
   cellSize?: number;
   onCellClick?: (x: number, y: number) => void;
+  onStationClick?: (stationId: string) => void;
 }
 
 export function CityGrid({ 
@@ -21,7 +22,8 @@ export function CityGrid({
   citizens,
   lines,
   cellSize = 60,
-  onCellClick 
+  onCellClick,
+  onStationClick 
 }: CityGridProps) {
   const width = config.gridWidth * cellSize;
   const height = config.gridHeight * cellSize;
@@ -79,6 +81,7 @@ export function CityGrid({
                     station={station}
                     lines={lines}
                     cellSize={cellSize}
+                    onStationClick={onStationClick}
                   />
                 )}
               </g>

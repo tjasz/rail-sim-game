@@ -9,15 +9,24 @@ interface StationMarkerProps {
   station: Station;
   lines: Map<string, Line>;
   cellSize: number;
+  onStationClick?: (stationId: string) => void;
 }
 
-export function StationMarker({ row, col, station, lines, cellSize }: StationMarkerProps) {
+export function StationMarker({ row, col, station, lines, cellSize, onStationClick }: StationMarkerProps) {
   const { setSelectedObject } = useSelection();
 
   const waitingPassengersCount = Array.from(station.waitingCitizens.values()).reduce((sum, list) => sum + list.length, 0);
 
-  const handleClick = () => {
-    setSelectedObject(station);
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent cell click from firing
+    
+    // If there's a station click handler, use it (for assignment modal)
+    if (onStationClick) {
+      onStationClick(station.id);
+    } else {
+      // Otherwise use the selection context (for inspector)
+      setSelectedObject(station);
+    }
   };
 
   return (

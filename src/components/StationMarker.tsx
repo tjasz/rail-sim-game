@@ -40,7 +40,7 @@ export function StationMarker({ row, col, station, lines, cellSize, onStationCli
         cx={col * cellSize + cellSize / 2}
         cy={row * cellSize + cellSize / 2}
         r={STATION_MARKER_RADIUS + idx * 2}
-        fill="none"
+        fill="#6668"
         stroke={lines.get(lineId)?.color || '#888'}
         strokeWidth="2"
       />
@@ -50,7 +50,7 @@ export function StationMarker({ row, col, station, lines, cellSize, onStationCli
         cx={col * cellSize + cellSize / 2}
         cy={row * cellSize + cellSize / 2}
         r={STATION_MARKER_RADIUS}
-        fill="none"
+        fill="#6668"
         stroke="#888"
         strokeWidth="2"
         strokeDasharray="4,4"

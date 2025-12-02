@@ -12,5 +12,4 @@ export interface Neighborhood {
   proportionOfJobs: number; // proportion of jobs in the city (0-1)
   availableShifts: Shift[]; // shifts available for jobs in this neighborhood
   proportionOfRecreationalDemand: number; // proportion of non-work demand (0-1)
-  activationOrder: number; // order in which neighborhood is activated (1-indexed)
 }

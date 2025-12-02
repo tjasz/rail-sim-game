@@ -45,7 +45,6 @@ const baseGameState: GameState = {
           proportionOfJobs: 0.60, // 60% of city jobs
           availableShifts: [[8, 17], [9, 18]], // Business hours
           proportionOfRecreationalDemand: 0.2, // 20% of recreational trips
-          activationOrder: 1, // Active from day 0
         },
         {
           id: 'stadium',
@@ -57,7 +56,6 @@ const baseGameState: GameState = {
           proportionOfJobs: 0.10, // 10% of city jobs
           availableShifts: [[8, 17], [9, 18]], // Business hours
           proportionOfRecreationalDemand: 0.3, // 30% of recreational trips
-          activationOrder: 1, // Active from day 0
         },
         {
           id: 'industrial',
@@ -69,7 +67,6 @@ const baseGameState: GameState = {
           proportionOfJobs: 0.20, // 20% of city jobs
           availableShifts: [[8,16], [16,24], [0,8]], // Shift work hours
           proportionOfRecreationalDemand: 0.0, // 0% of recreational trips
-          activationOrder: 1, // Active from day 0
         },
         {
           id: 'northgate',
@@ -81,7 +78,6 @@ const baseGameState: GameState = {
           proportionOfJobs: 0.1, // 10% of city jobs
           availableShifts: [[7, 15], [15, 23]], // Retail hours
           proportionOfRecreationalDemand: 0.4, // 40% of recreational trips
-          activationOrder: 2, // Active from day 0
         },
         {
           id: 'u-village',
@@ -93,7 +89,6 @@ const baseGameState: GameState = {
           proportionOfJobs: 0.1, // 10% of city jobs
           availableShifts: [[7, 15], [15, 23]], // Retail hours
           proportionOfRecreationalDemand: 0.3, // 30% of recreational trips
-          activationOrder: 4, // Active from day 1
         },
         {
           id: 'capitol-hill',
@@ -105,7 +100,6 @@ const baseGameState: GameState = {
           proportionOfJobs: 0.05, // 5% of city jobs (small businesses)
           availableShifts: [[8, 17]], // Standard hours
           proportionOfRecreationalDemand: 0.0, // No recreational demand
-          activationOrder: 3, // Active from day 0
         },
         {
           id: 'ballard',
@@ -117,7 +111,6 @@ const baseGameState: GameState = {
           proportionOfJobs: 0.05, // 5% of city jobs
           availableShifts: [[8, 17]],
           proportionOfRecreationalDemand: 0.0,
-          activationOrder: 5, // Active from day 2
         },
         {
           id: 'alaska-junction',
@@ -129,7 +122,6 @@ const baseGameState: GameState = {
           proportionOfJobs: 0.05, // 5% of city jobs
           availableShifts: [[8, 17]],
           proportionOfRecreationalDemand: 0.0,
-          activationOrder: 6, // Active from day 3
         },
         {
           id: 'beacon-hill',
@@ -141,7 +133,6 @@ const baseGameState: GameState = {
           proportionOfJobs: 0.05, // 5% of city jobs
           availableShifts: [[8, 17]],
           proportionOfRecreationalDemand: 0.0,
-          activationOrder: 7, // Active from day 4
         },
       ],
       

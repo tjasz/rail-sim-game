@@ -31,7 +31,6 @@ const testCityConfig: CityConfig = {
       proportionOfJobs: 0.5,
       availableShifts: [[8, 17]],
       proportionOfRecreationalDemand: 0.3,
-      activationOrder: 1,
     },
     {
       id: 'commercial-a',
@@ -43,7 +42,6 @@ const testCityConfig: CityConfig = {
       proportionOfJobs: 0.15,
       availableShifts: [[9, 21]],
       proportionOfRecreationalDemand: 0.4,
-      activationOrder: 2,
     },
     {
       id: 'commercial-b',
@@ -55,7 +53,6 @@ const testCityConfig: CityConfig = {
       proportionOfJobs: 0.15,
       availableShifts: [[9, 21]],
       proportionOfRecreationalDemand: 0.3,
-      activationOrder: 4,
     },
     {
       id: 'residential-1',
@@ -67,7 +64,6 @@ const testCityConfig: CityConfig = {
       proportionOfJobs: 0.05,
       availableShifts: [[8, 17]],
       proportionOfRecreationalDemand: 0.0,
-      activationOrder: 3,
     },
     {
       id: 'residential-2',
@@ -79,7 +75,6 @@ const testCityConfig: CityConfig = {
       proportionOfJobs: 0.05,
       availableShifts: [[8, 17]],
       proportionOfRecreationalDemand: 0.0,
-      activationOrder: 5,
     },
     {
       id: 'residential-3',
@@ -91,7 +86,6 @@ const testCityConfig: CityConfig = {
       proportionOfJobs: 0.05,
       availableShifts: [[8, 17]],
       proportionOfRecreationalDemand: 0.0,
-      activationOrder: 6,
     },
     {
       id: 'residential-4',
@@ -103,7 +97,6 @@ const testCityConfig: CityConfig = {
       proportionOfJobs: 0.05,
       availableShifts: [[8, 17]],
       proportionOfRecreationalDemand: 0.0,
-      activationOrder: 7,
     },
   ],
   initialPopulation: 100,

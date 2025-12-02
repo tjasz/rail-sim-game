@@ -21,14 +21,11 @@ import { calculateRoute } from './pathfinding';
 export function getActiveNeighborhoods(
   neighborhoods: Neighborhood[],
   day: number
-): Neighborhood[] {
-  // Sort neighborhoods by activation order
-  const sorted = [...neighborhoods].sort((a, b) => a.activationOrder - b.activationOrder);
+): Neighborhood[] {  
+  // Start with 3 neighborhoods, add 1 each day
+  const numActive = Math.min(3 + day, neighborhoods.length);
   
-  // Start with 8 neighborhoods, add 1 each day
-  const numActive = Math.min(8 + day, sorted.length);
-  
-  return sorted.slice(0, numActive);
+  return neighborhoods.slice(0, numActive);
 }
 
 /**

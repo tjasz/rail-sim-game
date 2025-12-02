@@ -1,0 +1,173 @@
+import type { CityState } from "./models";
+
+export const SeattleConfig : CityState = {
+  config: {
+      id: 'seattle',
+      name: 'Seattle',
+      gridWidth: 20,
+      gridHeight: 20,
+      tiles: [
+        ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'l', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],
+        ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'l', 'l', 'w', 'w', 'w', 'w', 'l', 'w', 'w', 'w', 'w', 'w', 'w'],
+        ['l', 'w', 'w', 'w', 'l', 'l', 'l', 'l', 'l', 'l', 'w', 'w', 'l', 'l', 'l', 'l', 'l', 'l', 'w', 'w'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'w', 'w', 'w', 'l', 'l', 'l', 'l', 'l', 'l', 'w'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'w', 'l', 'l', 'l', 'l', 'w', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'w', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'w', 'l', 'l', 'w', 'w', 'l', 'l', 'l', 'l', 'l', 'l', 'l'],
+        ['l', 'w', 'w', 'w', 'w', 'w', 'l', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'l', 'l', 'l', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'w', 'w', 'w', 'w', 'l', 'l', 'w', 'l', 'l', 'w', 'w', 'w', 'w', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'w', 'w', 'l', 'l', 'l', 'w', 'w', 'l', 'l', 'l', 'w', 'w', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'w', 'w', 'w', 'w', 'l', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'w', 'w', 'l', 'l', 'l', 'l', 'l', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'w', 'w', 'w', 'w', 'w', 'w', 'l', 'l', 'l', 'l', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l'],
+        ['l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'l'],
+      ],
+      neighborhoods: [
+        {
+          id: 'downtown',
+          name: 'Downtown',
+          position: { x: 5, y: 11 },
+          icon: 'temaki-briefcase',
+          color: '#e74c3c',
+          residents: 5,
+          proportionOfJobs: 0.60, // 60% of city jobs
+          availableShifts: [[8, 17], [9, 18]], // Business hours
+          proportionOfRecreationalDemand: 0.2, // 20% of recreational trips
+        },
+        {
+          id: 'stadium',
+          name: 'Stadium',
+          position: { x: 5, y: 12 },
+          icon: 'baseball',
+          color: '#e74c3c',
+          residents: 5,
+          proportionOfJobs: 0.10, // 10% of city jobs
+          availableShifts: [[8, 17], [9, 18]], // Business hours
+          proportionOfRecreationalDemand: 0.3, // 30% of recreational trips
+        },
+        {
+          id: 'industrial',
+          name: 'Industrial',
+          position: { x: 5, y: 13 },
+          icon: 'construction',
+          color: '#e74c3c',
+          residents: 5,
+          proportionOfJobs: 0.20, // 20% of city jobs
+          availableShifts: [[8,16], [16,24], [0,8]], // Shift work hours
+          proportionOfRecreationalDemand: 0.0, // 0% of recreational trips
+        },
+        {
+          id: 'northgate',
+          name: 'Northgate',
+          position: { x: 5, y: 4 },
+          icon: 'shop',
+          color: '#3498db',
+          residents: 10,
+          proportionOfJobs: 0.1, // 10% of city jobs
+          availableShifts: [[7, 15], [15, 23]], // Retail hours
+          proportionOfRecreationalDemand: 0.4, // 40% of recreational trips
+        },
+        {
+          id: 'u-village',
+          name: 'U Village',
+          position: { x: 7, y: 7 },
+          icon: 'shop',
+          color: '#3498db',
+          residents: 8,
+          proportionOfJobs: 0.1, // 10% of city jobs
+          availableShifts: [[7, 15], [15, 23]], // Retail hours
+          proportionOfRecreationalDemand: 0.3, // 30% of recreational trips
+        },
+        {
+          id: 'capitol-hill',
+          name: 'Capitol Hill',
+          position: { x: 5, y: 10 },
+          icon: 'home',
+          color: '#2ecc71',
+          residents: 30,
+          proportionOfJobs: 0.05, // 5% of city jobs (small businesses)
+          availableShifts: [[8, 17]], // Standard hours
+          proportionOfRecreationalDemand: 0.0, // No recreational demand
+        },
+        {
+          id: 'ballard',
+          name: 'Ballard',
+          position: { x: 2, y: 6 },
+          icon: 'home',
+          color: '#f39c12',
+          residents: 30,
+          proportionOfJobs: 0.05, // 5% of city jobs
+          availableShifts: [[8, 17]],
+          proportionOfRecreationalDemand: 0.0,
+        },
+        {
+          id: 'alaska-junction',
+          name: 'Alaska Junction',
+          position: { x: 2, y: 14 },
+          icon: 'home',
+          color: '#9b59b6',
+          residents: 30,
+          proportionOfJobs: 0.05, // 5% of city jobs
+          availableShifts: [[8, 17]],
+          proportionOfRecreationalDemand: 0.0,
+        },
+        {
+          id: 'beacon-hill',
+          name: 'Beacon Hill',
+          position: { x: 6, y: 13 },
+          icon: 'home',
+          color: '#9b59b6',
+          residents: 30,
+          proportionOfJobs: 0.05, // 5% of city jobs
+          availableShifts: [[8, 17]],
+          proportionOfRecreationalDemand: 0.0,
+        },
+        {
+          id: 'bellevue',
+          name: 'Bellevue',
+          position: { x: 11, y: 10 },
+          icon: 'gift',
+          color: '#9b59b6',
+          residents: 30,
+          proportionOfJobs: 0.05, // 5% of city jobs
+          availableShifts: [[8, 17]],
+          proportionOfRecreationalDemand: 0.0,
+        },
+        {
+          id: 'redmond-tech',
+          name: 'Redmond Tech',
+          position: { x: 14, y: 8 },
+          icon: 'mobile-phone',
+          color: '#9b59b6',
+          residents: 30,
+          proportionOfJobs: 0.05, // 5% of city jobs
+          availableShifts: [[8, 17]],
+          proportionOfRecreationalDemand: 0.0,
+        },
+      ],
+      
+      initialPopulation: 100,
+      populationGrowthRate: 0.05,
+      initialBudget: 30000,
+      budgetBaseline: 1000,
+      budgetBonusPerHappyCitizen: 10,
+      walkingSpeed: 0.05,
+      trainSpeed: 0.15,
+      timePerStationStop: 1,
+      costPerStation: 1000,
+      costPerTrackMileLand: 500,
+      costPerTrackMileWater: 1000,
+      costPerTrain: 2000,
+      trainCapacity: 10,
+    },
+    currentMonth: 1,
+    currentDay: 0,
+    population: 45, // Initial: downtown (5) + commercial-a (10) + residential-1 (30) on day 0
+    budget: 30000,
+  };

@@ -869,7 +869,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           
           {/* Build Track Controls */}
           <div className="panel build-track-panel">
-            <h3>Build Track</h3>
             {!buildTrackState.isBuilding ? (
               <button 
                 className="btn-primary" 
@@ -893,13 +892,13 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
                     onClick={handleConfirmBuildTrack}
                     disabled={buildTrackState.points.length < 2 || buildTrackState.totalCost > gameState.city.budget}
                   >
-                    ✓ Confirm
+                    ✓ Confirm Track
                   </button>
                   <button 
                     className="btn-secondary" 
                     onClick={handleCancelBuildTrack}
                   >
-                    ✗ Cancel
+                    ✗ Cancel Track
                   </button>
                 </div>
               </div>
@@ -908,7 +907,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
 
           {/* Build Station Controls */}
           <div className="panel build-track-panel">
-            <h3>Build Station</h3>
             {!buildStationState.isBuilding ? (
               <button 
                 className="btn-primary" 
@@ -929,7 +927,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
                     className="btn-secondary" 
                     onClick={handleCancelBuildStation}
                   >
-                    ✗ Cancel
+                    ✗ Cancel Station
                   </button>
                 </div>
               </div>

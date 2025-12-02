@@ -161,7 +161,7 @@
 }
 
 /* Stats */
-.game-stats, .network-stats {
+.game-stats, .network-stats, .build-track-panel {
   padding: 1.5rem;
   border-bottom: 1px solid #eee;
 }
@@ -172,10 +172,46 @@
   color: #2c3e50;
 }
 
-.network-stats h3 {
+.network-stats h3, .build-track-panel h3 {
   margin: 0 0 1rem 0;
   font-size: 1.1rem;
   color: #2c3e50;
+}
+
+/* Build Track Panel */
+.build-track-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.build-track-info {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.build-track-info p {
+  margin: 0.25rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.build-track-info p:first-child {
+  font-weight: bold;
+  color: #3498db;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.build-track-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.build-track-buttons button {
+  flex: 1;
 }
 
 .stats-grid {

@@ -4,6 +4,7 @@ import {
   NetworkStats,
   CityGrid,
   TrackOverlay,
+  DraftTrackOverlay,
   TrainMarkers,
   LinesList,
   TrainsList,
@@ -31,10 +32,23 @@ interface GameProps {
   onGameStateChange?: (newState: GameState) => void;
 }
 
+interface BuildTrackState {
+  isBuilding: boolean;
+  points: { x: number; y: number }[];
+  totalDistance: number;
+  totalCost: number;
+}
+
 export function Game({ gameState: initialGameState, onGameStateChange }: GameProps) {
   const [gameState, setGameState] = useState<GameState>(initialGameState);
   const [activeTab, setActiveTab] = useState<'lines' | 'trains' | 'stations' | 'passengers' | 'trips'>('trips');
   const [dayResult, setDayResult] = useState<DayResult | null>(null);
+  const [buildTrackState, setBuildTrackState] = useState<BuildTrackState>({
+    isBuilding: false,
+    points: [],
+    totalDistance: 0,
+    totalCost: 0,
+  });
   const prevDayRef = useRef<number>(initialGameState.city.currentDay);
   const prevSimulatingRef = useRef<boolean>(initialGameState.isSimulating);
 
@@ -329,6 +343,146 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     });
   }, []);
 
+  const handleStartBuildTrack = useCallback(() => {
+    setBuildTrackState({
+      isBuilding: true,
+      points: [],
+      totalDistance: 0,
+      totalCost: 0,
+    });
+  }, []);
+
+  const handleCancelBuildTrack = useCallback(() => {
+    setBuildTrackState({
+      isBuilding: false,
+      points: [],
+      totalDistance: 0,
+      totalCost: 0,
+    });
+  }, []);
+
+  const handleMapClick = useCallback((x: number, y: number) => {
+    if (!buildTrackState.isBuilding) return;
+
+    setBuildTrackState((prev) => {
+      // First click - allow any position
+      if (prev.points.length === 0) {
+        return {
+          ...prev,
+          points: [{ x, y }],
+        };
+      }
+
+      // Subsequent clicks - must be adjacent to last point
+      const lastPoint = prev.points[prev.points.length - 1];
+      const dx = Math.abs(x - lastPoint.x);
+      const dy = Math.abs(y - lastPoint.y);
+
+      // Check if adjacent (including diagonally)
+      if (dx > 1 || dy > 1) {
+        console.warn('Track segment must be adjacent to previous point');
+        return prev;
+      }
+
+      // Check if point already exists in path (no backtracking)
+      if (prev.points.some(p => p.x === x && p.y === y)) {
+        console.warn('Cannot revisit the same point');
+        return prev;
+      }
+
+      // Calculate segment distance and cost
+      const segmentDistance = calculateDistance(lastPoint, { x, y });
+      const isOverWater = gameState.city.config.tiles[x][y] === 'w';
+      const costPerMile = isOverWater 
+        ? gameState.city.config.costPerTrackMileWater 
+        : gameState.city.config.costPerTrackMileLand;
+      const segmentCost = segmentDistance * costPerMile;
+
+      return {
+        ...prev,
+        points: [...prev.points, { x, y }],
+        totalDistance: prev.totalDistance + segmentDistance,
+        totalCost: prev.totalCost + segmentCost,
+      };
+    });
+  }, [buildTrackState.isBuilding, gameState.city.config]);
+
+  const handleConfirmBuildTrack = useCallback(() => {
+    if (buildTrackState.points.length < 2) {
+      console.warn('Need at least 2 points to build track');
+      return;
+    }
+
+    if (gameState.city.budget < buildTrackState.totalCost) {
+      console.warn('Insufficient budget to build track');
+      return;
+    }
+
+    setGameState((prevState) => {
+      const newTracks = new Map(prevState.railNetwork.tracks);
+      
+      // Create track segments between each pair of points
+      for (let i = 0; i < buildTrackState.points.length - 1; i++) {
+        const from = buildTrackState.points[i];
+        const to = buildTrackState.points[i + 1];
+        
+        // Check if track already exists (bidirectional)
+        const existingTrack = Array.from(newTracks.values()).find(
+          t => (t.from.x === from.x && t.from.y === from.y && t.to.x === to.x && t.to.y === to.y) ||
+               (t.from.x === to.x && t.from.y === to.y && t.to.x === from.x && t.to.y === from.y)
+        );
+        
+        if (existingTrack) {
+          continue; // Skip if track already exists
+        }
+        
+        const distance = calculateDistance(from, to);
+        const isOverWater = prevState.city.config.tiles[to.x][to.y] === 'w' || 
+                           prevState.city.config.tiles[from.x][from.y] === 'w';
+        const costPerMile = isOverWater 
+          ? prevState.city.config.costPerTrackMileWater 
+          : prevState.city.config.costPerTrackMileLand;
+        const cost = distance * costPerMile;
+        
+        const newTrack = {
+          id: `track-${Date.now()}-${i}`,
+          from,
+          to,
+          distance,
+          isOverWater,
+          cost,
+          lineIds: [],
+        };
+        
+        newTracks.set(newTrack.id, newTrack);
+      }
+      
+      return {
+        ...prevState,
+        city: {
+          ...prevState.city,
+          budget: prevState.city.budget - buildTrackState.totalCost,
+        },
+        railNetwork: {
+          ...prevState.railNetwork,
+          tracks: newTracks,
+        },
+        stats: {
+          ...prevState.stats,
+          totalMoneySpent: prevState.stats.totalMoneySpent + buildTrackState.totalCost,
+        },
+      };
+    });
+
+    // Reset build state
+    setBuildTrackState({
+      isBuilding: false,
+      points: [],
+      totalDistance: 0,
+      totalCost: 0,
+    });
+  }, [buildTrackState, gameState.city.budget]);
+
   const timeOfDay = formatTime(gameState.simulationTime);
   const dayProgress = (gameState.simulationTime / MINUTES_PER_DAY) * 100;  return (
     <SelectionProvider>
@@ -377,7 +531,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           <button className="btn-secondary" onClick={handleSkipToEndOfDay} disabled={gameState.isSimulating}>
             ⏭ Skip to End
           </button>
-          <button className="btn-secondary">🔧 Build Mode</button>
         </div>
       </div>
       
@@ -392,6 +545,45 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           />
           
           <NetworkStats network={gameState.railNetwork} />
+          
+          {/* Build Track Controls */}
+          <div className="panel build-track-panel">
+            <h3>Build Track</h3>
+            {!buildTrackState.isBuilding ? (
+              <button 
+                className="btn-primary" 
+                onClick={handleStartBuildTrack}
+                disabled={gameState.isSimulating}
+              >
+                🔧 Start Building Track
+              </button>
+            ) : (
+              <div className="build-track-controls">
+                <div className="build-track-info">
+                  <p>Click on map to place track points</p>
+                  <p>Points: {buildTrackState.points.length}</p>
+                  <p>Distance: {buildTrackState.totalDistance.toFixed(2)} units</p>
+                  <p>Cost: ${Math.round(buildTrackState.totalCost)}</p>
+                  <p>Budget: ${gameState.city.budget}</p>
+                </div>
+                <div className="build-track-buttons">
+                  <button 
+                    className="btn-primary" 
+                    onClick={handleConfirmBuildTrack}
+                    disabled={buildTrackState.points.length < 2 || buildTrackState.totalCost > gameState.city.budget}
+                  >
+                    ✓ Confirm
+                  </button>
+                  <button 
+                    className="btn-secondary" 
+                    onClick={handleCancelBuildTrack}
+                  >
+                    ✗ Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
           
           <ObjectInspector />
           
@@ -476,6 +668,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               citizens={gameState.citizens}
               lines={gameState.railNetwork.lines}
               cellSize={36}
+              onCellClick={buildTrackState.isBuilding ? handleMapClick : undefined}
             />
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}
@@ -484,6 +677,14 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               gridHeight={gameState.city.config.gridHeight}
               cellSize={36}
             />
+            {buildTrackState.isBuilding && (
+              <DraftTrackOverlay
+                points={buildTrackState.points}
+                gridWidth={gameState.city.config.gridWidth}
+                gridHeight={gameState.city.config.gridHeight}
+                cellSize={36}
+              />
+            )}
             <TrainMarkers
               trains={gameState.railNetwork.trains}
               lines={gameState.railNetwork.lines}

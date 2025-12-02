@@ -3,6 +3,8 @@ import type { Neighborhood } from '../models';
 import { useSelection } from '../contexts/SelectionContext';
 import { iconPaths } from '../iconPaths';
 
+const NEIGHBORHOOD_ICON_SIZE = 20; // in pixels
+
 interface NeighborhoodMarkerProps {
   row: number;
   col: number;
@@ -23,16 +25,16 @@ export function NeighborhoodMarker({ row, col, neighborhood, cellSize }: Neighbo
     onContextMenu={(e) => { e.preventDefault(); console.log(neighborhood); }}
   >
     <path
-      transform={`translate(${col * cellSize}, ${row * cellSize}) scale(${cellSize / 15})`}
+      transform={`translate(${(col+0.5) * cellSize - NEIGHBORHOOD_ICON_SIZE / 2}, ${(row+0.5) * cellSize - NEIGHBORHOOD_ICON_SIZE / 2}) scale(${NEIGHBORHOOD_ICON_SIZE / 15})`}
       fill={neighborhood.color}
-      opacity="0.4"
+      opacity="1"
       d={iconPaths[neighborhood.icon]}
       />
     <text
       x={col * cellSize + cellSize / 2}
       y={(row+1) * cellSize - 5}
       textAnchor="middle"
-      fontSize="10"
+      fontSize="6"
       fill="#000"
       fontWeight="bold"
     >

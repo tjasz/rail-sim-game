@@ -35,8 +35,8 @@ export const SeattleConfig : CityState = {
           position: { x: 5, y: 11 },
           icon: 'temaki-briefcase',
           color: '#e74c3c',
-          residents: 5,
-          proportionOfJobs: 0.60, // 60% of city jobs
+          residents: 22,
+          proportionOfJobs: 219,
           availableShifts: [[8, 17], [9, 18]], // Business hours
           proportionOfRecreationalDemand: 0.2, // 20% of recreational trips
         },
@@ -46,10 +46,21 @@ export const SeattleConfig : CityState = {
           position: { x: 5, y: 12 },
           icon: 'baseball',
           color: '#e74c3c',
-          residents: 5,
-          proportionOfJobs: 0.10, // 10% of city jobs
+          residents: 9,
+          proportionOfJobs: 55,
           availableShifts: [[8, 17], [9, 18]], // Business hours
           proportionOfRecreationalDemand: 0.3, // 30% of recreational trips
+        },
+        {
+          id: 'central',
+          name: 'Central',
+          position: { x: 6, y: 11 },
+          icon: 'circle',
+          color: '#e74c3c',
+          residents: 20,
+          proportionOfJobs: 22,
+          availableShifts: [[8, 17], [9, 18]], // Business hours
+          proportionOfRecreationalDemand: 0.0,
         },
         {
           id: 'industrial',
@@ -57,8 +68,8 @@ export const SeattleConfig : CityState = {
           position: { x: 5, y: 13 },
           icon: 'construction',
           color: '#e74c3c',
-          residents: 5,
-          proportionOfJobs: 0.20, // 20% of city jobs
+          residents: 10,
+          proportionOfJobs: 55,
           availableShifts: [[8,16], [16,24], [0,8]], // Shift work hours
           proportionOfRecreationalDemand: 0.0, // 0% of recreational trips
         },
@@ -68,8 +79,8 @@ export const SeattleConfig : CityState = {
           position: { x: 5, y: 4 },
           icon: 'shop',
           color: '#3498db',
-          residents: 10,
-          proportionOfJobs: 0.1, // 10% of city jobs
+          residents: 15,
+          proportionOfJobs: 16,
           availableShifts: [[7, 15], [15, 23]], // Retail hours
           proportionOfRecreationalDemand: 0.4, // 40% of recreational trips
         },
@@ -80,7 +91,7 @@ export const SeattleConfig : CityState = {
           icon: 'shop',
           color: '#3498db',
           residents: 8,
-          proportionOfJobs: 0.1, // 10% of city jobs
+          proportionOfJobs: 38,
           availableShifts: [[7, 15], [15, 23]], // Retail hours
           proportionOfRecreationalDemand: 0.3, // 30% of recreational trips
         },
@@ -90,8 +101,8 @@ export const SeattleConfig : CityState = {
           position: { x: 5, y: 10 },
           icon: 'home',
           color: '#2ecc71',
-          residents: 30,
-          proportionOfJobs: 0.05, // 5% of city jobs (small businesses)
+          residents: 38,
+          proportionOfJobs: 168,
           availableShifts: [[8, 17]], // Standard hours
           proportionOfRecreationalDemand: 0.0, // No recreational demand
         },
@@ -101,8 +112,8 @@ export const SeattleConfig : CityState = {
           position: { x: 2, y: 6 },
           icon: 'home',
           color: '#f39c12',
-          residents: 30,
-          proportionOfJobs: 0.05, // 5% of city jobs
+          residents: 19,
+          proportionOfJobs: 10,
           availableShifts: [[8, 17]],
           proportionOfRecreationalDemand: 0.0,
         },
@@ -112,8 +123,8 @@ export const SeattleConfig : CityState = {
           position: { x: 2, y: 14 },
           icon: 'home',
           color: '#9b59b6',
-          residents: 30,
-          proportionOfJobs: 0.05, // 5% of city jobs
+          residents: 15,
+          proportionOfJobs: 8,
           availableShifts: [[8, 17]],
           proportionOfRecreationalDemand: 0.0,
         },
@@ -123,8 +134,8 @@ export const SeattleConfig : CityState = {
           position: { x: 6, y: 13 },
           icon: 'home',
           color: '#9b59b6',
-          residents: 30,
-          proportionOfJobs: 0.05, // 5% of city jobs
+          residents: 14,
+          proportionOfJobs: 13,
           availableShifts: [[8, 17]],
           proportionOfRecreationalDemand: 0.0,
         },
@@ -134,8 +145,8 @@ export const SeattleConfig : CityState = {
           position: { x: 11, y: 10 },
           icon: 'gift',
           color: '#9b59b6',
-          residents: 30,
-          proportionOfJobs: 0.05, // 5% of city jobs
+          residents: 15,
+          proportionOfJobs: 96,
           availableShifts: [[8, 17]],
           proportionOfRecreationalDemand: 0.0,
         },
@@ -145,13 +156,12 @@ export const SeattleConfig : CityState = {
           position: { x: 14, y: 8 },
           icon: 'mobile-phone',
           color: '#9b59b6',
-          residents: 30,
-          proportionOfJobs: 0.05, // 5% of city jobs
+          residents: 6,
+          proportionOfJobs: 82,
           availableShifts: [[8, 17]],
           proportionOfRecreationalDemand: 0.0,
         },
       ],
-      
       initialPopulation: 100,
       populationGrowthRate: 0.05,
       initialBudget: 30000,

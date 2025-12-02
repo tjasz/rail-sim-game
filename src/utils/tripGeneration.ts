@@ -66,11 +66,14 @@ function assignWorkNeighborhood(
   activeNeighborhoods: Neighborhood[]
 ): Neighborhood {
   const random = Math.random();
+
+  const totalJobHeat = activeNeighborhoods.reduce((sum, n) => sum + n.proportionOfJobs, 0);
+  const scaledRandom = random * totalJobHeat;
   
   let cumulative = 0;
   for (const neighborhood of activeNeighborhoods) {
     cumulative += neighborhood.proportionOfJobs;
-    if (random <= cumulative) {
+    if (scaledRandom <= cumulative) {
       return neighborhood;
     }
   }

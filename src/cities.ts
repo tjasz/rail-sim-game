@@ -56,13 +56,24 @@ export const SeattleConfig : CityState = {
           proportionOfRecreationalDemand: 0.0, // No recreational demand
         },
         {
-          id: 'center',
-          name: 'Center',
+          id: 'needle',
+          name: 'Needle',
           position: { x: 4, y: 10 },
           icon: 'museum',
           color: '#2ecc71',
           residents: 35,
           proportionOfJobs: 256,
+          availableShifts: BusinessShifts,
+          proportionOfRecreationalDemand: 0.0, // No recreational demand
+        },
+        {
+          id: 'queen-anne',
+          name: 'Queen Anne',
+          position: { x: 4, y: 9 },
+          icon: 'jewelry-store',
+          color: '#2ecc71',
+          residents: 22,
+          proportionOfJobs: 35,
           availableShifts: BusinessShifts,
           proportionOfRecreationalDemand: 0.0, // No recreational demand
         },
@@ -111,6 +122,28 @@ export const SeattleConfig : CityState = {
           proportionOfRecreationalDemand: 0.0,
         },
         {
+          id: 'greenwood',
+          name: 'Greenwood',
+          position: { x: 4, y: 5 },
+          icon: 'temaki-tree_needleleaved',
+          color: '#2ecc71',
+          residents: 24,
+          proportionOfJobs: 12,
+          availableShifts: BusinessShifts,
+          proportionOfRecreationalDemand: 0.0, // No recreational demand
+        },
+        {
+          id: 'licton-springs',
+          name: 'Licton Springs',
+          position: { x: 4, y: 4 },
+          icon: 'hot-spring',
+          color: '#2ecc71',
+          residents: 22,
+          proportionOfJobs: 18,
+          availableShifts: BusinessShifts,
+          proportionOfRecreationalDemand: 0.0, // No recreational demand
+        },
+        {
           id: 'tukwila',
           name: 'Tukwila',
           position: { x: 8, y: 19 },
@@ -130,6 +163,17 @@ export const SeattleConfig : CityState = {
           residents: 15,
           proportionOfJobs: 96,
           availableShifts: BusinessShifts,
+          proportionOfRecreationalDemand: 0.0,
+        },
+        {
+          id: 'totem-lake',
+          name: 'Totem Lake',
+          position: { x: 12, y: 4 },
+          icon: 'square',
+          color: '#9b59b6',
+          residents: 22,
+          proportionOfJobs: 26,
+          availableShifts: RetailShifts,
           proportionOfRecreationalDemand: 0.0,
         },
         {

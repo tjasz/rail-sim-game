@@ -25,7 +25,8 @@ import {
   MINUTES_PER_DAY,
   initializeDay,
   calculatePopulation,
-  calculateDistance
+  calculateDistance,
+  calculateCitizenRoutes
 } from './utils';
 import './Game.css';
 
@@ -435,16 +436,27 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         const updatedStations = new Map(prevState.railNetwork.stations);
         updatedStations.set(newStationId, newStation);
         
+        const updatedRailNetwork = {
+          ...prevState.railNetwork,
+          stations: updatedStations,
+        };
+        
+        // Recalculate citizen routes with updated network
+        const updatedCitizens = calculateCitizenRoutes(
+          prevState.citizens,
+          prevState.city.config.neighborhoods,
+          prevState.city.config,
+          updatedRailNetwork
+        );
+        
         return {
           ...prevState,
           city: {
             ...prevState.city,
             budget: prevState.city.budget - stationCost,
           },
-          railNetwork: {
-            ...prevState.railNetwork,
-            stations: updatedStations,
-          },
+          railNetwork: updatedRailNetwork,
+          citizens: updatedCitizens,
           stats: {
             ...prevState.stats,
             totalMoneySpent: prevState.stats.totalMoneySpent + stationCost,
@@ -556,16 +568,27 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         newTracks.set(newTrack.id, newTrack);
       }
       
+      const updatedRailNetwork = {
+        ...prevState.railNetwork,
+        tracks: newTracks,
+      };
+      
+      // Recalculate citizen routes with updated network
+      const updatedCitizens = calculateCitizenRoutes(
+        prevState.citizens,
+        prevState.city.config.neighborhoods,
+        prevState.city.config,
+        updatedRailNetwork
+      );
+      
       return {
         ...prevState,
         city: {
           ...prevState.city,
           budget: prevState.city.budget - buildTrackState.totalCost,
         },
-        railNetwork: {
-          ...prevState.railNetwork,
-          tracks: newTracks,
-        },
+        railNetwork: updatedRailNetwork,
+        citizens: updatedCitizens,
         stats: {
           ...prevState.stats,
           totalMoneySpent: prevState.stats.totalMoneySpent + buildTrackState.totalCost,
@@ -642,14 +665,25 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         }
       });
 
+      const updatedRailNetwork = {
+        ...prevState.railNetwork,
+        stations: updatedStations,
+        lines: updatedLines,
+        tracks: updatedTracks,
+      };
+      
+      // Recalculate citizen routes with updated network
+      const updatedCitizens = calculateCitizenRoutes(
+        prevState.citizens,
+        prevState.city.config.neighborhoods,
+        prevState.city.config,
+        updatedRailNetwork
+      );
+      
       return {
         ...prevState,
-        railNetwork: {
-          ...prevState.railNetwork,
-          stations: updatedStations,
-          lines: updatedLines,
-          tracks: updatedTracks,
-        },
+        railNetwork: updatedRailNetwork,
+        citizens: updatedCitizens,
       };
     });
   }, []);
@@ -679,13 +713,24 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
 
       // Note: We don't remove the line from tracks because other stations might still use them
 
+      const updatedRailNetwork = {
+        ...prevState.railNetwork,
+        stations: updatedStations,
+        lines: updatedLines,
+      };
+      
+      // Recalculate citizen routes with updated network
+      const updatedCitizens = calculateCitizenRoutes(
+        prevState.citizens,
+        prevState.city.config.neighborhoods,
+        prevState.city.config,
+        updatedRailNetwork
+      );
+      
       return {
         ...prevState,
-        railNetwork: {
-          ...prevState.railNetwork,
-          stations: updatedStations,
-          lines: updatedLines,
-        },
+        railNetwork: updatedRailNetwork,
+        citizens: updatedCitizens,
       };
     });
   }, []);
@@ -719,13 +764,24 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       const updatedLines = new Map(prevState.railNetwork.lines);
       updatedLines.set(newLineId, newLine);
 
+      const updatedRailNetwork = {
+        ...prevState.railNetwork,
+        stations: updatedStations,
+        lines: updatedLines,
+      };
+      
+      // Recalculate citizen routes with updated network
+      const updatedCitizens = calculateCitizenRoutes(
+        prevState.citizens,
+        prevState.city.config.neighborhoods,
+        prevState.city.config,
+        updatedRailNetwork
+      );
+      
       return {
         ...prevState,
-        railNetwork: {
-          ...prevState.railNetwork,
-          stations: updatedStations,
-          lines: updatedLines,
-        },
+        railNetwork: updatedRailNetwork,
+        citizens: updatedCitizens,
       };
     });
   }, []);

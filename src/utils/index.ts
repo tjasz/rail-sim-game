@@ -5,7 +5,8 @@ export {
   initializeTrains,
   initializeDay,
   getActiveNeighborhoods,
-  calculatePopulation
+  calculatePopulation,
+  calculateCitizenRoutes
 } from './tripGeneration';
 export { calculateRoute, calculateAllRoutes } from './pathfinding';
 export { 

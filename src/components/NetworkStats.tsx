@@ -10,7 +10,7 @@ export function NetworkStats({ network }: NetworkStatsProps) {
     .reduce((sum, track) => sum + track.distance, 0);
   
   return (
-    <div className="network-stats">
+    <div className="network-stats" onContextMenu={() => console.log(network)}>
       <h3>Network</h3>
       <div className="stats-grid">
         <div className="stat-item">

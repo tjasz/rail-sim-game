@@ -838,6 +838,13 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             >
               5x
             </button>
+            <button
+              className={`speed-btn ${gameState.simulationSpeed === 10 ? 'active' : ''}`}
+              onClick={() => handleSpeedChange(10)}
+              disabled={!gameState.isSimulating}
+            >
+              10x
+            </button>
           </div>
           <button className="btn-primary" onClick={handleStartPause}>
             {gameState.isSimulating ? '⏸ Pause' : '▶ Start Day'}

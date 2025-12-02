@@ -36,6 +36,17 @@ export function StationMarker({ row, col, station, lines, cellSize }: StationMar
         strokeWidth="2"
       />
     ))}
+    {station.lineIds.length === 0 && (
+      <circle
+        cx={col * cellSize + cellSize / 2}
+        cy={row * cellSize + cellSize / 2}
+        r={STATION_MARKER_RADIUS}
+        fill="none"
+        stroke="#888"
+        strokeWidth="2"
+        strokeDasharray="4,4"
+      />
+    )}
 
     {/* Waiting passenger count badge */}
     {station && waitingPassengersCount > 0 && (

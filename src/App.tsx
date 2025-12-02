@@ -48,6 +48,18 @@ const baseGameState: GameState = {
           activationOrder: 1, // Active from day 0
         },
         {
+          id: 'stadium',
+          name: 'Stadium',
+          position: { x: 5, y: 12 },
+          icon: 'baseball',
+          color: '#e74c3c',
+          residents: 5,
+          proportionOfJobs: 0.10, // 10% of city jobs
+          availableShifts: [[8, 17], [9, 18]], // Business hours
+          proportionOfRecreationalDemand: 0.3, // 30% of recreational trips
+          activationOrder: 1, // Active from day 0
+        },
+        {
           id: 'industrial',
           name: 'Industrial',
           position: { x: 5, y: 13 },

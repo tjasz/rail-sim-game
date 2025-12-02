@@ -12,6 +12,10 @@ interface CitizenMarkerProps {
 
 export function CitizenMarker({ citizen, neighborhoods, cellSize }: CitizenMarkerProps) {
   const { setSelectedObject } = useSelection();
+
+  if (!citizen.state.includes('walking')) {
+    return null;
+  }
   
   let fill = '#666';
   if (citizen.state === 'waiting-at-origin') fill = 'none';

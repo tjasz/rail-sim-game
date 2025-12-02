@@ -563,8 +563,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
                   <p>Click on map to place track points</p>
                   <p>Points: {buildTrackState.points.length}</p>
                   <p>Distance: {buildTrackState.totalDistance.toFixed(2)} units</p>
-                  <p>Cost: ${Math.round(buildTrackState.totalCost)}</p>
-                  <p>Budget: ${gameState.city.budget}</p>
+                  <p>Cost: ${Math.round(buildTrackState.totalCost).toLocaleString()}</p>
+                  <p>Budget: ${Math.round(gameState.city.budget).toLocaleString()}</p>
                 </div>
                 <div className="build-track-buttons">
                   <button 

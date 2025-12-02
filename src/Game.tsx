@@ -343,13 +343,24 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       }
       updatedLines.set(lineId, updatedLine);
       
+      const updatedRailNetwork = {
+        ...prevState.railNetwork,
+        trains: updatedTrains,
+        lines: updatedLines,
+      };
+      
+      // Recalculate citizen routes with updated network (line now has trains!)
+      const updatedCitizens = calculateCitizenRoutes(
+        prevState.citizens,
+        prevState.city.config.neighborhoods,
+        prevState.city.config,
+        updatedRailNetwork
+      );
+      
       return {
         ...prevState,
-        railNetwork: {
-          ...prevState.railNetwork,
-          trains: updatedTrains,
-          lines: updatedLines,
-        },
+        railNetwork: updatedRailNetwork,
+        citizens: updatedCitizens,
       };
     });
   }, []);

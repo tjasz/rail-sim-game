@@ -135,7 +135,7 @@ const baseGameState: GameState = {
       
       initialPopulation: 100,
       populationGrowthRate: 0.05,
-      initialBudget: 10000,
+      initialBudget: 30000,
       budgetBaseline: 1000,
       budgetBonusPerHappyCitizen: 10,
       walkingSpeed: 0.05,
@@ -150,7 +150,7 @@ const baseGameState: GameState = {
     currentMonth: 1,
     currentDay: 0,
     population: 45, // Initial: downtown (5) + commercial-a (10) + residential-1 (30) on day 0
-    budget: 8500,
+    budget: 30000,
   },
   railNetwork: {
     stations: new Map(),

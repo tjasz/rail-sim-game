@@ -67,34 +67,34 @@ export function TrainsList({
                   <span>Direction: {train.direction}</span>
                   {station && <span>At: {station.neighborhoodId}</span>}
                 </div>
-                {isUnassigned ? (
-                  <div className="train-assignment">
-                    {hasLines ? (
-                      <>
-                        <label htmlFor={`train-${train.id}-line`}>Assign to line:</label>
-                        <select 
-                          id={`train-${train.id}-line`}
-                          className="line-selector"
-                          onChange={(e) => {
-                            if (e.target.value) {
-                              onAssignTrainToLine(train.id, e.target.value);
-                            }
-                          }}
-                          defaultValue=""
-                        >
-                          <option value="">Select a line...</option>
-                          {Array.from(lines.values()).map(l => (
-                            <option key={l.id} value={l.id}>
-                              {l.name} ({l.stationIds.length} stations)
-                            </option>
-                          ))}
-                        </select>
-                      </>
-                    ) : (
-                      <p className="warning-text">Create a line first to assign this train</p>
-                    )}
-                  </div>
-                ) : null}
+                <div className="train-assignment">
+                  {hasLines ? (
+                    <>
+                      <label htmlFor={`train-${train.id}-line`}>
+                        {isUnassigned ? 'Assign to line:' : 'Re-assign to line:'}
+                      </label>
+                      <select 
+                        id={`train-${train.id}-line`}
+                        className="line-selector"
+                        onChange={(e) => {
+                          if (e.target.value && e.target.value !== train.lineId) {
+                            onAssignTrainToLine(train.id, e.target.value);
+                          }
+                        }}
+                        value={train.lineId === 'unassigned' ? '' : train.lineId}
+                      >
+                        <option value="">Select a line...</option>
+                        {Array.from(lines.values()).map(l => (
+                          <option key={l.id} value={l.id}>
+                            {l.name} ({l.stationIds.length} stations)
+                          </option>
+                        ))}
+                      </select>
+                    </>
+                  ) : (
+                    <p className="warning-text">Create a line first to assign this train</p>
+                  )}
+                </div>
               </div>
             );
           })}

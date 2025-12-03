@@ -262,6 +262,19 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         return prevState;
       }
       
+      // Handle re-assignment: remove train from old line if it was assigned
+      const updatedLines = new Map(prevState.railNetwork.lines);
+      if (train.lineId && train.lineId !== 'unassigned' && train.lineId !== lineId) {
+        const oldLine = prevState.railNetwork.lines.get(train.lineId);
+        if (oldLine) {
+          updatedLines.set(train.lineId, {
+            ...oldLine,
+            trainIds: oldLine.trainIds.filter(id => id !== trainId),
+            isActive: oldLine.trainIds.filter(id => id !== trainId).length > 0,
+          });
+        }
+      }
+      
       // Get existing trains on this line (excluding the one being assigned)
       const existingTrainsOnLine = Array.from(prevState.railNetwork.trains.values())
         .filter(t => t.lineId === lineId && t.id !== trainId);
@@ -343,7 +356,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       });
       
       // Add train to line's trainIds if not already there
-      const updatedLines = new Map(prevState.railNetwork.lines);
       const updatedLine = { ...line };
       if (!updatedLine.trainIds.includes(trainId)) {
         updatedLine.trainIds = [...updatedLine.trainIds, trainId];

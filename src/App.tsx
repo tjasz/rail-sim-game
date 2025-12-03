@@ -1,8 +1,13 @@
 import { Game } from './Game';
-import type { GameState } from './models';
+import type { GameState, Neighborhood } from './models';
 import { calculateDistance, initializeDay } from './utils';
 import './App.css';
 import { SeattleConfig } from './cities';
+
+const getNeighborhoodPriority = (neighborhood: Neighborhood) => {
+  return neighborhood.residents;
+  return (neighborhood.residents + 0.5 * neighborhood.proportionOfJobs) * (17.8 - calculateDistance(neighborhood.position, { x: 5, y: 11 }));
+}
 
 // Base game configuration (without citizens - they'll be generated)
 const baseGameState: GameState = {
@@ -16,8 +21,8 @@ const baseGameState: GameState = {
         SeattleConfig.config.tiles[n.position.x][n.position.y] !== 'w'
       )
       .sort((a, b) => {
-        const aScore = (a.residents + 0.5 * a.proportionOfJobs) * (17.8 - calculateDistance(a.position, { x: 5, y: 11 }));
-        const bScore = (b.residents + 0.5 * b.proportionOfJobs) * (17.8 - calculateDistance(b.position, { x: 5, y: 11 }));
+        const aScore = getNeighborhoodPriority(a);
+        const bScore = getNeighborhoodPriority(b);
         return bScore - aScore;
       }),
     },

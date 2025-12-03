@@ -16,16 +16,13 @@ import { calculateDistance } from './simulation';
 import { calculateRoute } from './pathfinding';
 
 /**
- * Get active neighborhoods based on the current day
+ * Get active neighborhoods based on the active neighborhood count
  */
 export function getActiveNeighborhoods(
   neighborhoods: Neighborhood[],
-  day: number
+  activeNeighborhoodCount: number
 ): Neighborhood[] {  
-  // Start with 3 neighborhoods, add 1 each day
-  const numActive = Math.min(3 + day, neighborhoods.length);
-  
-  return neighborhoods.slice(0, numActive);
+  return neighborhoods.slice(0, activeNeighborhoodCount);
 }
 
 /**
@@ -33,9 +30,9 @@ export function getActiveNeighborhoods(
  */
 export function calculatePopulation(
   neighborhoods: Neighborhood[],
-  day: number
+  activeNeighborhoodCount: number
 ): number {
-  const activeNeighborhoods = getActiveNeighborhoods(neighborhoods, day);
+  const activeNeighborhoods = getActiveNeighborhoods(neighborhoods, activeNeighborhoodCount);
   return activeNeighborhoods.reduce((sum, n) => sum + n.residents, 0);
 }
 
@@ -569,6 +566,7 @@ export function initializeTrains(
 export function initializeDay(
   config: CityConfig,
   day: number,
+  activeNeighborhoodCount: number,
   railNetwork: RailNetwork,
   startTime: number = 0 // Midnight default
 ): {
@@ -576,8 +574,8 @@ export function initializeDay(
   citizens: Map<string, Citizen>;
   updatedNetwork: RailNetwork;
 } {
-  // Get active neighborhoods based on day
-  const activeNeighborhoods = getActiveNeighborhoods(config.neighborhoods, day);
+  // Get active neighborhoods based on activeNeighborhoodCount
+  const activeNeighborhoods = getActiveNeighborhoods(config.neighborhoods, activeNeighborhoodCount);
   
   // Create citizens with work assignments and daily schedules
   const citizensWithoutRoutes = createCitizensWithSchedules(activeNeighborhoods);

@@ -10,6 +10,7 @@ interface CityGridProps {
   stations: Map<string, Station>;
   citizens: Map<string, Citizen>;
   lines: Map<string, Line>;
+  activeNeighborhoodCount: number;
   cellSize?: number;
   onCellClick?: (x: number, y: number) => void;
   onStationClick?: (stationId: string) => void;
@@ -21,6 +22,7 @@ export function CityGrid({
   stations, 
   citizens,
   lines,
+  activeNeighborhoodCount,
   cellSize = 60,
   onCellClick,
   onStationClick 
@@ -28,10 +30,10 @@ export function CityGrid({
   const width = config.gridWidth * cellSize;
   const height = config.gridHeight * cellSize;
   
-  // Create a map of positions to neighborhoods
-  const neighborhoodMap = new Map<string, Neighborhood>();
-  neighborhoods.forEach(n => {
-    neighborhoodMap.set(`${n.position.x},${n.position.y}`, n);
+  // Create a map of positions to neighborhoods with their indices
+  const neighborhoodMap = new Map<string, { neighborhood: Neighborhood; index: number }>();
+  neighborhoods.forEach((n, index) => {
+    neighborhoodMap.set(`${n.position.x},${n.position.y}`, { neighborhood: n, index });
   });
   
   // Create a map of positions to stations
@@ -52,7 +54,7 @@ export function CityGrid({
         {Array.from({ length: config.gridWidth }).map((_, x) =>
           Array.from({ length: config.gridHeight }).map((_, y) => {
             const isWater = config.tiles[x][y] === 'w';
-            const neighborhood = neighborhoodMap.get(`${x},${y}`);
+            const neighborhoodData = neighborhoodMap.get(`${x},${y}`);
             const station = stationMap.get(`${x},${y}`);
             
             return (
@@ -64,11 +66,13 @@ export function CityGrid({
                 {/* Cell background */}
                 <GridCell row={y} col={x} isWater={isWater} cellSize={cellSize} />
                 
-                {neighborhood && (
+                {neighborhoodData && (
                   <NeighborhoodMarker
                     row={y}
                     col={x}
-                    neighborhood={neighborhood}
+                    neighborhood={neighborhoodData.neighborhood}
+                    neighborhoodIndex={neighborhoodData.index}
+                    activeNeighborhoodCount={activeNeighborhoodCount}
                     cellSize={cellSize}
                     />
                 )}

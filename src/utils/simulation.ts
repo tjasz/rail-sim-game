@@ -321,6 +321,7 @@ export function updateCitizens(
   citizens: Map<string, Citizen>,
   trains: Map<string, Train>,
   stations: Map<string, Station>,
+  lines: Map<string, Line>,
   neighborhoods: any[], // Array of neighborhoods from config
   deltaMinutes: number,
   walkingSpeed: number,
@@ -529,28 +530,42 @@ export function updateCitizens(
     const waitingCitizens = (citizensByState.get('waiting-at-station') || [])
       .filter(c => c.currentStationId === station.id);
     
-    // Group waiting citizens by line and direction
-    const waitingByLineAndDirection = new Map<string, Citizen[]>();
-    for (const citizen of waitingCitizens) {
-      if (!citizen.route || citizen.route.segments.length === 0) continue;
-      
-      const nextSegment = citizen.route.segments[0];
-      if (nextSegment.type !== 'ride') continue;
-      
-      const key = `${nextSegment.lineId}-${nextSegment.lineDirection}`;
-      if (!waitingByLineAndDirection.has(key)) {
-        waitingByLineAndDirection.set(key, []);
-      }
-      waitingByLineAndDirection.get(key)!.push(citizen);
-    }
-    
-    // For each train at the station, board waiting citizens
+    // For each train at the station, board waiting citizens who can use this train
     for (const train of trainsAtStation) {
-      const key = `${train.lineId}-${train.direction}`;
-      const waitingForThisTrain = waitingByLineAndDirection.get(key) || [];
+      const line = lines.get(train.lineId);
+      if (!line || !line.isActive) continue;
       
+      // Determine which stations this train will visit based on its direction
+      const currentIndex = train.currentStationIndex;
+      const stationsAhead: string[] = [];
+      
+      if (train.direction === 'forward') {
+        // Train is going forward through the line
+        stationsAhead.push(...line.stationIds.slice(currentIndex + 1));
+      } else {
+        // Train is going backward through the line
+        for (let i = currentIndex - 1; i >= 0; i--) {
+          stationsAhead.push(line.stationIds[i]);
+        }
+      }
+      
+      // Find citizens who want to go to any station this train will visit
+      const eligibleCitizens: Citizen[] = [];
+      for (const citizen of waitingCitizens) {
+        if (!citizen.route || citizen.route.segments.length === 0) continue;
+        
+        const nextSegment = citizen.route.segments[0];
+        if (nextSegment.type !== 'ride') continue;
+        
+        // Check if this train goes to the citizen's desired station
+        if (stationsAhead.includes(nextSegment.toStationId)) {
+          eligibleCitizens.push(citizen);
+        }
+      }
+      
+      // Board as many eligible citizens as possible
       const availableCapacity = train.capacity - train.passengerIds.length;
-      const citizensToBoard = waitingForThisTrain.slice(0, availableCapacity);
+      const citizensToBoard = eligibleCitizens.slice(0, availableCapacity);
       
       for (const citizen of citizensToBoard) {
         const updatedCitizen = { ...citizen };
@@ -560,6 +575,12 @@ export function updateCitizens(
         
         updatedCitizens.set(citizen.id, updatedCitizen);
         train.passengerIds.push(citizen.id);
+        
+        // Remove from waiting list so they don't board another train
+        const index = waitingCitizens.indexOf(citizen);
+        if (index > -1) {
+          waitingCitizens.splice(index, 1);
+        }
       }
     }
   });
@@ -821,6 +842,7 @@ export function tickSimulation(
     gameState.citizens,
     updatedTrains,
     gameState.railNetwork.stations,
+    gameState.railNetwork.lines,
     gameState.city.config.neighborhoods,
     deltaMinutes,
     gameState.city.config.walkingSpeed,

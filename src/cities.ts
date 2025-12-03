@@ -1,9 +1,15 @@
 import { iconPaths } from "./iconPaths";
 import type { CityState, Shift } from "./models";
-
 const BusinessShifts : Shift[] = [[7,16], [8, 17], [9, 18]];
 const RetailShifts : Shift[] = [[6, 14], [11, 19], [16, 0]];
 const ShiftWorkShifts : Shift[] = [[4,12], [12,20], [20,4]];
+
+// default to a mix of shifts
+const DefaultShifts : Shift[] = [
+  ...BusinessShifts,
+  ...RetailShifts,
+  ...ShiftWorkShifts,
+];
 
 export const SeattleConfig : CityState = {
   config: {
@@ -42,7 +48,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -53,7 +59,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -64,7 +70,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -75,7 +81,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -86,7 +92,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -97,7 +103,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -108,7 +114,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -119,7 +125,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -130,7 +136,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -141,7 +147,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -152,7 +158,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -163,7 +169,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -174,7 +180,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -185,7 +191,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -196,7 +202,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -207,7 +213,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -218,7 +224,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -229,7 +235,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -240,7 +246,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -251,7 +257,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -262,7 +268,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -273,7 +279,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -284,7 +290,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -295,7 +301,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -306,7 +312,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -317,7 +323,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -328,7 +334,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -339,7 +345,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -350,7 +356,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -361,7 +367,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -372,7 +378,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -383,7 +389,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -394,7 +400,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -405,7 +411,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -416,7 +422,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -427,7 +433,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -438,7 +444,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -449,7 +455,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -460,7 +466,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -471,7 +477,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -482,7 +488,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -493,7 +499,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -504,7 +510,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -515,7 +521,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -526,7 +532,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -537,7 +543,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -548,7 +554,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 8,
     proportionOfJobs: 5,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -559,7 +565,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 7,
     proportionOfJobs: 7,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -570,7 +576,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -581,7 +587,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -592,7 +598,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -603,7 +609,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -614,7 +620,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -625,7 +631,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -636,7 +642,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 5,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -647,7 +653,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 5,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -658,7 +664,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -669,7 +675,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -680,7 +686,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -691,7 +697,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -702,7 +708,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -713,7 +719,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -724,7 +730,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -735,7 +741,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -746,7 +752,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -757,7 +763,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 5,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -768,7 +774,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 9,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -779,7 +785,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 7,
     proportionOfJobs: 7,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -790,7 +796,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -801,7 +807,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 8,
     proportionOfJobs: 11,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -812,7 +818,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 13,
     proportionOfJobs: 25,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -823,7 +829,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -834,7 +840,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -845,7 +851,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -856,7 +862,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -867,7 +873,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -878,7 +884,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -889,7 +895,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -900,7 +906,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -911,7 +917,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -922,7 +928,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -933,7 +939,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -944,7 +950,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -955,7 +961,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -966,7 +972,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -977,7 +983,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 6,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -988,7 +994,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 5,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -999,7 +1005,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 7,
     proportionOfJobs: 5,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1010,7 +1016,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 6,
     proportionOfJobs: 6,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1021,7 +1027,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 9,
     proportionOfJobs: 15,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1032,7 +1038,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 18,
     proportionOfJobs: 117,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1043,7 +1049,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 9,
     proportionOfJobs: 97,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1054,7 +1060,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 7,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1065,7 +1071,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 7,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1076,7 +1082,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 5,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1087,7 +1093,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1098,7 +1104,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1109,7 +1115,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1120,7 +1126,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1131,7 +1137,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1142,7 +1148,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1153,7 +1159,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1164,7 +1170,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1175,7 +1181,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1186,7 +1192,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1197,7 +1203,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 7,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1208,7 +1214,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 7,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1219,7 +1225,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 8,
     proportionOfJobs: 8,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1230,7 +1236,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 5,
     proportionOfJobs: 7,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1241,7 +1247,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 5,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1252,7 +1258,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 22,
     proportionOfJobs: 80,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1263,7 +1269,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 12,
     proportionOfJobs: 96,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1274,7 +1280,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 6,
     proportionOfJobs: 12,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1285,7 +1291,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 6,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1296,7 +1302,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 6,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1307,7 +1313,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 5,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1318,7 +1324,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1329,7 +1335,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1340,7 +1346,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1351,7 +1357,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1362,7 +1368,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1373,7 +1379,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1384,7 +1390,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1395,7 +1401,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 5,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1406,7 +1412,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1417,7 +1423,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 5,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1428,7 +1434,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 6,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1439,7 +1445,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 8,
     proportionOfJobs: 9,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1450,7 +1456,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 7,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1461,7 +1467,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1472,7 +1478,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 10,
     proportionOfJobs: 9,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1483,7 +1489,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 8,
     proportionOfJobs: 9,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1494,7 +1500,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 5,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1505,7 +1511,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 5,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1516,7 +1522,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 5,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1527,7 +1533,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1538,7 +1544,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1549,7 +1555,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1560,7 +1566,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1571,7 +1577,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1582,7 +1588,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1593,7 +1599,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1604,7 +1610,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1615,7 +1621,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1626,7 +1632,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1637,7 +1643,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1648,7 +1654,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1659,7 +1665,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 6,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1670,7 +1676,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 6,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1681,7 +1687,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1692,7 +1698,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1703,7 +1709,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1714,7 +1720,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1725,7 +1731,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1736,7 +1742,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 5,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1747,7 +1753,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1758,7 +1764,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1769,7 +1775,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1780,7 +1786,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1791,7 +1797,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1802,7 +1808,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1813,7 +1819,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1824,7 +1830,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1835,7 +1841,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1846,7 +1852,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1857,7 +1863,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1868,7 +1874,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1879,7 +1885,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1890,7 +1896,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1901,7 +1907,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1912,7 +1918,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1923,7 +1929,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1934,7 +1940,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1945,7 +1951,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1956,7 +1962,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1967,7 +1973,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1978,7 +1984,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -1989,7 +1995,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2000,7 +2006,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2011,7 +2017,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2022,7 +2028,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2033,7 +2039,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2044,7 +2050,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2055,7 +2061,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2066,7 +2072,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2077,7 +2083,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2088,7 +2094,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2099,7 +2105,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2110,7 +2116,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2121,7 +2127,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2132,7 +2138,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2143,7 +2149,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2154,7 +2160,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2165,7 +2171,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2176,7 +2182,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2187,7 +2193,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2198,7 +2204,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2209,7 +2215,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2220,7 +2226,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2231,7 +2237,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2242,7 +2248,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2253,7 +2259,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2264,7 +2270,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2275,7 +2281,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2286,7 +2292,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2297,7 +2303,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2308,7 +2314,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 9,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2319,7 +2325,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 6,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2330,7 +2336,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 5,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2341,7 +2347,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2352,7 +2358,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 32,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2363,7 +2369,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 20,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2374,7 +2380,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2385,7 +2391,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2396,7 +2402,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2407,7 +2413,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2418,7 +2424,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2429,7 +2435,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2440,7 +2446,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2451,7 +2457,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2462,7 +2468,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2473,7 +2479,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2484,7 +2490,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2495,7 +2501,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2506,7 +2512,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2517,7 +2523,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2528,7 +2534,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2539,7 +2545,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 6,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2550,7 +2556,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2561,7 +2567,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 5,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2572,7 +2578,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 8,
     proportionOfJobs: 43,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2583,7 +2589,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 6,
     proportionOfJobs: 39,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2594,7 +2600,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2605,7 +2611,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2616,7 +2622,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2627,7 +2633,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2638,7 +2644,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2649,7 +2655,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2660,7 +2666,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 5,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2671,7 +2677,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2682,7 +2688,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2693,7 +2699,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2704,7 +2710,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2715,7 +2721,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 5,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2726,7 +2732,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2737,7 +2743,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2748,7 +2754,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2759,7 +2765,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2770,7 +2776,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2781,7 +2787,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 8,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2792,7 +2798,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 10,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2803,7 +2809,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2814,7 +2820,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2825,7 +2831,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2836,7 +2842,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2847,7 +2853,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2858,7 +2864,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2869,7 +2875,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2880,7 +2886,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2891,7 +2897,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2902,7 +2908,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2913,7 +2919,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2924,7 +2930,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2935,7 +2941,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2946,7 +2952,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2957,7 +2963,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2968,7 +2974,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2979,7 +2985,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 11,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -2990,7 +2996,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 13,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3001,7 +3007,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 10,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3012,7 +3018,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 7,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3023,7 +3029,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3034,7 +3040,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3045,7 +3051,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 6,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3056,7 +3062,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3067,7 +3073,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3078,7 +3084,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3089,7 +3095,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3100,7 +3106,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3111,7 +3117,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3122,7 +3128,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3133,7 +3139,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3144,7 +3150,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3155,7 +3161,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3166,7 +3172,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3177,7 +3183,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3188,7 +3194,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 6,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3199,7 +3205,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 14,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3210,7 +3216,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 23,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3221,7 +3227,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 10,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3232,7 +3238,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3243,7 +3249,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3254,7 +3260,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3265,7 +3271,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3276,7 +3282,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3287,7 +3293,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3298,7 +3304,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3309,7 +3315,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3320,7 +3326,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3331,7 +3337,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3342,7 +3348,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3353,7 +3359,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3364,7 +3370,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3375,7 +3381,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3386,7 +3392,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3397,7 +3403,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3408,7 +3414,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 4,
     proportionOfJobs: 6,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3419,7 +3425,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 3,
     proportionOfJobs: 17,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3430,7 +3436,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 12,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3441,7 +3447,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3452,7 +3458,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3463,7 +3469,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3474,7 +3480,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3485,7 +3491,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3496,7 +3502,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3507,7 +3513,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3518,7 +3524,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3529,7 +3535,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3540,7 +3546,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3551,7 +3557,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3562,7 +3568,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3573,7 +3579,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3584,7 +3590,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3595,7 +3601,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3606,7 +3612,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3617,7 +3623,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3628,7 +3634,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3639,7 +3645,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3650,7 +3656,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3661,7 +3667,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3672,7 +3678,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3683,7 +3689,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3694,7 +3700,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3705,7 +3711,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3716,7 +3722,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3727,7 +3733,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3738,7 +3744,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3749,7 +3755,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3760,7 +3766,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3771,7 +3777,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3782,7 +3788,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3793,7 +3799,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3804,7 +3810,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3815,7 +3821,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3826,7 +3832,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3837,7 +3843,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3848,7 +3854,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3859,7 +3865,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3870,7 +3876,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3881,7 +3887,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3892,7 +3898,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3903,7 +3909,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3914,7 +3920,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3925,7 +3931,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3936,7 +3942,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3947,7 +3953,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3958,7 +3964,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3969,7 +3975,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3980,7 +3986,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -3991,7 +3997,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4002,7 +4008,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4013,7 +4019,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4024,7 +4030,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4035,7 +4041,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4046,7 +4052,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4057,7 +4063,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4068,7 +4074,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 1,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4079,7 +4085,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4090,7 +4096,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4101,7 +4107,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4112,7 +4118,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4123,7 +4129,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4134,7 +4140,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4145,7 +4151,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4156,7 +4162,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4167,7 +4173,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4178,7 +4184,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 3,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4189,7 +4195,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4200,7 +4206,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4211,7 +4217,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4222,7 +4228,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4233,7 +4239,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4244,7 +4250,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4255,7 +4261,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4266,7 +4272,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4277,7 +4283,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4288,7 +4294,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4299,7 +4305,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4310,7 +4316,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4321,7 +4327,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4332,7 +4338,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4343,7 +4349,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4354,7 +4360,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4365,7 +4371,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4376,7 +4382,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4387,7 +4393,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 2,
     proportionOfJobs: 4,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4398,7 +4404,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 1,
     proportionOfJobs: 2,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4409,7 +4415,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4420,7 +4426,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   },
   {
@@ -4431,7 +4437,7 @@ export const SeattleConfig : CityState = {
     color: 'black',
     residents: 0,
     proportionOfJobs: 0,
-    availableShifts: BusinessShifts,
+    availableShifts: DefaultShifts,
     recreationalDemandCoefficient: 1,
   }
       ],

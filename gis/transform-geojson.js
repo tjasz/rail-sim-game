@@ -35,7 +35,7 @@ const neighborhoods = geojson.features.map(feature => {
     color: 'black',
     residents,
     proportionOfJobs,
-    availableShifts: 'BusinessShifts',
+    availableShifts: 'DefaultShifts',
     recreationalDemandCoefficient: 1.0
   };
 });

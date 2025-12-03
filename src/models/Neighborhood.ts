@@ -9,7 +9,7 @@ export interface Neighborhood {
   icon: string; // maki or temaki icon name
   color: string;
   residents: number; // number of residents living in this neighborhood
-  proportionOfJobs: number; // proportion of jobs in the city (0-1)
+  proportionOfJobs: number; // jobs will be proportionate to this number, normalized across active neighborhoods
   availableShifts: Shift[]; // shifts available for jobs in this neighborhood
-  proportionOfRecreationalDemand: number; // proportion of non-work demand (0-1)
+  recreationalDemandCoefficient: number; // recreational demand will be proportionate to this times the sum of jobs and residents
 }

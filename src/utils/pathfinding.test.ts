@@ -30,7 +30,7 @@ const testCityConfig: CityConfig = {
       residents: 5,
       proportionOfJobs: 0.5,
       availableShifts: [[8, 17]],
-      proportionOfRecreationalDemand: 0.3,
+      recreationalDemandCoefficient: 1,
     },
     {
       id: 'commercial-a',
@@ -41,7 +41,7 @@ const testCityConfig: CityConfig = {
       residents: 10,
       proportionOfJobs: 0.15,
       availableShifts: [[9, 21]],
-      proportionOfRecreationalDemand: 0.4,
+      recreationalDemandCoefficient: 1,
     },
     {
       id: 'commercial-b',
@@ -52,7 +52,7 @@ const testCityConfig: CityConfig = {
       residents: 8,
       proportionOfJobs: 0.15,
       availableShifts: [[9, 21]],
-      proportionOfRecreationalDemand: 0.3,
+      recreationalDemandCoefficient: 1,
     },
     {
       id: 'residential-1',
@@ -63,7 +63,7 @@ const testCityConfig: CityConfig = {
       residents: 30,
       proportionOfJobs: 0.05,
       availableShifts: [[8, 17]],
-      proportionOfRecreationalDemand: 0.0,
+      recreationalDemandCoefficient: 1,
     },
     {
       id: 'residential-2',
@@ -74,7 +74,7 @@ const testCityConfig: CityConfig = {
       residents: 25,
       proportionOfJobs: 0.05,
       availableShifts: [[8, 17]],
-      proportionOfRecreationalDemand: 0.0,
+      recreationalDemandCoefficient: 1,
     },
     {
       id: 'residential-3',
@@ -85,7 +85,7 @@ const testCityConfig: CityConfig = {
       residents: 20,
       proportionOfJobs: 0.05,
       availableShifts: [[8, 17]],
-      proportionOfRecreationalDemand: 0.0,
+      recreationalDemandCoefficient: 1,
     },
     {
       id: 'residential-4',
@@ -96,7 +96,7 @@ const testCityConfig: CityConfig = {
       residents: 22,
       proportionOfJobs: 0.05,
       availableShifts: [[8, 17]],
-      proportionOfRecreationalDemand: 0.0,
+      recreationalDemandCoefficient: 1,
     },
   ],
   initialPopulation: 100,

@@ -224,8 +224,11 @@ function generateDailySchedule(
  * Pick a recreational destination based on proportions
  */
 function pickRecreationalDestination(activeNeighborhoods: Neighborhood[]): Neighborhood {
+  const recreationalDemand = (n : Neighborhood) => 
+    n.recreationalDemandCoefficient * (n.residents + n.proportionOfJobs);
+
   const totalRecDemand = activeNeighborhoods.reduce(
-    (sum, n) => sum + n.proportionOfRecreationalDemand, 
+    (sum, n) => sum + recreationalDemand(n), 
     0
   );
   
@@ -233,7 +236,7 @@ function pickRecreationalDestination(activeNeighborhoods: Neighborhood[]): Neigh
   
   let cumulative = 0;
   for (const neighborhood of activeNeighborhoods) {
-    cumulative += neighborhood.proportionOfRecreationalDemand;
+    cumulative += recreationalDemand(neighborhood);
     if (random <= cumulative) {
       return neighborhood;
     }

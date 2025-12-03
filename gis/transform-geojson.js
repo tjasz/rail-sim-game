@@ -36,7 +36,7 @@ const neighborhoods = geojson.features.map(feature => {
     residents,
     proportionOfJobs,
     availableShifts: 'BusinessShifts',
-    proportionOfRecreationalDemand: 0.0
+    recreationalDemandCoefficient: 1.0
   };
 });
 
@@ -54,7 +54,7 @@ neighborhoods.forEach((neighborhood, index) => {
   output += `    residents: ${neighborhood.residents},\n`;
   output += `    proportionOfJobs: ${neighborhood.proportionOfJobs},\n`;
   output += `    availableShifts: ${neighborhood.availableShifts},\n`;
-  output += `    proportionOfRecreationalDemand: ${neighborhood.proportionOfRecreationalDemand},\n`;
+  output += `    recreationalDemandCoefficient: ${neighborhood.recreationalDemandCoefficient},\n`;
   output += '  }';
   
   if (index < neighborhoods.length - 1) {

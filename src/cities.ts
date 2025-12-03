@@ -43,7 +43,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-1',
@@ -54,7 +54,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-2',
@@ -65,7 +65,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-3',
@@ -76,7 +76,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-4',
@@ -87,7 +87,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-5',
@@ -98,7 +98,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-6',
@@ -109,7 +109,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-7',
@@ -120,7 +120,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-8',
@@ -131,7 +131,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-9',
@@ -142,7 +142,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-10',
@@ -153,7 +153,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-11',
@@ -164,7 +164,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-12',
@@ -175,7 +175,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-13',
@@ -186,7 +186,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-14',
@@ -197,7 +197,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-15',
@@ -208,7 +208,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-16',
@@ -219,7 +219,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-17',
@@ -230,7 +230,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-18',
@@ -241,7 +241,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '0-19',
@@ -252,7 +252,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-0',
@@ -263,7 +263,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-1',
@@ -274,7 +274,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-2',
@@ -285,7 +285,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-3',
@@ -296,7 +296,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-4',
@@ -307,7 +307,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-5',
@@ -318,7 +318,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-6',
@@ -329,7 +329,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-7',
@@ -340,7 +340,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-8',
@@ -351,7 +351,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-9',
@@ -362,7 +362,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-10',
@@ -373,7 +373,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-11',
@@ -384,7 +384,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-12',
@@ -395,7 +395,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-13',
@@ -406,7 +406,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-14',
@@ -417,7 +417,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-15',
@@ -428,7 +428,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-16',
@@ -439,7 +439,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-17',
@@ -450,7 +450,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-18',
@@ -461,7 +461,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '1-19',
@@ -472,7 +472,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-0',
@@ -483,7 +483,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-1',
@@ -494,7 +494,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-2',
@@ -505,7 +505,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-3',
@@ -516,7 +516,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-4',
@@ -527,7 +527,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-5',
@@ -538,7 +538,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-6',
@@ -549,7 +549,7 @@ export const SeattleConfig : CityState = {
     residents: 8,
     proportionOfJobs: 5,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-7',
@@ -560,7 +560,7 @@ export const SeattleConfig : CityState = {
     residents: 7,
     proportionOfJobs: 7,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-8',
@@ -571,7 +571,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-9',
@@ -582,7 +582,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-10',
@@ -593,7 +593,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-11',
@@ -604,7 +604,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-12',
@@ -615,7 +615,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-13',
@@ -626,7 +626,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-14',
@@ -637,7 +637,7 @@ export const SeattleConfig : CityState = {
     residents: 5,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-15',
@@ -648,7 +648,7 @@ export const SeattleConfig : CityState = {
     residents: 5,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-16',
@@ -659,7 +659,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-17',
@@ -670,7 +670,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-18',
@@ -681,7 +681,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '2-19',
@@ -692,7 +692,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-0',
@@ -703,7 +703,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-1',
@@ -714,7 +714,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-2',
@@ -725,7 +725,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-3',
@@ -736,7 +736,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-4',
@@ -747,7 +747,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-5',
@@ -758,7 +758,7 @@ export const SeattleConfig : CityState = {
     residents: 5,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-6',
@@ -769,7 +769,7 @@ export const SeattleConfig : CityState = {
     residents: 9,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-7',
@@ -780,7 +780,7 @@ export const SeattleConfig : CityState = {
     residents: 7,
     proportionOfJobs: 7,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-8',
@@ -791,7 +791,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-9',
@@ -802,7 +802,7 @@ export const SeattleConfig : CityState = {
     residents: 8,
     proportionOfJobs: 11,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-10',
@@ -813,7 +813,7 @@ export const SeattleConfig : CityState = {
     residents: 13,
     proportionOfJobs: 25,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-11',
@@ -824,7 +824,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-12',
@@ -835,7 +835,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-13',
@@ -846,7 +846,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-14',
@@ -857,7 +857,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-15',
@@ -868,7 +868,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-16',
@@ -879,7 +879,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-17',
@@ -890,7 +890,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-18',
@@ -901,7 +901,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '3-19',
@@ -912,7 +912,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-0',
@@ -923,7 +923,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-1',
@@ -934,7 +934,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-2',
@@ -945,7 +945,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-3',
@@ -956,7 +956,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-4',
@@ -967,7 +967,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-5',
@@ -978,7 +978,7 @@ export const SeattleConfig : CityState = {
     residents: 6,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-6',
@@ -989,7 +989,7 @@ export const SeattleConfig : CityState = {
     residents: 5,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-7',
@@ -1000,7 +1000,7 @@ export const SeattleConfig : CityState = {
     residents: 7,
     proportionOfJobs: 5,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-8',
@@ -1011,7 +1011,7 @@ export const SeattleConfig : CityState = {
     residents: 6,
     proportionOfJobs: 6,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-9',
@@ -1022,7 +1022,7 @@ export const SeattleConfig : CityState = {
     residents: 9,
     proportionOfJobs: 15,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-10',
@@ -1033,7 +1033,7 @@ export const SeattleConfig : CityState = {
     residents: 18,
     proportionOfJobs: 117,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-11',
@@ -1044,7 +1044,7 @@ export const SeattleConfig : CityState = {
     residents: 9,
     proportionOfJobs: 97,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-12',
@@ -1055,7 +1055,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 7,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-13',
@@ -1066,7 +1066,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 7,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-14',
@@ -1077,7 +1077,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 5,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-15',
@@ -1088,7 +1088,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-16',
@@ -1099,7 +1099,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-17',
@@ -1110,7 +1110,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-18',
@@ -1121,7 +1121,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '4-19',
@@ -1132,7 +1132,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-0',
@@ -1143,7 +1143,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-1',
@@ -1154,7 +1154,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-2',
@@ -1165,7 +1165,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-3',
@@ -1176,7 +1176,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-4',
@@ -1187,7 +1187,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-5',
@@ -1198,7 +1198,7 @@ export const SeattleConfig : CityState = {
     residents: 7,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-6',
@@ -1209,7 +1209,7 @@ export const SeattleConfig : CityState = {
     residents: 7,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-7',
@@ -1220,7 +1220,7 @@ export const SeattleConfig : CityState = {
     residents: 8,
     proportionOfJobs: 8,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-8',
@@ -1231,7 +1231,7 @@ export const SeattleConfig : CityState = {
     residents: 5,
     proportionOfJobs: 7,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-9',
@@ -1242,7 +1242,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 5,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-10',
@@ -1253,7 +1253,7 @@ export const SeattleConfig : CityState = {
     residents: 22,
     proportionOfJobs: 80,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-11',
@@ -1264,7 +1264,7 @@ export const SeattleConfig : CityState = {
     residents: 12,
     proportionOfJobs: 96,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-12',
@@ -1275,7 +1275,7 @@ export const SeattleConfig : CityState = {
     residents: 6,
     proportionOfJobs: 12,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-13',
@@ -1286,7 +1286,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 6,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-14',
@@ -1297,7 +1297,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 6,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-15',
@@ -1308,7 +1308,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 5,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-16',
@@ -1319,7 +1319,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-17',
@@ -1330,7 +1330,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-18',
@@ -1341,7 +1341,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '5-19',
@@ -1352,7 +1352,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-0',
@@ -1363,7 +1363,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-1',
@@ -1374,7 +1374,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-2',
@@ -1385,7 +1385,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-3',
@@ -1396,7 +1396,7 @@ export const SeattleConfig : CityState = {
     residents: 5,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-4',
@@ -1407,7 +1407,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-5',
@@ -1418,7 +1418,7 @@ export const SeattleConfig : CityState = {
     residents: 5,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-6',
@@ -1429,7 +1429,7 @@ export const SeattleConfig : CityState = {
     residents: 6,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-7',
@@ -1440,7 +1440,7 @@ export const SeattleConfig : CityState = {
     residents: 8,
     proportionOfJobs: 9,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-8',
@@ -1451,7 +1451,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 7,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-9',
@@ -1462,7 +1462,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-10',
@@ -1473,7 +1473,7 @@ export const SeattleConfig : CityState = {
     residents: 10,
     proportionOfJobs: 9,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-11',
@@ -1484,7 +1484,7 @@ export const SeattleConfig : CityState = {
     residents: 8,
     proportionOfJobs: 9,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-12',
@@ -1495,7 +1495,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 5,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-13',
@@ -1506,7 +1506,7 @@ export const SeattleConfig : CityState = {
     residents: 5,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-14',
@@ -1517,7 +1517,7 @@ export const SeattleConfig : CityState = {
     residents: 5,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-15',
@@ -1528,7 +1528,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-16',
@@ -1539,7 +1539,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-17',
@@ -1550,7 +1550,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-18',
@@ -1561,7 +1561,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '6-19',
@@ -1572,7 +1572,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-0',
@@ -1583,7 +1583,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-1',
@@ -1594,7 +1594,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-2',
@@ -1605,7 +1605,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-3',
@@ -1616,7 +1616,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-4',
@@ -1627,7 +1627,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-5',
@@ -1638,7 +1638,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-6',
@@ -1649,7 +1649,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-7',
@@ -1660,7 +1660,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 6,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-8',
@@ -1671,7 +1671,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 6,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-9',
@@ -1682,7 +1682,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-10',
@@ -1693,7 +1693,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-11',
@@ -1704,7 +1704,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-12',
@@ -1715,7 +1715,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-13',
@@ -1726,7 +1726,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-14',
@@ -1737,7 +1737,7 @@ export const SeattleConfig : CityState = {
     residents: 5,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-15',
@@ -1748,7 +1748,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-16',
@@ -1759,7 +1759,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-17',
@@ -1770,7 +1770,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-18',
@@ -1781,7 +1781,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '7-19',
@@ -1792,7 +1792,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-0',
@@ -1803,7 +1803,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-1',
@@ -1814,7 +1814,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-2',
@@ -1825,7 +1825,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-3',
@@ -1836,7 +1836,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-4',
@@ -1847,7 +1847,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-5',
@@ -1858,7 +1858,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-6',
@@ -1869,7 +1869,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-7',
@@ -1880,7 +1880,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-8',
@@ -1891,7 +1891,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-9',
@@ -1902,7 +1902,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-10',
@@ -1913,7 +1913,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-11',
@@ -1924,7 +1924,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-12',
@@ -1935,7 +1935,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-13',
@@ -1946,7 +1946,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-14',
@@ -1957,7 +1957,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-15',
@@ -1968,7 +1968,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-16',
@@ -1979,7 +1979,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-17',
@@ -1990,7 +1990,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-18',
@@ -2001,7 +2001,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '8-19',
@@ -2012,7 +2012,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-0',
@@ -2023,7 +2023,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-1',
@@ -2034,7 +2034,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-2',
@@ -2045,7 +2045,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-3',
@@ -2056,7 +2056,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-4',
@@ -2067,7 +2067,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-5',
@@ -2078,7 +2078,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-6',
@@ -2089,7 +2089,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-7',
@@ -2100,7 +2100,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-8',
@@ -2111,7 +2111,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-9',
@@ -2122,7 +2122,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-10',
@@ -2133,7 +2133,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-11',
@@ -2144,7 +2144,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-12',
@@ -2155,7 +2155,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-13',
@@ -2166,7 +2166,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-14',
@@ -2177,7 +2177,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-15',
@@ -2188,7 +2188,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-16',
@@ -2199,7 +2199,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-17',
@@ -2210,7 +2210,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-18',
@@ -2221,7 +2221,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '9-19',
@@ -2232,7 +2232,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-0',
@@ -2243,7 +2243,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-1',
@@ -2254,7 +2254,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-2',
@@ -2265,7 +2265,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-3',
@@ -2276,7 +2276,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-4',
@@ -2287,7 +2287,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-5',
@@ -2298,7 +2298,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-6',
@@ -2309,7 +2309,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 9,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-7',
@@ -2320,7 +2320,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 6,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-8',
@@ -2331,7 +2331,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 5,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-9',
@@ -2342,7 +2342,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-10',
@@ -2353,7 +2353,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 32,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-11',
@@ -2364,7 +2364,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 20,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-12',
@@ -2375,7 +2375,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-13',
@@ -2386,7 +2386,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-14',
@@ -2397,7 +2397,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-15',
@@ -2408,7 +2408,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-16',
@@ -2419,7 +2419,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-17',
@@ -2430,7 +2430,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-18',
@@ -2441,7 +2441,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '10-19',
@@ -2452,7 +2452,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-0',
@@ -2463,7 +2463,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-1',
@@ -2474,7 +2474,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-2',
@@ -2485,7 +2485,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-3',
@@ -2496,7 +2496,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-4',
@@ -2507,7 +2507,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-5',
@@ -2518,7 +2518,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-6',
@@ -2529,7 +2529,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-7',
@@ -2540,7 +2540,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 6,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-8',
@@ -2551,7 +2551,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-9',
@@ -2562,7 +2562,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 5,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-10',
@@ -2573,7 +2573,7 @@ export const SeattleConfig : CityState = {
     residents: 8,
     proportionOfJobs: 43,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-11',
@@ -2584,7 +2584,7 @@ export const SeattleConfig : CityState = {
     residents: 6,
     proportionOfJobs: 39,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-12',
@@ -2595,7 +2595,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-13',
@@ -2606,7 +2606,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-14',
@@ -2617,7 +2617,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-15',
@@ -2628,7 +2628,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-16',
@@ -2639,7 +2639,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-17',
@@ -2650,7 +2650,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-18',
@@ -2661,7 +2661,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 5,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '11-19',
@@ -2672,7 +2672,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-0',
@@ -2683,7 +2683,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-1',
@@ -2694,7 +2694,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-2',
@@ -2705,7 +2705,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-3',
@@ -2716,7 +2716,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 5,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-4',
@@ -2727,7 +2727,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-5',
@@ -2738,7 +2738,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-6',
@@ -2749,7 +2749,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-7',
@@ -2760,7 +2760,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-8',
@@ -2771,7 +2771,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-9',
@@ -2782,7 +2782,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 8,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-10',
@@ -2793,7 +2793,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 10,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-11',
@@ -2804,7 +2804,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-12',
@@ -2815,7 +2815,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-13',
@@ -2826,7 +2826,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-14',
@@ -2837,7 +2837,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-15',
@@ -2848,7 +2848,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-16',
@@ -2859,7 +2859,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-17',
@@ -2870,7 +2870,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-18',
@@ -2881,7 +2881,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '12-19',
@@ -2892,7 +2892,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-0',
@@ -2903,7 +2903,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-1',
@@ -2914,7 +2914,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-2',
@@ -2925,7 +2925,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-3',
@@ -2936,7 +2936,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-4',
@@ -2947,7 +2947,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-5',
@@ -2958,7 +2958,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-6',
@@ -2969,7 +2969,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-7',
@@ -2980,7 +2980,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 11,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-8',
@@ -2991,7 +2991,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 13,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-9',
@@ -3002,7 +3002,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 10,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-10',
@@ -3013,7 +3013,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 7,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-11',
@@ -3024,7 +3024,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-12',
@@ -3035,7 +3035,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-13',
@@ -3046,7 +3046,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 6,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-14',
@@ -3057,7 +3057,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-15',
@@ -3068,7 +3068,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-16',
@@ -3079,7 +3079,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-17',
@@ -3090,7 +3090,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-18',
@@ -3101,7 +3101,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '13-19',
@@ -3112,7 +3112,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-0',
@@ -3123,7 +3123,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-1',
@@ -3134,7 +3134,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-2',
@@ -3145,7 +3145,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-3',
@@ -3156,7 +3156,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-4',
@@ -3167,7 +3167,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-5',
@@ -3178,7 +3178,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-6',
@@ -3189,7 +3189,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 6,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-7',
@@ -3200,7 +3200,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 14,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-8',
@@ -3211,7 +3211,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 23,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-9',
@@ -3222,7 +3222,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 10,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-10',
@@ -3233,7 +3233,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-11',
@@ -3244,7 +3244,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-12',
@@ -3255,7 +3255,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-13',
@@ -3266,7 +3266,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-14',
@@ -3277,7 +3277,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-15',
@@ -3288,7 +3288,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-16',
@@ -3299,7 +3299,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-17',
@@ -3310,7 +3310,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-18',
@@ -3321,7 +3321,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '14-19',
@@ -3332,7 +3332,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-0',
@@ -3343,7 +3343,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-1',
@@ -3354,7 +3354,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-2',
@@ -3365,7 +3365,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-3',
@@ -3376,7 +3376,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-4',
@@ -3387,7 +3387,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-5',
@@ -3398,7 +3398,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-6',
@@ -3409,7 +3409,7 @@ export const SeattleConfig : CityState = {
     residents: 4,
     proportionOfJobs: 6,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-7',
@@ -3420,7 +3420,7 @@ export const SeattleConfig : CityState = {
     residents: 3,
     proportionOfJobs: 17,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-8',
@@ -3431,7 +3431,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 12,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-9',
@@ -3442,7 +3442,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-10',
@@ -3453,7 +3453,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-11',
@@ -3464,7 +3464,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-12',
@@ -3475,7 +3475,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-13',
@@ -3486,7 +3486,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-14',
@@ -3497,7 +3497,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-15',
@@ -3508,7 +3508,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-16',
@@ -3519,7 +3519,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-17',
@@ -3530,7 +3530,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-18',
@@ -3541,7 +3541,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '15-19',
@@ -3552,7 +3552,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-0',
@@ -3563,7 +3563,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-1',
@@ -3574,7 +3574,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-2',
@@ -3585,7 +3585,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-3',
@@ -3596,7 +3596,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-4',
@@ -3607,7 +3607,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-5',
@@ -3618,7 +3618,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-6',
@@ -3629,7 +3629,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-7',
@@ -3640,7 +3640,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-8',
@@ -3651,7 +3651,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-9',
@@ -3662,7 +3662,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-10',
@@ -3673,7 +3673,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-11',
@@ -3684,7 +3684,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-12',
@@ -3695,7 +3695,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-13',
@@ -3706,7 +3706,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-14',
@@ -3717,7 +3717,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-15',
@@ -3728,7 +3728,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-16',
@@ -3739,7 +3739,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-17',
@@ -3750,7 +3750,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-18',
@@ -3761,7 +3761,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '16-19',
@@ -3772,7 +3772,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-0',
@@ -3783,7 +3783,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-1',
@@ -3794,7 +3794,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-2',
@@ -3805,7 +3805,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-3',
@@ -3816,7 +3816,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-4',
@@ -3827,7 +3827,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-5',
@@ -3838,7 +3838,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-6',
@@ -3849,7 +3849,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-7',
@@ -3860,7 +3860,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-8',
@@ -3871,7 +3871,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-9',
@@ -3882,7 +3882,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-10',
@@ -3893,7 +3893,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-11',
@@ -3904,7 +3904,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-12',
@@ -3915,7 +3915,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-13',
@@ -3926,7 +3926,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-14',
@@ -3937,7 +3937,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-15',
@@ -3948,7 +3948,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-16',
@@ -3959,7 +3959,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-17',
@@ -3970,7 +3970,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-18',
@@ -3981,7 +3981,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '17-19',
@@ -3992,7 +3992,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-0',
@@ -4003,7 +4003,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-1',
@@ -4014,7 +4014,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-2',
@@ -4025,7 +4025,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-3',
@@ -4036,7 +4036,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-4',
@@ -4047,7 +4047,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-5',
@@ -4058,7 +4058,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-6',
@@ -4069,7 +4069,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 1,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-7',
@@ -4080,7 +4080,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-8',
@@ -4091,7 +4091,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-9',
@@ -4102,7 +4102,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-10',
@@ -4113,7 +4113,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-11',
@@ -4124,7 +4124,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-12',
@@ -4135,7 +4135,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-13',
@@ -4146,7 +4146,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-14',
@@ -4157,7 +4157,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-15',
@@ -4168,7 +4168,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-16',
@@ -4179,7 +4179,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 3,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-17',
@@ -4190,7 +4190,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-18',
@@ -4201,7 +4201,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '18-19',
@@ -4212,7 +4212,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-0',
@@ -4223,7 +4223,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-1',
@@ -4234,7 +4234,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-2',
@@ -4245,7 +4245,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-3',
@@ -4256,7 +4256,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-4',
@@ -4267,7 +4267,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-5',
@@ -4278,7 +4278,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-6',
@@ -4289,7 +4289,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-7',
@@ -4300,7 +4300,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-8',
@@ -4311,7 +4311,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-9',
@@ -4322,7 +4322,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-10',
@@ -4333,7 +4333,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-11',
@@ -4344,7 +4344,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-12',
@@ -4355,7 +4355,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-13',
@@ -4366,7 +4366,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-14',
@@ -4377,7 +4377,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-15',
@@ -4388,7 +4388,7 @@ export const SeattleConfig : CityState = {
     residents: 2,
     proportionOfJobs: 4,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-16',
@@ -4399,7 +4399,7 @@ export const SeattleConfig : CityState = {
     residents: 1,
     proportionOfJobs: 2,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-17',
@@ -4410,7 +4410,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-18',
@@ -4421,7 +4421,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   },
   {
     id: '19-19',
@@ -4432,7 +4432,7 @@ export const SeattleConfig : CityState = {
     residents: 0,
     proportionOfJobs: 0,
     availableShifts: BusinessShifts,
-    proportionOfRecreationalDemand: 0,
+    recreationalDemandCoefficient: 1,
   }
       ],
       initialPopulation: 100,

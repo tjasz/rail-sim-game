@@ -119,15 +119,16 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
   }, []);
 
   const handleContinueDay = useCallback(() => {
+    if (!dayResult) return;
+    
     setDayResult(null);
     // Trigger day rollover and initialize new day with citizens
     setGameState((prevState) => {
-      // Calculate rollover statistics
-      const totalCitizens = prevState.stats.currentDayHappyCitizens + prevState.stats.currentDayUnhappyCitizens;
-      const happyCitizens = prevState.stats.currentDayHappyCitizens;
-      const unhappyCitizens = prevState.stats.currentDayUnhappyCitizens;
-      const budgetEarned = prevState.city.config.budgetBaseline + 
-        (happyCitizens * prevState.city.config.budgetBonusPerHappyCitizen);
+      // Use budget earned from the day result
+      const budgetEarned = dayResult.budgetEarned;
+      const totalCitizens = dayResult.totalCitizens;
+      const happyCitizens = dayResult.happyCitizens;
+      const unhappyCitizens = dayResult.unhappyCitizens;
       
       const updatedStats = {
         ...prevState.stats,
@@ -185,7 +186,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         railNetwork: updatedNetwork,
       };
     });
-  }, []);
+  }, [dayResult]);
 
   const handleGameOver = useCallback(() => {
     setDayResult(null);

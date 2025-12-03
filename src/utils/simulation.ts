@@ -622,10 +622,21 @@ export function calculateDayResult(gameState: GameState): DayResult {
   const happyCitizens = gameState.stats.currentDayHappyCitizens;
   const unhappyCitizens = gameState.stats.currentDayUnhappyCitizens;
   const happinessRate = totalCitizens > 0 ? (happyCitizens / totalCitizens) * 100 : 0;
-  const passed = happinessRate >= 50;
+  const votersApprove = happinessRate >= 50;
   
-  const budgetEarned = gameState.city.config.budgetBaseline + 
-    (happyCitizens * gameState.city.config.budgetBonusPerHappyCitizen);
+  const budgetEarned = votersApprove
+    ? gameState.city.config.budgetBaseline + 
+      (happyCitizens * gameState.city.config.budgetBonusPerHappyCitizen)
+    : 0;
+
+  // If you have no budget to make improvements and citizens are unhappy, you fail the day
+  const totalBudget = gameState.city.budget + budgetEarned;
+  const passed = votersApprove
+    || totalBudget >= gameState.city.config.costPerStation
+    || totalBudget >= gameState.city.config.costPerTrackMileLand
+    || totalBudget >= gameState.city.config.costPerTrackMileWater
+    || totalBudget >= gameState.city.config.costPerTrain
+    ;
 
   return {
     day: gameState.city.currentDay,

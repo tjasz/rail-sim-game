@@ -29,7 +29,7 @@ export function DayResultModal({ result, onContinue, onGameOver }: DayResultModa
           
           <div className="result-stat large">
             <span className="stat-label">Happiness Rate</span>
-            <span className={`stat-value ${result.passed ? 'success' : 'failure'}`}>
+            <span className={`stat-value ${result.happinessRate >= 50 ? 'success' : 'failure'}`}>
               {result.happinessRate.toFixed(1)}%
             </span>
           </div>
@@ -58,11 +58,17 @@ export function DayResultModal({ result, onContinue, onGameOver }: DayResultModa
         </div>
         
         <div className="result-message">
-          {result.passed ? (
-            <p>Great job! More than half of your citizens were happy with the metro service.</p>
-          ) : (
-            <p>Too many citizens were unhappy with the metro service. Try expanding your network!</p>
-          )}
+          {result.passed
+            ? result.happinessRate >= 50
+              ? (
+                <p>Great job! More than half of your citizens were happy with the metro service.</p>
+              )
+              : (
+                <p>Citizens are unhappy with the service. Try using your budget to expand the network!</p>
+              )
+            : (
+              <p>Too many citizens were unhappy with the metro service. You have no budget to make further improvements.</p>
+            )}
         </div>
         
         <button className="btn-large btn-primary" onClick={handleClick}>

@@ -11,7 +11,11 @@ const baseGameState: GameState = {
     ...SeattleConfig,
     config: {
       ...SeattleConfig.config,
-      neighborhoods: SeattleConfig.config.neighborhoods.sort((a, b) => {
+      neighborhoods: SeattleConfig.config.neighborhoods
+      .filter(n => 
+        SeattleConfig.config.tiles[n.position.x][n.position.y] !== 'w'
+      )
+      .sort((a, b) => {
         const aScore = (a.residents + 0.5 * a.proportionOfJobs) * (17.8 - calculateDistance(a.position, { x: 5, y: 11 }));
         const bScore = (b.residents + 0.5 * b.proportionOfJobs) * (17.8 - calculateDistance(b.position, { x: 5, y: 11 }));
         return bScore - aScore;

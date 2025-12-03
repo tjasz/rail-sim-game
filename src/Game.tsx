@@ -147,17 +147,24 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       const adjustedDay = newDay > daysInMonth ? 1 : newDay;
       const monthlyBonus = newDay > daysInMonth ? prevState.city.config.budgetBaseline : 0;
       
+      // Calculate new active neighborhood count (add 1 each day, up to total neighborhoods)
+      const newActiveNeighborhoodCount = Math.min(
+        prevState.activeNeighborhoodCount + 1,
+        prevState.city.config.neighborhoods.length
+      );
+      
       // Initialize new day with citizens and trips
       const { tripMatrix, citizens, updatedNetwork } = initializeDay(
         prevState.city.config,
         adjustedDay,
+        newActiveNeighborhoodCount,
         prevState.railNetwork,
       );
       
       // Calculate population from active neighborhoods
       const newPopulation = calculatePopulation(
         prevState.city.config.neighborhoods,
-        adjustedDay
+        newActiveNeighborhoodCount
       );
       
       return {
@@ -172,6 +179,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         stats: updatedStats,
         simulationTime: 0, // Midnight
         isSimulating: false,
+        activeNeighborhoodCount: newActiveNeighborhoodCount,
         citizens,
         currentTripMatrix: tripMatrix,
         railNetwork: updatedNetwork,
@@ -1016,6 +1024,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               stations={gameState.railNetwork.stations}
               citizens={gameState.citizens}
               lines={gameState.railNetwork.lines}
+              activeNeighborhoodCount={gameState.activeNeighborhoodCount}
               cellSize={36}
               onCellClick={(buildTrackState.isBuilding || buildStationState.isBuilding) ? handleMapClick : undefined}
               onStationClick={(!buildTrackState.isBuilding && !buildStationState.isBuilding && !gameState.isSimulating) ? setSelectedStationForAssignment : undefined}

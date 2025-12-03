@@ -33,6 +33,7 @@ const baseGameState: GameState = {
   isSimulating: false,
   simulationTime: 0,
   simulationSpeed: 1,
+  activeNeighborhoodCount: 3, // Start with 3 neighborhoods, add 1 each day
   stats: {
     totalDaysPlayed: 0,
     totalCitizensTransported: 0,
@@ -54,6 +55,7 @@ function App() {
   const { tripMatrix, citizens, updatedNetwork } = initializeDay(
     baseGameState.city.config,
     baseGameState.city.currentDay,
+    baseGameState.activeNeighborhoodCount,
     baseGameState.railNetwork,
   );
   

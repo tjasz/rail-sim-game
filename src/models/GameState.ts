@@ -17,6 +17,9 @@ export interface GameState {
   simulationTime: number; // minutes elapsed in current day
   simulationSpeed: number; // multiplier for simulation speed
   
+  // Neighborhood activation
+  activeNeighborhoodCount: number; // number of neighborhoods currently active
+  
   // Statistics
   stats: GameStats;
 }

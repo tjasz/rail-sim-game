@@ -5,8 +5,7 @@ import './App.css';
 import { SeattleConfig } from './cities';
 
 const getNeighborhoodPriority = (neighborhood: Neighborhood) => {
-  return neighborhood.residents;
-  return (neighborhood.residents + 0.5 * neighborhood.proportionOfJobs) * (17.8 - calculateDistance(neighborhood.position, { x: 5, y: 11 }));
+  return (neighborhood.residents + 0.125 * neighborhood.proportionOfJobs) * (17.2 - calculateDistance(neighborhood.position, { x: 5, y: 10 }));
 }
 
 // Base game configuration (without citizens - they'll be generated)

@@ -1,0 +1,8 @@
+.leaflet-map-wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.leaflet-container {
+  background: #1a1a2e;
+}

@@ -14,7 +14,8 @@ import {
   DayResultModal,
   StationAssignmentModal,
   TripMatrixDisplay,
-  ObjectInspector
+  ObjectInspector,
+  LeafletMap
 } from './components';
 import { SelectionProvider } from './contexts/SelectionContext';
 import type { GameState, DayResult } from './models';
@@ -1030,7 +1031,10 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         </div>
         
         <div className="map-panel">
-          <div className="map-container">
+          <LeafletMap 
+            gridWidth={gameState.city.config.gridWidth}
+            gridHeight={gameState.city.config.gridHeight}
+          >
             <CityGrid
               config={gameState.city.config}
               neighborhoods={gameState.city.config.neighborhoods}
@@ -1073,7 +1077,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               gridHeight={gameState.city.config.gridHeight}
               cellSize={36}
             />
-          </div>
+          </LeafletMap>
         </div>
       </div>
       

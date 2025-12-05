@@ -16,3 +16,4 @@ export { DayResultModal } from './DayResultModal';
 export { StationAssignmentModal } from './StationAssignmentModal';
 export { TripMatrixDisplay } from './TripMatrixDisplay';
 export { ObjectInspector } from './ObjectInspector';
+export { LeafletMap } from './LeafletMap';

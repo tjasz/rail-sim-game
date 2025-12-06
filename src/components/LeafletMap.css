@@ -23,3 +23,9 @@
   background: transparent;
   cursor: pointer;
 }
+
+.citizen-marker {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}

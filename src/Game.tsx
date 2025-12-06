@@ -9,6 +9,7 @@ import {
   TrainMarkers,
   NeighborhoodMarkers,
   StationMarkers,
+  CitizenMarkers,
   LinesList,
   TrainsList,
   PassengersList,
@@ -1039,8 +1040,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           >
             <CityGrid
               config={gameState.city.config}
-              neighborhoods={gameState.city.config.neighborhoods}
-              citizens={gameState.citizens}
               cellSize={36}
               onCellClick={(buildTrackState.isBuilding || buildStationState.isBuilding) ? handleMapClick : undefined}
             />
@@ -1052,6 +1051,10 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               stations={gameState.railNetwork.stations}
               lines={gameState.railNetwork.lines}
               onStationClick={(!buildTrackState.isBuilding && !buildStationState.isBuilding && !gameState.isSimulating) ? setSelectedStationForAssignment : undefined}
+            />
+            <CitizenMarkers
+              citizens={gameState.citizens}
+              neighborhoods={gameState.city.config.neighborhoods}
             />
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}

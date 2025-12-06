@@ -1,19 +1,14 @@
-import type { CityConfig, Neighborhood, Citizen } from '../models';
-import { CitizenMarker } from './CitizenMarker';
+import type { CityConfig } from '../models';
 import { GridCell } from './GridCell';
 
 interface CityGridProps {
   config: CityConfig;
-  neighborhoods: Neighborhood[]; // Still needed for CitizenMarker
-  citizens: Map<string, Citizen>;
   cellSize?: number;
   onCellClick?: (x: number, y: number) => void;
 }
 
 export function CityGrid({ 
   config, 
-  neighborhoods,
-  citizens,
   cellSize = 60,
   onCellClick
 }: CityGridProps) {
@@ -45,11 +40,6 @@ export function CityGrid({
             );
           })
         )}
-        
-        {/* Draw citizens */}
-        {Array.from(citizens.values()).map(citizen => (
-          <CitizenMarker key={citizen.id} citizen={citizen} neighborhoods={neighborhoods} cellSize={cellSize} />
-        ))}
       </svg>
     </div>
   );

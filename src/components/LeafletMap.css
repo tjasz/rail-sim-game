@@ -29,3 +29,9 @@
   background: transparent;
   cursor: pointer;
 }
+
+.station-placement-indicator {
+  border: none;
+  background: transparent;
+  pointer-events: none;
+}

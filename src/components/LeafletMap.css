@@ -17,3 +17,9 @@
   background: transparent;
   cursor: pointer;
 }
+
+.station-marker {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}

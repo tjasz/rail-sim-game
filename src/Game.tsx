@@ -8,6 +8,7 @@ import {
   StationPlacementOverlay,
   TrainMarkers,
   NeighborhoodMarkers,
+  StationMarkers,
   LinesList,
   TrainsList,
   PassengersList,
@@ -1039,16 +1040,18 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             <CityGrid
               config={gameState.city.config}
               neighborhoods={gameState.city.config.neighborhoods}
-              stations={gameState.railNetwork.stations}
               citizens={gameState.citizens}
-              lines={gameState.railNetwork.lines}
               cellSize={36}
               onCellClick={(buildTrackState.isBuilding || buildStationState.isBuilding) ? handleMapClick : undefined}
-              onStationClick={(!buildTrackState.isBuilding && !buildStationState.isBuilding && !gameState.isSimulating) ? setSelectedStationForAssignment : undefined}
             />
             <NeighborhoodMarkers
               neighborhoods={gameState.city.config.neighborhoods}
               activeNeighborhoodCount={gameState.activeNeighborhoodCount}
+            />
+            <StationMarkers
+              stations={gameState.railNetwork.stations}
+              lines={gameState.railNetwork.lines}
+              onStationClick={(!buildTrackState.isBuilding && !buildStationState.isBuilding && !gameState.isSimulating) ? setSelectedStationForAssignment : undefined}
             />
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}

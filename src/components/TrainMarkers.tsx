@@ -66,7 +66,7 @@ export function TrainMarkers({ trains, lines }: TrainMarkersProps) {
         });
         
         // In Simple CRS, coordinates are [y, x] (row, col)
-        const position: [number, number] = [train.position.y + 0.5, train.position.x + 0.5];
+        const position: [number, number] = [train.position.y, train.position.x];
         
         return (
           <Marker 

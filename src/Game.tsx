@@ -544,7 +544,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       const costPerMile = isOverWater 
         ? gameState.city.config.costPerTrackMileWater 
         : gameState.city.config.costPerTrackMileLand;
-      const segmentCost = segmentDistance * costPerMile;
+      const segmentCost = Math.round(segmentDistance * costPerMile);
 
       return {
         ...prev,

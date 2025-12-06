@@ -1,27 +1,29 @@
+import { SVGOverlay } from 'react-leaflet';
 import type { CityConfig } from '../models';
 import { GridCell } from './GridCell';
 
 interface CityGridProps {
   config: CityConfig;
-  cellSize?: number;
-  onCellClick?: (x: number, y: number) => void;
 }
 
-export function CityGrid({ 
-  config, 
-  cellSize = 60,
-  onCellClick
-}: CityGridProps) {
+export function CityGrid({ config }: CityGridProps) {
+  const cellSize = 20; // Each cell is 1 unit in Simple CRS
   const width = config.gridWidth * cellSize;
   const height = config.gridHeight * cellSize;
   
+  // Define bounds for the SVG overlay
+  const bounds: [[number, number], [number, number]] = [
+    [0, 0], // Southwest corner
+    [config.gridHeight, config.gridWidth] // Northeast corner
+  ];
+  
   return (
-    <div className="city-grid-container">
+    <SVGOverlay bounds={bounds} attributes={{ className: 'city-grid-overlay' }}>
       <svg 
         width={width} 
         height={height} 
-        className="city-grid"
         viewBox={`0 0 ${width} ${height}`}
+        style={{ pointerEvents: 'none' }}
       >
         {/* Draw grid cells */}
         {Array.from({ length: config.gridWidth }).map((_, x) =>
@@ -29,11 +31,7 @@ export function CityGrid({
             const isWater = config.tiles[x][y] === 'w';
             
             return (
-              <g 
-                key={`${x}-${y}`}
-                onClick={() => onCellClick?.(x, y)}
-                style={{ cursor: onCellClick ? 'pointer' : 'default' }}
-              >
+              <g key={`${x}-${y}`}>
                 {/* Cell background */}
                 <GridCell row={y} col={x} isWater={isWater} cellSize={cellSize} />
               </g>
@@ -41,6 +39,6 @@ export function CityGrid({
           })
         )}
       </svg>
-    </div>
+    </SVGOverlay>
   );
 }

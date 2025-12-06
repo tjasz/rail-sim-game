@@ -20,8 +20,6 @@ export function CityGrid({ config }: CityGridProps) {
   return (
     <SVGOverlay bounds={bounds} attributes={{ className: 'city-grid-overlay' }}>
       <svg 
-        width={width} 
-        height={height} 
         viewBox={`0 0 ${width} ${height}`}
         style={{ pointerEvents: 'none' }}
       >

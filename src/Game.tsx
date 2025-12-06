@@ -1075,9 +1075,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               <StationPlacementOverlay
                 tracks={gameState.railNetwork.tracks}
                 stations={gameState.railNetwork.stations}
-                gridWidth={gameState.city.config.gridWidth}
-                gridHeight={gameState.city.config.gridHeight}
-                cellSize={36}
               />
             )}
             <TrainMarkers

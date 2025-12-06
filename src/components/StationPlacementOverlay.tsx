@@ -1,23 +1,16 @@
+import { Marker } from 'react-leaflet';
+import { DivIcon } from 'leaflet';
 import type { Track, Station } from '../models';
 
 interface StationPlacementOverlayProps {
   tracks: Map<string, Track>;
   stations: Map<string, Station>;
-  gridWidth: number;
-  gridHeight: number;
-  cellSize?: number;
 }
 
 export function StationPlacementOverlay({ 
   tracks, 
-  stations,
-  gridWidth, 
-  gridHeight, 
-  cellSize = 60 
+  stations
 }: StationPlacementOverlayProps) {
-  const width = gridWidth * cellSize;
-  const height = gridHeight * cellSize;
-  
   // Get all positions where stations already exist
   const stationPositions = new Set<string>();
   stations.forEach(station => {
@@ -38,32 +31,46 @@ export function StationPlacementOverlay({
     }
   });
   
+  // Create custom HTML for the placement indicator
+  const placementHtml = `
+    <svg width="20" height="20" style="overflow: visible;">
+      <circle
+        cx="10"
+        cy="10"
+        r="8"
+        fill="#3498db"
+        opacity="0.4"
+        stroke="#2980b9"
+        stroke-width="2"
+      />
+    </svg>
+  `;
+
+  const icon = new DivIcon({
+    html: placementHtml,
+    className: 'station-placement-indicator',
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
+  });
+  
   return (
-    <svg 
-      width={width} 
-      height={height} 
-      className="station-placement-overlay"
-      viewBox={`0 0 ${width} ${height}`}
-      style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}
-    >
+    <>
       {Array.from(validPositions).map(posKey => {
         const [x, y] = posKey.split(',').map(Number);
-        const cx = x * cellSize + cellSize / 2;
-        const cy = y * cellSize + cellSize / 2;
+        
+        // In Simple CRS, coordinates are [y, x] (row, col)
+        const position: [number, number] = [y + 0.5, x + 0.5];
         
         return (
-          <circle
-            key={posKey}
-            cx={cx}
-            cy={cy}
-            r={8}
-            fill="#3498db"
-            opacity={0.4}
-            stroke="#2980b9"
-            strokeWidth={2}
+          <Marker 
+            key={posKey} 
+            position={position} 
+            icon={icon}
+            // Disable interaction since these are display-only indicators
+            interactive={false}
           />
         );
       })}
-    </svg>
+    </>
   );
 }

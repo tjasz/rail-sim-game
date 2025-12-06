@@ -1063,9 +1063,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             {buildTrackState.isBuilding && (
               <DraftTrackOverlay
                 points={buildTrackState.points}
-                gridWidth={gameState.city.config.gridWidth}
-                gridHeight={gameState.city.config.gridHeight}
-                cellSize={36}
               />
             )}
             {buildStationState.isBuilding && (

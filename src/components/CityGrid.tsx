@@ -7,7 +7,7 @@ interface CityGridProps {
 }
 
 export function CityGrid({ config }: CityGridProps) {
-  const cellSize = 20; // Each cell is 1 unit in Simple CRS
+  const cellSize = 1; // Each cell is 1 unit in Simple CRS
   const width = config.gridWidth * cellSize;
   const height = config.gridHeight * cellSize;
   

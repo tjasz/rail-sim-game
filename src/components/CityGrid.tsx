@@ -1,16 +1,14 @@
 import type { CityConfig, Neighborhood, Station, Citizen, Line } from '../models';
 import { CitizenMarker } from './CitizenMarker';
 import { GridCell } from './GridCell';
-import { NeighborhoodMarker } from './NeighborhoodMarker';
 import { StationMarker } from './StationMarker';
 
 interface CityGridProps {
   config: CityConfig;
-  neighborhoods: Neighborhood[];
+  neighborhoods: Neighborhood[]; // Still needed for CitizenMarker
   stations: Map<string, Station>;
   citizens: Map<string, Citizen>;
   lines: Map<string, Line>;
-  activeNeighborhoodCount: number;
   cellSize?: number;
   onCellClick?: (x: number, y: number) => void;
   onStationClick?: (stationId: string) => void;
@@ -18,23 +16,16 @@ interface CityGridProps {
 
 export function CityGrid({ 
   config, 
-  neighborhoods, 
+  neighborhoods,
   stations, 
   citizens,
   lines,
-  activeNeighborhoodCount,
   cellSize = 60,
   onCellClick,
   onStationClick 
 }: CityGridProps) {
   const width = config.gridWidth * cellSize;
   const height = config.gridHeight * cellSize;
-  
-  // Create a map of positions to neighborhoods with their indices
-  const neighborhoodMap = new Map<string, { neighborhood: Neighborhood; index: number }>();
-  neighborhoods.forEach((n, index) => {
-    neighborhoodMap.set(`${n.position.x},${n.position.y}`, { neighborhood: n, index });
-  });
   
   // Create a map of positions to stations
   const stationMap = new Map<string, Station>();
@@ -54,7 +45,6 @@ export function CityGrid({
         {Array.from({ length: config.gridWidth }).map((_, x) =>
           Array.from({ length: config.gridHeight }).map((_, y) => {
             const isWater = config.tiles[x][y] === 'w';
-            const neighborhoodData = neighborhoodMap.get(`${x},${y}`);
             const station = stationMap.get(`${x},${y}`);
             
             return (
@@ -65,17 +55,6 @@ export function CityGrid({
               >
                 {/* Cell background */}
                 <GridCell row={y} col={x} isWater={isWater} cellSize={cellSize} />
-                
-                {neighborhoodData && (
-                  <NeighborhoodMarker
-                    row={y}
-                    col={x}
-                    neighborhood={neighborhoodData.neighborhood}
-                    neighborhoodIndex={neighborhoodData.index}
-                    activeNeighborhoodCount={activeNeighborhoodCount}
-                    cellSize={cellSize}
-                    />
-                )}
                 
                 {/* Station indicator */}
                 {station && (

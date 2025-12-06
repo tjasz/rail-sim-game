@@ -26,7 +26,7 @@ export function LeafletMap({ gridWidth, gridHeight, children }: LeafletMapProps)
         center={center}
         zoom={0}
         minZoom={-2}
-        maxZoom={2}
+        maxZoom={20}
         crs={CRS.Simple}
         style={{ height: '100%', width: '100%', background: '#1a1a2e' }}
         maxBounds={bounds}

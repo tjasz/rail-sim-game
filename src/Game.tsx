@@ -7,6 +7,7 @@ import {
   DraftTrackOverlay,
   StationPlacementOverlay,
   TrainMarkers,
+  NeighborhoodMarkers,
   LinesList,
   TrainsList,
   PassengersList,
@@ -1041,10 +1042,13 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               stations={gameState.railNetwork.stations}
               citizens={gameState.citizens}
               lines={gameState.railNetwork.lines}
-              activeNeighborhoodCount={gameState.activeNeighborhoodCount}
               cellSize={36}
               onCellClick={(buildTrackState.isBuilding || buildStationState.isBuilding) ? handleMapClick : undefined}
               onStationClick={(!buildTrackState.isBuilding && !buildStationState.isBuilding && !gameState.isSimulating) ? setSelectedStationForAssignment : undefined}
+            />
+            <NeighborhoodMarkers
+              neighborhoods={gameState.city.config.neighborhoods}
+              activeNeighborhoodCount={gameState.activeNeighborhoodCount}
             />
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}

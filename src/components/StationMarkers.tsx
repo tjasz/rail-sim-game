@@ -32,8 +32,8 @@ export function StationMarkers({
           // Station with no lines - dashed circle
           circlesHtml = `
             <circle
-              cx="${STATION_MARKER_RADIUS}"
-              cy="${STATION_MARKER_RADIUS}"
+              cx="${0}"
+              cy="${0}"
               r="${STATION_MARKER_RADIUS}"
               fill="#6668"
               stroke="#888"
@@ -47,8 +47,8 @@ export function StationMarkers({
             const lineColor = lines.get(lineId)?.color || '#888';
             return `
               <circle
-                cx="${STATION_MARKER_RADIUS}"
-                cy="${STATION_MARKER_RADIUS}"
+                cx="${0}"
+                cy="${0}"
                 r="${STATION_MARKER_RADIUS + idx * 2}"
                 fill="${idx > 0 ? 'none' : '#6668'}"
                 stroke="${lineColor}"
@@ -60,12 +60,12 @@ export function StationMarkers({
 
         // Calculate SVG size based on number of lines
         const maxRadius = STATION_MARKER_RADIUS + Math.max(0, station.lineIds.length - 1) * 2;
-        const svgSize = maxRadius * 2 + 4; // +4 for stroke width
+        const svgSize = maxRadius * 2;
 
         // Create custom HTML for the station marker
         const stationHtml = `
-          <div style="position: relative; width: ${svgSize}px; height: ${svgSize}px;">
-            <svg width="${svgSize}" height="${svgSize}" style="overflow: visible;">
+          <div>
+            <svg viewBox="${-maxRadius} ${-maxRadius} ${maxRadius} ${maxRadius}" style="overflow: visible;">
               ${circlesHtml}
             </svg>
             ${waitingPassengersCount > 0 ? `
@@ -95,7 +95,7 @@ export function StationMarkers({
           html: stationHtml,
           className: 'station-marker',
           iconSize: [svgSize, svgSize],
-          iconAnchor: [svgSize / 2, svgSize / 2],
+          iconAnchor: [svgSize, svgSize],
         });
 
         // In Simple CRS, coordinates are [y, x] (row, col)

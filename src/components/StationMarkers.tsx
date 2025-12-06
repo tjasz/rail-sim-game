@@ -32,8 +32,8 @@ export function StationMarkers({
           // Station with no lines - dashed circle
           circlesHtml = `
             <circle
-              cx="${STATION_MARKER_RADIUS * 2}"
-              cy="${STATION_MARKER_RADIUS * 2}"
+              cx="${STATION_MARKER_RADIUS}"
+              cy="${STATION_MARKER_RADIUS}"
               r="${STATION_MARKER_RADIUS}"
               fill="#6668"
               stroke="#888"
@@ -47,8 +47,8 @@ export function StationMarkers({
             const lineColor = lines.get(lineId)?.color || '#888';
             return `
               <circle
-                cx="${STATION_MARKER_RADIUS * 2}"
-                cy="${STATION_MARKER_RADIUS * 2}"
+                cx="${STATION_MARKER_RADIUS}"
+                cy="${STATION_MARKER_RADIUS}"
                 r="${STATION_MARKER_RADIUS + idx * 2}"
                 fill="${idx > 0 ? 'none' : '#6668'}"
                 stroke="${lineColor}"

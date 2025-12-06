@@ -59,7 +59,7 @@ export function StationPlacementOverlay({
         const [x, y] = posKey.split(',').map(Number);
         
         // In Simple CRS, coordinates are [y, x] (row, col)
-        const position: [number, number] = [y + 0.5, x + 0.5];
+        const position: [number, number] = [y, x];
         
         return (
           <Marker 
@@ -67,7 +67,7 @@ export function StationPlacementOverlay({
             position={position} 
             icon={icon}
             // Disable interaction since these are display-only indicators
-            interactive={false}
+            interactive={true}
           />
         );
       })}

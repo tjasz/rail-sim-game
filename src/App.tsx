@@ -17,7 +17,7 @@ const baseGameState: GameState = {
       ...SeattleConfig.config,
       neighborhoods: SeattleConfig.config.neighborhoods
       .filter(n => 
-        SeattleConfig.config.tiles[n.position.x][n.position.y] !== 'w'
+        SeattleConfig.config.tiles[n.position.x][SeattleConfig.config.gridHeight - 1 -n.position.y] !== 'w'
       )
       .sort((a, b) => {
         const aScore = getNeighborhoodPriority(a);

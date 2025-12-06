@@ -13,8 +13,8 @@ export function LeafletMap({ gridWidth, gridHeight, children }: LeafletMapProps)
   // Calculate bounds in simple CRS coordinates
   // In simple CRS, coordinates map directly to pixels
   const bounds = new LatLngBounds(
-    [0, 0], // Southwest corner
-    [gridHeight, gridWidth] // Northeast corner
+    [-0.5, -0.5], // Southwest corner
+    [gridHeight - 0.5, gridWidth - 0.5] // Northeast corner
   );
 
   // Center of the map

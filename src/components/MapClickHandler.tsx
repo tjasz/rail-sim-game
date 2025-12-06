@@ -10,8 +10,8 @@ export function MapClickHandler({ onMapClick }: MapClickHandlerProps) {
       if (onMapClick) {
         // In Simple CRS, latlng.lat is y and latlng.lng is x
         // Subtract 0.5 to get the cell coordinate (since cells are centered at 0.5, 1.5, etc.)
-        const x = Math.floor(e.latlng.lng);
-        const y = Math.floor(e.latlng.lat);
+        const x = Math.round(e.latlng.lng);
+        const y = Math.round(e.latlng.lat);
         onMapClick(x, y);
       }
     },

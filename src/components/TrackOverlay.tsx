@@ -18,8 +18,8 @@ export function TrackOverlay({ tracks, lines }: TrackOverlayProps) {
       {Array.from(tracks.values()).map(track => {
         // In Simple CRS, coordinates are [y, x] (row, col)
         // Add 0.5 to center on the cell
-        const fromPos: [number, number] = [track.from.y + 0.5, track.from.x + 0.5];
-        const toPos: [number, number] = [track.to.y + 0.5, track.to.x + 0.5];
+        const fromPos: [number, number] = [track.from.y, track.from.x];
+        const toPos: [number, number] = [track.to.y, track.to.x];
         const positions = [fromPos, toPos];
         
         // If track has no lines, show as dashed gray

@@ -13,8 +13,8 @@ export function CityGrid({ config }: CityGridProps) {
   
   // Define bounds for the SVG overlay
   const bounds: [[number, number], [number, number]] = [
-    [0, 0], // Southwest corner
-    [config.gridHeight, config.gridWidth] // Northeast corner
+    [-0.5, -0.5], // Southwest corner
+    [config.gridHeight - 0.5, config.gridWidth - 0.5] // Northeast corner
   ];
   
   return (

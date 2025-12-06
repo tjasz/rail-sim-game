@@ -65,7 +65,7 @@ export function NeighborhoodMarkers({
         });
 
         // In Simple CRS, coordinates are [y, x] (row, col)
-        const position: [number, number] = [neighborhood.position.y + 0.5, neighborhood.position.x + 0.5];
+        const position: [number, number] = [neighborhood.position.y, neighborhood.position.x];
 
         return (
           <Marker 

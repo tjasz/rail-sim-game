@@ -11,8 +11,8 @@ export function DraftTrackOverlay({ points }: DraftTrackOverlayProps) {
   
   // Convert points to Leaflet coordinates [y, x] and center on cells
   const leafletPositions: [number, number][] = points.map(point => [
-    point.y + 0.5,
-    point.x + 0.5
+    point.y,
+    point.x
   ]);
   
   return (

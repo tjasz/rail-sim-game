@@ -57,8 +57,8 @@ export function CitizenMarkers({ citizens, neighborhoods }: CitizenMarkersProps)
 
         // In Simple CRS, coordinates are [y, x] (row, col)
         const position: [number, number] = [
-          citizen.currentPosition.y + 0.5,
-          citizen.currentPosition.x + 0.5
+          citizen.currentPosition.y,
+          citizen.currentPosition.x
         ];
 
         return (

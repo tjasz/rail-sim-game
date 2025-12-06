@@ -31,7 +31,7 @@ export function CityGrid({ config }: CityGridProps) {
             return (
               <g key={`${x}-${y}`}>
                 {/* Cell background */}
-                <GridCell row={y} col={x} isWater={isWater} cellSize={cellSize} />
+                <GridCell row={config.gridHeight - 1 - y} col={x} isWater={isWater} cellSize={cellSize} />
               </g>
             );
           })

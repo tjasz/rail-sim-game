@@ -1059,9 +1059,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}
               lines={gameState.railNetwork.lines}
-              gridWidth={gameState.city.config.gridWidth}
-              gridHeight={gameState.city.config.gridHeight}
-              cellSize={36}
             />
             {buildTrackState.isBuilding && (
               <DraftTrackOverlay

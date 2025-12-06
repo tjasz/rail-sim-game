@@ -19,7 +19,7 @@ export function NeighborhoodMarkers({
 
   return (
     <>
-      {neighborhoods.map((neighborhood, index) => {
+      {neighborhoods.slice(0,activeNeighborhoodCount+5).map((neighborhood, index) => {
         // Calculate opacity based on activation status
         // Active neighborhoods: opacity 1
         // Next neighborhood: opacity 0.5

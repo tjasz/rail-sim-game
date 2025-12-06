@@ -10,6 +10,7 @@ import {
   NeighborhoodMarkers,
   StationMarkers,
   CitizenMarkers,
+  MapClickHandler,
   LinesList,
   TrainsList,
   PassengersList,
@@ -1038,10 +1039,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             gridWidth={gameState.city.config.gridWidth}
             gridHeight={gameState.city.config.gridHeight}
           >
-            <CityGrid
-              config={gameState.city.config}
-              cellSize={36}
-              onCellClick={(buildTrackState.isBuilding || buildStationState.isBuilding) ? handleMapClick : undefined}
+            <CityGrid config={gameState.city.config} />
+            <MapClickHandler
+              onMapClick={(buildTrackState.isBuilding || buildStationState.isBuilding) ? handleMapClick : undefined}
             />
             <NeighborhoodMarkers
               neighborhoods={gameState.city.config.neighborhoods}

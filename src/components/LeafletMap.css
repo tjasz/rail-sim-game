@@ -6,3 +6,8 @@
 .leaflet-container {
   background: #1a1a2e;
 }
+
+.train-marker {
+  border: none;
+  background: transparent;
+}

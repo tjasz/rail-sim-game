@@ -1073,9 +1073,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             <TrainMarkers
               trains={gameState.railNetwork.trains}
               lines={gameState.railNetwork.lines}
-              gridWidth={gameState.city.config.gridWidth}
-              gridHeight={gameState.city.config.gridHeight}
-              cellSize={36}
             />
           </LeafletMap>
         </div>

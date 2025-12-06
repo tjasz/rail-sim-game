@@ -1,96 +1,83 @@
+import { Marker } from 'react-leaflet';
+import { DivIcon } from 'leaflet';
 import type { Train, Line } from '../models';
 
 interface TrainMarkersProps {
   trains: Map<string, Train>;
   lines: Map<string, Line>;
-  gridWidth: number;
-  gridHeight: number;
-  cellSize?: number;
 }
 
-export function TrainMarkers({ 
-  trains, 
-  lines, 
-  gridWidth, 
-  gridHeight, 
-  cellSize = 60 
-}: TrainMarkersProps) {
-  const width = gridWidth * cellSize;
-  const height = gridHeight * cellSize;
-  
+export function TrainMarkers({ trains, lines }: TrainMarkersProps) {
   return (
-    <svg 
-      width={width} 
-      height={height} 
-      className="train-markers"
-      viewBox={`0 0 ${width} ${height}`}
-      style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}
-    >
+    <>
       {Array.from(trains.values()).map(train => {
         const line = lines.get(train.lineId);
         if (!line || !line.isActive) return null;
         
-        // Use train's current position
-        const x = train.position.x * cellSize + cellSize / 2;
-        const y = train.position.y * cellSize + cellSize / 2;
+        // Create custom HTML for the train marker
+        const trainHtml = `
+          <div style="position: relative; width: 32px; height: 24px;">
+            <svg width="32" height="24" style="overflow: visible;">
+              <!-- Train body -->
+              <rect
+                x="8"
+                y="6"
+                width="16"
+                height="12"
+                fill="${line.color}"
+                stroke="#000"
+                stroke-width="1.5"
+                rx="2"
+              />
+              <!-- Train window -->
+              <rect
+                x="11"
+                y="9"
+                width="10"
+                height="6"
+                fill="rgba(255, 255, 255, 0.5)"
+                rx="1"
+              />
+              <!-- Direction indicator -->
+              <polygon
+                points="${train.direction === 'forward'
+                  ? '24,12 28,8 28,16'
+                  : '8,12 4,8 4,16'}"
+                fill="#fff"
+              />
+            </svg>
+            ${train.passengerIds.length > 0 ? `
+              <div style="position: absolute; top: -2px; right: 0; 
+                          background: #ff6b6b; border: 1px solid #fff; 
+                          border-radius: 50%; width: 16px; height: 16px; 
+                          display: flex; align-items: center; justify-content: center;
+                          font-size: 9px; font-weight: bold; color: #fff;">
+                ${train.passengerIds.length}
+              </div>
+            ` : ''}
+          </div>
+        `;
+        
+        const icon = new DivIcon({
+          html: trainHtml,
+          className: 'train-marker',
+          iconSize: [32, 24],
+          iconAnchor: [16, 12],
+        });
+        
+        // In Simple CRS, coordinates are [y, x] (row, col)
+        const position: [number, number] = [train.position.y + 0.5, train.position.x + 0.5];
         
         return (
-          <g key={train.id}>
-            {/* Train body */}
-            <rect
-              x={x - 8}
-              y={y - 6}
-              width={16}
-              height={12}
-              fill={line.color}
-              stroke="#000"
-              strokeWidth="1.5"
-              rx="2"
-            />
-            {/* Train window */}
-            <rect
-              x={x - 5}
-              y={y - 3}
-              width={10}
-              height={6}
-              fill="rgba(255, 255, 255, 0.5)"
-              rx="1"
-            />
-            {/* Direction indicator */}
-            <polygon
-              points={
-                train.direction === 'forward'
-                  ? `${x + 8},${y} ${x + 12},${y - 4} ${x + 12},${y + 4}`
-                  : `${x - 8},${y} ${x - 12},${y - 4} ${x - 12},${y + 4}`
-              }
-              fill="#fff"
-            />
-            {/* Passenger count badge */}
-            {train.passengerIds.length > 0 && (
-              <>
-                <circle
-                  cx={x + 8}
-                  cy={y - 8}
-                  r="6"
-                  fill="#ff6b6b"
-                  stroke="#fff"
-                  strokeWidth="1"
-                />
-                <text
-                  x={x + 8}
-                  y={y - 6}
-                  textAnchor="middle"
-                  fontSize="7"
-                  fill="#fff"
-                  fontWeight="bold"
-                >
-                  {train.passengerIds.length}
-                </text>
-              </>
-            )}
-          </g>
+          <Marker 
+            key={train.id} 
+            position={position} 
+            icon={icon}
+            // Disable interaction since trains are display-only
+            interactive={false}
+          />
         );
       })}
-    </svg>
+    </>
   );
 }

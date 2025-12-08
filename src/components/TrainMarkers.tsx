@@ -2,12 +2,19 @@ import { Marker } from 'react-leaflet';
 import { DivIcon } from 'leaflet';
 import type { Train, Line } from '../models';
 
+const RIDER_SIZE = [10, 12]; // [width, height] in pixels
+const RIDER_MARGIN = 2; // margin between riders in pixels
+const RIDER_ROWS = 4;
+const RIDER_COLS = 2;
+
 interface TrainMarkersProps {
   trains: Map<string, Train>;
   lines: Map<string, Line>;
 }
 
 export function TrainMarkers({ trains, lines }: TrainMarkersProps) {
+  const width = RIDER_SIZE[0] * RIDER_COLS + (RIDER_COLS + 1) * RIDER_MARGIN;
+  const height = RIDER_SIZE[1] * RIDER_ROWS + (RIDER_ROWS + 1) * RIDER_MARGIN;
   return (
     <>
       {Array.from(trains.values()).map(train => {
@@ -16,53 +23,41 @@ export function TrainMarkers({ trains, lines }: TrainMarkersProps) {
         
         // Create custom HTML for the train marker
         const trainHtml = `
-          <div style="position: relative; width: 32px; height: 24px;">
-            <svg width="32" height="24" style="overflow: visible;">
+          <div style="position: relative; width: ${width}px; height: ${height}px;">
+            <svg width="${width}" height="${height}" style="overflow: visible;">
               <!-- Train body -->
               <rect
-                x="8"
-                y="6"
-                width="16"
-                height="12"
+                width="${width}"
+                height="${height}"
                 fill="${line.color}"
-                stroke="#000"
-                stroke-width="1.5"
+                stroke="none"
+                stroke-width="0"
                 rx="2"
               />
-              <!-- Train window -->
-              <rect
-                x="11"
-                y="9"
-                width="10"
-                height="6"
-                fill="rgba(255, 255, 255, 0.5)"
-                rx="1"
-              />
-              <!-- Direction indicator -->
-              <polygon
-                points="${train.direction === 'forward'
-                  ? '24,12 28,8 28,16'
-                  : '8,12 4,8 4,16'}"
-                fill="#fff"
-              />
+              ${train.passengerIds.map((_, idx) => {
+                const row = Math.floor(idx / RIDER_COLS);
+                const col = idx % RIDER_COLS;
+                const x = RIDER_MARGIN + col * (RIDER_SIZE[0] + RIDER_MARGIN);
+                const y = RIDER_MARGIN + row * (RIDER_SIZE[1] + RIDER_MARGIN);
+                return `
+                  <rect
+                    x="${x}"
+                    y="${y}"
+                    width="${RIDER_SIZE[0]}"
+                    height="${RIDER_SIZE[1]}"
+                    fill="black"
+                  />
+                `;
+              }).join('')}
             </svg>
-            ${train.passengerIds.length > 0 ? `
-              <div style="position: absolute; top: -2px; right: 0; 
-                          background: #ff6b6b; border: 1px solid #fff; 
-                          border-radius: 50%; width: 16px; height: 16px; 
-                          display: flex; align-items: center; justify-content: center;
-                          font-size: 9px; font-weight: bold; color: #fff;">
-                ${train.passengerIds.length}
-              </div>
-            ` : ''}
           </div>
         `;
         
         const icon = new DivIcon({
           html: trainHtml,
           className: 'train-marker',
-          iconSize: [32, 24],
-          iconAnchor: [16, 12],
+          iconSize: [width, height],
+          iconAnchor: [width/2, height/2],
         });
         
         // In Simple CRS, coordinates are [y, x] (row, col)
@@ -71,7 +66,7 @@ export function TrainMarkers({ trains, lines }: TrainMarkersProps) {
         return (
           <Marker 
             key={train.id} 
-            position={position} 
+            position={position}
             icon={icon}
             // Disable interaction since trains are display-only
             interactive={false}

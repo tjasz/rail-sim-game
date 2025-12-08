@@ -1,8 +1,9 @@
 import { Marker } from 'react-leaflet';
 import { DivIcon } from 'leaflet';
-import type { Train, Line } from '../models';
+import type { Train, Line, Citizen, Neighborhood } from '../models';
+import { renderCitizenIcon } from './CitizenMarkers';
 
-const RIDER_SIZE = [10, 12]; // [width, height] in pixels
+const RIDER_SIZE = [15, 18]; // [width, height] in pixels
 const RIDER_MARGIN = 2; // margin between riders in pixels
 const RIDER_ROWS = 4;
 const RIDER_COLS = 2;
@@ -10,9 +11,12 @@ const RIDER_COLS = 2;
 interface TrainMarkersProps {
   trains: Map<string, Train>;
   lines: Map<string, Line>;
+  citizens: Map<string, Citizen>;
+  neighborhoods: Neighborhood[];
+  simulationTime: number; // minutes elapsed in current day
 }
 
-export function TrainMarkers({ trains, lines }: TrainMarkersProps) {
+export function TrainMarkers({ trains, lines, citizens, neighborhoods, simulationTime }: TrainMarkersProps) {
   const width = RIDER_SIZE[0] * RIDER_COLS + (RIDER_COLS + 1) * RIDER_MARGIN;
   const height = RIDER_SIZE[1] * RIDER_ROWS + (RIDER_ROWS + 1) * RIDER_MARGIN;
   return (
@@ -39,15 +43,7 @@ export function TrainMarkers({ trains, lines }: TrainMarkersProps) {
                 const col = idx % RIDER_COLS;
                 const x = RIDER_MARGIN + col * (RIDER_SIZE[0] + RIDER_MARGIN);
                 const y = RIDER_MARGIN + row * (RIDER_SIZE[1] + RIDER_MARGIN);
-                return `
-                  <rect
-                    x="${x}"
-                    y="${y}"
-                    width="${RIDER_SIZE[0]}"
-                    height="${RIDER_SIZE[1]}"
-                    fill="black"
-                  />
-                `;
+                return renderCitizenIcon([x,y], RIDER_SIZE[0], citizens.get(train.passengerIds[idx])!, neighborhoods, simulationTime);
               }).join('')}
             </svg>
           </div>

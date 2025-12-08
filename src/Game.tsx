@@ -1064,6 +1064,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             <TrainMarkers
               trains={gameState.railNetwork.trains}
               lines={gameState.railNetwork.lines}
+              citizens={gameState.citizens}
+              neighborhoods={gameState.city.config.neighborhoods}
+              simulationTime={gameState.simulationTime}
             />
           </LeafletMap>
         </div>

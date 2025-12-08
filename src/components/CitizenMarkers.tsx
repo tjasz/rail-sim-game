@@ -9,9 +9,10 @@ const CITIZEN_ICON_SIZE = 10; // in pixels
 interface CitizenMarkersProps {
   citizens: Map<string, Citizen>;
   neighborhoods: Neighborhood[];
+  simulationTime: number; // minutes elapsed in current day
 }
 
-export function CitizenMarkers({ citizens, neighborhoods }: CitizenMarkersProps) {
+export function CitizenMarkers({ citizens, neighborhoods, simulationTime }: CitizenMarkersProps) {
   const { setSelectedObject } = useSelection();
 
   return (
@@ -21,16 +22,10 @@ export function CitizenMarkers({ citizens, neighborhoods }: CitizenMarkersProps)
         if (!citizen.state.includes('walking')) {
           return null;
         }
-        
-        let fill = '#666';
-        if (citizen.state === 'waiting-at-origin') fill = 'none';
-        else if (citizen.state === 'walking-to-station') fill = '#3498db';
-        else if (citizen.state === 'waiting-at-station') fill = '#f39c12';
-        else if (citizen.state === 'riding-train') fill = '#9b59b6';
-        else if (citizen.state === 'walking-to-destination') fill = '#2ecc71';
-        else if (citizen.state === 'at-destination') fill = 'none';
-        else if (citizen.state === 'completed') fill = 'none';
-        else if (!citizen.isHappy) fill = '#e74c3c';
+
+        const currentTripTime = simulationTime - citizen.tripStartTime;
+        const happiness = Math.max(0, Math.min(1, (citizen.route!.walkingOnlyTime! - currentTripTime) / citizen.route!.walkingOnlyTime!));
+        const fill = "black";
 
         const destinationNeighborhoodIcon = neighborhoods.find(
           n => n.id === citizen.destinationNeighborhoodId
@@ -38,12 +33,17 @@ export function CitizenMarkers({ citizens, neighborhoods }: CitizenMarkersProps)
 
         // Create custom HTML for the citizen marker
         const citizenHtml = `
-          <svg width="${CITIZEN_ICON_SIZE}" height="${CITIZEN_ICON_SIZE}" style="overflow: visible;">
+          <svg width="${CITIZEN_ICON_SIZE}" height="${CITIZEN_ICON_SIZE+3}" style="overflow: visible;">
             <path
               transform="scale(${CITIZEN_ICON_SIZE / 15})"
               fill="${fill}"
               opacity="0.8"
               d="${iconPaths[destinationNeighborhoodIcon]}"
+            />
+            <path
+              fill="${fill}"
+              opacity="0.8"
+              d="M0 ${CITIZEN_ICON_SIZE+1} H${Math.floor(happiness * CITIZEN_ICON_SIZE)} v2 H0 Z"
             />
           </svg>
         `;

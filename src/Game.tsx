@@ -1055,6 +1055,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             <CitizenMarkers
               citizens={gameState.citizens}
               neighborhoods={gameState.city.config.neighborhoods}
+              simulationTime={gameState.simulationTime}
             />
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}

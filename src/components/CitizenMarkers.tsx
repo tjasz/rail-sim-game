@@ -19,34 +19,12 @@ export function CitizenMarkers({ citizens, neighborhoods, simulationTime }: Citi
     <>
       {Array.from(citizens.values()).map(citizen => {
         // Only render walking citizens
-        if (!citizen.state.includes('walking')) {
+        if (!citizen.state.includes('walking') && !citizen.state.includes('riding') && !citizen.state.includes('waiting-at-station')) {
           return null;
         }
 
-        const currentTripTime = simulationTime - citizen.tripStartTime;
-        const happiness = Math.max(0, Math.min(1, (citizen.route!.walkingOnlyTime! - currentTripTime) / citizen.route!.walkingOnlyTime!));
-        const fill = "black";
-
-        const destinationNeighborhoodIcon = neighborhoods.find(
-          n => n.id === citizen.destinationNeighborhoodId
-        )?.icon ?? 'circle';
-
         // Create custom HTML for the citizen marker
-        const citizenHtml = `
-          <svg width="${CITIZEN_ICON_SIZE}" height="${CITIZEN_ICON_SIZE+3}" style="overflow: visible;">
-            <path
-              transform="scale(${CITIZEN_ICON_SIZE / 15})"
-              fill="${fill}"
-              opacity="0.8"
-              d="${iconPaths[destinationNeighborhoodIcon]}"
-            />
-            <path
-              fill="${fill}"
-              opacity="0.8"
-              d="M0 ${CITIZEN_ICON_SIZE+1} H${Math.floor(happiness * CITIZEN_ICON_SIZE)} v2 H0 Z"
-            />
-          </svg>
-        `;
+        const citizenHtml = renderCitizenIcon(citizen, neighborhoods, simulationTime);
 
         const icon = new DivIcon({
           html: citizenHtml,
@@ -80,4 +58,28 @@ export function CitizenMarkers({ citizens, neighborhoods, simulationTime }: Citi
       })}
     </>
   );
+}
+
+export const renderCitizenIcon = (citizen: Citizen, neighborhoods: Neighborhood[], simulationTime: number) => {
+  const currentTripTime = simulationTime - citizen.tripStartTime;
+  const happiness = Math.max(0, Math.min(1, (citizen.route!.walkingOnlyTime! - currentTripTime) / citizen.route!.walkingOnlyTime!));
+  const fill = "black";
+  const destinationNeighborhoodIcon = neighborhoods.find(
+    n => n.id === citizen.destinationNeighborhoodId
+  )?.icon ?? 'circle';
+  return `
+    <svg width="${CITIZEN_ICON_SIZE}" height="${CITIZEN_ICON_SIZE+3}" style="overflow: visible;">
+      <path
+        transform="scale(${CITIZEN_ICON_SIZE / 15})"
+        fill="${fill}"
+        opacity="0.8"
+        d="${iconPaths[destinationNeighborhoodIcon]}"
+      />
+      <path
+        fill="${fill}"
+        opacity="0.8"
+        d="M0 ${CITIZEN_ICON_SIZE+1} H${Math.floor(happiness * CITIZEN_ICON_SIZE)} v2 H0 Z"
+      />
+    </svg>
+  `;
 }

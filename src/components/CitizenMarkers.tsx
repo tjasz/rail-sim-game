@@ -24,13 +24,13 @@ export function CitizenMarkers({ citizens, neighborhoods, simulationTime }: Citi
         }
 
         // Create custom HTML for the citizen marker
-        const citizenHtml = renderCitizenIcon(citizen, neighborhoods, simulationTime);
+        const citizenHtml = renderCitizenIcon([0,0], CITIZEN_ICON_SIZE, citizen, neighborhoods, simulationTime);
 
         const icon = new DivIcon({
           html: citizenHtml,
           className: 'citizen-marker',
-          iconSize: [CITIZEN_ICON_SIZE, CITIZEN_ICON_SIZE],
-          iconAnchor: [CITIZEN_ICON_SIZE / 2, CITIZEN_ICON_SIZE / 2],
+          iconSize: [CITIZEN_ICON_SIZE, CITIZEN_ICON_SIZE+3],
+          iconAnchor: [CITIZEN_ICON_SIZE / 2, (CITIZEN_ICON_SIZE + 3) / 2],
         });
 
         // In Simple CRS, coordinates are [y, x] (row, col)
@@ -60,7 +60,7 @@ export function CitizenMarkers({ citizens, neighborhoods, simulationTime }: Citi
   );
 }
 
-export const renderCitizenIcon = (citizen: Citizen, neighborhoods: Neighborhood[], simulationTime: number) => {
+export const renderCitizenIcon = (position: [number, number], size: number, citizen: Citizen, neighborhoods: Neighborhood[], simulationTime: number) => {
   const currentTripTime = simulationTime - citizen.tripStartTime;
   const happiness = Math.max(0, Math.min(1, (citizen.route!.walkingOnlyTime! - currentTripTime) / citizen.route!.walkingOnlyTime!));
   const fill = "black";
@@ -68,9 +68,9 @@ export const renderCitizenIcon = (citizen: Citizen, neighborhoods: Neighborhood[
     n => n.id === citizen.destinationNeighborhoodId
   )?.icon ?? 'circle';
   return `
-    <svg width="${CITIZEN_ICON_SIZE}" height="${CITIZEN_ICON_SIZE+3}" style="overflow: visible;">
+    <svg width="${size}" height="${size+3}" style="overflow: visible;">
       <path
-        transform="scale(${CITIZEN_ICON_SIZE / 15})"
+        transform="translate(${position[0]}, ${position[1]}) scale(${size / 15})"
         fill="${fill}"
         opacity="0.8"
         d="${iconPaths[destinationNeighborhoodIcon]}"
@@ -78,7 +78,7 @@ export const renderCitizenIcon = (citizen: Citizen, neighborhoods: Neighborhood[
       <path
         fill="${fill}"
         opacity="0.8"
-        d="M0 ${CITIZEN_ICON_SIZE+1} H${Math.floor(happiness * CITIZEN_ICON_SIZE)} v2 H0 Z"
+        d="M0 ${size+1} H${Math.floor(happiness * size)} v2 H0 Z"
       />
     </svg>
   `;

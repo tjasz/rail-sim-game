@@ -24,7 +24,10 @@ export function CitizenMarkers({ citizens, neighborhoods, simulationTime }: Citi
         }
 
         // Create custom HTML for the citizen marker
-        const citizenHtml = renderCitizenIcon([0,0], CITIZEN_ICON_SIZE, citizen, neighborhoods, simulationTime);
+        const citizenHtml = `
+          <svg width="${CITIZEN_ICON_SIZE}" height="${CITIZEN_ICON_SIZE+3}" style="overflow: visible;">
+            ${renderCitizenIcon([0,0], CITIZEN_ICON_SIZE, citizen, neighborhoods, simulationTime)}
+          </svg>`;
 
         const icon = new DivIcon({
           html: citizenHtml,
@@ -68,7 +71,7 @@ export const renderCitizenIcon = (position: [number, number], size: number, citi
     n => n.id === citizen.destinationNeighborhoodId
   )?.icon ?? 'circle';
   return `
-    <svg width="${size}" height="${size+3}" style="overflow: visible;">
+    <g>
       <path
         transform="translate(${position[0]}, ${position[1]}) scale(${size / 15})"
         fill="${fill}"
@@ -80,6 +83,6 @@ export const renderCitizenIcon = (position: [number, number], size: number, citi
         opacity="0.8"
         d="M0 ${size+1} H${Math.floor(happiness * size)} v2 H0 Z"
       />
-    </svg>
+    </g>
   `;
 }

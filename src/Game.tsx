@@ -201,14 +201,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     }));
   }, []);
 
-  const handleSkipToEndOfDay = useCallback(() => {
-    setGameState((prevState) => ({
-      ...prevState,
-      simulationTime: MINUTES_PER_DAY - 1,
-      isSimulating: false,
-    }));
-  }, []);
-
   const handlePurchaseTrain = useCallback(() => {
     setGameState((prevState) => {
       const trainCost = prevState.city.config.costPerTrain;
@@ -874,9 +866,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           </div>
           <button className="btn-primary" onClick={handleStartPause}>
             {gameState.isSimulating ? '⏸ Pause' : '▶ Start Day'}
-          </button>
-          <button className="btn-secondary" onClick={handleSkipToEndOfDay} disabled={gameState.isSimulating}>
-            ⏭ Skip to End
           </button>
         </div>
       </div>

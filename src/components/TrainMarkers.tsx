@@ -26,18 +26,19 @@ export function TrainMarkers({ trains, lines, citizens, neighborhoods, simulatio
         const line = lines.get(train.lineId);
         if (!line || !line.isActive) return null;
         
+        // Get rotation angle (default to 0 if heading is not set)
+        const rotation = train.heading ?? 0;
+        
         // Create custom HTML for the train marker
         const trainHtml = `
-          <div style="position: relative; width: ${width}px; height: ${height}px;">
+          <div style="position: relative; width: ${width}px; height: ${height}px; transform: rotate(-${rotation}deg); transform-origin: center;">
             <svg width="${width}" height="${height}" style="overflow: visible;">
               <!-- Train body -->
-              <rect
-                width="${width}"
-                height="${height}"
+              <path
+                d="M 0 2 L ${width/2} 0 L ${width} 2 L ${width} ${height} L 0 ${height} Z"
                 fill="${line.color}"
-                stroke="none"
-                stroke-width="0"
-                rx="2"
+                stroke="black"
+                stroke-width="1"
               />
               ${train.passengerIds.map((_, idx) => {
                 const row = Math.floor(idx / RIDER_COLS);

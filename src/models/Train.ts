@@ -11,6 +11,7 @@ export interface Train {
   passengerIds: string[]; // citizenIds currently on this train
   capacity: number; // maximum passengers
   speed: number; // grid squares per minute
+  heading?: number; // direction of travel in degrees (0 = east, 90 = south, 180 = west, 270 = north)
   nextStationArrivalTime?: number; // simulation time in minutes
   currentPath?: Position[]; // waypoints to follow to reach next station
   currentPathIndex?: number; // current position in the path

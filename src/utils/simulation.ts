@@ -27,6 +27,37 @@ export function calculateDistance(
 }
 
 /**
+ * Calculate the heading angle (in degrees) from one position to another
+ * 0 = east, 90 = south, 180 = west, 270 = north
+ */
+export function calculateHeading(
+  from: { x: number; y: number },
+  to: { x: number; y: number },
+  fallback: number = 0
+): number {
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+
+  if (dx === 0 && dy === 0) {
+    return fallback;
+  }
+  
+  // atan2 returns angle in radians from -π to π, with 0 pointing right (east)
+  // and increasing counter-clockwise
+  const radians = Math.atan2(dy, dx);
+  
+  // Convert to degrees (0-360), with 0 = east and increasing clockwise
+  let degrees = radians * (180 / Math.PI);
+  
+  // Normalize to 0-360 range
+  if (degrees < 0) {
+    degrees += 360;
+  }
+  
+  return degrees;
+}
+
+/**
  * Move a position toward a target at a given speed
  * Returns the new position and whether the target was reached
  */
@@ -214,6 +245,9 @@ export function updateTrains(
         const currentTarget = updatedTrain.currentPath[pathIndex + 1];
         
         if (currentTarget) {
+          // Calculate heading before moving
+          updatedTrain.heading = calculateHeading(train.position, currentTarget, train.heading ?? 0);
+          
           // Move toward current waypoint
           const movement = moveToward(
             train.position,
@@ -230,6 +264,9 @@ export function updateTrains(
         }
       } else {
         // Fallback to direct movement if no path
+        // Calculate heading before moving
+        updatedTrain.heading = calculateHeading(train.position, nextStation.position, train.heading ?? 0);
+        
         const movement = moveToward(
           train.position,
           nextStation.position,

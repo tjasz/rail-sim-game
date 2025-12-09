@@ -4,23 +4,24 @@
 function polarToCartesian(radius: number, angleInDegrees: number): { x: number; y: number } {
   const angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
   return {
-    x: radius * Math.cos(angleInRadians),
-    y: radius * Math.sin(angleInRadians)
+    x: Math.round(100 * radius * Math.cos(angleInRadians)) / 100,
+    y: Math.round(100 * radius * Math.sin(angleInRadians)) / 100,
   };
 }
 
 /**
  * Creates an SVG path string for a regular polygon centered at [0,0]
  * 
- * @param outerRadius - The distance from the center to each vertex
  * @param numberOfPoints - The number of vertices/sides of the polygon
+ * @param outerRadius - The distance from the center to each vertex
+ * @param center - The center point of the shape
  * @returns SVG path string
  * 
  * @example
  * // Creates a hexagon with radius 10
  * createPolygonPath(10, 6)
  */
-export function createPolygonPath(numberOfPoints: number, outerRadius: number): string {
+export function createPolygonPath(numberOfPoints: number, outerRadius: number, center: { x: number; y: number }): string {
   if (numberOfPoints < 3) {
     throw new Error('A polygon must have at least 3 points');
   }
@@ -34,11 +35,11 @@ export function createPolygonPath(numberOfPoints: number, outerRadius: number): 
   }
 
   // Start at the first point
-  let path = `M ${points[0].x} ${points[0].y}`;
+  let path = `M ${center.x + points[0].x} ${center.y + points[0].y}`;
   
   // Draw lines to each subsequent point
   for (let i = 1; i < points.length; i++) {
-    path += ` L ${points[i].x} ${points[i].y}`;
+    path += ` L ${center.x + points[i].x} ${center.y + points[i].y}`;
   }
   
   // Close the path
@@ -50,9 +51,10 @@ export function createPolygonPath(numberOfPoints: number, outerRadius: number): 
 /**
  * Creates an SVG path string for a star shape centered at [0,0]
  * 
+ * @param numberOfPoints - The number of outer points on the star
  * @param outerRadius - The distance from the center to the outer points
  * @param innerRadius - The distance from the center to the inner points
- * @param numberOfPoints - The number of outer points on the star
+ * @param center - The center point of the shape
  * @returns SVG path string
  * 
  * @example
@@ -62,7 +64,8 @@ export function createPolygonPath(numberOfPoints: number, outerRadius: number): 
 export function createStarPath(
   numberOfPoints: number,
   outerRadius: number, 
-  innerRadius: number
+  innerRadius: number,
+  center: { x: number; y: number }
 ): string {
   if (numberOfPoints < 3) {
     throw new Error('A star must have at least 3 points');
@@ -78,11 +81,11 @@ export function createStarPath(
   }
 
   // Start at the first point
-  let path = `M ${points[0].x} ${points[0].y}`;
+  let path = `M ${center.x + points[0].x} ${center.y + points[0].y}`;
   
   // Draw lines to each subsequent point
   for (let i = 1; i < points.length; i++) {
-    path += ` L ${points[i].x} ${points[i].y}`;
+    path += ` L ${center.x + points[i].x} ${center.y + points[i].y}`;
   }
   
   // Close the path
@@ -94,9 +97,10 @@ export function createStarPath(
 /**
  * Creates an SVG path string for either a polygon or star centered at [0,0]
  * 
- * @param outerRadius - The distance from the center to the outer points
  * @param numberOfPoints - The number of points (outer points for stars)
+ * @param outerRadius - The distance from the center to the outer points
  * @param innerRadius - Optional inner radius for creating a star
+ * @param center - The center point of the shape
  * @returns SVG path string
  * 
  * @example
@@ -110,10 +114,11 @@ export function createStarPath(
 export function createShapePath(
   numberOfPoints: number,
   outerRadius: number,
-  innerRadius?: number
+  innerRadius?: number,
+  center: { x: number; y: number } = { x: 0, y: 0 }
 ): string {
   if (innerRadius !== undefined) {
-    return createStarPath(outerRadius, innerRadius, numberOfPoints);
+    return createStarPath(numberOfPoints, outerRadius, innerRadius, center);
   }
-  return createPolygonPath(outerRadius, numberOfPoints);
+  return createPolygonPath(numberOfPoints, outerRadius, center);
 }

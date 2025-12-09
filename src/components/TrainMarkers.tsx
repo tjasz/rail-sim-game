@@ -3,9 +3,8 @@ import { DivIcon } from 'leaflet';
 import type { Train, Line, Citizen, Neighborhood } from '../models';
 import { renderCitizenIcon } from './CitizenMarkers';
 
-const RIDER_SIZE = [15, 18]; // [width, height] in pixels
+const RIDER_SIZE = [9, 12]; // [width, height] in pixels
 const RIDER_MARGIN = 2; // margin between riders in pixels
-const RIDER_ROWS = 4;
 const RIDER_COLS = 2;
 
 interface TrainMarkersProps {
@@ -18,10 +17,12 @@ interface TrainMarkersProps {
 
 export function TrainMarkers({ trains, lines, citizens, neighborhoods, simulationTime }: TrainMarkersProps) {
   const width = RIDER_SIZE[0] * RIDER_COLS + (RIDER_COLS + 1) * RIDER_MARGIN;
-  const height = RIDER_SIZE[1] * RIDER_ROWS + (RIDER_ROWS + 1) * RIDER_MARGIN;
   return (
     <>
       {Array.from(trains.values()).map(train => {
+        const rider_rows = Math.ceil(train.capacity / RIDER_COLS);
+        const height = RIDER_SIZE[1] * rider_rows + (rider_rows + 1) * RIDER_MARGIN;
+
         const line = lines.get(train.lineId);
         if (!line || !line.isActive) return null;
         

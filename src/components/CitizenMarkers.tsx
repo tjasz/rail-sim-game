@@ -71,9 +71,8 @@ export const renderCitizenIcon = (position: [number, number], size: number, citi
     n => n.id === citizen.destinationNeighborhoodId
   )?.icon ?? 'circle';
   return `
-    <g>
+    <g transform="translate(${position[0]}, ${position[1]}) scale(${size / 15})">
       <path
-        transform="translate(${position[0]}, ${position[1]}) scale(${size / 15})"
         fill="${fill}"
         opacity="0.8"
         d="${iconPaths[destinationNeighborhoodIcon]}"
@@ -81,7 +80,7 @@ export const renderCitizenIcon = (position: [number, number], size: number, citi
       <path
         fill="${fill}"
         opacity="0.8"
-        d="M0 ${size+1} H${Math.floor(happiness * size)} v2 H0 Z"
+        d="M0 16 H${Math.floor(happiness * 15)} v2 H0 Z"
       />
     </g>
   `;

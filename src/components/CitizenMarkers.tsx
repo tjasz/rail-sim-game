@@ -19,7 +19,7 @@ export function CitizenMarkers({ citizens, neighborhoods, simulationTime }: Citi
     <>
       {Array.from(citizens.values()).map(citizen => {
         // Only render walking citizens
-        if (!citizen.state.includes('walking') && !citizen.state.includes('waiting-at-station')) {
+        if (!citizen.state.includes('walking')) {
           return null;
         }
 

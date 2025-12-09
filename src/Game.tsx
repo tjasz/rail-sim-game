@@ -1039,6 +1039,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             <StationMarkers
               stations={gameState.railNetwork.stations}
               lines={gameState.railNetwork.lines}
+              citizens={gameState.citizens}
+              neighborhoods={gameState.city.config.neighborhoods}
+              simulationTime={gameState.simulationTime}
               onStationClick={(!buildTrackState.isBuilding && !buildStationState.isBuilding && !gameState.isSimulating) ? setSelectedStationForAssignment : undefined}
             />
             <CitizenMarkers

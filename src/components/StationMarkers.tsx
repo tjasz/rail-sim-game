@@ -1,19 +1,29 @@
 import { Marker } from 'react-leaflet';
 import { DivIcon } from 'leaflet';
-import type { Station, Line } from '../models';
+import type { Station, Line, Citizen, Neighborhood } from '../models';
 import { useSelection } from '../contexts/SelectionContext';
+import { renderCitizenIcon } from './CitizenMarkers';
 
-const STATION_MARKER_RADIUS = 10; // in pixels
+const STATION_MARKER_RADIUS = 20; // in pixels
+const RIDER_SIZE = [10, 13]; // [width, height] in pixels
+const RIDER_COLS = 5;
+const RIDER_MARGIN = 0;
 
 interface StationMarkersProps {
   stations: Map<string, Station>;
   lines: Map<string, Line>;
+  citizens: Map<string, Citizen>;
+  neighborhoods: Neighborhood[];
+  simulationTime: number; // minutes elapsed in current day
   onStationClick?: (stationId: string) => void;
 }
 
 export function StationMarkers({ 
   stations, 
   lines,
+  citizens,
+  neighborhoods,
+  simulationTime,
   onStationClick 
 }: StationMarkersProps) {
   const { setSelectedObject } = useSelection();
@@ -21,9 +31,9 @@ export function StationMarkers({
   return (
     <>
       {Array.from(stations.values()).map(station => {
-        const waitingPassengersCount = Array.from(station.waitingCitizens.values()).reduce(
-          (sum, list) => sum + list.length, 
-          0
+        const waitingPassengers = Array.from(station.waitingCitizens.values()).reduce(
+          (sum, list) => [...sum, ...list], 
+          []
         );
 
         // Build SVG for station marker with concentric circles for each line
@@ -65,37 +75,24 @@ export function StationMarkers({
         // Create custom HTML for the station marker
         const stationHtml = `
           <div>
-            <svg viewBox="${-maxRadius} ${-maxRadius} ${maxRadius} ${maxRadius}" style="overflow: visible;">
+            <svg viewBox="${-maxRadius} ${-maxRadius} ${svgSize + RIDER_SIZE[0] * RIDER_COLS} ${svgSize}" style="overflow: visible;">
               ${circlesHtml}
+              ${waitingPassengers.map((citizenId, idx) => {
+                const row = 0;
+                const col = idx;
+                const x = maxRadius*Math.sqrt(3)/2 + RIDER_MARGIN + col * (RIDER_SIZE[0] + RIDER_MARGIN);
+                const y = maxRadius/2 + RIDER_MARGIN + row * (RIDER_SIZE[1] + RIDER_MARGIN);
+                return renderCitizenIcon([x,y], RIDER_SIZE[0], citizens.get(citizenId)!, neighborhoods, simulationTime);
+              }).join('')}
             </svg>
-            ${waitingPassengersCount > 0 ? `
-              <div style="
-                position: absolute;
-                top: -4px;
-                right: -4px;
-                background: #ff6b6b;
-                border: 1px solid #fff;
-                border-radius: 50%;
-                width: 20px;
-                height: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 10px;
-                font-weight: bold;
-                color: #fff;
-              ">
-                ${waitingPassengersCount}
-              </div>
-            ` : ''}
           </div>
         `;
 
         const icon = new DivIcon({
           html: stationHtml,
           className: 'station-marker',
-          iconSize: [svgSize, svgSize],
-          iconAnchor: [svgSize, svgSize],
+          iconSize: [svgSize + RIDER_SIZE[0] * RIDER_COLS, svgSize],
+          iconAnchor: [maxRadius, maxRadius],
         });
 
         // In Simple CRS, coordinates are [y, x] (row, col)

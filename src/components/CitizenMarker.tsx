@@ -42,7 +42,7 @@ export function CitizenMarker({ citizen, neighborhoods, cellSize }: CitizenMarke
       transform={`translate(${cx}, ${cy}) scale(${CITIZEN_ICON_SIZE / 15})`}
       fill={fill}
       opacity="0.8"
-      d={iconPaths[destinationNeighborhoodIcon]}
+      d={iconPaths[destinationNeighborhoodIcon] ?? destinationNeighborhoodIcon}
       style={{ cursor: 'pointer' }}
       />)
 }

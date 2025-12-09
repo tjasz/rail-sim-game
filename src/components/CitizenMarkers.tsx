@@ -75,7 +75,7 @@ export const renderCitizenIcon = (position: [number, number], size: number, citi
       <path
         fill="${fill}"
         opacity="0.8"
-        d="${iconPaths[destinationNeighborhoodIcon]}"
+        d="${iconPaths[destinationNeighborhoodIcon] ?? destinationNeighborhoodIcon}"
       />
       <path
         fill="${fill}"

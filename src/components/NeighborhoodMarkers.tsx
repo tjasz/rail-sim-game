@@ -39,7 +39,7 @@ export function NeighborhoodMarkers({
                 transform="scale(${NEIGHBORHOOD_ICON_SIZE / 15})"
                 fill="${neighborhood.color}"
                 opacity="${opacity}"
-                d="${iconPaths[neighborhood.icon]}"
+                d="${iconPaths[neighborhood.icon] ?? neighborhood.icon}"
               />
             </svg>
             <div style="

@@ -48,7 +48,7 @@ export function NeighborhoodMarker({
       transform={`translate(${(col+0.5) * cellSize - NEIGHBORHOOD_ICON_SIZE / 2}, ${(row+0.5) * cellSize - NEIGHBORHOOD_ICON_SIZE / 2}) scale(${NEIGHBORHOOD_ICON_SIZE / 15})`}
       fill={neighborhood.color}
       opacity={opacity}
-      d={iconPaths[neighborhood.icon]}
+      d={iconPaths[neighborhood.icon] ?? neighborhood.icon}
       />
     <text
       x={col * cellSize + cellSize / 2}

@@ -37,8 +37,8 @@ export function TrainMarkers({ trains, lines, citizens, neighborhoods, simulatio
               <path
                 d="M 0 2 L ${width/2} 0 L ${width} 2 L ${width} ${height} L 0 ${height} Z"
                 fill="${line.color}"
-                stroke="black"
-                stroke-width="1"
+                stroke="none"
+                stroke-width="0"
               />
               ${train.passengerIds.map((_, idx) => {
                 const row = Math.floor(idx / RIDER_COLS);

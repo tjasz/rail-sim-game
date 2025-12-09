@@ -31,7 +31,7 @@ export function TrainMarkers({ trains, lines, citizens, neighborhoods, simulatio
         
         // Create custom HTML for the train marker
         const trainHtml = `
-          <div style="position: relative; width: ${width}px; height: ${height}px; transform: rotate(-${rotation}deg); transform-origin: center;">
+          <div style="position: relative; width: ${width}px; height: ${height}px; transform: rotate(${90-rotation}deg); transform-origin: center;">
             <svg width="${width}" height="${height}" style="overflow: visible;">
               <!-- Train body -->
               <path

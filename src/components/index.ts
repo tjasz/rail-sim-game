@@ -5,7 +5,6 @@ export { NetworkStats } from './NetworkStats';
 export { CityGrid } from './CityGrid';
 export { TrackOverlay } from './TrackOverlay';
 export { DraftTrackOverlay } from './DraftTrackOverlay';
-export { StationPlacementOverlay } from './StationPlacementOverlay';
 export { TrainMarkers } from './TrainMarkers';
 export { NeighborhoodMarkers } from './NeighborhoodMarkers';
 export { StationMarkers } from './StationMarkers';

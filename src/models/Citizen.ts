@@ -33,7 +33,7 @@ export interface Citizen {
   tripStartTime: number; // simulation time in minutes
   tripEndTime?: number; // simulation time in minutes
   currentTrainId?: string; // if riding a train
-  currentStationId?: string; // if at a station
+  currentNeighborhoodId?: string; // if at a neighborhood/station
   route?: CitizenRoute; // planned route
 }
 
@@ -46,7 +46,7 @@ export type RouteSegment = WaitSegment | RideSegment;
 
 export interface WaitSegment {
   type: 'wait';
-  stationId: string;
+  neighborhoodId: string;
   lineId: string;
   estimatedTime: number; // in minutes
 }
@@ -55,8 +55,8 @@ export interface RideSegment {
   type: 'ride';
   lineId: string;
   lineDirection: 'forward' | 'backward';
-  fromStationId: string;
-  toStationId: string;
+  fromNeighborhoodId: string;
+  toNeighborhoodId: string;
   distance: number; // in grid squares (along tracks)
   estimatedTime: number; // in minutes
 }

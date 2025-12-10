@@ -11,7 +11,6 @@ export type {
   RideSegment,
   DailyTrip
 } from './Citizen';
-export type { Station } from './Station';
 export type { Track } from './Track';
 export type { Line } from './Line';
 export type { Train, TrainDirection } from './Train';

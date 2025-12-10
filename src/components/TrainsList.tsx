@@ -1,9 +1,9 @@
-import type { Train, Line, Station } from '../models';
+import type { Train, Line, Neighborhood } from '../models';
 
 interface TrainsListProps {
   trains: Map<string, Train>;
   lines: Map<string, Line>;
-  stations: Map<string, Station>;
+  neighborhoods: Neighborhood[];
   budget: number;
   trainCost: number;
   onPurchaseTrain: () => void;
@@ -13,7 +13,7 @@ interface TrainsListProps {
 export function TrainsList({ 
   trains, 
   lines, 
-  stations,
+  neighborhoods,
   budget,
   trainCost,
   onPurchaseTrain,
@@ -41,8 +41,8 @@ export function TrainsList({
         <div className="trains-container">
           {Array.from(trains.values()).map(train => {
             const line = lines.get(train.lineId);
-            const currentStation = line?.stationIds[train.currentStationIndex];
-            const station = currentStation ? stations.get(currentStation) : null;
+            const currentNeighborhoodId = line?.neighborhoodIds[train.currentNeighborhoodIndex];
+            const neighborhood = currentNeighborhoodId ? neighborhoods.find(n => n.id === currentNeighborhoodId) : null;
             const isUnassigned = !line;
             
             return (
@@ -65,7 +65,7 @@ export function TrainsList({
                 <div className="train-details">
                   <span>Passengers: {train.passengerIds.length} / {train.capacity}</span>
                   <span>Direction: {train.direction}</span>
-                  {station && <span>At: {station.neighborhoodId}</span>}
+                  {neighborhood && <span>At: {neighborhood.id}</span>}
                 </div>
                 <div className="train-assignment">
                   {hasLines ? (
@@ -86,7 +86,7 @@ export function TrainsList({
                         <option value="">Select a line...</option>
                         {Array.from(lines.values()).map(l => (
                           <option key={l.id} value={l.id}>
-                            {l.name} ({l.stationIds.length} stations)
+                            {l.name} ({l.neighborhoodIds.length} stops)
                           </option>
                         ))}
                       </select>

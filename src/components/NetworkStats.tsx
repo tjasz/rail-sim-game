@@ -32,11 +32,6 @@ export function NetworkStats({ network }: NetworkStatsProps) {
       </h3>
       {!isCollapsed && <div className="stats-grid">
         <div className="stat-item">
-          <span className="stat-label">Stations</span>
-          <span className="stat-value">{network.stations.size}</span>
-        </div>
-        
-        <div className="stat-item">
           <span className="stat-label">Track Miles</span>
           <span className="stat-value">{totalTrackMiles.toFixed(1)}</span>
         </div>

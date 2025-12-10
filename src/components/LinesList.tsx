@@ -1,11 +1,11 @@
-import type { Line, Station } from '../models';
+import type { Line, Neighborhood } from '../models';
 
 interface LinesListProps {
   lines: Map<string, Line>;
-  stations: Map<string, Station>;
+  neighborhoods: Neighborhood[];
 }
 
-export function LinesList({ lines, stations }: LinesListProps) {
+export function LinesList({ lines, neighborhoods }: LinesListProps) {
   return (
     <div className="lines-list">
       <h3>Metro Lines</h3>
@@ -14,10 +14,10 @@ export function LinesList({ lines, stations }: LinesListProps) {
       ) : (
         <div className="lines-container">
           {Array.from(lines.values()).map(line => {
-            const stationNames = line.stationIds
+            const neighborhoodNames = line.neighborhoodIds
               .map(id => {
-                const station = stations.get(id);
-                return station ? `Station ${station.neighborhoodId}` : 'Unknown';
+                const neighborhood = neighborhoods.find(n => n.id === id);
+                return neighborhood ? `${neighborhood.name} Station` : 'Unknown';
               })
               .join(' → ');
             
@@ -30,10 +30,10 @@ export function LinesList({ lines, stations }: LinesListProps) {
                 <div className="line-info">
                   <div className="line-name">{line.name}</div>
                   <div className="line-details">
-                    {line.stationIds.length} stations | {line.trainIds.length} trains
+                    {line.neighborhoodIds.length} stops | {line.trainIds.length} trains
                     {line.isActive ? ' ✓' : ' (inactive)'}
                   </div>
-                  <div className="line-route">{stationNames}</div>
+                  <div className="line-route">{neighborhoodNames}</div>
                 </div>
               </div>
             );

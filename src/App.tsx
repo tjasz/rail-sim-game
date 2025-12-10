@@ -1,5 +1,5 @@
 import { Game } from './Game';
-import type { GameState, Neighborhood, Station } from './models';
+import type { GameState, Neighborhood } from './models';
 import { calculateDistance, initializeDay } from './utils';
 import './App.css';
 import { SeattleConfig } from './cities';
@@ -9,15 +9,22 @@ const getNeighborhoodPriority = (neighborhood: Neighborhood) => {
 }
 
 // Base game configuration (without citizens - they'll be generated)
+// Initialize all neighborhoods with station properties
 const neighborhoods = SeattleConfig.config.neighborhoods
   .filter(n => 
     SeattleConfig.config.tiles[n.position.x][n.position.y] !== 'w'
   )
+  .map(n => ({
+    ...n,
+    lineIds: [],
+    waitingCitizens: new Map(),
+  }))
   .sort((a, b) => {
     const aScore = getNeighborhoodPriority(a);
     const bScore = getNeighborhoodPriority(b);
     return bScore - aScore;
   });
+
 const baseGameState: GameState = {
   status: 'playing',
   city: {
@@ -28,20 +35,6 @@ const baseGameState: GameState = {
     },
   },
   railNetwork: {
-    // Automatically build stations at each active neighborhood
-    stations: new Map([
-      ...neighborhoods.slice(0, SeattleConfig.config.activeNeighborhoodsAtTime(0)).map<[string, Station]>(n => {
-        const stationId = `station-${n.id}`;
-        const station : Station = {
-          id: stationId,
-          neighborhoodId: n.id,
-          position: { ...n.position },
-          lineIds: [],
-          waitingCitizens: new Map(),
-        };
-        return [stationId, station];
-      }),
-    ]),
     tracks: new Map(),
     lines: new Map(),
     trains: new Map(),

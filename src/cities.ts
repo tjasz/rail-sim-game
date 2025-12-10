@@ -4451,7 +4451,7 @@ export const SeattleConfig : CityState = {
         // at 900 minutes, 300 total trips
         return elapsedMinutes * elapsedMinutes / 3600 + elapsedMinutes / 12;
       },
-      activeNeighborhoodsAtTime : (elapsedMinutes: number) => Math.min(3 + Math.floor(elapsedMinutes / 300), 400),
+      activeNeighborhoodsAtTime : (elapsedMinutes: number) => Math.min(3 + Math.floor(elapsedMinutes / 100), 400),
       initialBudget: 10000,
       budgetBaseline: 1000,
       budgetBonusPerHappyCitizen: 10,

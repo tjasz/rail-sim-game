@@ -756,6 +756,20 @@ export function tickSimulation(
       gameState.city.config.activeNeighborhoodsAtTime(newTime),
       maxNeighborhoods
     );
+  
+  // Automatically put a new station in the new neighborhood when it becomes active
+  if (updatedActiveNeighborhoodCount > gameState.activeNeighborhoodCount) {
+    const newNeighborhood = gameState.city.config.neighborhoods[updatedActiveNeighborhoodCount - 1];
+    const newStationId = `station-${Date.now()}`;
+    const newStation : Station = {
+      id: newStationId,
+      neighborhoodId: newNeighborhood.id,
+      position: { ...newNeighborhood.position },
+      lineIds: [],
+      waitingCitizens: new Map<string, string[]>(),
+    };
+    gameState.railNetwork.stations.set(newStationId, newStation);
+  }
 
   // Generate new trips if needed
   let currentCitizens = new Map(gameState.citizens);

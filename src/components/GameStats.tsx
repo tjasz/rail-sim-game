@@ -4,11 +4,10 @@ import type { GameStats } from '../models';
 interface GameStatsProps {
   stats: GameStats;
   budget: number;
-  population: number;
   currentDay: number;
 }
 
-export function GameStats({ stats, budget, population, currentDay }: GameStatsProps) {
+export function GameStats({ stats, budget, currentDay }: GameStatsProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   
   return (
@@ -36,11 +35,6 @@ export function GameStats({ stats, budget, population, currentDay }: GameStatsPr
         <div className="stat-item">
           <span className="stat-label">Day</span>
           <span className="stat-value">{currentDay}</span>
-        </div>
-        
-        <div className="stat-item">
-          <span className="stat-label">Population</span>
-          <span className="stat-value">{population.toLocaleString()}</span>
         </div>
         
         <div className="stat-item budget">

@@ -689,15 +689,10 @@ export function initializeDay(
   tripMatrix: TripMatrix;
   citizens: Map<string, Citizen>;
   updatedNetwork: RailNetwork;
-  tripGenerationInterval: number;
   nextTripGenerationTime: number;
 } {
   // Start with empty citizens - they'll be generated continuously
   const citizens = new Map<string, Citizen>();
-  
-  // Calculate trip generation interval
-  const population = config.populationOnDay(day);
-  const tripGenerationInterval = calculateTripGenerationInterval(population);
   
   // Set next trip generation time to the start time
   const nextTripGenerationTime = startTime;
@@ -735,7 +730,6 @@ export function initializeDay(
     tripMatrix,
     citizens,
     updatedNetwork,
-    tripGenerationInterval,
     nextTripGenerationTime,
   };
 }

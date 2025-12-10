@@ -9,9 +9,8 @@ export interface CityConfig {
   tiles: TileType[][]; // [x][y] - 'l' for land or 'w' for water
   neighborhoods: Neighborhood[];
   
-  // Population settings
-  initialPopulation: number;
-  populationOnDay: (day: number) => number; // function that computes population on a given day (starting with day 0)
+  totalTripsStartedAtTime: (elapsedMinutes: number) => number; // function that computes the total number of trips started at a given time
+  activeNeighborhoodsAtTime : (elapsedMinutes: number) => number; // function that computes number of active neighborhoods at a given time
   
   // Economic settings
   initialBudget: number;
@@ -34,6 +33,5 @@ export interface CityConfig {
 export interface CityState {
   config: CityConfig;
   currentDay: number;
-  population: number;
   budget: number;
 }

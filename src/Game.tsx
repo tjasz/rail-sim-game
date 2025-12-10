@@ -29,7 +29,6 @@ import {
   formatTime, 
   MINUTES_PER_DAY,
   initializeDay,
-  calculatePopulation,
   calculateDistance,
   calculateCitizenRoutes
 } from './utils';
@@ -154,7 +153,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       
       // Initialize new day with continuous trip generation system
       const dayStartTime = newDay * MINUTES_PER_DAY;
-      const { tripMatrix, citizens, updatedNetwork, tripGenerationInterval, nextTripGenerationTime } = initializeDay(
+      const { tripMatrix, citizens, updatedNetwork, nextTripGenerationTime } = initializeDay(
         prevState.city.config,
         newDay,
         prevState.activeNeighborhoodCount,
@@ -162,15 +161,11 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         dayStartTime
       );
       
-      // Calculate population from active neighborhoods
-      const newPopulation = prevState.city.config.populationOnDay(newDay);
-      
       return {
         ...prevState,
         city: {
           ...prevState.city,
           currentDay: newDay,
-          population: newPopulation,
           budget: prevState.city.budget + budgetEarned,
         },
         stats: updatedStats,
@@ -180,7 +175,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         citizens,
         currentTripMatrix: tripMatrix,
         railNetwork: updatedNetwork,
-        tripGenerationInterval,
         nextTripGenerationTime,
         tripsGeneratedToday: 0,
       };
@@ -873,7 +867,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           <GameStats 
             stats={gameState.stats}
             budget={gameState.city.budget}
-            population={gameState.city.population}
             currentDay={gameState.city.currentDay}
           />
           <NetworkStats network={gameState.railNetwork} />

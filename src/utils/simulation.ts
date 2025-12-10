@@ -736,16 +736,13 @@ export function rolloverToNextDay(gameState: GameState): GameState {
     totalMoneyEarned: gameState.stats.totalMoneyEarned + budgetEarned,
   };
 
-  // Calculate new population (growth per day)
   const newDay = gameState.city.currentDay + 1;
-  const newPopulation = Math.floor(gameState.city.config.populationOnDay(newDay));
 
   return {
     ...gameState,
     city: {
       ...gameState.city,
       currentDay: newDay,
-      population: newPopulation,
       budget: gameState.city.budget + budgetEarned,
     },
     stats: updatedStats,
@@ -874,12 +871,11 @@ export function tickSimulation(
 
   // Generate new trips if needed
   let currentCitizens = new Map(gameState.citizens);
-  let nextTripTime = gameState.nextTripGenerationTime;
-  let tripsGenerated = gameState.tripsGeneratedToday;
-  const maxTripsPerDay = gameState.city.config.populationOnDay(gameState.city.currentDay);
+  let tripsGenerated = gameState.totalTripsStarted;
+  const tripsNeeded = gameState.city.config.totalTripsStartedAtTime(gameState.simulationTime);
   
   // Keep generating trips while we're past the next generation time and haven't hit the limit
-  while (newTime >= nextTripTime && tripsGenerated < maxTripsPerDay) {
+  while (tripsGenerated < tripsNeeded) {
     const activeNeighborhoods = gameState.city.config.neighborhoods.slice(0, updatedActiveNeighborhoodCount);
     
     // Use a counter based on current map size to ensure unique IDs
@@ -887,7 +883,7 @@ export function tickSimulation(
     
     const newCitizen = generateSingleTrip(
       activeNeighborhoods,
-      nextTripTime,
+      gameState.simulationTime,
       citizenIdCounter
     );
     
@@ -939,7 +935,6 @@ export function tickSimulation(
     }
     
     tripsGenerated++;
-    nextTripTime += gameState.tripGenerationInterval;
   }
 
   const newCitizens = new Map([...gameState.citizens, ...currentCitizens]);
@@ -992,8 +987,7 @@ export function tickSimulation(
     ...gameState,
     simulationTime: newTime,
     activeNeighborhoodCount: updatedActiveNeighborhoodCount,
-    nextTripGenerationTime: nextTripTime,
-    tripsGeneratedToday: tripsGenerated,
+    totalTripsStarted: tripsGenerated,
     railNetwork: {
       ...gameState.railNetwork,
       trains: updatedTrains,

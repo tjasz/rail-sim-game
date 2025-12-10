@@ -12,3 +12,13 @@ TODO
 - unassign track from line when line moves
 - consider average headway when deciding whether to take the train or walk
 - show headway on line info panel
+
+
+- When citizen is on a train at midnight:
+    Uncaught TypeError: Cannot read properties of undefined (reading 'tripStartTime')
+        at renderCitizenIcon (CitizenMarkers.tsx:67:52)
+        at TrainMarkers.tsx:48:24
+        at Array.map (<anonymous>)
+        at TrainMarkers.tsx:43:36
+        at Array.map (<anonymous>)
+        at TrainMarkers (TrainMarkers.tsx:22:36)

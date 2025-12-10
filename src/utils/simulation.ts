@@ -836,7 +836,6 @@ export function tickSimulation(
     updatedTrains,
     activeNeighborhoods,
     gameState.railNetwork.lines,
-    gameState.city.config.neighborhoods,
     newTime
   );
   

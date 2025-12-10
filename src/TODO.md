@@ -1,0 +1,14 @@
+TODO
+- editing lines sucks, index matters
+- mobile layout
+- light-dark
+- individualize shifts and recreation factor in neighborhoods
+- individualize icons for neighborhoods
+- leaflet fit bounds on each day start and fit bounds button
+- make trains accelerate and decelerate
+- make happiness viewable at a glance more easily
+- change trip calculation so that something is always happening (no dead time) and days go quicker
+- save game state to local storage
+- unassign track from line when line moves
+- consider average headway when deciding whether to take the train or walk
+- show headway on line info panel

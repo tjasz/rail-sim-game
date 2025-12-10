@@ -286,12 +286,10 @@ export function generateTripMatrix(
  * Create citizens with work assignments and daily schedules
  */
 export function createCitizensWithSchedules(
-  activeNeighborhoods: Neighborhood[]
+  activeNeighborhoods: Neighborhood[],
+  totalPopulation : number
 ): Map<string, Citizen> {
   const citizens = new Map<string, Citizen>();
-  
-  // Calculate total population from active neighborhoods
-  const totalPopulation = activeNeighborhoods.reduce((sum, n) => sum + n.residents, 0);
   
   // Create a citizen for each resident
   for (let i = 0; i < totalPopulation; i++) {
@@ -581,7 +579,8 @@ export function initializeDay(
   const activeNeighborhoods = getActiveNeighborhoods(config.neighborhoods, activeNeighborhoodCount);
   
   // Create citizens with work assignments and daily schedules
-  const citizensWithoutRoutes = createCitizensWithSchedules(activeNeighborhoods);
+  const totalPopulation = 35 * (day + 1);
+  const citizensWithoutRoutes = createCitizensWithSchedules(activeNeighborhoods, totalPopulation);
   
   // Calculate routes for all citizens
   const citizens = calculateCitizenRoutes(

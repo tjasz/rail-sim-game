@@ -1,14 +1,17 @@
 import { iconPaths } from "./iconPaths";
 import type { CityState, Shift } from "./models";
-const BusinessShifts : Shift[] = [[7,16], [8, 17], [9, 18]];
-const RetailShifts : Shift[] = [[6, 14], [11, 19], [16, 0]];
-const ShiftWorkShifts : Shift[] = [[4,12], [12,20], [20,4]];
+// const BusinessShifts : Shift[] = [[7,16], [8, 17], [9, 18]];
+// const RetailShifts : Shift[] = [[6, 14], [11, 19], [16, 0]];
+// const ShiftWorkShifts : Shift[] = [[4,12], [12,20], [20,4]];
 
 // default to a mix of shifts
 const DefaultShifts : Shift[] = [
-  ...BusinessShifts,
-  ...RetailShifts,
-  ...ShiftWorkShifts,
+  [0, 8], [1, 9], [2, 10], [3, 11],
+  [4, 12], [5, 13], [6, 14], [7, 15],
+  [8, 16], [9, 17], [10, 18], [11, 19],
+  [12, 20], [13, 21], [14, 22], [15, 23],
+  [16, 0], [17, 1], [18, 2], [19, 3],
+  [20, 4], [21, 5], [22, 6], [23, 7],
 ];
 
 export const SeattleConfig : CityState = {

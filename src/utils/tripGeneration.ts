@@ -118,12 +118,14 @@ function generateDailySchedule(
     // Regular shift: start at home, go to work, optionally recreation, end at home
     
     // Trip to work
-    schedule.push({
-      originNeighborhoodId: homeNeighborhoodId,
-      destinationNeighborhoodId: workNeighborhoodId,
-      departureTime: addRandomOffset(shiftStart),
-      purpose: 'to-work'
-    });
+    if (homeNeighborhoodId !== workNeighborhoodId) {
+      schedule.push({
+        originNeighborhoodId: homeNeighborhoodId,
+        destinationNeighborhoodId: workNeighborhoodId,
+        departureTime: addRandomOffset(shiftStart),
+        purpose: 'to-work'
+      });
+    }
     
     // Trip from work - 50% chance go straight home, 50% go to recreation
     const goToRecreation = Math.random() < 0.5;
@@ -132,29 +134,35 @@ function generateDailySchedule(
       // Pick a recreational destination
       const recreationNeighborhood = pickRecreationalDestination(activeNeighborhoods);
       
-      schedule.push({
-        originNeighborhoodId: workNeighborhoodId,
-        destinationNeighborhoodId: recreationNeighborhood.id,
-        departureTime: addRandomOffset(shiftEnd),
-        purpose: 'recreation'
-      });
+      if (workNeighborhoodId !== recreationNeighborhood.id) {
+        schedule.push({
+          originNeighborhoodId: workNeighborhoodId,
+          destinationNeighborhoodId: recreationNeighborhood.id,
+          departureTime: addRandomOffset(shiftEnd),
+          purpose: 'recreation'
+        });
+      }
       
       // After 1-2 hours of recreation, go home
       const recreationDuration = 1 + Math.floor(Math.random() * 2); // 1-2 hours
-      schedule.push({
-        originNeighborhoodId: recreationNeighborhood.id,
-        destinationNeighborhoodId: homeNeighborhoodId,
-        departureTime: addRandomOffset(shiftEnd + recreationDuration),
-        purpose: 'to-home'
-      });
+      if (recreationNeighborhood.id !== homeNeighborhoodId) {
+        schedule.push({
+          originNeighborhoodId: recreationNeighborhood.id,
+          destinationNeighborhoodId: homeNeighborhoodId,
+          departureTime: addRandomOffset(shiftEnd + recreationDuration),
+          purpose: 'to-home'
+        });
+      }
     } else {
       // Go straight home
-      schedule.push({
-        originNeighborhoodId: workNeighborhoodId,
-        destinationNeighborhoodId: homeNeighborhoodId,
-        departureTime: addRandomOffset(shiftEnd),
-        purpose: 'to-home'
-      });
+      if (workNeighborhoodId !== homeNeighborhoodId) {
+        schedule.push({
+          originNeighborhoodId: workNeighborhoodId,
+          destinationNeighborhoodId: homeNeighborhoodId,
+          departureTime: addRandomOffset(shiftEnd),
+          purpose: 'to-home'
+        });
+      }
     }
   } else {
     // Midnight-crossing shift: start at work, go home after shift, rest 8h, go back to work
@@ -166,21 +174,25 @@ function generateDailySchedule(
       // Pick a recreational destination
       const recreationNeighborhood = pickRecreationalDestination(activeNeighborhoods);
       
-      schedule.push({
-        originNeighborhoodId: workNeighborhoodId,
-        destinationNeighborhoodId: recreationNeighborhood.id,
-        departureTime: addRandomOffset(shiftEnd),
-        purpose: 'recreation'
-      });
+      if (workNeighborhoodId !== recreationNeighborhood.id) {
+        schedule.push({
+          originNeighborhoodId: workNeighborhoodId,
+          destinationNeighborhoodId: recreationNeighborhood.id,
+          departureTime: addRandomOffset(shiftEnd),
+          purpose: 'recreation'
+        });
+      }
       
       // After 1-2 hours of recreation, go home
       const recreationDuration = 1 + Math.floor(Math.random() * 2);
-      schedule.push({
-        originNeighborhoodId: recreationNeighborhood.id,
-        destinationNeighborhoodId: homeNeighborhoodId,
-        departureTime: addRandomOffset(shiftEnd + recreationDuration),
-        purpose: 'to-home'
-      });
+      if (recreationNeighborhood.id !== homeNeighborhoodId) {
+        schedule.push({
+          originNeighborhoodId: recreationNeighborhood.id,
+          destinationNeighborhoodId: homeNeighborhoodId,
+          departureTime: addRandomOffset(shiftEnd + recreationDuration),
+          purpose: 'to-home'
+        });
+      }
       
       // Leave home at least 8 hours before shift starts (accounting for 24h wrap)
       const nextShiftStart = shiftStart + 24; // next day's shift
@@ -189,31 +201,37 @@ function generateDailySchedule(
         nextShiftStart
       );
       
-      schedule.push({
-        originNeighborhoodId: homeNeighborhoodId,
-        destinationNeighborhoodId: workNeighborhoodId,
-        departureTime: addRandomOffset(leaveHomeTime),
-        purpose: 'to-work'
-      });
+      if (homeNeighborhoodId !== workNeighborhoodId) {
+        schedule.push({
+          originNeighborhoodId: homeNeighborhoodId,
+          destinationNeighborhoodId: workNeighborhoodId,
+          departureTime: addRandomOffset(leaveHomeTime),
+          purpose: 'to-work'
+        });
+      }
     } else {
       // Go straight home
-      schedule.push({
-        originNeighborhoodId: workNeighborhoodId,
-        destinationNeighborhoodId: homeNeighborhoodId,
-        departureTime: addRandomOffset(shiftEnd),
-        purpose: 'to-home'
-      });
+      if (workNeighborhoodId !== homeNeighborhoodId) {
+        schedule.push({
+          originNeighborhoodId: workNeighborhoodId,
+          destinationNeighborhoodId: homeNeighborhoodId,
+          departureTime: addRandomOffset(shiftEnd),
+          purpose: 'to-home'
+        });
+      }
       
       // Leave home at least 8 hours later for next shift
       const nextShiftStart = shiftStart + 24;
       const leaveHomeTime = Math.max(shiftEnd + 8, nextShiftStart);
       
-      schedule.push({
-        originNeighborhoodId: homeNeighborhoodId,
-        destinationNeighborhoodId: workNeighborhoodId,
-        departureTime: addRandomOffset(leaveHomeTime),
-        purpose: 'to-work'
-      });
+      if (homeNeighborhoodId !== workNeighborhoodId) {
+        schedule.push({
+          originNeighborhoodId: homeNeighborhoodId,
+          destinationNeighborhoodId: workNeighborhoodId,
+          departureTime: addRandomOffset(leaveHomeTime),
+          purpose: 'to-work'
+        });
+      }
     }
   }
   
@@ -311,25 +329,29 @@ export function createCitizensWithSchedules(
     // Determine starting position and first trip
     const crossesMidnight = shiftCrossesMidnight(shift);
     const firstTrip = dailySchedule[0];
-    const startingNeighborhoodId = crossesMidnight ? workNeighborhood.id : homeNeighborhood.id;
-    const startingNeighborhood = activeNeighborhoods.find(n => n.id === startingNeighborhoodId)!;
-    
-    const citizen: Citizen = {
-      id: citizenId,
-      homeNeighborhoodId: homeNeighborhood.id,
-      workNeighborhoodId: workNeighborhood.id,
-      shift,
-      dailySchedule,
-      currentTripIndex: 0,
-      originNeighborhoodId: firstTrip.originNeighborhoodId,
-      destinationNeighborhoodId: firstTrip.destinationNeighborhoodId,
-      state: 'waiting-at-origin',
-      currentPosition: { ...startingNeighborhood.position },
-      isHappy: true,
-      tripStartTime: firstTrip.departureTime * 60, // Convert hours to minutes
-    };
-    
-    citizens.set(citizenId, citizen);
+
+    // only add citizens that take trips
+    if (firstTrip !== undefined) {
+      const startingNeighborhoodId = crossesMidnight ? workNeighborhood.id : homeNeighborhood.id;
+      const startingNeighborhood = activeNeighborhoods.find(n => n.id === startingNeighborhoodId)!;
+      
+      const citizen: Citizen = {
+        id: citizenId,
+        homeNeighborhoodId: homeNeighborhood.id,
+        workNeighborhoodId: workNeighborhood.id,
+        shift,
+        dailySchedule,
+        currentTripIndex: 0,
+        originNeighborhoodId: firstTrip.originNeighborhoodId,
+        destinationNeighborhoodId: firstTrip.destinationNeighborhoodId,
+        state: 'waiting-at-origin',
+        currentPosition: { ...startingNeighborhood.position },
+        isHappy: true,
+        tripStartTime: firstTrip.departureTime * 60, // Convert hours to minutes
+      };
+      
+      citizens.set(citizenId, citizen);
+    }
   }
   
   return citizens;

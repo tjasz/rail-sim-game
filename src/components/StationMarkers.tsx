@@ -78,8 +78,8 @@ export function StationMarkers({
             <svg viewBox="${-maxRadius} ${-maxRadius} ${svgSize + RIDER_SIZE[0] * RIDER_COLS} ${svgSize}" style="overflow: visible;">
               ${circlesHtml}
               ${waitingPassengers.map((citizenId, idx) => {
-                const row = 0;
-                const col = idx;
+                const row = Math.floor(idx / RIDER_COLS);
+                const col = idx % RIDER_COLS;
                 const x = maxRadius*Math.sqrt(3)/2 + RIDER_MARGIN + col * (RIDER_SIZE[0] + RIDER_MARGIN);
                 const y = maxRadius/2 + RIDER_MARGIN + row * (RIDER_SIZE[1] + RIDER_MARGIN);
                 return renderCitizenIcon([x,y], RIDER_SIZE[0], citizens.get(citizenId)!, neighborhoods, simulationTime);

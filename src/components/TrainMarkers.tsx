@@ -12,7 +12,7 @@ interface TrainMarkersProps {
   lines: Map<string, Line>;
   citizens: Map<string, Citizen>;
   neighborhoods: Neighborhood[];
-  simulationTime: number; // minutes elapsed in current day
+  simulationTime: number; // total minutes elapsed since game start
 }
 
 export function TrainMarkers({ trains, lines, citizens, neighborhoods, simulationTime }: TrainMarkersProps) {

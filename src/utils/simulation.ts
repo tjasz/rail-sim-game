@@ -749,7 +749,7 @@ export function rolloverToNextDay(gameState: GameState): GameState {
       budget: gameState.city.budget + budgetEarned,
     },
     stats: updatedStats,
-    simulationTime: 0, // Reset to midnight
+    simulationTime: gameState.simulationTime, // Continue tracking total time
     isSimulating: false, // Stop simulation
     citizens: new Map(), // Clear citizens for new day
     status: passed ? gameState.status : 'game-over',
@@ -844,13 +844,15 @@ export function tickSimulation(
   deltaMinutes: number
 ): GameState {
   const newTime = gameState.simulationTime + deltaMinutes;
+  const currentDay = gameState.city.currentDay;
+  const expectedDayEndTime = (currentDay+1) * MINUTES_PER_DAY;
 
   // Check if day is over - stop simulation but don't rollover yet
   // The UI will show the day result modal and handle the rollover
-  if (newTime >= MINUTES_PER_DAY) {
+  if (newTime >= expectedDayEndTime) {
     return {
       ...gameState,
-      simulationTime: MINUTES_PER_DAY - 1, // Cap at end of day
+      simulationTime: expectedDayEndTime - 1, // Cap at end of current day
       isSimulating: false, // Stop simulation
     };
   }

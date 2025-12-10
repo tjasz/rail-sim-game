@@ -9,7 +9,7 @@ const CITIZEN_ICON_SIZE = 10; // in pixels
 interface CitizenMarkersProps {
   citizens: Map<string, Citizen>;
   neighborhoods: Neighborhood[];
-  simulationTime: number; // minutes elapsed in current day
+  simulationTime: number; // total minutes elapsed since game start
 }
 
 export function CitizenMarkers({ citizens, neighborhoods, simulationTime }: CitizenMarkersProps) {

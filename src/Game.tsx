@@ -80,8 +80,11 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
 
   // Detect day rollover and show result modal
   useEffect(() => {
+    const currentDay = gameState.city.currentDay;
+    const expectedDayEndTime = (currentDay+1) * MINUTES_PER_DAY;
+    
     // Check if simulation just stopped (day ended)
-    if (prevSimulatingRef.current && !gameState.isSimulating && gameState.simulationTime >= MINUTES_PER_DAY - 1) {
+    if (prevSimulatingRef.current && !gameState.isSimulating && gameState.simulationTime >= expectedDayEndTime - 1) {
       // Day just ended, show result modal
       const result = calculateDayResult(gameState);
       setDayResult(result);
@@ -156,11 +159,13 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       );
       
       // Initialize new day with continuous trip generation system
+      const dayStartTime = newDay * MINUTES_PER_DAY;
       const { tripMatrix, citizens, updatedNetwork, tripGenerationInterval, nextTripGenerationTime } = initializeDay(
         prevState.city.config,
         newDay,
         newActiveNeighborhoodCount,
         prevState.railNetwork,
+        dayStartTime
       );
       
       // Calculate population from active neighborhoods
@@ -178,7 +183,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           budget: prevState.city.budget + budgetEarned,
         },
         stats: updatedStats,
-        simulationTime: 0, // Midnight
+        simulationTime: newDay * MINUTES_PER_DAY, // Start of new day
         isSimulating: false,
         activeNeighborhoodCount: newActiveNeighborhoodCount,
         citizens,
@@ -814,7 +819,11 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
   }, []);
 
   const timeOfDay = formatTime(gameState.simulationTime);
-  const dayProgress = (gameState.simulationTime / MINUTES_PER_DAY) * 100;  return (
+  const currentDay = gameState.city.currentDay;
+  const dayStartTime = currentDay * MINUTES_PER_DAY;
+  const timeIntoCurrentDay = gameState.simulationTime - dayStartTime;
+  const dayProgress = (timeIntoCurrentDay / MINUTES_PER_DAY) * 100;
+  return (
     <SelectionProvider>
       <div className="game-container">
         <div className="game-header">

@@ -14,7 +14,7 @@ export interface GameState {
   
   // Day simulation
   isSimulating: boolean;
-  simulationTime: number; // minutes elapsed in current day
+  simulationTime: number; // total minutes elapsed since game start
   simulationSpeed: number; // multiplier for simulation speed
   
   // Neighborhood activation

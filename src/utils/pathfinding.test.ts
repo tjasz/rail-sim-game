@@ -99,8 +99,15 @@ const testCityConfig: CityConfig = {
       recreationalDemandCoefficient: 1,
     },
   ],
-  initialPopulation: 100,
-  populationOnDay: (day: number) => 50 * (day + 1),
+  // Total number of trips grows quadratically, so that trips per day grows linearly
+  totalTripsStartedAtTime: (elapsedMinutes: number) => {
+    // 50 trips at the first 300 minutes
+    // 200 trips at 600 minutes
+    // 450 trips at 900 minutes
+    // 800 trips at 1200 minutes
+    return elapsedMinutes * elapsedMinutes / 90000 * 50;
+  },
+  activeNeighborhoodsAtTime : (elapsedMinutes: number) => Math.min(3 + Math.floor(elapsedMinutes / 300), 400),
   initialBudget: 10000,
   budgetBaseline: 1000,
   budgetBonusPerHappyCitizen: 10,

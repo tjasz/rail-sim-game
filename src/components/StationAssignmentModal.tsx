@@ -1,19 +1,21 @@
 import { useState } from 'react';
-import type { Station, Line, RailNetwork } from '../models';
-import { findShortestTrackPath, areStationsConnected, generateLineColor } from '../utils';
+import type { Neighborhood, Line, RailNetwork } from '../models';
+import { areStationsConnected, findShortestTrackPath, generateLineColor } from '../utils';
 import './StationAssignmentModal.css';
 
 interface StationAssignmentModalProps {
-  station: Station;
+  neighborhood: Neighborhood;
+  neighborhoods: Map<string, Neighborhood>;
   railNetwork: RailNetwork;
   onClose: () => void;
-  onAssignLine: (stationId: string, lineId: string, trackIds: string[]) => void;
-  onUnassignLine: (stationId: string, lineId: string) => void;
-  onCreateNewLine: (stationId: string, lineName: string, lineColor: string) => void;
+  onAssignLine: (neighborhoodId: string, lineId: string, trackIds: string[]) => void;
+  onUnassignLine: (neighborhoodId: string, lineId: string) => void;
+  onCreateNewLine: (neighborhoodId: string, lineName: string, lineColor: string) => void;
 }
 
 export function StationAssignmentModal({
-  station,
+  neighborhood,
+  neighborhoods,
   railNetwork,
   onClose,
   onAssignLine,
@@ -24,25 +26,28 @@ export function StationAssignmentModal({
   const [isCreatingLine, setIsCreatingLine] = useState(false);
 
   // Get currently assigned lines
-  const assignedLines = station.lineIds
+  const lineIds = neighborhood.lineIds ?? [];
+  const assignedLines = lineIds
     .map(lineId => railNetwork.lines.get(lineId))
     .filter(line => line !== undefined) as Line[];
 
-  // Find assignable lines: lines that have at least one station connected to this station
-  const assignableLines: Array<{ line: Line; connectedStations: Station[] }> = [];
+  // Find assignable lines: lines that have at least one neighborhood connected to this neighborhood
+  const assignableLines: Array<{ line: Line; connectedNeighborhoods: Neighborhood[] }> = [];
   
   for (const line of railNetwork.lines.values()) {
     // Skip if already assigned
-    if (station.lineIds.includes(line.id)) continue;
+    if (lineIds.includes(line.id)) continue;
     
-    // Check if any station on this line is connected to our station
-    const connectedStations = line.stationIds
-      .map(stationId => railNetwork.stations.get(stationId))
+    // Check if any neighborhood on this line is connected to our neighborhood
+    // For now, we just check track connectivity
+    // In a complete implementation, we'd get neighborhoods from the game state
+    const connectedNeighborhoods: Neighborhood[] = line.neighborhoodIds
+      .map(neighborhoodId => neighborhoods.get(neighborhoodId))
       .filter(s => s !== undefined)
-      .filter(s => areStationsConnected(station, s!, railNetwork.tracks)) as Station[];
+      .filter(s => areStationsConnected(neighborhood, s!, railNetwork.tracks)) as Neighborhood[];
     
-    if (connectedStations.length > 0) {
-      assignableLines.push({ line, connectedStations });
+    if (connectedNeighborhoods.length > 0) {
+      assignableLines.push({ line, connectedNeighborhoods });
     }
   }
 
@@ -51,14 +56,14 @@ export function StationAssignmentModal({
     if (!line) return;
 
     // Find the closest station on this line
-    let closestStation: Station | null = null;
+    let closestStation: Neighborhood | null = null;
     let shortestPath: string[] | null = null;
 
-    for (const stationId of line.stationIds) {
-      const otherStation = railNetwork.stations.get(stationId);
+    for (const stationId of line.neighborhoodIds) {
+      const otherStation = neighborhoods.get(stationId);
       if (!otherStation) continue;
 
-      const path = findShortestTrackPath(station, otherStation, railNetwork.tracks);
+      const path = findShortestTrackPath(neighborhood, otherStation, railNetwork.tracks);
       if (path && (shortestPath === null || path.length < shortestPath.length)) {
         closestStation = otherStation;
         shortestPath = path;
@@ -66,7 +71,7 @@ export function StationAssignmentModal({
     }
 
     if (closestStation && shortestPath) {
-      onAssignLine(station.id, lineId, shortestPath);
+      onAssignLine(neighborhood.id, lineId, shortestPath);
     }
   };
 
@@ -76,7 +81,7 @@ export function StationAssignmentModal({
     const existingColors = Array.from(railNetwork.lines.values()).map(line => line.color);
     const newColor = generateLineColor(existingColors);
 
-    onCreateNewLine(station.id, newLineName.trim(), newColor);
+    onCreateNewLine(neighborhood.id, newLineName.trim(), newColor);
     setNewLineName('');
     setIsCreatingLine(false);
   };
@@ -85,7 +90,7 @@ export function StationAssignmentModal({
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content station-assignment-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>Station: {station.neighborhoodId || `(${station.position.x}, ${station.position.y})`}</h2>
+          <h2>Station: {neighborhood.id || `(${neighborhood.position.x}, ${neighborhood.position.y})`}</h2>
           <button className="modal-close" onClick={onClose}>×</button>
         </div>
 
@@ -106,12 +111,12 @@ export function StationAssignmentModal({
                       />
                       <span className="line-name">{line.name}</span>
                       <span className="line-stations-count">
-                        {line.stationIds.length} stations
+                        {line.neighborhoodIds.length} stops
                       </span>
                     </div>
                     <button 
                       className="btn-unassign"
-                      onClick={() => onUnassignLine(station.id, line.id)}
+                      onClick={() => onUnassignLine(neighborhood.id, line.id)}
                     >
                       Unassign
                     </button>
@@ -125,10 +130,10 @@ export function StationAssignmentModal({
           <section className="modal-section">
             <h3>Available Lines to Assign ({assignableLines.length})</h3>
             {assignableLines.length === 0 ? (
-              <p className="empty-message">No lines can be assigned (no connected stations)</p>
+              <p className="empty-message">No lines can be assigned (no connected neighborhoods)</p>
             ) : (
               <div className="lines-list">
-                {assignableLines.map(({ line, connectedStations }) => (
+                {assignableLines.map(({ line, connectedNeighborhoods }) => (
                   <div key={line.id} className="line-item">
                     <div className="line-info">
                       <div 
@@ -137,7 +142,7 @@ export function StationAssignmentModal({
                       />
                       <span className="line-name">{line.name}</span>
                       <span className="line-stations-count">
-                        {connectedStations.length} connected station{connectedStations.length !== 1 ? 's' : ''}
+                        {connectedNeighborhoods.length} connected
                       </span>
                     </div>
                     <button 

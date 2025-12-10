@@ -462,13 +462,6 @@ export function calculateCitizenRoutes(
   const neighborhoodMap = new Map(neighborhoods.map(n => [n.id, n]));
   const updatedCitizens = new Map<string, Citizen>();
   
-  const emptyNetwork: RailNetwork = {
-    stations: new Map(),
-    lines: new Map(),
-    tracks: new Map(),
-    trains: new Map(),
-  };
-  
   citizens.forEach(citizen => {
     const originNeighborhood = neighborhoodMap.get(citizen.originNeighborhoodId);
     const destNeighborhood = neighborhoodMap.get(citizen.destinationNeighborhoodId);
@@ -482,31 +475,18 @@ export function calculateCitizenRoutes(
     const segments = calculateRoute(
       originNeighborhood.position,
       destNeighborhood.position,
-      config,
       railNetwork,
-      config.walkingSpeed,
-      config.trainSpeed
+      config.trainSpeed,
+      config.timePerStationStop,
     );
     
     const totalEstimatedTime = segments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
-    
-    // Calculate walking-only time
-    const walkingSegments = calculateRoute(
-      originNeighborhood.position,
-      destNeighborhood.position,
-      config,
-      emptyNetwork,
-      config.walkingSpeed,
-      config.trainSpeed
-    );
-    const walkingOnlyTime = walkingSegments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
-    
+
     updatedCitizens.set(citizen.id, {
       ...citizen,
       route: {
         segments,
         totalEstimatedTime,
-        walkingOnlyTime,
       },
     });
   });

@@ -3,10 +3,8 @@ import type { Shift } from './Neighborhood';
 
 export type CitizenState = 
   | 'waiting-at-origin' 
-  | 'walking-to-station' 
   | 'waiting-at-station' 
   | 'riding-train' 
-  | 'walking-to-destination' 
   | 'at-destination'
   | 'returning-home'
   | 'completed';
@@ -42,18 +40,9 @@ export interface Citizen {
 export interface CitizenRoute {
   segments: RouteSegment[];
   totalEstimatedTime: number; // in minutes
-  walkingOnlyTime: number; // time if they walked the whole way
 }
 
-export type RouteSegment = WalkSegment | WaitSegment | RideSegment;
-
-export interface WalkSegment {
-  type: 'walk';
-  from: Position;
-  to: Position;
-  distance: number; // in grid squares
-  estimatedTime: number; // in minutes
-}
+export type RouteSegment = WaitSegment | RideSegment;
 
 export interface WaitSegment {
   type: 'wait';

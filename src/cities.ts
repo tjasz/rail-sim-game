@@ -4455,7 +4455,6 @@ export const SeattleConfig : CityState = {
       initialBudget: 10000,
       budgetBaseline: 1000,
       budgetBonusPerHappyCitizen: 10,
-      walkingSpeed: 0.05,
       trainSpeed: 0.25,
       timePerStationStop: 1,
       costPerStation: 500,

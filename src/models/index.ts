@@ -7,7 +7,6 @@ export type {
   CitizenState, 
   CitizenRoute, 
   RouteSegment, 
-  WalkSegment, 
   WaitSegment, 
   RideSegment,
   DailyTrip

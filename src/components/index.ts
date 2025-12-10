@@ -9,7 +9,6 @@ export { StationPlacementOverlay } from './StationPlacementOverlay';
 export { TrainMarkers } from './TrainMarkers';
 export { NeighborhoodMarkers } from './NeighborhoodMarkers';
 export { StationMarkers } from './StationMarkers';
-export { CitizenMarkers } from './CitizenMarkers';
 export { MapClickHandler } from './MapClickHandler';
 export { LinesList } from './LinesList';
 export { TrainsList } from './TrainsList';

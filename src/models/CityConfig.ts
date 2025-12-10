@@ -18,7 +18,6 @@ export interface CityConfig {
   budgetBonusPerHappyCitizen: number;
   
   // Transit settings
-  walkingSpeed: number; // grid squares per minute
   trainSpeed: number; // grid squares per minute
   timePerStationStop: number; // minutes
   

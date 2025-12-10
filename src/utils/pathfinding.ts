@@ -1,6 +1,6 @@
 // Pathfinding utilities for calculating optimal routes through the city
 
-import type { Position, CityConfig, RailNetwork, Station, Line, Track } from '../models';
+import type { Position, RailNetwork, Station, Line, Track } from '../models';
 import { calculateDistance } from './simulation';
 
 interface PathNode {
@@ -10,38 +10,6 @@ interface PathNode {
   stationId?: string; // if this node is at a station
   viaStation?: string;
   segmentCount?: number; // number of segments to reach this node
-}
-
-/**
- * Calculate the cost of traveling between two adjacent grid cells by walking.
- * Citizens can walk at 0 or 45 degree angles only.
- */
-function getWalkingCost(
-  from: Position,
-  to: Position,
-  config: CityConfig,
-  walkingSpeed: number
-): number {
-  // Check if positions are adjacent
-  const dx = Math.abs(to.x - from.x);
-  const dy = Math.abs(to.y - from.y);
-  if (dx > 1 || dy > 1) return Infinity;
-  
-  // Check bounds
-  if (to.x < 0 || to.x >= config.gridWidth || to.y < 0 || to.y >= config.gridHeight) {
-    return Infinity;
-  }
-  
-  // Check if either cell is water
-  const fromTile = config.tiles[from.x]?.[from.y];
-  const toTile = config.tiles[to.x]?.[to.y];
-  if (fromTile === 'w' || toTile === 'w') {
-    return Infinity;
-  }
-  
-  // Cost is distance divided by speed (time = distance / speed)
-  const distance = calculateDistance(from, to);
-  return distance / walkingSpeed;
 }
 
 /**
@@ -198,47 +166,13 @@ export interface GraphEdge {
 }
 
 export function buildCityGraph(
-  config: CityConfig,
   railNetwork: RailNetwork,
-  walkingSpeed: number,
   trainSpeed: number,
   stopTimePerStation: number
 ): Map<string, GraphEdge[]> {
   const graph = new Map<string, GraphEdge[]>();
   
   const posKey = (pos: Position) => `${pos.x},${pos.y}`;
-  
-  // Add walking edges for all land cells
-  for (let y = 0; y < config.gridHeight; y++) {
-    for (let x = 0; x < config.gridWidth; x++) {
-      if (config.tiles[x]?.[y] === 'w') continue;
-      
-      const pos = { x, y };
-      const key = posKey(pos);
-      const edges: GraphEdge[] = [];
-      
-      // Add walking to adjacent cells, including diagonals
-      const neighbors = [
-        { x: x - 1, y },
-        { x: x + 1, y },
-        { x, y: y - 1 },
-        { x, y: y + 1 },
-        { x: x - 1, y: y - 1 },
-        { x: x + 1, y: y - 1 },
-        { x: x - 1, y: y + 1 },
-        { x: x + 1, y: y + 1 },
-      ];
-      
-      for (const neighbor of neighbors) {
-        const cost = getWalkingCost(pos, neighbor, config, walkingSpeed);
-        if (cost < Infinity) {
-          edges.push({ position: neighbor, cost });
-        }
-      }
-      
-      graph.set(key, edges);
-    }
-  }
   
   // Add train edges between stations
   railNetwork.lines.forEach(line => {
@@ -373,12 +307,11 @@ function findShortestPath(
 /**
  * Convert a path of nodes into route segments
  */
-import type { RouteSegment, WalkSegment, RideSegment } from '../models';
+import type { RouteSegment, RideSegment } from '../models';
 
 function pathToRouteSegments(
   path: PathNode[],
   railNetwork: RailNetwork,
-  walkingSpeed: number,
   trainSpeed: number
 ): RouteSegment[] {
   if (path.length < 2) return [];
@@ -387,7 +320,6 @@ function pathToRouteSegments(
   let i = 0;
   
   while (i < path.length - 1) {
-    const current = path[i];
     const next = path[i + 1];
     
     // Check if this is a train segment (both nodes have stationIds)
@@ -468,18 +400,6 @@ function pathToRouteSegments(
       }
     }
     
-    // Otherwise, it's a walking segment
-    const distance = calculateDistance(current.position, next.position);
-    const estimatedTime = distance / walkingSpeed;
-    
-    segments.push({
-      type: 'walk',
-      from: current.position,
-      to: next.position,
-      distance,
-      estimatedTime,
-    } as WalkSegment);
-    
     i++;
   }
   
@@ -492,14 +412,12 @@ function pathToRouteSegments(
 export function calculateRoute(
   from: Position,
   to: Position,
-  config: CityConfig,
   railNetwork: RailNetwork,
-  walkingSpeed: number,
   trainSpeed: number,
   stopTimePerStation: number = 1
 ): RouteSegment[] {
   // Build graph
-  const graph = buildCityGraph(config, railNetwork, walkingSpeed, trainSpeed, stopTimePerStation);
+  const graph = buildCityGraph(railNetwork, trainSpeed, stopTimePerStation);
   
   // Find shortest path
   const path = findShortestPath(from, to, graph);
@@ -510,7 +428,7 @@ export function calculateRoute(
   }
   
   // Convert to route segments
-  return pathToRouteSegments(path, railNetwork, walkingSpeed, trainSpeed);
+  return pathToRouteSegments(path, railNetwork, trainSpeed);
 }
 
 /**
@@ -519,17 +437,16 @@ export function calculateRoute(
 export function calculateAllRoutes(
   origins: Position[],
   destinations: Position[],
-  config: CityConfig,
   railNetwork: RailNetwork,
-  walkingSpeed: number,
-  trainSpeed: number
+  trainSpeed: number,
+  timePerStationStop: number
 ): Map<string, RouteSegment[]> {
   const routes = new Map<string, RouteSegment[]>();
   
   for (const origin of origins) {
     for (const destination of destinations) {
       const key = `${origin.x},${origin.y}->${destination.x},${destination.y}`;
-      const route = calculateRoute(origin, destination, config, railNetwork, walkingSpeed, trainSpeed);
+      const route = calculateRoute(origin, destination, railNetwork, trainSpeed, timePerStationStop);
       routes.set(key, route);
     }
   }

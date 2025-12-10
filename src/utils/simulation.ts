@@ -361,8 +361,6 @@ export function updateCitizens(
   stations: Map<string, Station>,
   lines: Map<string, Line>,
   neighborhoods: any[], // Array of neighborhoods from config
-  deltaMinutes: number,
-  walkingSpeed: number,
   currentTime: number
 ): Map<string, Citizen> {
   const updatedCitizens = new Map(citizens);
@@ -390,88 +388,17 @@ export function updateCitizens(
     const updatedCitizen = { ...citizen };
     
     if (!citizen.route || citizen.route.segments.length === 0) {
-      // No route available - citizen is unhappy and gives up if its destination and origin differ
-      updatedCitizen.isHappy = updatedCitizen.originNeighborhoodId === updatedCitizen.destinationNeighborhoodId;
-      updatedCitizen.state = 'completed';
+      // No route available - wait at origin indefinitely
+      updatedCitizen.currentStationId = citizen.originNeighborhoodId
       updatedCitizens.set(citizen.id, updatedCitizen);
       continue;
     }
     
     // Start following the route
     const firstSegment = citizen.route.segments[0];
-    if (firstSegment.type === 'walk') {
-      updatedCitizen.state = citizen.route.segments.every(segment => segment.type === 'walk') 
-        ? 'walking-to-destination' 
-        : 'walking-to-station';
-    } else if (firstSegment.type === 'ride') {
-      // Route starts with a train ride, wait at that station
+    if (firstSegment.type === 'ride') {
       updatedCitizen.state = 'waiting-at-station';
       updatedCitizen.currentStationId = firstSegment.fromStationId;
-    }
-    
-    updatedCitizens.set(citizen.id, updatedCitizen);
-  }
-
-  // 2. Update walking citizens
-  const walkingCitizens = [
-    ...(citizensByState.get('walking-to-station') || []),
-    ...(citizensByState.get('walking-to-destination') || [])
-  ];
-  
-  for (const citizen of walkingCitizens) {
-    if (!citizen.route || citizen.route.segments.length === 0) continue;
-    
-    // Find first incomplete walk segment
-    let targetSegment = null;
-    for (const segment of citizen.route.segments) {
-      if (segment.type === 'walk') {
-        targetSegment = segment;
-        break;
-      }
-    }
-    
-    if (!targetSegment || targetSegment.type !== 'walk') continue;
-    
-    const updatedCitizen = { ...citizen };
-    const target = targetSegment.to;
-    const movement = moveToward(citizen.currentPosition, target, walkingSpeed, deltaMinutes);
-    updatedCitizen.currentPosition = movement.position;
-    
-    // Check if reached target
-    if (movement.reached) {
-      // Remove this segment from route
-      updatedCitizen.route = {
-        ...citizen.route,
-        segments: citizen.route.segments.slice(1),
-      };
-      
-      // Determine next state
-      if (updatedCitizen.route.segments.length === 0) {
-        // Reached final destination!
-        updatedCitizen.state = 'at-destination';
-        updatedCitizen.tripEndTime = currentTime;
-        
-        // Check happiness based on trip time
-        const tripDuration = currentTime - citizen.tripStartTime;
-        const threshold = citizen.route.walkingOnlyTime * 0.75; // Train trips should be faster than walking
-        updatedCitizen.isHappy = tripDuration <= threshold;
-      } else {
-        const nextSegment = updatedCitizen.route.segments[0];
-        if (nextSegment.type === 'ride') {
-          // Next segment is a train ride - wait at station
-          updatedCitizen.state = 'waiting-at-station';
-          // Find which station we're at
-          const station = Array.from(stations.values()).find(
-            s => s.position.x === target.x && s.position.y === target.y
-          );
-          if (station) {
-            updatedCitizen.currentStationId = station.id;
-          }
-        } else if (nextSegment.type === 'walk') {
-          // Continue walking - state stays the same
-          updatedCitizen.state = citizen.state;
-        }
-      }
     }
     
     updatedCitizens.set(citizen.id, updatedCitizen);
@@ -525,19 +452,13 @@ export function updateCitizens(
         if (updatedCitizen.route.segments.length === 0) {
           // This was the last segment - we're at destination
           updatedCitizen.state = 'at-destination';
-          updatedCitizen.tripEndTime = currentTime;
-          
-          const tripDuration = currentTime - citizen.tripStartTime;
-          const threshold = citizen.route.walkingOnlyTime * 0.75; // Train trips should be faster than walking
-          updatedCitizen.isHappy = tripDuration <= threshold;
+          updatedCitizen.tripEndTime = currentTime;          
         } else {
           // If next segment is a ride, wait at this station for the train
           const nextSegment = updatedCitizen.route.segments[0];
           if (nextSegment.type === 'ride') {
             updatedCitizen.state = 'waiting-at-station';
             updatedCitizen.currentStationId = nextSegment.fromStationId;
-          } else if (nextSegment.type === 'walk') {
-            updatedCitizen.state = 'walking-to-destination';
           }
         }
         
@@ -769,14 +690,6 @@ function recalculateRoutesForCitizens(
   const neighborhoods = config.neighborhoods;
   const neighborhoodMap = new Map(neighborhoods.map(n => [n.id, n]));
   
-  // Empty network for walking-only time calculation
-  const emptyNetwork: RailNetwork = {
-    stations: new Map(),
-    lines: new Map(),
-    tracks: new Map(),
-    trains: new Map(),
-  };
-  
   citizens.forEach(citizen => {
     // Only recalculate for citizens who need routes (waiting at origin without a route)
     if (citizen.state === 'waiting-at-origin' && !citizen.route) {
@@ -792,27 +705,12 @@ function recalculateRoutesForCitizens(
       const segments = calculateRoute(
         originNeighborhood.position,
         destNeighborhood.position,
-        config,
         railNetwork,
-        config.walkingSpeed,
-        config.trainSpeed
+        config.trainSpeed,
+        config.timePerStationStop
       );
       
       const totalEstimatedTime = segments.reduce(
-        (sum: number, seg: any) => sum + seg.estimatedTime, 
-        0
-      );
-      
-      // Calculate walking-only time
-      const walkingSegments = calculateRoute(
-        originNeighborhood.position,
-        destNeighborhood.position,
-        config,
-        emptyNetwork,
-        config.walkingSpeed,
-        config.trainSpeed
-      );
-      const walkingOnlyTime = walkingSegments.reduce(
         (sum: number, seg: any) => sum + seg.estimatedTime, 
         0
       );
@@ -822,7 +720,6 @@ function recalculateRoutesForCitizens(
         route: {
           segments,
           totalEstimatedTime,
-          walkingOnlyTime,
         },
       });
     } else {
@@ -896,37 +793,18 @@ export function tickSimulation(
         const segments = calculateRoute(
           originNeighborhood.position,
           destNeighborhood.position,
-          gameState.city.config,
           gameState.railNetwork,
-          gameState.city.config.walkingSpeed,
-          gameState.city.config.trainSpeed
+          gameState.city.config.trainSpeed,
+          gameState.city.config.timePerStationStop,
         );
         
         const totalEstimatedTime = segments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
-        
-        // Calculate walking-only time
-        const emptyNetwork: RailNetwork = {
-          stations: new Map(),
-          lines: new Map(),
-          tracks: new Map(),
-          trains: new Map(),
-        };
-        const walkingSegments = calculateRoute(
-          originNeighborhood.position,
-          destNeighborhood.position,
-          gameState.city.config,
-          emptyNetwork,
-          gameState.city.config.walkingSpeed,
-          gameState.city.config.trainSpeed
-        );
-        const walkingOnlyTime = walkingSegments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
-        
+
         const citizenWithRoute = {
           ...newCitizen,
           route: {
             segments,
             totalEstimatedTime,
-            walkingOnlyTime,
           },
         };
         
@@ -956,8 +834,6 @@ export function tickSimulation(
     gameState.railNetwork.stations,
     gameState.railNetwork.lines,
     gameState.city.config.neighborhoods,
-    deltaMinutes,
-    gameState.city.config.walkingSpeed,
     newTime
   );
   

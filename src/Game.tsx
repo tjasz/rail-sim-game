@@ -9,7 +9,6 @@ import {
   TrainMarkers,
   NeighborhoodMarkers,
   StationMarkers,
-  CitizenMarkers,
   MapClickHandler,
   LinesList,
   TrainsList,
@@ -1032,11 +1031,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               neighborhoods={gameState.city.config.neighborhoods}
               simulationTime={gameState.simulationTime}
               onStationClick={(!buildTrackState.isBuilding && !buildStationState.isBuilding && !gameState.isSimulating) ? setSelectedStationForAssignment : undefined}
-            />
-            <CitizenMarkers
-              citizens={gameState.citizens}
-              neighborhoods={gameState.city.config.neighborhoods}
-              simulationTime={gameState.simulationTime}
             />
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}

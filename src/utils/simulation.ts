@@ -736,27 +736,19 @@ export function rolloverToNextDay(gameState: GameState): GameState {
     totalMoneyEarned: gameState.stats.totalMoneyEarned + budgetEarned,
   };
 
-  // Calculate new population (growth per month, prorated per day)
-  const daysInMonth = 30;
-  const dailyGrowthRate = gameState.city.config.populationGrowthRate / daysInMonth;
+  // Calculate new population (growth per day)
+  const dailyGrowthRate = gameState.city.config.populationGrowthRate;
   const newPopulation = Math.floor(gameState.city.config.initialPopulation * Math.pow(1 + dailyGrowthRate, gameState.city.currentDay));
 
-  // Check if month rolled over
   const newDay = gameState.city.currentDay + 1;
-  const newMonth = newDay > daysInMonth ? gameState.city.currentMonth + 1 : gameState.city.currentMonth;
-  const adjustedDay = newDay > daysInMonth ? 1 : newDay;
-
-  // Add bonus budget at month rollover
-  const monthlyBonus = newDay > daysInMonth ? gameState.city.config.budgetBaseline : 0;
 
   return {
     ...gameState,
     city: {
       ...gameState.city,
-      currentDay: adjustedDay,
-      currentMonth: newMonth,
+      currentDay: newDay,
       population: newPopulation,
-      budget: gameState.city.budget + budgetEarned + monthlyBonus,
+      budget: gameState.city.budget + budgetEarned,
     },
     stats: updatedStats,
     simulationTime: 0, // Reset to midnight

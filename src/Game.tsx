@@ -147,11 +147,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         totalMoneyEarned: prevState.stats.totalMoneyEarned + budgetEarned,
       };
       
-      const daysInMonth = 30;
       const newDay = prevState.city.currentDay + 1;
-      const newMonth = newDay > daysInMonth ? prevState.city.currentMonth + 1 : prevState.city.currentMonth;
-      const adjustedDay = newDay > daysInMonth ? 1 : newDay;
-      const monthlyBonus = newDay > daysInMonth ? prevState.city.config.budgetBaseline : 0;
       
       // Calculate new active neighborhood count (add 1 each day, up to total neighborhoods)
       const newActiveNeighborhoodCount = Math.min(
@@ -162,7 +158,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       // Initialize new day with continuous trip generation system
       const { tripMatrix, citizens, updatedNetwork, tripGenerationInterval, nextTripGenerationTime } = initializeDay(
         prevState.city.config,
-        adjustedDay,
+        newDay,
         newActiveNeighborhoodCount,
         prevState.railNetwork,
       );
@@ -177,10 +173,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         ...prevState,
         city: {
           ...prevState.city,
-          currentDay: adjustedDay,
-          currentMonth: newMonth,
+          currentDay: newDay,
           population: newPopulation,
-          budget: prevState.city.budget + budgetEarned + monthlyBonus,
+          budget: prevState.city.budget + budgetEarned,
         },
         stats: updatedStats,
         simulationTime: 0, // Midnight
@@ -875,14 +870,12 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       
       <div className="game-content">
         <div className="left-panel">
-          <GameStats
+          <GameStats 
             stats={gameState.stats}
             budget={gameState.city.budget}
             population={gameState.city.population}
             currentDay={gameState.city.currentDay}
-            currentMonth={gameState.city.currentMonth}
           />
-          
           <NetworkStats network={gameState.railNetwork} />
           
           {/* Build Track Controls */}

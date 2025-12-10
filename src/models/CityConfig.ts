@@ -11,11 +11,11 @@ export interface CityConfig {
   
   // Population settings
   initialPopulation: number;
-  populationGrowthRate: number; // percentage per month (e.g., 0.05 = 5%)
+  populationGrowthRate: number; // percentage growth rate (e.g., 0.05 = 5%)
   
   // Economic settings
   initialBudget: number;
-  budgetBaseline: number; // fixed amount per month
+  budgetBaseline: number; // fixed amount per day
   budgetBonusPerHappyCitizen: number;
   
   // Transit settings
@@ -33,7 +33,6 @@ export interface CityConfig {
 
 export interface CityState {
   config: CityConfig;
-  currentMonth: number;
   currentDay: number;
   population: number;
   budget: number;

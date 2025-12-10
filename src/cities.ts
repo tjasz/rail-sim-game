@@ -4458,7 +4458,6 @@ export const SeattleConfig : CityState = {
       costPerTrain: 500,
       trainCapacity: 6,
     },
-    currentMonth: 1,
     currentDay: 0,
     population: 45, // Initial: downtown (5) + commercial-a (10) + residential-1 (30) on day 0
     budget: 10000,

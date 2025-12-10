@@ -6,10 +6,9 @@ interface GameStatsProps {
   budget: number;
   population: number;
   currentDay: number;
-  currentMonth: number;
 }
 
-export function GameStats({ stats, budget, population, currentDay, currentMonth }: GameStatsProps) {
+export function GameStats({ stats, budget, population, currentDay }: GameStatsProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   
   return (
@@ -34,11 +33,6 @@ export function GameStats({ stats, budget, population, currentDay, currentMonth 
       </div>
       
       {!isCollapsed && <div className="stats-grid">
-        <div className="stat-item">
-          <span className="stat-label">Month</span>
-          <span className="stat-value">{currentMonth}</span>
-        </div>
-        
         <div className="stat-item">
           <span className="stat-label">Day</span>
           <span className="stat-value">{currentDay}</span>

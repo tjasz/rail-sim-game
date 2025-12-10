@@ -4446,11 +4446,10 @@ export const SeattleConfig : CityState = {
       ],
       // Total number of trips grows quadratically, so that trips per day grows linearly
       totalTripsStartedAtTime: (elapsedMinutes: number) => {
-        // 50 trips at the first 300 minutes
-        // 200 trips at 600 minutes
-        // 450 trips at 900 minutes
-        // 800 trips at 1200 minutes
-        return elapsedMinutes * elapsedMinutes / 90000 * 50;
+        // at 300 minutes, 50 total trips
+        // at 600 minutes, 150 total trips
+        // at 900 minutes, 300 total trips
+        return elapsedMinutes * elapsedMinutes / 3600 + elapsedMinutes / 12;
       },
       activeNeighborhoodsAtTime : (elapsedMinutes: number) => Math.min(3 + Math.floor(elapsedMinutes / 300), 400),
       initialBudget: 10000,

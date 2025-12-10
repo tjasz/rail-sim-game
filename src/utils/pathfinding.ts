@@ -1,14 +1,14 @@
 // Pathfinding utilities for calculating optimal routes through the city
 
-import type { Position, RailNetwork, Station, Line, Track } from '../models';
+import type { Position, RailNetwork, Neighborhood, Line, Track } from '../models';
 import { calculateDistance } from './simulation';
 
 interface PathNode {
   position: Position;
   cost: number;
   previous?: PathNode;
-  stationId?: string; // if this node is at a station
-  viaStation?: string;
+  neighborhoodId?: string; // if this node is at a neighborhood
+  viaNeighborhood?: string;
   segmentCount?: number; // number of segments to reach this node
 }
 
@@ -75,17 +75,18 @@ function findTrackPath(
 }
 
 /**
- * Calculate the distance along tracks between two stations on the same line
+ * Calculate the distance along tracks between two neighborhoods on the same line
  */
-function getTrackDistanceBetweenStations(
-  fromStationId: string,
-  toStationId: string,
+function getTrackDistanceBetweenNeighborhoods(
+  fromNeighborhoodId: string,
+  toNeighborhoodId: string,
   line: Line,
-  stations: Map<string, Station>,
+  neighborhoods: Neighborhood[],
   tracks: Map<string, Track>
 ): number {
-  const fromIndex = line.stationIds.indexOf(fromStationId);
-  const toIndex = line.stationIds.indexOf(toStationId);
+  const neighborhoodMap = new Map(neighborhoods.map(n => [n.id, n]));
+  const fromIndex = line.neighborhoodIds.indexOf(fromNeighborhoodId);
+  const toIndex = line.neighborhoodIds.indexOf(toNeighborhoodId);
   
   if (fromIndex === -1 || toIndex === -1) return Infinity;
   
@@ -94,27 +95,27 @@ function getTrackDistanceBetweenStations(
   
   let totalDistance = 0;
   
-  // Sum up track distances between consecutive stations
+  // Sum up track distances between consecutive neighborhoods
   for (let i = startIndex; i < endIndex; i++) {
-    const currentStationId = line.stationIds[i];
-    const nextStationId = line.stationIds[i + 1];
+    const currentNeighborhoodId = line.neighborhoodIds[i];
+    const nextNeighborhoodId = line.neighborhoodIds[i + 1];
     
-    const currentStation = stations.get(currentStationId);
-    const nextStation = stations.get(nextStationId);
+    const currentNeighborhood = neighborhoodMap.get(currentNeighborhoodId);
+    const nextNeighborhood = neighborhoodMap.get(nextNeighborhoodId);
     
-    if (!currentStation || !nextStation) return Infinity;
+    if (!currentNeighborhood || !nextNeighborhood) return Infinity;
     
-    // Find path along tracks between these two consecutive stations
+    // Find path along tracks between these two consecutive neighborhoods
     const trackDistance = findTrackPath(
-      currentStation.position,
-      nextStation.position,
+      currentNeighborhood.position,
+      nextNeighborhood.position,
       line.id,
       tracks
     );
     
     // If no track path found, fall back to straight-line distance
     if (trackDistance === Infinity) {
-      totalDistance += calculateDistance(currentStation.position, nextStation.position);
+      totalDistance += calculateDistance(currentNeighborhood.position, nextNeighborhood.position);
     } else {
       totalDistance += trackDistance;
     }
@@ -124,24 +125,24 @@ function getTrackDistanceBetweenStations(
 }
 
 /**
- * Calculate the cost of traveling between two stations on the same line
+ * Calculate the cost of traveling between two neighborhoods on the same line
  */
 function getTrainCost(
-  fromStationId: string,
-  toStationId: string,
+  fromNeighborhoodId: string,
+  toNeighborhoodId: string,
   line: Line,
-  stations: Map<string, Station>,
+  neighborhoods: Neighborhood[],
   tracks: Map<string, Track>,
   trainSpeed: number,
-  stopTimePerStation: number
+  stopTimePerNeighborhood: number
 ): number {
-  const fromIndex = line.stationIds.indexOf(fromStationId);
-  const toIndex = line.stationIds.indexOf(toStationId);
+  const fromIndex = line.neighborhoodIds.indexOf(fromNeighborhoodId);
+  const toIndex = line.neighborhoodIds.indexOf(toNeighborhoodId);
   
   if (fromIndex === -1 || toIndex === -1) return Infinity;
   
   // Calculate distance along tracks
-  const distance = getTrackDistanceBetweenStations(fromStationId, toStationId, line, stations, tracks);
+  const distance = getTrackDistanceBetweenNeighborhoods(fromNeighborhoodId, toNeighborhoodId, line, neighborhoods, tracks);
   
   if (distance === Infinity) return Infinity;
   
@@ -149,69 +150,71 @@ function getTrainCost(
   const stopsInBetween = Math.abs(toIndex - fromIndex) - 1;
   
   // Time = travel time + stop time
-  return (distance / trainSpeed) + (stopsInBetween * stopTimePerStation);
+  return (distance / trainSpeed) + (stopsInBetween * stopTimePerNeighborhood);
 }
 
 /**
  * Build a graph of all possible movements in the city
- * Returns a map of position keys to arrays of {position, cost, stationId?}
+ * Returns a map of position keys to arrays of {position, cost, neighborhoodId?}
  */
 export interface GraphEdge {
   position: Position;
   cost: number;
-  stationId?: string;
+  neighborhoodId?: string;
   lineId?: string;
   lineDirection?: 'forward' | 'backward';
-  viaStation?: string; // if this edge uses a train line
+  viaNeighborhood?: string; // if this edge uses a train line
 }
 
 export function buildCityGraph(
   railNetwork: RailNetwork,
+  neighborhoods: Neighborhood[],
   trainSpeed: number,
-  stopTimePerStation: number
+  stopTimePerNeighborhood: number
 ): Map<string, GraphEdge[]> {
   const graph = new Map<string, GraphEdge[]>();
   
   const posKey = (pos: Position) => `${pos.x},${pos.y}`;
+  const neighborhoodMap = new Map(neighborhoods.map(n => [n.id, n]));
   
-  // Add train edges between stations
+  // Add train edges between neighborhoods
   railNetwork.lines.forEach(line => {
-    if (!line.isActive || line.stationIds.length < 2) return;
+    if (!line.isActive || line.neighborhoodIds.length < 2) return;
     
-    // For each station on the line
-    for (let i = 0; i < line.stationIds.length; i++) {
-      const stationId = line.stationIds[i];
-      const station = railNetwork.stations.get(stationId);
-      if (!station) continue;
+    // For each neighborhood on the line
+    for (let i = 0; i < line.neighborhoodIds.length; i++) {
+      const neighborhoodId = line.neighborhoodIds[i];
+      const neighborhood = neighborhoodMap.get(neighborhoodId);
+      if (!neighborhood) continue;
       
-      const key = posKey(station.position);
+      const key = posKey(neighborhood.position);
       const edges = graph.get(key) || [];
       
-      // Add edges to all other stations on this line
-      for (let j = 0; j < line.stationIds.length; j++) {
+      // Add edges to all other neighborhoods on this line
+      for (let j = 0; j < line.neighborhoodIds.length; j++) {
         if (i === j) continue;
         
-        const otherStationId = line.stationIds[j];
-        const otherStation = railNetwork.stations.get(otherStationId);
-        if (!otherStation) continue;
+        const otherNeighborhoodId = line.neighborhoodIds[j];
+        const otherNeighborhood = neighborhoodMap.get(otherNeighborhoodId);
+        if (!otherNeighborhood) continue;
         
         const cost = getTrainCost(
-          stationId,
-          otherStationId,
+          neighborhoodId,
+          otherNeighborhoodId,
           line,
-          railNetwork.stations,
+          neighborhoods,
           railNetwork.tracks,
           trainSpeed,
-          stopTimePerStation
+          stopTimePerNeighborhood
         );
         
         edges.push({
-          position: otherStation.position,
+          position: otherNeighborhood.position,
           cost,
-          stationId: otherStationId,
+          neighborhoodId: otherNeighborhoodId,
           lineId: line.id,
           lineDirection: j > i ? 'forward' : 'backward',
-          viaStation: stationId,
+          viaNeighborhood: neighborhoodId,
         });
       }
       
@@ -284,8 +287,8 @@ function findShortestPath(
           position: edge.position,
           cost: newCost,
           previous: current,
-          stationId: edge.stationId,
-          viaStation: edge.viaStation,
+          neighborhoodId: edge.neighborhoodId,
+          viaNeighborhood: edge.viaNeighborhood,
           segmentCount: newSegmentCount,
         };
         
@@ -312,54 +315,56 @@ import type { RouteSegment, RideSegment } from '../models';
 function pathToRouteSegments(
   path: PathNode[],
   railNetwork: RailNetwork,
+  neighborhoods: Neighborhood[],
   trainSpeed: number
 ): RouteSegment[] {
   if (path.length < 2) return [];
   
   const segments: RouteSegment[] = [];
+  const neighborhoodMap = new Map(neighborhoods.map(n => [n.id, n]));
   let i = 0;
   
   while (i < path.length - 1) {
     const next = path[i + 1];
     
-    // Check if this is a train segment (both nodes have stationIds)
-    if (next.viaStation && next.stationId) {
-      // Find which line connects these stations
+    // Check if this is a train segment (both nodes have neighborhoodIds)
+    if (next.viaNeighborhood && next.neighborhoodId) {
+      // Find which line connects these neighborhoods
       let lineId: string | undefined;
       let lineDirection: 'forward' | 'backward' | undefined;
-      let fromStationId = next.viaStation;
-      let toStationId = next.stationId;
+      let fromNeighborhoodId = next.viaNeighborhood;
+      let toNeighborhoodId = next.neighborhoodId;
       
       railNetwork.lines.forEach(line => {
-        if (line.stationIds.includes(fromStationId) && line.stationIds.includes(toStationId)) {
+        if (line.neighborhoodIds.includes(fromNeighborhoodId) && line.neighborhoodIds.includes(toNeighborhoodId)) {
           lineId = line.id;
-          lineDirection = line.stationIds.indexOf(fromStationId) < line.stationIds.indexOf(toStationId) ? 'forward' : 'backward';
+          lineDirection = line.neighborhoodIds.indexOf(fromNeighborhoodId) < line.neighborhoodIds.indexOf(toNeighborhoodId) ? 'forward' : 'backward';
         }
       });
       
       if (lineId && lineDirection) {
         // Look ahead to merge consecutive segments on the same line in the same direction
-        let endStationId = toStationId;
+        let endNeighborhoodId = toNeighborhoodId;
         let j = i + 1;
         
         while (j < path.length - 1) {
           const nextNode = path[j + 1];
-          if (!nextNode.viaStation || !nextNode.stationId) break;
+          if (!nextNode.viaNeighborhood || !nextNode.neighborhoodId) break;
           
           // Check if the next segment is on the same line
           let nextLineId: string | undefined;
           let nextLineDirection: 'forward' | 'backward' | undefined;
           
           railNetwork.lines.forEach(line => {
-            if (line.stationIds.includes(nextNode.viaStation!) && line.stationIds.includes(nextNode.stationId!)) {
+            if (line.neighborhoodIds.includes(nextNode.viaNeighborhood!) && line.neighborhoodIds.includes(nextNode.neighborhoodId!)) {
               nextLineId = line.id;
-              nextLineDirection = line.stationIds.indexOf(nextNode.viaStation!) < line.stationIds.indexOf(nextNode.stationId!) ? 'forward' : 'backward';
+              nextLineDirection = line.neighborhoodIds.indexOf(nextNode.viaNeighborhood!) < line.neighborhoodIds.indexOf(nextNode.neighborhoodId!) ? 'forward' : 'backward';
             }
           });
           
           // If same line and same direction, extend the segment
-          if (nextLineId === lineId && nextLineDirection === lineDirection && nextNode.viaStation === endStationId) {
-            endStationId = nextNode.stationId;
+          if (nextLineId === lineId && nextLineDirection === lineDirection && nextNode.viaNeighborhood === endNeighborhoodId) {
+            endNeighborhoodId = nextNode.neighborhoodId;
             j++;
           } else {
             break;
@@ -367,20 +372,20 @@ function pathToRouteSegments(
         }
         
         const line = railNetwork.lines.get(lineId);
-        const fromStation = railNetwork.stations.get(fromStationId);
-        const endStation = railNetwork.stations.get(endStationId);
+        const fromNeighborhood = neighborhoodMap.get(fromNeighborhoodId);
+        const endNeighborhood = neighborhoodMap.get(endNeighborhoodId);
         
-        if (line && fromStation && endStation) {
+        if (line && fromNeighborhood && endNeighborhood) {
           // Use track distance instead of straight-line distance
-          const distance = getTrackDistanceBetweenStations(
-            fromStationId,
-            endStationId,
+          const distance = getTrackDistanceBetweenNeighborhoods(
+            fromNeighborhoodId,
+            endNeighborhoodId,
             line,
-            railNetwork.stations,
+            neighborhoods,
             railNetwork.tracks
           );
-          const fromIndex = line.stationIds.indexOf(fromStationId);
-          const toIndex = line.stationIds.indexOf(endStationId);
+          const fromIndex = line.neighborhoodIds.indexOf(fromNeighborhoodId);
+          const toIndex = line.neighborhoodIds.indexOf(endNeighborhoodId);
           const stopsInBetween = Math.abs(toIndex - fromIndex) - 1;
           const estimatedTime = (distance / trainSpeed) + (stopsInBetween * 1); // 1 min per stop
           
@@ -388,8 +393,8 @@ function pathToRouteSegments(
             type: 'ride',
             lineId,
             lineDirection,
-            fromStationId,
-            toStationId: endStationId,
+            fromNeighborhoodId,
+            toNeighborhoodId: endNeighborhoodId,
             distance,
             estimatedTime,
           } as RideSegment);
@@ -413,11 +418,12 @@ export function calculateRoute(
   from: Position,
   to: Position,
   railNetwork: RailNetwork,
+  neighborhoods: Neighborhood[],
   trainSpeed: number,
-  stopTimePerStation: number = 1
+  stopTimePerNeighborhood: number = 1
 ): RouteSegment[] {
   // Build graph
-  const graph = buildCityGraph(railNetwork, trainSpeed, stopTimePerStation);
+  const graph = buildCityGraph(railNetwork, neighborhoods, trainSpeed, stopTimePerNeighborhood);
   
   // Find shortest path
   const path = findShortestPath(from, to, graph);
@@ -428,7 +434,7 @@ export function calculateRoute(
   }
   
   // Convert to route segments
-  return pathToRouteSegments(path, railNetwork, trainSpeed);
+  return pathToRouteSegments(path, railNetwork, neighborhoods, trainSpeed);
 }
 
 /**
@@ -438,15 +444,16 @@ export function calculateAllRoutes(
   origins: Position[],
   destinations: Position[],
   railNetwork: RailNetwork,
+  neighborhoods: Neighborhood[],
   trainSpeed: number,
-  timePerStationStop: number
+  timePerNeighborhoodStop: number
 ): Map<string, RouteSegment[]> {
   const routes = new Map<string, RouteSegment[]>();
   
   for (const origin of origins) {
     for (const destination of destinations) {
       const key = `${origin.x},${origin.y}->${destination.x},${destination.y}`;
-      const route = calculateRoute(origin, destination, railNetwork, trainSpeed, timePerStationStop);
+      const route = calculateRoute(origin, destination, railNetwork, neighborhoods, trainSpeed, timePerNeighborhoodStop);
       routes.set(key, route);
     }
   }

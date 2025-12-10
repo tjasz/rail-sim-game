@@ -20,7 +20,7 @@ import {
   LeafletMap
 } from './components';
 import { SelectionProvider } from './contexts/SelectionContext';
-import type { GameState, DayResult } from './models';
+import type { GameState, DayResult, Neighborhood } from './models';
 import { 
   tickSimulation, 
   calculateDayResult, 
@@ -194,7 +194,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       const newTrain = {
         id: newTrainId,
         lineId: 'unassigned', // Special ID for unassigned trains
-        currentStationIndex: 0,
+        currentNeighborhoodIndex: 0,
         direction: 'forward' as const,
         position: { x: 0, y: 0 },
         passengerIds: [],
@@ -233,9 +233,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         return prevState;
       }
       
-      // Check if line has at least 2 stations
-      if (line.stationIds.length < 2) {
-        console.warn('Cannot assign train to line with less than 2 stations');
+      // Check if line has at least 2 neighborhoods
+      if (line.neighborhoodIds.length < 2) {
+        console.warn('Cannot assign train to line with less than 2 neighborhoods');
         return prevState;
       }
       
@@ -257,19 +257,19 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         .filter(t => t.lineId === lineId && t.id !== trainId);
       
       const numExistingTrains = existingTrainsOnLine.length;
-      const numStations = line.stationIds.length;
+      const numNeighborhoods = line.neighborhoodIds.length;
       
       // Initialize train properties based on existing trains
-      let stationIndex: number;
+      let neighborhoodIndex: number;
       let direction: 'forward' | 'backward';
       
       if (numExistingTrains === 0) {
         // First train on the line: start at beginning, going forward
-        stationIndex = 0;
+        neighborhoodIndex = 0;
         direction = 'forward';
       } else if (numExistingTrains === 1) {
         // Second train: start at end going backward (opposite direction)
-        stationIndex = numStations - 1;
+        neighborhoodIndex = numNeighborhoods - 1;
         direction = 'backward';
       } else {
         // Multiple trains: distribute evenly
@@ -280,41 +280,41 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           // Forward trains: space them evenly along the line
           const forwardCount = Math.ceil((numExistingTrains + 1) / 2);
           const forwardIdx = Math.floor(numExistingTrains / 2);
-          const spacing = Math.max(1, Math.floor(numStations / forwardCount));
-          stationIndex = Math.min(forwardIdx * spacing, numStations - 1);
+          const spacing = Math.max(1, Math.floor(numNeighborhoods / forwardCount));
+          neighborhoodIndex = Math.min(forwardIdx * spacing, numNeighborhoods - 1);
           direction = 'forward';
         } else {
           // Backward trains: space them evenly from the end
           const backwardCount = Math.floor((numExistingTrains + 1) / 2);
           const backwardIdx = Math.floor(numExistingTrains / 2);
-          const spacing = Math.max(1, Math.floor(numStations / backwardCount));
-          stationIndex = Math.max(numStations - 1 - backwardIdx * spacing, 0);
+          const spacing = Math.max(1, Math.floor(numNeighborhoods / backwardCount));
+          neighborhoodIndex = Math.max(numNeighborhoods - 1 - backwardIdx * spacing, 0);
           direction = 'backward';
         }
       }
       
-      // Get current and next station
-      const currentStationId = line.stationIds[stationIndex];
-      const currentStation = prevState.railNetwork.stations.get(currentStationId);
+      // Get current and next neighborhood
+      const currentNeighborhoodId = line.neighborhoodIds[neighborhoodIndex];
+      const currentNeighborhood = prevState.city.config.neighborhoods.find(n => n.id === currentNeighborhoodId);
       
-      if (!currentStation) {
+      if (!currentNeighborhood) {
         return prevState;
       }
       
-      // Calculate next station arrival time
-      const nextIndex = direction === 'forward' ? stationIndex + 1 : stationIndex - 1;
-      let nextStationArrivalTime: number | undefined;
+      // Calculate next neighborhood arrival time
+      const nextIndex = direction === 'forward' ? neighborhoodIndex + 1 : neighborhoodIndex - 1;
+      let nextNeighborhoodArrivalTime: number | undefined;
       
-      if (nextIndex >= 0 && nextIndex < numStations) {
-        const nextStationId = line.stationIds[nextIndex];
-        const nextStation = prevState.railNetwork.stations.get(nextStationId);
+      if (nextIndex >= 0 && nextIndex < numNeighborhoods) {
+        const nextNeighborhoodId = line.neighborhoodIds[nextIndex];
+        const nextNeighborhood = prevState.city.config.neighborhoods.find(n => n.id === nextNeighborhoodId);
         
-        if (nextStation) {
+        if (nextNeighborhood) {
           // Calculate distance and travel time
-          const distance = calculateDistance(currentStation.position, nextStation.position);
+          const distance = calculateDistance(currentNeighborhood.position, nextNeighborhood.position);
           const travelTime = distance / train.speed;
-          // Add time per station stop from config
-          nextStationArrivalTime = prevState.simulationTime + travelTime + prevState.city.config.timePerStationStop;
+          // Add time per neighborhood stop from config
+          nextNeighborhoodArrivalTime = prevState.simulationTime + travelTime + prevState.city.config.timePerStationStop;
         }
       }
       
@@ -323,11 +323,11 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       updatedTrains.set(trainId, {
         ...train,
         lineId: lineId,
-        currentStationIndex: stationIndex,
+        currentNeighborhoodIndex: neighborhoodIndex,
         direction: direction,
-        position: { x: currentStation.position.x, y: currentStation.position.y },
+        position: { x: currentNeighborhood.position.x, y: currentNeighborhood.position.y },
         passengerIds: [], // Clear passengers when reassigning
-        nextStationArrivalTime: nextStationArrivalTime,
+        nextNeighborhoodArrivalTime: nextNeighborhoodArrivalTime,
         currentPath: undefined,
         currentPathIndex: undefined,
       });
@@ -425,7 +425,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         totalCost: prev.totalCost + segmentCost,
       };
     });
-  }, [buildTrackState.isBuilding, gameState.city.config, gameState.city.budget, gameState.railNetwork.stations, gameState.railNetwork.tracks]);
+  }, [buildTrackState.isBuilding, gameState.city.config, gameState.city.budget, gameState.railNetwork.tracks]);
 
   const handleConfirmBuildTrack = useCallback(() => {
     if (buildTrackState.points.length < 2) {
@@ -514,35 +514,33 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     });
   }, [buildTrackState, gameState.city.budget]);
 
-  const handleAssignStationToLine = useCallback((stationId: string, lineId: string, trackIds: string[]) => {
+  const handleAssignNeighborhoodToLine = useCallback((neighborhoodId: string, lineId: string, trackIds: string[]) => {
     setGameState((prevState) => {
-      const station = prevState.railNetwork.stations.get(stationId);
+      const neighborhood = prevState.city.config.neighborhoods.find(n => n.id === neighborhoodId);
       const line = prevState.railNetwork.lines.get(lineId);
       
-      if (!station || !line) {
+      if (!neighborhood || !line) {
         return prevState;
       }
 
-      // Update station to include line
-      const updatedStations = new Map(prevState.railNetwork.stations);
-      updatedStations.set(stationId, {
-        ...station,
-        lineIds: [...station.lineIds, lineId],
-      });
+      // Update neighborhood to include line
+      const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n => 
+        n.id === neighborhoodId ? { ...n, lineIds: [...(n.lineIds ?? []), lineId] } : n
+      );
 
-      // Find where to insert the station in the line's station list
-      // Insert it next to the station it's connected to
-      let insertIndex = line.stationIds.length;
-      for (let i = 0; i < line.stationIds.length; i++) {
-        const existingStationId = line.stationIds[i];
-        const existingStation = prevState.railNetwork.stations.get(existingStationId);
-        if (existingStation && trackIds.length > 0) {
-          // Check if this station is connected via our track path
+      // Find where to insert the neighborhood in the line's neighborhood list
+      // Insert it next to the neighborhood it's connected to
+      let insertIndex = line.neighborhoodIds.length;
+      for (let i = 0; i < line.neighborhoodIds.length; i++) {
+        const existingNeighborhoodId = line.neighborhoodIds[i];
+        const existingNeighborhood = prevState.city.config.neighborhoods.find(n => n.id === existingNeighborhoodId);
+        if (existingNeighborhood && trackIds.length > 0) {
+          // Check if this neighborhood is connected via our track path
           const firstTrack = prevState.railNetwork.tracks.get(trackIds[0]);
           if (firstTrack) {
             const isConnected = 
-              (firstTrack.from.x === existingStation.position.x && firstTrack.from.y === existingStation.position.y) ||
-              (firstTrack.to.x === existingStation.position.x && firstTrack.to.y === existingStation.position.y);
+              (firstTrack.from.x === existingNeighborhood.position.x && firstTrack.from.y === existingNeighborhood.position.y) ||
+              (firstTrack.to.x === existingNeighborhood.position.x && firstTrack.to.y === existingNeighborhood.position.y);
             
             if (isConnected) {
               insertIndex = i + 1;
@@ -552,14 +550,14 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         }
       }
 
-      // Update line to include station
+      // Update line to include neighborhood
       const updatedLines = new Map(prevState.railNetwork.lines);
-      const newStationIds = [...line.stationIds];
-      newStationIds.splice(insertIndex, 0, stationId);
+      const newNeighborhoodIds = [...line.neighborhoodIds];
+      newNeighborhoodIds.splice(insertIndex, 0, neighborhoodId);
       
       updatedLines.set(lineId, {
         ...line,
-        stationIds: newStationIds,
+        neighborhoodIds: newNeighborhoodIds,
       });
 
       // Update tracks to include line
@@ -576,7 +574,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
 
       const updatedRailNetwork = {
         ...prevState.railNetwork,
-        stations: updatedStations,
         lines: updatedLines,
         tracks: updatedTracks,
       };
@@ -584,71 +581,82 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       // Recalculate citizen routes with updated network
       const updatedCitizens = calculateCitizenRoutes(
         prevState.citizens,
-        prevState.city.config.neighborhoods,
+        updatedNeighborhoods,
         prevState.city.config,
         updatedRailNetwork
       );
       
       return {
         ...prevState,
+        city: {
+          ...prevState.city,
+          config: {
+            ...prevState.city.config,
+            neighborhoods: updatedNeighborhoods,
+          },
+        },
         railNetwork: updatedRailNetwork,
         citizens: updatedCitizens,
       };
     });
   }, []);
 
-  const handleUnassignStationFromLine = useCallback((stationId: string, lineId: string) => {
+  const handleUnassignNeighborhoodFromLine = useCallback((neighborhoodId: string, lineId: string) => {
     setGameState((prevState) => {
-      const station = prevState.railNetwork.stations.get(stationId);
+      const neighborhood = prevState.city.config.neighborhoods.find(n => n.id === neighborhoodId);
       const line = prevState.railNetwork.lines.get(lineId);
       
-      if (!station || !line) {
+      if (!neighborhood || !line) {
         return prevState;
       }
 
-      // Update station to remove line
-      const updatedStations = new Map(prevState.railNetwork.stations);
-      updatedStations.set(stationId, {
-        ...station,
-        lineIds: station.lineIds.filter(id => id !== lineId),
-      });
+      // Update neighborhood to remove line
+      const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n =>
+        n.id === neighborhoodId ? { ...n, lineIds: (n.lineIds ?? []).filter((id: string) => id !== lineId) } : n
+      );
 
-      // Update line to remove station
+      // Update line to remove neighborhood
       const updatedLines = new Map(prevState.railNetwork.lines);
       updatedLines.set(lineId, {
         ...line,
-        stationIds: line.stationIds.filter(id => id !== stationId),
+        neighborhoodIds: line.neighborhoodIds.filter((id: string) => id !== neighborhoodId),
       });
 
-      // Note: We don't remove the line from tracks because other stations might still use them
+      // Note: We don't remove the line from tracks because other neighborhoods might still use them
 
       const updatedRailNetwork = {
         ...prevState.railNetwork,
-        stations: updatedStations,
         lines: updatedLines,
       };
       
       // Recalculate citizen routes with updated network
       const updatedCitizens = calculateCitizenRoutes(
         prevState.citizens,
-        prevState.city.config.neighborhoods,
+        updatedNeighborhoods,
         prevState.city.config,
         updatedRailNetwork
       );
       
       return {
         ...prevState,
+        city: {
+          ...prevState.city,
+          config: {
+            ...prevState.city.config,
+            neighborhoods: updatedNeighborhoods,
+          },
+        },
         railNetwork: updatedRailNetwork,
         citizens: updatedCitizens,
       };
     });
   }, []);
 
-  const handleCreateNewLine = useCallback((stationId: string, lineName: string, lineColor: string) => {
+  const handleCreateNewLine = useCallback((neighborhoodId: string, lineName: string, lineColor: string) => {
     setGameState((prevState) => {
-      const station = prevState.railNetwork.stations.get(stationId);
+      const neighborhood = prevState.city.config.neighborhoods.find(n => n.id === neighborhoodId);
       
-      if (!station) {
+      if (!neighborhood) {
         return prevState;
       }
 
@@ -657,17 +665,15 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         id: newLineId,
         name: lineName,
         color: lineColor,
-        stationIds: [stationId],
+        neighborhoodIds: [neighborhoodId],
         trainIds: [],
         isActive: false,
       };
 
-      // Update station to include new line
-      const updatedStations = new Map(prevState.railNetwork.stations);
-      updatedStations.set(stationId, {
-        ...station,
-        lineIds: [...station.lineIds, newLineId],
-      });
+      // Update neighborhood to include new line
+      const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n =>
+        n.id === neighborhoodId ? { ...n, lineIds: [...(n.lineIds ?? []), newLineId] } : n
+      );
 
       // Add new line
       const updatedLines = new Map(prevState.railNetwork.lines);
@@ -675,20 +681,26 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
 
       const updatedRailNetwork = {
         ...prevState.railNetwork,
-        stations: updatedStations,
         lines: updatedLines,
       };
       
       // Recalculate citizen routes with updated network
       const updatedCitizens = calculateCitizenRoutes(
         prevState.citizens,
-        prevState.city.config.neighborhoods,
+        updatedNeighborhoods,
         prevState.city.config,
         updatedRailNetwork
       );
       
       return {
         ...prevState,
+        city: {
+          ...prevState.city,
+          config: {
+            ...prevState.city.config,
+            neighborhoods: updatedNeighborhoods,
+          },
+        },
         railNetwork: updatedRailNetwork,
         citizens: updatedCitizens,
       };
@@ -700,6 +712,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
   const dayStartTime = currentDay * MINUTES_PER_DAY;
   const timeIntoCurrentDay = gameState.simulationTime - dayStartTime;
   const dayProgress = (timeIntoCurrentDay / MINUTES_PER_DAY) * 100;
+  const neighborhoodMap: Map<string, Neighborhood> = new Map(gameState.city.config.neighborhoods.slice(0,gameState.activeNeighborhoodCount).map(n => [n.id, n]));
   return (
     <SelectionProvider>
       <div className="game-container">
@@ -846,14 +859,14 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             {activeTab === 'lines' && (
               <LinesList
                 lines={gameState.railNetwork.lines}
-                stations={gameState.railNetwork.stations}
+                neighborhoods={gameState.city.config.neighborhoods}
               />
             )}
             {activeTab === 'trains' && (
               <TrainsList
                 trains={gameState.railNetwork.trains}
                 lines={gameState.railNetwork.lines}
-                stations={gameState.railNetwork.stations}
+                neighborhoods={gameState.city.config.neighborhoods}
                 budget={gameState.city.budget}
                 trainCost={gameState.city.config.costPerTrain}
                 onPurchaseTrain={handlePurchaseTrain}
@@ -862,7 +875,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             )}
             {activeTab === 'stations' && (
               <StationsList
-                stations={gameState.railNetwork.stations}
+                neighborhoods={gameState.city.config.neighborhoods}
                 lines={gameState.railNetwork.lines}
               />
             )}
@@ -889,10 +902,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               activeNeighborhoodCount={gameState.activeNeighborhoodCount}
             />
             <StationMarkers
-              stations={gameState.railNetwork.stations}
+              neighborhoods={[...neighborhoodMap.values()]}
               lines={gameState.railNetwork.lines}
               citizens={gameState.citizens}
-              neighborhoods={gameState.city.config.neighborhoods}
               onStationClick={(!buildTrackState.isBuilding && !gameState.isSimulating) ? setSelectedStationForAssignment : undefined}
             />
             <TrackOverlay
@@ -923,14 +935,15 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           />
         )}
 
-        {/* Station Assignment Modal */}
-        {selectedStationForAssignment && gameState.railNetwork.stations.get(selectedStationForAssignment) && (
+        {/* Neighborhood Assignment Modal */}
+        {selectedStationForAssignment && neighborhoodMap.has(selectedStationForAssignment) && (
           <StationAssignmentModal
-            station={gameState.railNetwork.stations.get(selectedStationForAssignment)!}
+            neighborhood={neighborhoodMap.get(selectedStationForAssignment)!}
+            neighborhoods={neighborhoodMap}
             railNetwork={gameState.railNetwork}
             onClose={() => setSelectedStationForAssignment(null)}
-            onAssignLine={handleAssignStationToLine}
-            onUnassignLine={handleUnassignStationFromLine}
+            onAssignLine={handleAssignNeighborhoodToLine}
+            onUnassignLine={handleUnassignNeighborhoodFromLine}
             onCreateNewLine={handleCreateNewLine}
           />
         )}

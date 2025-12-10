@@ -1,6 +1,7 @@
 // Utility functions for game simulation
 
 import type { GameState, Citizen, Train, Line, Station, Track, Position } from '../models';
+import { generateSingleTrip } from './tripGeneration';
 
 export const MINUTES_PER_DAY = 24 * 60; // 1440 minutes in a day
 export const SIMULATION_TICK_MS = 50; // Update every 50ms
@@ -864,6 +865,78 @@ export function tickSimulation(
     };
   }
 
+  // Generate new trips if needed
+  let currentCitizens = new Map(gameState.citizens);
+  let nextTripTime = gameState.nextTripGenerationTime;
+  let tripsGenerated = gameState.tripsGeneratedToday;
+  const maxTripsPerDay = 50 * (gameState.city.currentDay + 1);
+  
+  // Keep generating trips while we're past the next generation time and haven't hit the limit
+  while (newTime >= nextTripTime && tripsGenerated < maxTripsPerDay) {
+    const activeNeighborhoods = gameState.city.config.neighborhoods.slice(0, gameState.activeNeighborhoodCount);
+    
+    // Use a counter based on current map size to ensure unique IDs
+    const citizenIdCounter = Date.now() + currentCitizens.size;
+    
+    const newCitizen = generateSingleTrip(
+      activeNeighborhoods,
+      nextTripTime,
+      citizenIdCounter
+    );
+    
+    if (newCitizen) {
+      // Calculate route for the new citizen
+      const originNeighborhood = activeNeighborhoods.find(n => n.id === newCitizen.originNeighborhoodId);
+      const destNeighborhood = activeNeighborhoods.find(n => n.id === newCitizen.destinationNeighborhoodId);
+      
+      if (originNeighborhood && destNeighborhood) {
+        const segments = calculateRoute(
+          originNeighborhood.position,
+          destNeighborhood.position,
+          gameState.city.config,
+          gameState.railNetwork,
+          gameState.city.config.walkingSpeed,
+          gameState.city.config.trainSpeed
+        );
+        
+        const totalEstimatedTime = segments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
+        
+        // Calculate walking-only time
+        const emptyNetwork: RailNetwork = {
+          stations: new Map(),
+          lines: new Map(),
+          tracks: new Map(),
+          trains: new Map(),
+        };
+        const walkingSegments = calculateRoute(
+          originNeighborhood.position,
+          destNeighborhood.position,
+          gameState.city.config,
+          emptyNetwork,
+          gameState.city.config.walkingSpeed,
+          gameState.city.config.trainSpeed
+        );
+        const walkingOnlyTime = walkingSegments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
+        
+        const citizenWithRoute = {
+          ...newCitizen,
+          route: {
+            segments,
+            totalEstimatedTime,
+            walkingOnlyTime,
+          },
+        };
+        
+        currentCitizens.set(citizenWithRoute.id, citizenWithRoute);
+      }
+    }
+    
+    tripsGenerated++;
+    nextTripTime += gameState.tripGenerationInterval;
+  }
+
+  const newCitizens = new Map([...gameState.citizens, ...currentCitizens]);
+
   // Update trains
   let updatedTrains = updateTrains(
     gameState.railNetwork.trains,
@@ -876,7 +949,7 @@ export function tickSimulation(
 
   // Update citizens
   let updatedCitizens = updateCitizens(
-    gameState.citizens,
+    newCitizens,
     updatedTrains,
     gameState.railNetwork.stations,
     gameState.railNetwork.lines,
@@ -911,6 +984,8 @@ export function tickSimulation(
   return {
     ...gameState,
     simulationTime: newTime,
+    nextTripGenerationTime: nextTripTime,
+    tripsGeneratedToday: tripsGenerated,
     railNetwork: {
       ...gameState.railNetwork,
       trains: updatedTrains,

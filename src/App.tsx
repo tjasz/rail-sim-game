@@ -38,6 +38,9 @@ const baseGameState: GameState = {
   simulationTime: 0,
   simulationSpeed: 1,
   activeNeighborhoodCount: 3, // Start with 3 neighborhoods, add 1 each day
+  nextTripGenerationTime: 0, // Will be set by initializeDay
+  tripGenerationInterval: 0, // Will be set by initializeDay
+  tripsGeneratedToday: 0,
   stats: {
     totalDaysPlayed: 0,
     totalCitizensTransported: 0,
@@ -55,8 +58,8 @@ const baseGameState: GameState = {
 };
 
 function App() {
-  // Initialize the first day with citizens and positioned trains
-  const { tripMatrix, citizens, updatedNetwork } = initializeDay(
+  // Initialize the first day with continuous trip generation
+  const { tripMatrix, citizens, updatedNetwork, tripGenerationInterval, nextTripGenerationTime } = initializeDay(
     baseGameState.city.config,
     baseGameState.city.currentDay,
     baseGameState.activeNeighborhoodCount,
@@ -68,6 +71,9 @@ function App() {
     currentTripMatrix: tripMatrix,
     citizens,
     railNetwork: updatedNetwork,
+    tripGenerationInterval,
+    nextTripGenerationTime,
+    tripsGeneratedToday: 0,
   };
 
   return <Game gameState={gameState} />;

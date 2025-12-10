@@ -159,8 +159,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         prevState.city.config.neighborhoods.length
       );
       
-      // Initialize new day with citizens and trips
-      const { tripMatrix, citizens, updatedNetwork } = initializeDay(
+      // Initialize new day with continuous trip generation system
+      const { tripMatrix, citizens, updatedNetwork, tripGenerationInterval, nextTripGenerationTime } = initializeDay(
         prevState.city.config,
         adjustedDay,
         newActiveNeighborhoodCount,
@@ -189,6 +189,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         citizens,
         currentTripMatrix: tripMatrix,
         railNetwork: updatedNetwork,
+        tripGenerationInterval,
+        nextTripGenerationTime,
+        tripsGeneratedToday: 0,
       };
     });
   }, [dayResult]);

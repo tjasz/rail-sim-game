@@ -15,6 +15,14 @@ import type { Shift } from '../models/Neighborhood';
 import { calculateDistance } from './simulation';
 import { calculateRoute } from './pathfinding';
 
+// Trip purpose probabilities
+const TRIP_PROBABILITIES = {
+  HOME_TO_WORK: 0.40,
+  WORK_TO_HOME: 0.40,
+  WORK_TO_RECREATION: 0.10,
+  RECREATION_TO_HOME: 0.10,
+};
+
 /**
  * Get active neighborhoods based on the active neighborhood count
  */
@@ -261,6 +269,92 @@ function pickRecreationalDestination(activeNeighborhoods: Neighborhood[]): Neigh
   }
   
   return activeNeighborhoods[activeNeighborhoods.length - 1];
+}
+
+/**
+ * Calculate trip generation interval based on day number
+ * Formula: 1440 / 50 / (day + 1) minutes per trip
+ */
+export function calculateTripGenerationInterval(day: number): number {
+  return 1440 / 50 / (day + 1);
+}
+
+/**
+ * Generate a single trip based on probabilities
+ * 40% home-to-work
+ * 40% work-to-home
+ * 10% work-to-recreation
+ * 10% recreation-to-home
+ */
+export function generateSingleTrip(
+  activeNeighborhoods: Neighborhood[],
+  currentTime: number,
+  citizenIdCounter: number
+): Citizen | null {
+  const random = Math.random();
+  
+  let originNeighborhood: Neighborhood;
+  let destinationNeighborhood: Neighborhood;
+  let purpose: 'to-work' | 'from-work' | 'recreation' | 'to-home';
+  
+  if (random < TRIP_PROBABILITIES.HOME_TO_WORK) {
+    // 40% chance: home to work
+    originNeighborhood = assignHomeNeighborhood(activeNeighborhoods);
+    destinationNeighborhood = assignWorkNeighborhood(activeNeighborhoods);
+    purpose = 'to-work';
+  } else if (random < TRIP_PROBABILITIES.HOME_TO_WORK + TRIP_PROBABILITIES.WORK_TO_HOME) {
+    // 40% chance: work to home
+    destinationNeighborhood = assignHomeNeighborhood(activeNeighborhoods);
+    originNeighborhood = assignWorkNeighborhood(activeNeighborhoods);
+    purpose = 'from-work';
+  } else if (random < TRIP_PROBABILITIES.HOME_TO_WORK + TRIP_PROBABILITIES.WORK_TO_HOME + TRIP_PROBABILITIES.WORK_TO_RECREATION) {
+    // 10% chance: work to recreation
+    originNeighborhood = assignWorkNeighborhood(activeNeighborhoods);
+    destinationNeighborhood = pickRecreationalDestination(activeNeighborhoods);
+    purpose = 'recreation';
+  } else {
+    // 10% chance: recreation to home
+    originNeighborhood = pickRecreationalDestination(activeNeighborhoods);
+    destinationNeighborhood = assignHomeNeighborhood(activeNeighborhoods);
+    purpose = 'to-home';
+  }
+  
+  // Don't create trips where origin and destination are the same
+  if (originNeighborhood.id === destinationNeighborhood.id) {
+    return null;
+  }
+  
+  const citizenId = `citizen-${citizenIdCounter}`;
+  
+  // Create a simplified citizen for this single trip
+  // We'll use a dummy shift and schedule since we're not tracking full daily schedules anymore
+  const dummyShift: Shift = [9, 17]; // 9am-5pm dummy
+  
+  const citizen: Citizen = {
+    id: citizenId,
+    homeNeighborhoodId: purpose === 'to-work' || purpose === 'recreation' 
+      ? originNeighborhood.id 
+      : destinationNeighborhood.id,
+    workNeighborhoodId: purpose === 'to-work' || purpose === 'from-work'
+      ? destinationNeighborhood.id
+      : originNeighborhood.id,
+    shift: dummyShift,
+    dailySchedule: [{
+      originNeighborhoodId: originNeighborhood.id,
+      destinationNeighborhoodId: destinationNeighborhood.id,
+      departureTime: currentTime / 60, // Convert minutes to hours
+      purpose: purpose,
+    }],
+    currentTripIndex: 0,
+    originNeighborhoodId: originNeighborhood.id,
+    destinationNeighborhoodId: destinationNeighborhood.id,
+    state: 'waiting-at-origin',
+    currentPosition: { ...originNeighborhood.position },
+    isHappy: true,
+    tripStartTime: currentTime,
+  };
+  
+  return citizen;
 }
 
 /**
@@ -584,42 +678,42 @@ export function initializeTrains(
 }
 
 /**
- * Initialize a new day with citizens and trips
+ * Initialize a new day with the new continuous trip generation system
  */
 export function initializeDay(
   config: CityConfig,
   day: number,
-  activeNeighborhoodCount: number,
+  _activeNeighborhoodCount: number,
   railNetwork: RailNetwork,
   startTime: number = 0 // Midnight default
 ): {
   tripMatrix: TripMatrix;
   citizens: Map<string, Citizen>;
   updatedNetwork: RailNetwork;
+  tripGenerationInterval: number;
+  nextTripGenerationTime: number;
 } {
-  // Get active neighborhoods based on activeNeighborhoodCount
-  const activeNeighborhoods = getActiveNeighborhoods(config.neighborhoods, activeNeighborhoodCount);
+  // Start with empty citizens - they'll be generated continuously
+  const citizens = new Map<string, Citizen>();
   
-  // Create citizens with work assignments and daily schedules
-  const totalPopulation = 35 * (day + 1);
-  const citizensWithoutRoutes = createCitizensWithSchedules(activeNeighborhoods, totalPopulation);
+  // Calculate trip generation interval: 1440 / 50 / (day + 1) minutes
+  const tripGenerationInterval = calculateTripGenerationInterval(day);
   
-  // Calculate routes for all citizens
-  const citizens = calculateCitizenRoutes(
-    citizensWithoutRoutes,
-    activeNeighborhoods,
-    config,
-    railNetwork
-  );
+  // Set next trip generation time to the start time
+  const nextTripGenerationTime = startTime;
   
-  // Generate trip matrix from citizen schedules
-  const tripMatrix = generateTripMatrix(citizens, day);
+  // Create empty trip matrix
+  const tripMatrix: TripMatrix = {
+    date: day,
+    trips: new Map(),
+    totalTrips: 0,
+  };
   
-  // Update stations with waiting citizens
+  // Update stations with no waiting citizens initially
   const updatedStations = updateStationWaitingCitizens(
     railNetwork.stations,
     citizens,
-    activeNeighborhoods
+    []
   );
   
   // Initialize train positions and arrival times
@@ -641,5 +735,7 @@ export function initializeDay(
     tripMatrix,
     citizens,
     updatedNetwork,
+    tripGenerationInterval,
+    nextTripGenerationTime,
   };
 }

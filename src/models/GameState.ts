@@ -20,6 +20,11 @@ export interface GameState {
   // Neighborhood activation
   activeNeighborhoodCount: number; // number of neighborhoods currently active
   
+  // Trip generation
+  nextTripGenerationTime: number; // simulation time in minutes when next trip should be generated
+  tripGenerationInterval: number; // minutes between trip generations
+  tripsGeneratedToday: number; // count of trips generated in current day
+  
   // Statistics
   stats: GameStats;
 }

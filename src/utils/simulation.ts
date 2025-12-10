@@ -346,6 +346,14 @@ export function updateStationWaitingLists(
           station.waitingCitizens.get(lineId)!.push(citizen.id);
         }
       }
+      else {
+        // No route - just add to a generic waiting list (could be improved)
+        const genericLineId = 'generic';
+        if (!station.waitingCitizens.has(genericLineId)) {
+          station.waitingCitizens.set(genericLineId, []);
+        }
+        station.waitingCitizens.get(genericLineId)!.push(citizen.id);
+      }
     }
   });
   
@@ -389,7 +397,10 @@ export function updateCitizens(
     
     if (!citizen.route || citizen.route.segments.length === 0) {
       // No route available - wait at origin indefinitely
-      updatedCitizen.currentStationId = citizen.originNeighborhoodId
+      updatedCitizen.state = 'waiting-at-station';
+      updatedCitizen.currentStationId = Array.from(stations.values()).find(
+        s => s.neighborhoodId === citizen.originNeighborhoodId
+      )?.id;
       updatedCitizens.set(citizen.id, updatedCitizen);
       continue;
     }

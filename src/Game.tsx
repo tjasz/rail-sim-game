@@ -152,27 +152,18 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       
       const newDay = prevState.city.currentDay + 1;
       
-      // Calculate new active neighborhood count (add 1 each day, up to total neighborhoods)
-      const newActiveNeighborhoodCount = Math.min(
-        prevState.activeNeighborhoodCount + 1,
-        prevState.city.config.neighborhoods.length
-      );
-      
       // Initialize new day with continuous trip generation system
       const dayStartTime = newDay * MINUTES_PER_DAY;
       const { tripMatrix, citizens, updatedNetwork, tripGenerationInterval, nextTripGenerationTime } = initializeDay(
         prevState.city.config,
         newDay,
-        newActiveNeighborhoodCount,
+        prevState.activeNeighborhoodCount,
         prevState.railNetwork,
         dayStartTime
       );
       
       // Calculate population from active neighborhoods
-      const newPopulation = calculatePopulation(
-        prevState.city.config.neighborhoods,
-        newActiveNeighborhoodCount
-      );
+      const newPopulation = prevState.city.config.populationOnDay(newDay);
       
       return {
         ...prevState,
@@ -185,7 +176,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         stats: updatedStats,
         simulationTime: newDay * MINUTES_PER_DAY, // Start of new day
         isSimulating: false,
-        activeNeighborhoodCount: newActiveNeighborhoodCount,
+        activeNeighborhoodCount: prevState.activeNeighborhoodCount,
         citizens,
         currentTripMatrix: tripMatrix,
         railNetwork: updatedNetwork,

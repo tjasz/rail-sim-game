@@ -857,6 +857,21 @@ export function tickSimulation(
     };
   }
 
+  // Check if we should increment active neighborhood count (every 100 minutes)
+  const oldNeighborhoodThreshold = Math.floor(gameState.simulationTime / 100);
+  const newNeighborhoodThreshold = Math.floor(newTime / 100);
+  const maxNeighborhoods = gameState.city.config.neighborhoods.length;
+  
+  let updatedActiveNeighborhoodCount = gameState.activeNeighborhoodCount;
+  if (newNeighborhoodThreshold > oldNeighborhoodThreshold) {
+    // We've crossed a 100-minute boundary, increment if not at max
+    const increments = newNeighborhoodThreshold - oldNeighborhoodThreshold;
+    updatedActiveNeighborhoodCount = Math.min(
+      gameState.activeNeighborhoodCount + increments,
+      maxNeighborhoods
+    );
+  }
+
   // Generate new trips if needed
   let currentCitizens = new Map(gameState.citizens);
   let nextTripTime = gameState.nextTripGenerationTime;
@@ -865,7 +880,7 @@ export function tickSimulation(
   
   // Keep generating trips while we're past the next generation time and haven't hit the limit
   while (newTime >= nextTripTime && tripsGenerated < maxTripsPerDay) {
-    const activeNeighborhoods = gameState.city.config.neighborhoods.slice(0, gameState.activeNeighborhoodCount);
+    const activeNeighborhoods = gameState.city.config.neighborhoods.slice(0, updatedActiveNeighborhoodCount);
     
     // Use a counter based on current map size to ensure unique IDs
     const citizenIdCounter = Date.now() + currentCitizens.size;
@@ -976,6 +991,7 @@ export function tickSimulation(
   return {
     ...gameState,
     simulationTime: newTime,
+    activeNeighborhoodCount: updatedActiveNeighborhoodCount,
     nextTripGenerationTime: nextTripTime,
     tripsGeneratedToday: tripsGenerated,
     railNetwork: {

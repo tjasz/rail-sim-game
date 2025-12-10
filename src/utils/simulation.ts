@@ -751,20 +751,11 @@ export function tickSimulation(
     };
   }
 
-  // Check if we should increment active neighborhood count (every 100 minutes)
-  const oldNeighborhoodThreshold = Math.floor(gameState.simulationTime / 100);
-  const newNeighborhoodThreshold = Math.floor(newTime / 100);
   const maxNeighborhoods = gameState.city.config.neighborhoods.length;
-  
-  let updatedActiveNeighborhoodCount = gameState.activeNeighborhoodCount;
-  if (newNeighborhoodThreshold > oldNeighborhoodThreshold) {
-    // We've crossed a 100-minute boundary, increment if not at max
-    const increments = newNeighborhoodThreshold - oldNeighborhoodThreshold;
-    updatedActiveNeighborhoodCount = Math.min(
-      gameState.activeNeighborhoodCount + increments,
+  let updatedActiveNeighborhoodCount = Math.min(
+      gameState.city.config.activeNeighborhoodsAtTime(newTime),
       maxNeighborhoods
     );
-  }
 
   // Generate new trips if needed
   let currentCitizens = new Map(gameState.citizens);

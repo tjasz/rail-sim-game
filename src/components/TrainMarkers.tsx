@@ -12,10 +12,9 @@ interface TrainMarkersProps {
   lines: Map<string, Line>;
   citizens: Map<string, Citizen>;
   neighborhoods: Neighborhood[];
-  simulationTime: number; // total minutes elapsed since game start
 }
 
-export function TrainMarkers({ trains, lines, citizens, neighborhoods, simulationTime }: TrainMarkersProps) {
+export function TrainMarkers({ trains, lines, citizens, neighborhoods }: TrainMarkersProps) {
   const width = RIDER_SIZE[0] * RIDER_COLS + (RIDER_COLS + 1) * RIDER_MARGIN;
   return (
     <>
@@ -45,7 +44,7 @@ export function TrainMarkers({ trains, lines, citizens, neighborhoods, simulatio
                 const col = idx % RIDER_COLS;
                 const x = RIDER_MARGIN + col * (RIDER_SIZE[0] + RIDER_MARGIN);
                 const y = RIDER_MARGIN + row * (RIDER_SIZE[1] + RIDER_MARGIN);
-                return renderCitizenIcon([x,y], RIDER_SIZE[0], citizens.get(train.passengerIds[idx])!, neighborhoods, simulationTime);
+                return renderCitizenIcon([x,y], RIDER_SIZE[0], citizens.get(train.passengerIds[idx])!, neighborhoods);
               }).join('')}
             </svg>
           </div>

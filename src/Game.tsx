@@ -1029,7 +1029,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               lines={gameState.railNetwork.lines}
               citizens={gameState.citizens}
               neighborhoods={gameState.city.config.neighborhoods}
-              simulationTime={gameState.simulationTime}
               onStationClick={(!buildTrackState.isBuilding && !buildStationState.isBuilding && !gameState.isSimulating) ? setSelectedStationForAssignment : undefined}
             />
             <TrackOverlay
@@ -1052,7 +1051,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               lines={gameState.railNetwork.lines}
               citizens={gameState.citizens}
               neighborhoods={gameState.city.config.neighborhoods}
-              simulationTime={gameState.simulationTime}
             />
           </LeafletMap>
         </div>

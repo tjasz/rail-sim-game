@@ -14,7 +14,6 @@ interface StationMarkersProps {
   lines: Map<string, Line>;
   citizens: Map<string, Citizen>;
   neighborhoods: Neighborhood[];
-  simulationTime: number; // total minutes elapsed since game start
   onStationClick?: (stationId: string) => void;
 }
 
@@ -23,7 +22,6 @@ export function StationMarkers({
   lines,
   citizens,
   neighborhoods,
-  simulationTime,
   onStationClick 
 }: StationMarkersProps) {
   const { setSelectedObject } = useSelection();
@@ -82,7 +80,7 @@ export function StationMarkers({
                 const col = idx % RIDER_COLS;
                 const x = maxRadius*Math.sqrt(3)/2 + RIDER_MARGIN + col * (RIDER_SIZE[0] + RIDER_MARGIN);
                 const y = maxRadius/2 + RIDER_MARGIN + row * (RIDER_SIZE[1] + RIDER_MARGIN);
-                return renderCitizenIcon([x,y], RIDER_SIZE[0], citizens.get(citizenId)!, neighborhoods, simulationTime);
+                return renderCitizenIcon([x,y], RIDER_SIZE[0], citizens.get(citizenId)!, neighborhoods);
               }).join('')}
             </svg>
           </div>

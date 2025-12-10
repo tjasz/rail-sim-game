@@ -5,7 +5,6 @@ import {
   CityGrid,
   TrackOverlay,
   DraftTrackOverlay,
-  StationPlacementOverlay,
   TrainMarkers,
   NeighborhoodMarkers,
   StationMarkers,
@@ -45,10 +44,6 @@ interface BuildTrackState {
   totalCost: number;
 }
 
-interface BuildStationState {
-  isBuilding: boolean;
-}
-
 export function Game({ gameState: initialGameState, onGameStateChange }: GameProps) {
   const [gameState, setGameState] = useState<GameState>(initialGameState);
   const [activeTab, setActiveTab] = useState<'lines' | 'trains' | 'stations' | 'passengers' | 'trips'>('trips');
@@ -58,9 +53,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     points: [],
     totalDistance: 0,
     totalCost: 0,
-  });
-  const [buildStationState, setBuildStationState] = useState<BuildStationState>({
-    isBuilding: false,
   });
   const [selectedStationForAssignment, setSelectedStationForAssignment] = useState<string | null>(null);
   const prevDayRef = useRef<number>(initialGameState.city.currentDay);
@@ -388,106 +380,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     });
   }, []);
 
-  const handleStartBuildStation = useCallback(() => {
-    setBuildStationState({
-      isBuilding: true,
-    });
-  }, []);
-
-  const handleCancelBuildStation = useCallback(() => {
-    setBuildStationState({
-      isBuilding: false,
-    });
-  }, []);
-
-  const handleMapClick = useCallback((x: number, y: number) => {
-    // Handle station building
-    if (buildStationState.isBuilding) {
-      // Check if there's already a station at this position
-      const existingStation = Array.from(gameState.railNetwork.stations.values()).find(
-        s => s.position.x === x && s.position.y === y
-      );
-      
-      if (existingStation) {
-        console.warn('Station already exists at this position');
-        return;
-      }
-      
-      // Check if there's track at or adjacent to this position
-      const hasTrack = Array.from(gameState.railNetwork.tracks.values()).some(track => {
-        // Check if track passes through this cell
-        return (track.from.x === x && track.from.y === y) || 
-               (track.to.x === x && track.to.y === y);
-      });
-      
-      if (!hasTrack) {
-        console.warn('Station must be placed on or adjacent to track');
-        return;
-      }
-      
-      // Check if player can afford
-      const stationCost = gameState.city.config.costPerStation;
-      if (gameState.city.budget < stationCost) {
-        console.warn('Insufficient budget to build station');
-        return;
-      }
-      
-      // Build the station
-      setGameState((prevState) => {
-        const newStationId = `station-${Date.now()}`;
-        
-        // Check if station is in a neighborhood
-        const neighborhood = prevState.city.config.neighborhoods.find(
-          n => n.position.x === x && n.position.y === y
-        );
-        
-        const newStation = {
-          id: newStationId,
-          neighborhoodId: neighborhood?.id || '',
-          position: { x, y },
-          lineIds: [],
-          waitingCitizens: new Map<string, string[]>(),
-        };
-        
-        const updatedStations = new Map(prevState.railNetwork.stations);
-        updatedStations.set(newStationId, newStation);
-        
-        const updatedRailNetwork = {
-          ...prevState.railNetwork,
-          stations: updatedStations,
-        };
-        
-        // Recalculate citizen routes with updated network
-        const updatedCitizens = calculateCitizenRoutes(
-          prevState.citizens,
-          prevState.city.config.neighborhoods,
-          prevState.city.config,
-          updatedRailNetwork
-        );
-        
-        return {
-          ...prevState,
-          city: {
-            ...prevState.city,
-            budget: prevState.city.budget - stationCost,
-          },
-          railNetwork: updatedRailNetwork,
-          citizens: updatedCitizens,
-          stats: {
-            ...prevState.stats,
-            totalMoneySpent: prevState.stats.totalMoneySpent + stationCost,
-          },
-        };
-      });
-      
-      // Exit build mode
-      setBuildStationState({
-        isBuilding: false,
-      });
-      
-      return;
-    }
-    
+  const handleMapClick = useCallback((x: number, y: number) => {    
     // Handle track building
     if (!buildTrackState.isBuilding) return;
 
@@ -532,7 +425,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         totalCost: prev.totalCost + segmentCost,
       };
     });
-  }, [buildTrackState.isBuilding, buildStationState.isBuilding, gameState.city.config, gameState.city.budget, gameState.railNetwork.stations, gameState.railNetwork.tracks]);
+  }, [buildTrackState.isBuilding, gameState.city.config, gameState.city.budget, gameState.railNetwork.stations, gameState.railNetwork.tracks]);
 
   const handleConfirmBuildTrack = useCallback(() => {
     if (buildTrackState.points.length < 2) {
@@ -876,7 +769,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               <button 
                 className="btn-primary" 
                 onClick={handleStartBuildTrack}
-                disabled={gameState.isSimulating || buildStationState.isBuilding}
+                disabled={gameState.isSimulating}
               >
                 🔧 Start Building Track
               </button>
@@ -902,35 +795,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
                     onClick={handleCancelBuildTrack}
                   >
                     ✗ Cancel Track
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Build Station Controls */}
-          <div className="panel build-track-panel">
-            {!buildStationState.isBuilding ? (
-              <button 
-                className="btn-primary" 
-                onClick={handleStartBuildStation}
-                disabled={gameState.isSimulating || buildTrackState.isBuilding}
-              >
-                🏢 Start Building Station
-              </button>
-            ) : (
-              <div className="build-track-controls">
-                <div className="build-track-info">
-                  <p>Click on map to place station</p>
-                  <p>Cost: ${Math.round(gameState.city.config.costPerStation).toLocaleString()}</p>
-                  <p>Budget: ${Math.round(gameState.city.budget).toLocaleString()}</p>
-                </div>
-                <div className="build-track-buttons">
-                  <button 
-                    className="btn-secondary" 
-                    onClick={handleCancelBuildStation}
-                  >
-                    ✗ Cancel Station
                   </button>
                 </div>
               </div>
@@ -1018,7 +882,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           >
             <CityGrid config={gameState.city.config} />
             <MapClickHandler
-              onMapClick={(buildTrackState.isBuilding || buildStationState.isBuilding) ? handleMapClick : undefined}
+              onMapClick={buildTrackState.isBuilding ? handleMapClick : undefined}
             />
             <NeighborhoodMarkers
               neighborhoods={gameState.city.config.neighborhoods}
@@ -1029,7 +893,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               lines={gameState.railNetwork.lines}
               citizens={gameState.citizens}
               neighborhoods={gameState.city.config.neighborhoods}
-              onStationClick={(!buildTrackState.isBuilding && !buildStationState.isBuilding && !gameState.isSimulating) ? setSelectedStationForAssignment : undefined}
+              onStationClick={(!buildTrackState.isBuilding && !gameState.isSimulating) ? setSelectedStationForAssignment : undefined}
             />
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}
@@ -1038,12 +902,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             {buildTrackState.isBuilding && (
               <DraftTrackOverlay
                 points={buildTrackState.points}
-              />
-            )}
-            {buildStationState.isBuilding && (
-              <StationPlacementOverlay
-                tracks={gameState.railNetwork.tracks}
-                stations={gameState.railNetwork.stations}
               />
             )}
             <TrainMarkers

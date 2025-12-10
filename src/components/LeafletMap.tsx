@@ -25,6 +25,7 @@ export function LeafletMap({ gridWidth, gridHeight, children }: LeafletMapProps)
       <MapContainer
         center={center}
         zoom={5}
+        zoomSnap={0}
         minZoom={3}
         maxZoom={9}
         crs={CRS.Simple}

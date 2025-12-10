@@ -737,10 +737,8 @@ export function rolloverToNextDay(gameState: GameState): GameState {
   };
 
   // Calculate new population (growth per day)
-  const dailyGrowthRate = gameState.city.config.populationGrowthRate;
-  const newPopulation = Math.floor(gameState.city.config.initialPopulation * Math.pow(1 + dailyGrowthRate, gameState.city.currentDay));
-
   const newDay = gameState.city.currentDay + 1;
+  const newPopulation = Math.floor(gameState.city.config.populationOnDay(newDay));
 
   return {
     ...gameState,
@@ -861,7 +859,7 @@ export function tickSimulation(
   let currentCitizens = new Map(gameState.citizens);
   let nextTripTime = gameState.nextTripGenerationTime;
   let tripsGenerated = gameState.tripsGeneratedToday;
-  const maxTripsPerDay = 50 * (gameState.city.currentDay + 1);
+  const maxTripsPerDay = gameState.city.config.populationOnDay(gameState.city.currentDay);
   
   // Keep generating trips while we're past the next generation time and haven't hit the limit
   while (newTime >= nextTripTime && tripsGenerated < maxTripsPerDay) {

@@ -11,7 +11,7 @@ export interface CityConfig {
   
   // Population settings
   initialPopulation: number;
-  populationGrowthRate: number; // percentage growth rate (e.g., 0.05 = 5%)
+  populationOnDay: (day: number) => number; // function that computes population on a given day (starting with day 0)
   
   // Economic settings
   initialBudget: number;

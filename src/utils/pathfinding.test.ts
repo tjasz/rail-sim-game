@@ -100,7 +100,7 @@ const testCityConfig: CityConfig = {
     },
   ],
   initialPopulation: 100,
-  populationGrowthRate: 0.05,
+  populationOnDay: (day: number) => 50 * (day + 1),
   initialBudget: 10000,
   budgetBaseline: 1000,
   budgetBonusPerHappyCitizen: 10,

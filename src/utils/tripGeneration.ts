@@ -273,10 +273,9 @@ function pickRecreationalDestination(activeNeighborhoods: Neighborhood[]): Neigh
 
 /**
  * Calculate trip generation interval based on day number
- * Formula: 1440 / 50 / (day + 1) minutes per trip
  */
-export function calculateTripGenerationInterval(day: number): number {
-  return 1440 / 50 / (day + 1);
+export function calculateTripGenerationInterval(tripsPerDay: number): number {
+  return 1440 / tripsPerDay;
 }
 
 /**
@@ -696,8 +695,9 @@ export function initializeDay(
   // Start with empty citizens - they'll be generated continuously
   const citizens = new Map<string, Citizen>();
   
-  // Calculate trip generation interval: 1440 / 50 / (day + 1) minutes
-  const tripGenerationInterval = calculateTripGenerationInterval(day);
+  // Calculate trip generation interval
+  const population = config.populationOnDay(day);
+  const tripGenerationInterval = calculateTripGenerationInterval(population);
   
   // Set next trip generation time to the start time
   const nextTripGenerationTime = startTime;

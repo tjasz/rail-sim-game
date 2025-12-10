@@ -1,7 +1,6 @@
 export { tickSimulation, rolloverToNextDay, calculateDayResult, formatTime, MINUTES_PER_DAY, calculateDistance } from './simulation';
 export { 
   generateTripMatrix, 
-  updateStationWaitingCitizens, 
   initializeTrains,
   initializeDay,
   getActiveNeighborhoods,

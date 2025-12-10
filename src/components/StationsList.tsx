@@ -1,37 +1,42 @@
-import type { Station, Line } from '../models';
+import type { Neighborhood, Line } from '../models';
 
 interface StationsListProps {
-  stations: Map<string, Station>;
+  neighborhoods: Neighborhood[];
   lines: Map<string, Line>;
 }
 
-export function StationsList({ stations, lines }: StationsListProps) {
+export function StationsList({ neighborhoods, lines }: StationsListProps) {
+  // Filter to only neighborhoods that have lines (stations)
+  const stations = neighborhoods.filter(n => (n.lineIds ?? []).length > 0);
+  
   return (
     <div className="stations-list">
-      <h3>Stations ({stations.size})</h3>
-      {stations.size === 0 ? (
+      <h3>Stations ({stations.length})</h3>
+      {stations.length === 0 ? (
         <p className="empty-state">No stations built yet</p>
       ) : (
         <div className="stations-container">
-          {Array.from(stations.values()).map(station => {
-            const totalWaiting = Array.from(station.waitingCitizens.values())
+          {stations.map(neighborhood => {
+            const lineIds = neighborhood.lineIds ?? [];
+            const waitingCitizens = neighborhood.waitingCitizens ?? new Map();
+            const totalWaiting = Array.from(waitingCitizens.values())
               .reduce((sum, arr) => sum + arr.length, 0);
             
             return (
-              <div key={station.id} className="station-item">
+              <div key={neighborhood.id} className="station-item">
                 <div className="station-header">
-                  <span className="station-name">{station.neighborhoodId}</span>
+                  <span className="station-name">{neighborhood.id}</span>
                   <span className="station-location">
-                    ({station.position.x}, {station.position.y})
+                    ({neighborhood.position.x}, {neighborhood.position.y})
                   </span>
                 </div>
                 <div className="station-details">
-                  <span>Lines: {station.lineIds.length}</span>
+                  <span>Lines: {lineIds.length}</span>
                   <span>Waiting: {totalWaiting}</span>
                 </div>
-                {station.lineIds.length > 0 && (
+                {lineIds.length > 0 && (
                   <div className="station-lines">
-                    {station.lineIds.map(lineId => {
+                    {lineIds.map(lineId => {
                       const line = lines.get(lineId);
                       return line ? (
                         <span

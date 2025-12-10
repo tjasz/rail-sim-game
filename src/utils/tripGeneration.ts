@@ -5,7 +5,6 @@ import type {
   Neighborhood, 
   TripMatrix, 
   Citizen, 
-  Station,
   RailNetwork,
   Train,
   Line,
@@ -476,6 +475,7 @@ export function calculateCitizenRoutes(
       originNeighborhood.position,
       destNeighborhood.position,
       railNetwork,
+      config.neighborhoods,
       config.trainSpeed,
       config.timePerStationStop,
     );
@@ -494,52 +494,6 @@ export function calculateCitizenRoutes(
   return updatedCitizens;
 }
 
-/**
- * Update station waiting citizens based on citizen positions and states
- */
-export function updateStationWaitingCitizens(
-  stations: Map<string, Station> | undefined,
-  citizens: Map<string, Citizen>,
-  _neighborhoods: Neighborhood[]
-): Map<string, Station> {
-  // Handle undefined stations
-  if (!stations) {
-    return new Map();
-  }
-  
-  const updatedStations = new Map(stations);
-  
-  // Clear all waiting citizens
-  updatedStations.forEach(station => {
-    station.waitingCitizens = new Map();
-  });
-  
-  // Find stations by neighborhood position
-  const stationsByPosition = new Map<string, Station>();
-  updatedStations.forEach(station => {
-    const key = `${station.position.x},${station.position.y}`;
-    stationsByPosition.set(key, station);
-  });
-  
-  // Add citizens who are waiting at stations
-  citizens.forEach(citizen => {
-    if (citizen.state === 'waiting-at-station' && citizen.currentStationId) {
-      const station = updatedStations.get(citizen.currentStationId);
-      if (station) {
-        // For now, assume they're waiting for any line at the station
-        // In a full implementation, you'd determine which line they need
-        station.lineIds.forEach(lineId => {
-          if (!station.waitingCitizens.has(lineId)) {
-            station.waitingCitizens.set(lineId, []);
-          }
-          station.waitingCitizens.get(lineId)!.push(citizen.id);
-        });
-      }
-    }
-  });
-  
-  return updatedStations;
-}
 
 /**
  * Initialize train positions and arrival times for the start of a day
@@ -547,7 +501,7 @@ export function updateStationWaitingCitizens(
 export function initializeTrains(
   trains: Map<string, Train> | undefined,
   lines: Map<string, Line>,
-  stations: Map<string, Station>,
+  neighborhoods: Neighborhood[],
   currentTime: number,
   trainSpeed: number
 ): Map<string, Train> {
@@ -557,6 +511,8 @@ export function initializeTrains(
   if (!trains) {
     return updatedTrains;
   }
+  
+  const neighborhoodMap = new Map(neighborhoods.map(n => [n.id, n]));
   
   // Group trains by line
   const trainsByLine = new Map<string, Train[]>();
@@ -570,29 +526,29 @@ export function initializeTrains(
   // Initialize each line's trains
   trainsByLine.forEach((lineTrains, lineId) => {
     const line = lines.get(lineId);
-    if (!line || !line.isActive || line.stationIds.length < 2) {
-      // Keep trains as-is if line is inactive or has insufficient stations
+    if (!line || !line.isActive || line.neighborhoodIds.length < 2) {
+      // Keep trains as-is if line is inactive or has insufficient neighborhoods
       lineTrains.forEach(train => updatedTrains.set(train.id, train));
       return;
     }
     
     const numTrains = lineTrains.length;
-    const numStations = line.stationIds.length;
+    const numNeighborhoods = line.neighborhoodIds.length;
     
     lineTrains.forEach((train, idx) => {
       let updatedTrain = { ...train };
       
       if (numTrains === 1) {
         // Single train: start at beginning, going forward
-        updatedTrain.currentStationIndex = 0;
+        updatedTrain.currentNeighborhoodIndex = 0;
         updatedTrain.direction = 'forward';
       } else if (numTrains === 2) {
         // Two trains: one at start going forward, one at end going backward
         if (idx === 0) {
-          updatedTrain.currentStationIndex = 0;
+          updatedTrain.currentNeighborhoodIndex = 0;
           updatedTrain.direction = 'forward';
         } else {
-          updatedTrain.currentStationIndex = numStations - 1;
+          updatedTrain.currentNeighborhoodIndex = numNeighborhoods - 1;
           updatedTrain.direction = 'backward';
         }
       } else {
@@ -604,49 +560,49 @@ export function initializeTrains(
           // Forward trains: space them evenly along the line
           const forwardCount = Math.ceil(numTrains / 2);
           const forwardIdx = Math.floor(idx / 2);
-          const spacing = Math.max(1, Math.floor(numStations / forwardCount));
-          updatedTrain.currentStationIndex = Math.min(
+          const spacing = Math.max(1, Math.floor(numNeighborhoods / forwardCount));
+          updatedTrain.currentNeighborhoodIndex = Math.min(
             forwardIdx * spacing,
-            numStations - 1
+            numNeighborhoods - 1
           );
           updatedTrain.direction = 'forward';
         } else {
           // Backward trains: space them evenly from the end
           const backwardCount = Math.floor(numTrains / 2);
           const backwardIdx = Math.floor(idx / 2);
-          const spacing = Math.max(1, Math.floor(numStations / backwardCount));
-          updatedTrain.currentStationIndex = Math.max(
-            numStations - 1 - backwardIdx * spacing,
+          const spacing = Math.max(1, Math.floor(numNeighborhoods / backwardCount));
+          updatedTrain.currentNeighborhoodIndex = Math.max(
+            numNeighborhoods - 1 - backwardIdx * spacing,
             0
           );
           updatedTrain.direction = 'backward';
         }
       }
       
-      // Set train position to current station
-      const currentStationId = line.stationIds[updatedTrain.currentStationIndex];
-      const currentStation = stations.get(currentStationId);
-      if (currentStation) {
-        updatedTrain.position = { ...currentStation.position };
+      // Set train position to current neighborhood
+      const currentNeighborhoodId = line.neighborhoodIds[updatedTrain.currentNeighborhoodIndex];
+      const currentNeighborhood = neighborhoodMap.get(currentNeighborhoodId);
+      if (currentNeighborhood) {
+        updatedTrain.position = { ...currentNeighborhood.position };
       }
       
-      // Calculate next station arrival time
+      // Calculate next neighborhood arrival time
       const nextIndex = updatedTrain.direction === 'forward'
-        ? updatedTrain.currentStationIndex + 1
-        : updatedTrain.currentStationIndex - 1;
+        ? updatedTrain.currentNeighborhoodIndex + 1
+        : updatedTrain.currentNeighborhoodIndex - 1;
       
-      if (nextIndex >= 0 && nextIndex < numStations) {
-        const nextStationId = line.stationIds[nextIndex];
-        const nextStation = stations.get(nextStationId);
+      if (nextIndex >= 0 && nextIndex < numNeighborhoods) {
+        const nextNeighborhoodId = line.neighborhoodIds[nextIndex];
+        const nextNeighborhood = neighborhoodMap.get(nextNeighborhoodId);
         
-        if (currentStation && nextStation) {
-          const distance = calculateDistance(currentStation.position, nextStation.position);
+        if (currentNeighborhood && nextNeighborhood) {
+          const distance = calculateDistance(currentNeighborhood.position, nextNeighborhood.position);
           const travelTime = distance / trainSpeed;
-          // Add 1 minute for station stop time
-          updatedTrain.nextStationArrivalTime = currentTime + travelTime + 1;
+          // Add 1 minute for neighborhood stop time
+          updatedTrain.nextNeighborhoodArrivalTime = currentTime + travelTime + 1;
         }
       } else {
-        updatedTrain.nextStationArrivalTime = undefined;
+        updatedTrain.nextNeighborhoodArrivalTime = undefined;
       }
       
       updatedTrains.set(updatedTrain.id, updatedTrain);
@@ -684,25 +640,17 @@ export function initializeDay(
     totalTrips: 0,
   };
   
-  // Update stations with no waiting citizens initially
-  const updatedStations = updateStationWaitingCitizens(
-    railNetwork.stations,
-    citizens,
-    []
-  );
-  
   // Initialize train positions and arrival times
   const updatedTrains = initializeTrains(
     railNetwork.trains,
     railNetwork.lines,
-    updatedStations,
+    config.neighborhoods,
     startTime,
     config.trainSpeed
   );
   
   const updatedNetwork: RailNetwork = {
     ...railNetwork,
-    stations: updatedStations,
     trains: updatedTrains,
   };
   

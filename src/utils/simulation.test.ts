@@ -1,13 +1,19 @@
 import { describe, it, expect } from '@jest/globals';
-import type { Station, Track, Position } from '../models';
+import type { Track, Position, Neighborhood } from '../models';
 import { findTrackPath } from './simulation';
 
 describe('findTrackPath', () => {
   // Helper function to create a station
-  const createStation = (id: string, x: number, y: number): Station => ({
+  const createStation = (id: string, x: number, y: number): Neighborhood => ({
     id,
+    name: id,
     position: { x, y },
-    neighborhoodId: 'test-neighborhood',
+    icon: 'circle',
+    color: 'black',
+    residents: 10,
+    proportionOfJobs: 10,
+    availableShifts: [],
+    recreationalDemandCoefficient: 0.5,
     lineIds: [],
     waitingCitizens: new Map(),
   });

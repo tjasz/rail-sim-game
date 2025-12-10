@@ -1,14 +1,14 @@
 // Utility functions for managing rail network connections
 
-import type { Position, Station, Track } from '../models';
+import type { Position, Track, Neighborhood } from '../models';
 
 /**
  * Find the shortest path between two stations using BFS on the track network
  * Returns an array of track IDs that form the path, or null if no path exists
  */
 export function findShortestTrackPath(
-  fromStation: Station,
-  toStation: Station,
+  fromStation: Neighborhood,
+  toStation: Neighborhood,
   tracks: Map<string, Track>
 ): string[] | null {
   if (fromStation.id === toStation.id) {
@@ -73,8 +73,8 @@ export function findShortestTrackPath(
  * Check if two stations are connected by tracks
  */
 export function areStationsConnected(
-  station1: Station,
-  station2: Station,
+  station1: Neighborhood,
+  station2: Neighborhood,
   tracks: Map<string, Track>
 ): boolean {
   return findShortestTrackPath(station1, station2, tracks) !== null;
@@ -84,11 +84,11 @@ export function areStationsConnected(
  * Get all stations connected to a given station via tracks
  */
 export function getConnectedStations(
-  station: Station,
-  allStations: Map<string, Station>,
+  station: Neighborhood,
+  allStations: Map<string, Neighborhood>,
   tracks: Map<string, Track>
-): Station[] {
-  const connected: Station[] = [];
+): Neighborhood[] {
+  const connected: Neighborhood[] = [];
 
   for (const otherStation of allStations.values()) {
     if (otherStation.id !== station.id) {

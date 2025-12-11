@@ -20,6 +20,10 @@ export interface CityConfig {
   trainSpeed: number; // grid squares per minute
   timePerStationStop: number; // minutes
   
+  // Station capacity and crowding
+  stationCapacity: number; // max waiting passengers before station is crowded
+  stationCrowdingTimeLimit: number; // minutes a station can be crowded before game over
+  
   // Construction costs
   costPerStation: number;
   costPerTrackMileLand: number;

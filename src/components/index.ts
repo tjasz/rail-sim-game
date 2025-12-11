@@ -12,6 +12,7 @@ export { MapClickHandler } from './MapClickHandler';
 export { LinesList } from './LinesList';
 export { StationsList } from './StationsList';
 export { DayResultModal } from './DayResultModal';
+export { GameOverModal } from './GameOverModal';
 export { StationAssignmentModal } from './StationAssignmentModal';
 export { LeafletMap } from './LeafletMap';
 export { PlaybackControl } from './PlaybackControl';

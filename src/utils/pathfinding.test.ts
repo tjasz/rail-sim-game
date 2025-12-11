@@ -117,6 +117,8 @@ const testCityConfig: CityConfig = {
   costPerTrackMileWater: 1000,
   costPerTrain: 2000,
   trainCapacity: 50,
+  stationCapacity: 5,
+  stationCrowdingTimeLimit: 60,
 };
 
 const testRailNetwork: RailNetwork = {

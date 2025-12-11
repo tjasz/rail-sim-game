@@ -10,6 +10,7 @@ import {
   MapClickHandler,
   LinesList,
   DayResultModal,
+  GameOverModal,
   StationAssignmentModal,
   LeafletMap,
   PlaybackControl
@@ -81,6 +82,16 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     
     prevSimulatingRef.current = gameState.isSimulating;
   }, [gameState.isSimulating, gameState.simulationTime, gameState.city.currentDay]);
+
+  // Stop simulation when game is over
+  useEffect(() => {
+    if (gameState.status === 'game-over' && gameState.isSimulating) {
+      setGameState((prevState) => ({
+        ...prevState,
+        isSimulating: false,
+      }));
+    }
+  }, [gameState.status, gameState.isSimulating]);
 
   // Simulation loop
   useEffect(() => {
@@ -940,6 +951,13 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           <DayResultModal
             result={dayResult}
             onContinue={handleContinueDay}
+          />
+        )}
+
+        {/* Game Over Modal */}
+        {gameState.status === 'game-over' && (
+          <GameOverModal
+            gameState={gameState}
           />
         )}
 

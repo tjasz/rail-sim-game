@@ -4456,6 +4456,8 @@ export const SeattleConfig : CityState = {
       budgetBaseline: 1000,
       trainSpeed: 0.25,
       timePerStationStop: 1,
+      stationCapacity: 5,
+      stationCrowdingTimeLimit: 60,
       costPerStation: 500,
       costPerTrackMileLand: 500,
       costPerTrackMileWater: 1000,

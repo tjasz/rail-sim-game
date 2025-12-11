@@ -319,7 +319,11 @@ export function updateNeighborhoodWaitingLists(
   neighborhoods: Neighborhood[],
   citizens: Map<string, Citizen>
 ): Neighborhood[] {
-  const updatedNeighborhoods = neighborhoods.map(n => ({ ...n, waitingCitizens: new Map<string, string[]>() }));
+  const updatedNeighborhoods = neighborhoods.map(n => ({ 
+    ...n, 
+    waitingCitizens: new Map<string, string[]>(),
+    crowdingTime: n.crowdingTime || 0 
+  }));
   const neighborhoodMap = new Map(updatedNeighborhoods.map(n => [n.id, n]));
   
   // Add citizens who are currently waiting at neighborhoods
@@ -816,12 +820,45 @@ export function tickSimulation(
     updatedCitizens
   );
   
-  // Update the neighborhoods in the city config with the updated waiting lists
+  // Update crowding time for each neighborhood and check for game-over condition
+  const stationCapacity = gameState.city.config.stationCapacity;
+  const crowdingTimeLimit = gameState.city.config.stationCrowdingTimeLimit;
+  let isGameOver = false;
+  
+  const neighborhoodsWithCrowding = updatedNeighborhoods.map(neighborhood => {
+    // Count total waiting passengers at this station
+    const totalWaiting = Array.from(neighborhood.waitingCitizens?.values() || [])
+      .reduce((sum, citizens) => sum + citizens.length, 0);
+    
+    const isCrowded = totalWaiting > stationCapacity;
+    const currentCrowdingTime = neighborhood.crowdingTime || 0;
+    
+    let newCrowdingTime: number;
+    if (isCrowded) {
+      // Station is crowded - increment crowding time
+      newCrowdingTime = currentCrowdingTime + deltaMinutes;
+      
+      // Check if crowding time exceeds limit
+      if (newCrowdingTime >= crowdingTimeLimit) {
+        isGameOver = true;
+      }
+    } else {
+      // Station is not crowded - reset crowding time to 0
+      newCrowdingTime = 0;
+    }
+    
+    return {
+      ...neighborhood,
+      crowdingTime: newCrowdingTime,
+    };
+  });
+  
+  // Update the neighborhoods in the city config with the updated waiting lists and crowding times
   const updatedConfig = {
     ...gameState.city.config,
     neighborhoods: gameState.city.config.neighborhoods.map((n, i) => {
-      if (i < updatedNeighborhoods.length) {
-        return updatedNeighborhoods[i];
+      if (i < neighborhoodsWithCrowding.length) {
+        return neighborhoodsWithCrowding[i];
       }
       return n;
     }),
@@ -829,6 +866,7 @@ export function tickSimulation(
 
   return {
     ...gameState,
+    status: isGameOver ? 'game-over' : gameState.status,
     simulationTime: newTime,
     activeNeighborhoodCount: updatedActiveNeighborhoodCount,
     totalTripsStarted: tripsGenerated,

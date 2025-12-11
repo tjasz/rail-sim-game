@@ -108,7 +108,7 @@ export function StationMarkers({
 
         // Create custom HTML for the station marker
         const stationHtml = `
-          <div>
+          <div ${crowdingTime > 0 ? 'class="crowded"' : ''}>
             <svg viewBox="${-maxRadius} ${-maxRadius} ${svgSize + RIDER_SIZE[0] * RIDER_COLS} ${svgSize}" style="overflow: visible;">
               ${circlesHtml}
               ${waitingPassengers.map((citizenId: string, idx: number) => {
@@ -124,7 +124,7 @@ export function StationMarkers({
 
         const icon = new DivIcon({
           html: stationHtml,
-          className: `station-marker ${crowdingTime > 0 ? 'crowded' : ''}`,
+          className: 'station-marker',
           iconSize: [svgSize + RIDER_SIZE[0] * RIDER_COLS, svgSize],
           iconAnchor: [maxRadius, maxRadius],
         });

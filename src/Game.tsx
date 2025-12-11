@@ -21,7 +21,6 @@ import type { GameState, DayResult, Neighborhood } from './models';
 import { 
   tickSimulation, 
   calculateDayResult, 
-  formatTime, 
   MINUTES_PER_DAY,
   calculateDistance,
   calculateCitizenRoutes
@@ -730,7 +729,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     });
   }, []);
 
-  const timeOfDay = formatTime(gameState.simulationTime);
   const currentDay = gameState.city.currentDay;
   const dayStartTime = currentDay * MINUTES_PER_DAY;
   const timeIntoCurrentDay = gameState.simulationTime - dayStartTime;
@@ -741,18 +739,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       <div className="game-container">
         <div className="game-header">
           <h1>Rails Game</h1>
-          <div className="day-time-display">
-            <div className="day-info">
-              <span className="day-label">Day {gameState.city.currentDay}</span>
-              <span className="time-label">{timeOfDay}</span>
-            </div>
-            <div className="time-progress-bar">
-              <div 
-                className="time-progress-fill" 
-                style={{ width: `${dayProgress}%` }}
-              />
-            </div>
-          </div>
         </div>
       
       <div className="game-content">

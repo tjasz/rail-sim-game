@@ -1,7 +1,7 @@
 /**
  * Converts polar coordinates to cartesian coordinates
  */
-function polarToCartesian(radius: number, angleInDegrees: number): { x: number; y: number } {
+export function polarToCartesian(radius: number, angleInDegrees: number): { x: number; y: number } {
   const angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
   return {
     x: Math.round(100 * radius * Math.cos(angleInRadians)) / 100,

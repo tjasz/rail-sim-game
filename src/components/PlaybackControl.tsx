@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 import './PlaybackControl.css';
+import { polarToCartesian } from '../utils/svgShapes';
 
 interface PlaybackControlProps {
   dayProgress: number;
@@ -57,8 +58,11 @@ export function PlaybackControl({
     container.innerHTML = '';
 
     // Add day progress display
+    const clockPoint = polarToCartesian(10, dayProgress * 360);
     const dayProgressDiv = L.DomUtil.create('div', 'day-progress', container);
-    dayProgressDiv.innerHTML = `${Math.round(dayProgress * 100).toFixed(0)}%`;
+    dayProgressDiv.innerHTML = `<svg viewBox="-10 -10 20 20" width="28" height="28">
+      <path d="M0 0L0 -10 A10 10 0 ${dayProgress > 0.5 ? 1 : 0} 1 ${clockPoint.x} ${clockPoint.y}Z" fill="black" />
+    </svg>`;
 
     // Create pause/play button
     const pausePlayBtn = L.DomUtil.create('button', 'playback-btn pause-play-btn', container);

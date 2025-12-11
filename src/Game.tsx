@@ -11,11 +11,9 @@ import {
   MapClickHandler,
   LinesList,
   TrainsList,
-  PassengersList,
   StationsList,
   DayResultModal,
   StationAssignmentModal,
-  TripMatrixDisplay,
   LeafletMap
 } from './components';
 import { SelectionProvider } from './contexts/SelectionContext';
@@ -815,27 +813,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             >
               Stations
             </button>
-            <button
-              className={`tab ${activeTab === 'passengers' ? 'active' : ''}`}
-              onClick={() => setActiveTab('passengers')}
-            >
-              Passengers
-            </button>
-            <button
-              className={`tab ${activeTab === 'trips' ? 'active' : ''}`}
-              onClick={() => setActiveTab('trips')}
-            >
-              Trips
-            </button>
           </div>
           
           <div className="panel-content">
-            {activeTab === 'trips' && (
-              <TripMatrixDisplay
-                tripMatrix={gameState.currentTripMatrix}
-                neighborhoods={gameState.city.config.neighborhoods}
-              />
-            )}
             {activeTab === 'lines' && (
               <LinesList
                 lines={gameState.railNetwork.lines}
@@ -857,12 +837,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               <StationsList
                 neighborhoods={gameState.city.config.neighborhoods}
                 lines={gameState.railNetwork.lines}
-              />
-            )}
-            {activeTab === 'passengers' && (
-              <PassengersList
-                citizens={gameState.citizens}
-                neighborhoods={gameState.city.config.neighborhoods}
               />
             )}
           </div>

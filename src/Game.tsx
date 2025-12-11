@@ -16,7 +16,6 @@ import {
   DayResultModal,
   StationAssignmentModal,
   TripMatrixDisplay,
-  ObjectInspector,
   LeafletMap
 } from './components';
 import { SelectionProvider } from './contexts/SelectionContext';
@@ -796,8 +795,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               </div>
             )}
           </div>
-          
-          <ObjectInspector />
           
           <div className="panel-tabs">
             <button

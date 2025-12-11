@@ -10,7 +10,6 @@ import {
   StationMarkers,
   MapClickHandler,
   LinesList,
-  TrainsList,
   StationsList,
   DayResultModal,
   StationAssignmentModal,
@@ -42,7 +41,7 @@ interface BuildTrackState {
 
 export function Game({ gameState: initialGameState, onGameStateChange }: GameProps) {
   const [gameState, setGameState] = useState<GameState>(initialGameState);
-  const [activeTab, setActiveTab] = useState<'lines' | 'trains' | 'stations' | 'passengers' | 'trips'>('trips');
+  const [activeTab, setActiveTab] = useState<'lines' | 'stations' | 'passengers' | 'trips'>('trips');
   const [dayResult, setDayResult] = useState<DayResult | null>(null);
   const [buildTrackState, setBuildTrackState] = useState<BuildTrackState>({
     isBuilding: false,
@@ -328,6 +327,66 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       };
       
       // Recalculate citizen routes with updated network (line now has trains!)
+      const updatedCitizens = calculateCitizenRoutes(
+        prevState.citizens,
+        prevState.city.config.neighborhoods,
+        prevState.city.config,
+        updatedRailNetwork
+      );
+      
+      return {
+        ...prevState,
+        railNetwork: updatedRailNetwork,
+        citizens: updatedCitizens,
+      };
+    });
+  }, []);
+
+  const handleRemoveTrainFromLine = useCallback((trainId: string) => {
+    setGameState((prevState) => {
+      const train = prevState.railNetwork.trains.get(trainId);
+      
+      if (!train || train.lineId === 'unassigned') {
+        return prevState;
+      }
+      
+      const line = prevState.railNetwork.lines.get(train.lineId);
+      
+      // Remove train from line's trainIds
+      const updatedLines = new Map(prevState.railNetwork.lines);
+      if (line) {
+        const updatedLine = {
+          ...line,
+          trainIds: line.trainIds.filter(id => id !== trainId),
+        };
+        // Deactivate line if no trains remain
+        if (updatedLine.trainIds.length === 0) {
+          updatedLine.isActive = false;
+        }
+        updatedLines.set(line.id, updatedLine);
+      }
+      
+      // Update train to unassigned
+      const updatedTrains = new Map(prevState.railNetwork.trains);
+      updatedTrains.set(trainId, {
+        ...train,
+        lineId: 'unassigned',
+        passengerIds: [], // Clear passengers when unassigning
+        currentNeighborhoodIndex: 0,
+        direction: 'forward',
+        position: { x: 0, y: 0 },
+        nextNeighborhoodArrivalTime: undefined,
+        currentPath: undefined,
+        currentPathIndex: undefined,
+      });
+      
+      const updatedRailNetwork = {
+        ...prevState.railNetwork,
+        trains: updatedTrains,
+        lines: updatedLines,
+      };
+      
+      // Recalculate citizen routes with updated network
       const updatedCitizens = calculateCitizenRoutes(
         prevState.citizens,
         prevState.city.config.neighborhoods,
@@ -802,12 +861,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               Lines
             </button>
             <button
-              className={`tab ${activeTab === 'trains' ? 'active' : ''}`}
-              onClick={() => setActiveTab('trains')}
-            >
-              Trains
-            </button>
-            <button
               className={`tab ${activeTab === 'stations' ? 'active' : ''}`}
               onClick={() => setActiveTab('stations')}
             >
@@ -819,18 +872,13 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             {activeTab === 'lines' && (
               <LinesList
                 lines={gameState.railNetwork.lines}
-                neighborhoods={gameState.city.config.neighborhoods}
-              />
-            )}
-            {activeTab === 'trains' && (
-              <TrainsList
                 trains={gameState.railNetwork.trains}
-                lines={gameState.railNetwork.lines}
                 neighborhoods={gameState.city.config.neighborhoods}
                 budget={gameState.city.budget}
                 trainCost={gameState.city.config.costPerTrain}
                 onPurchaseTrain={handlePurchaseTrain}
                 onAssignTrainToLine={handleAssignTrainToLine}
+                onRemoveTrainFromLine={handleRemoveTrainFromLine}
               />
             )}
             {activeTab === 'stations' && (

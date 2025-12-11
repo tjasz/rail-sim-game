@@ -3,7 +3,7 @@
 import type { GameState, Citizen, Train, Line, Neighborhood, Track, Position } from '../models';
 import { generateSingleTrip } from './tripGeneration';
 
-export const MINUTES_PER_DAY = 24 * 60; // 1440 minutes in a day
+export const MINUTES_PER_DAY = 300; // 300 minutes in a day
 export const SIMULATION_TICK_MS = 50; // Update every 50ms
 
 /**

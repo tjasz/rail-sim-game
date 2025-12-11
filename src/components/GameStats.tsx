@@ -43,11 +43,6 @@ export function GameStats({ stats, budget, currentDay }: GameStatsProps) {
         </div>
         
         <div className="stat-item">
-          <span className="stat-label">Total Days</span>
-          <span className="stat-value">{stats.totalDaysPlayed}</span>
-        </div>
-        
-        <div className="stat-item">
           <span className="stat-label">Total Transported</span>
           <span className="stat-value">{stats.totalCitizensTransported.toLocaleString()}</span>
         </div>

@@ -47,7 +47,6 @@ const baseGameState: GameState = {
   activeNeighborhoodCount: SeattleConfig.config.activeNeighborhoodsAtTime(0),
   totalTripsStarted: 0,
   stats: {
-    totalDaysPlayed: 0,
     totalCitizensTransported: 0,
     totalMoneySpent: 0,
     totalMoneyEarned: 0,

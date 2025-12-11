@@ -623,7 +623,6 @@ export function rolloverToNextDay(gameState: GameState): GameState {
   // Update statistics
   const updatedStats = {
     ...gameState.stats,
-    totalDaysPlayed: gameState.stats.totalDaysPlayed + 1,
     totalMoneyEarned: gameState.stats.totalMoneyEarned + budgetEarned,
   };
 

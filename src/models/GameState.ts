@@ -28,7 +28,6 @@ export interface GameState {
 }
 
 export interface GameStats {
-  totalDaysPlayed: number;
   totalCitizensTransported: number;
   
   // Financial

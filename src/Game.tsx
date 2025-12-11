@@ -122,7 +122,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       
       const updatedStats = {
         ...prevState.stats,
-        totalDaysPlayed: prevState.stats.totalDaysPlayed + 1,
         totalMoneyEarned: prevState.stats.totalMoneyEarned + budgetEarned,
       };
       

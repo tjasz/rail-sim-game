@@ -766,7 +766,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               <button 
                 className="btn-primary" 
                 onClick={handleStartBuildTrack}
-                disabled={gameState.isSimulating}
               >
                 🔧 Start Building Track
               </button>
@@ -889,7 +888,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               neighborhoods={[...neighborhoodMap.values()]}
               lines={gameState.railNetwork.lines}
               citizens={gameState.citizens}
-              onStationClick={(!buildTrackState.isBuilding && !gameState.isSimulating) ? setSelectedStationForAssignment : undefined}
+              onStationClick={!buildTrackState.isBuilding ? setSelectedStationForAssignment : undefined}
             />
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}

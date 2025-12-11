@@ -21,7 +21,8 @@ import {
   calculateDayResult, 
   MINUTES_PER_DAY,
   calculateDistance,
-  calculateCitizenRoutes
+  calculateCitizenRoutes,
+  generateLineColor
 } from './utils';
 import './Game.css';
 
@@ -672,6 +673,38 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     });
   }, []);
 
+  const handleDrawNewLine = useCallback(() => {
+    setGameState((prevState) => {
+      const newLineId = `line-${Date.now()}`;
+
+      const existingColors = Array.from(prevState.railNetwork.lines.values()).map(line => line.color);
+      const newColor = generateLineColor(existingColors);
+
+      const name = `${prevState.railNetwork.lines.size + 1}`;
+      
+      const newLine = {
+        id: newLineId,
+        name: name,
+        color: newColor,
+        neighborhoodIds: [],
+        trainIds: [],
+        isActive: false,
+      };
+      const updatedLines = new Map(prevState.railNetwork.lines);
+      updatedLines.set(newLineId, newLine);
+
+      const updatedRailNetwork = {
+        ...prevState.railNetwork,
+        lines: updatedLines,
+      };
+      
+      return {
+        ...prevState,
+        railNetwork: updatedRailNetwork,
+      };
+    });
+  }, []);
+
   const handleCreateNewLine = useCallback((neighborhoodId: string, lineName: string, lineColor: string) => {
     setGameState((prevState) => {
       const neighborhood = prevState.city.config.neighborhoods.find(n => n.id === neighborhoodId);
@@ -848,6 +881,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               onRemoveTrainFromLine={handleRemoveTrainFromLine}
               onStartDrawLine={handleStartDrawLine}
               onStopDrawLine={handleStopDrawLine}
+              onDrawNewLine={handleDrawNewLine}
             />
           </div>
         </div>

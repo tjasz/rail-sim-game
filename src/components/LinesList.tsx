@@ -12,6 +12,7 @@ interface LinesListProps {
   onRemoveTrainFromLine: (trainId: string) => void;
   onStartDrawLine: (lineId: string) => void;
   onStopDrawLine: () => void;
+  onDrawNewLine: () => void;
 }
 
 export function LinesList({ 
@@ -25,7 +26,8 @@ export function LinesList({
   onAssignTrainToLine,
   onRemoveTrainFromLine,
   onStartDrawLine,
-  onStopDrawLine
+  onStopDrawLine,
+  onDrawNewLine,
 }: LinesListProps) {
   const canAffordTrain = budget >= trainCost;
   
@@ -161,6 +163,13 @@ export function LinesList({
             );
           })
         )}
+        <button 
+          className="btn-purchase-train"
+          onClick={onDrawNewLine}
+          title={"Add a new line to the metro network"}
+        >
+          + Add Line
+        </button>
       </div>
     </div>
   );

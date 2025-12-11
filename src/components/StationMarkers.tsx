@@ -124,7 +124,7 @@ export function StationMarkers({
 
         const icon = new DivIcon({
           html: stationHtml,
-          className: 'station-marker',
+          className: `station-marker ${crowdingTime > 0 ? 'crowded' : ''}`,
           iconSize: [svgSize + RIDER_SIZE[0] * RIDER_COLS, svgSize],
           iconAnchor: [maxRadius, maxRadius],
         });

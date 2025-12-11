@@ -6,9 +6,12 @@ interface LinesListProps {
   neighborhoods: Neighborhood[];
   budget: number;
   trainCost: number;
+  drawingLineId: string | null;
   onPurchaseTrain: () => void;
   onAssignTrainToLine: (trainId: string, lineId: string) => void;
   onRemoveTrainFromLine: (trainId: string) => void;
+  onStartDrawLine: (lineId: string) => void;
+  onStopDrawLine: () => void;
 }
 
 export function LinesList({ 
@@ -17,9 +20,12 @@ export function LinesList({
   neighborhoods: _neighborhoods,
   budget,
   trainCost,
+  drawingLineId,
   onPurchaseTrain,
   onAssignTrainToLine,
-  onRemoveTrainFromLine
+  onRemoveTrainFromLine,
+  onStartDrawLine,
+  onStopDrawLine
 }: LinesListProps) {
   const canAffordTrain = budget >= trainCost;
   
@@ -100,6 +106,7 @@ export function LinesList({
             const lineTrains = getTrainsForLine(line.id);
             const hasUnassignedTrains = unassignedTrains.length > 0;
             const hasTrainsOnLine = lineTrains.length > 0;
+            const isDrawingThisLine = drawingLineId === line.id;
             
             return (
               <div key={line.id} className="line-item">
@@ -112,13 +119,14 @@ export function LinesList({
                   <div className="line-details">
                     {line.neighborhoodIds.length} stops | {lineTrains.length} trains
                     {line.isActive ? ' ✓' : ' (inactive)'}
+                    {isDrawingThisLine && ' 🎨 Drawing'}
                   </div>
                 </div>
                 <div className="line-actions">
                   <button 
                     className="btn-train-action"
                     onClick={() => handleRemoveTrainFromLine(line.id)}
-                    disabled={!hasTrainsOnLine}
+                    disabled={!hasTrainsOnLine || isDrawingThisLine}
                     title={hasTrainsOnLine ? "Remove train from line" : "No trains on this line"}
                   >
                     -
@@ -126,11 +134,28 @@ export function LinesList({
                   <button 
                     className="btn-train-action"
                     onClick={() => handleAddTrainToLine(line.id)}
-                    disabled={!hasUnassignedTrains}
+                    disabled={!hasUnassignedTrains || isDrawingThisLine}
                     title={hasUnassignedTrains ? "Assign train from unassigned pool" : "No unassigned trains available"}
                   >
                     +
                   </button>
+                  {!isDrawingThisLine ? (
+                    <button 
+                      className="btn-train-action"
+                      onClick={() => onStartDrawLine(line.id)}
+                      title="Draw this line by clicking stations on the map"
+                    >
+                      Draw
+                    </button>
+                  ) : (
+                    <button 
+                      className="btn-train-action"
+                      onClick={onStopDrawLine}
+                      title="Stop drawing this line"
+                    >
+                      Done
+                    </button>
+                  )}
                 </div>
               </div>
             );

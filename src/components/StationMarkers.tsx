@@ -13,14 +13,20 @@ interface StationMarkersProps {
   neighborhoods: Neighborhood[];
   lines: Map<string, Line>;
   citizens: Map<string, Citizen>;
+  drawingLineId?: string | null;
   onStationClick?: (neighborhoodId: string) => void;
+  onStationClickForDraw?: (neighborhoodId: string, lineId: string, trackIds: string[]) => void;
+  tracks?: Map<string, import('../models').Track>;
 }
 
 export function StationMarkers({ 
   neighborhoods,
   lines,
   citizens,
-  onStationClick 
+  drawingLineId,
+  onStationClick,
+  onStationClickForDraw,
+  tracks
 }: StationMarkersProps) {
   const { setSelectedObject } = useSelection();
 
@@ -107,8 +113,52 @@ export function StationMarkers({
                 // Stop propagation to prevent cell click
                 e.originalEvent.stopPropagation();
                 
+                // If in draw mode, handle station assignment to line
+                if (drawingLineId && onStationClickForDraw && tracks) {
+                  // Find tracks that connect this neighborhood to any neighborhood already on the line
+                  const line = lines.get(drawingLineId);
+                  if (!line) return;
+                  
+                  // Check if neighborhood is already on this line
+                  if (line.neighborhoodIds.includes(neighborhood.id)) {
+                    console.warn('Station is already on this line');
+                    return;
+                  }
+                  
+                  // Find connecting tracks
+                  const connectingTracks: string[] = [];
+                  tracks.forEach((track, trackId) => {
+                    // Check if track connects to this neighborhood
+                    const connectsToNeighborhood = 
+                      (track.from.x === neighborhood.position.x && track.from.y === neighborhood.position.y) ||
+                      (track.to.x === neighborhood.position.x && track.to.y === neighborhood.position.y);
+                    
+                    if (!connectsToNeighborhood) return;
+                    
+                    // Check if the other end connects to a neighborhood on the line
+                    const otherEnd = 
+                      track.from.x === neighborhood.position.x && track.from.y === neighborhood.position.y
+                        ? track.to
+                        : track.from;
+                    
+                    const connectedNeighborhood = neighborhoods.find(
+                      n => n.position.x === otherEnd.x && n.position.y === otherEnd.y
+                    );
+                    
+                    if (connectedNeighborhood && line.neighborhoodIds.includes(connectedNeighborhood.id)) {
+                      connectingTracks.push(trackId);
+                    }
+                  });
+                  
+                  if (connectingTracks.length === 0) {
+                    console.warn('No tracks connect this station to the line');
+                    return;
+                  }
+                  
+                  onStationClickForDraw(neighborhood.id, drawingLineId, connectingTracks);
+                }
                 // If there's a station click handler, use it (for assignment modal)
-                if (onStationClick) {
+                else if (onStationClick) {
                   onStationClick(neighborhood.id);
                 } else {
                   // Otherwise use the selection context (for inspector)

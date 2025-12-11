@@ -47,6 +47,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     totalCost: 0,
   });
   const [selectedStationForAssignment, setSelectedStationForAssignment] = useState<string | null>(null);
+  const [drawingLineId, setDrawingLineId] = useState<string | null>(null);
   const prevDayRef = useRef<number>(initialGameState.city.currentDay);
   const prevSimulatingRef = useRef<boolean>(initialGameState.isSimulating);
 
@@ -726,6 +727,14 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     });
   }, []);
 
+  const handleStartDrawLine = useCallback((lineId: string) => {
+    setDrawingLineId(lineId);
+  }, []);
+
+  const handleStopDrawLine = useCallback(() => {
+    setDrawingLineId(null);
+  }, []);
+
   const currentDay = gameState.city.currentDay;
   const dayStartTime = currentDay * MINUTES_PER_DAY;
   const timeIntoCurrentDay = gameState.simulationTime - dayStartTime;
@@ -789,9 +798,12 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               neighborhoods={gameState.city.config.neighborhoods}
               budget={gameState.city.budget}
               trainCost={gameState.city.config.costPerTrain}
+              drawingLineId={drawingLineId}
               onPurchaseTrain={handlePurchaseTrain}
               onAssignTrainToLine={handleAssignTrainToLine}
               onRemoveTrainFromLine={handleRemoveTrainFromLine}
+              onStartDrawLine={handleStartDrawLine}
+              onStopDrawLine={handleStopDrawLine}
             />
           </div>
         </div>
@@ -821,7 +833,10 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               neighborhoods={[...neighborhoodMap.values()]}
               lines={gameState.railNetwork.lines}
               citizens={gameState.citizens}
-              onStationClick={!buildTrackState.isBuilding ? setSelectedStationForAssignment : undefined}
+              tracks={gameState.railNetwork.tracks}
+              drawingLineId={drawingLineId}
+              onStationClick={!buildTrackState.isBuilding && !drawingLineId ? setSelectedStationForAssignment : undefined}
+              onStationClickForDraw={drawingLineId ? handleAssignNeighborhoodToLine : undefined}
             />
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}

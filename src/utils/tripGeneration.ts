@@ -348,7 +348,6 @@ export function generateSingleTrip(
     destinationNeighborhoodId: destinationNeighborhood.id,
     state: 'waiting-at-origin',
     currentPosition: { ...originNeighborhood.position },
-    isHappy: true,
     tripStartTime: currentTime,
   };
   
@@ -438,7 +437,6 @@ export function createCitizensWithSchedules(
         destinationNeighborhoodId: firstTrip.destinationNeighborhoodId,
         state: 'waiting-at-origin',
         currentPosition: { ...startingNeighborhood.position },
-        isHappy: true,
         tripStartTime: firstTrip.departureTime * 60, // Convert hours to minutes
       };
       

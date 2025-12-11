@@ -110,7 +110,6 @@ const testCityConfig: CityConfig = {
   activeNeighborhoodsAtTime : (elapsedMinutes: number) => Math.min(3 + Math.floor(elapsedMinutes / 300), 400),
   initialBudget: 10000,
   budgetBaseline: 1000,
-  budgetBonusPerHappyCitizen: 10,
   trainSpeed: 0.15,
   timePerStationStop: 1,
   costPerStation: 1000,

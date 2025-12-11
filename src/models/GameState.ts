@@ -30,11 +30,6 @@ export interface GameState {
 export interface GameStats {
   totalDaysPlayed: number;
   totalCitizensTransported: number;
-  totalHappyCitizens: number;
-  totalUnhappyCitizens: number;
-  currentDayHappyCitizens: number;
-  currentDayUnhappyCitizens: number;
-  happinessRate: number; // percentage (0-100)
   
   // Financial
   totalMoneySpent: number;
@@ -48,10 +43,5 @@ export interface GameStats {
 
 export interface DayResult {
   day: number;
-  totalCitizens: number;
-  happyCitizens: number;
-  unhappyCitizens: number;
-  happinessRate: number;
   budgetEarned: number;
-  passed: boolean; // true if > 50% happy
 }

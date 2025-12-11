@@ -3,23 +3,14 @@ import type { DayResult } from '../models';
 interface DayResultModalProps {
   result: DayResult;
   onContinue: () => void;
-  onGameOver?: () => void;
 }
 
-export function DayResultModal({ result, onContinue, onGameOver }: DayResultModalProps) {
-  const handleClick = () => {
-    if (result.passed) {
-      onContinue();
-    } else {
-      onGameOver?.();
-    }
-  };
-
+export function DayResultModal({ result, onContinue }: DayResultModalProps) {
   return (
     <div className="modal-overlay">
       <div className="modal-content day-result-modal">
-        <h2 className={result.passed ? 'success' : 'failure'}>
-          {result.passed ? '✓ Day Complete!' : '✗ Day Failed'}
+        <h2 className="success">
+          {'✓ Day Complete!'}
         </h2>
         
         <div className="result-summary">
@@ -27,29 +18,7 @@ export function DayResultModal({ result, onContinue, onGameOver }: DayResultModa
             <span className="stat-label">Day {result.day}</span>
           </div>
           
-          <div className="result-stat large">
-            <span className="stat-label">Happiness Rate</span>
-            <span className={`stat-value ${result.happinessRate >= 50 ? 'success' : 'failure'}`}>
-              {result.happinessRate.toFixed(1)}%
-            </span>
-          </div>
-          
-          <div className="result-grid">
-            <div className="result-stat">
-              <span className="stat-label">Total Citizens</span>
-              <span className="stat-value">{result.totalCitizens}</span>
-            </div>
-            
-            <div className="result-stat">
-              <span className="stat-label">Happy</span>
-              <span className="stat-value success">{result.happyCitizens}</span>
-            </div>
-            
-            <div className="result-stat">
-              <span className="stat-label">Unhappy</span>
-              <span className="stat-value failure">{result.unhappyCitizens}</span>
-            </div>
-            
+          <div className="result-grid">            
             <div className="result-stat">
               <span className="stat-label">Budget Earned</span>
               <span className="stat-value success">${result.budgetEarned.toLocaleString()}</span>
@@ -57,22 +26,8 @@ export function DayResultModal({ result, onContinue, onGameOver }: DayResultModa
           </div>
         </div>
         
-        <div className="result-message">
-          {result.passed
-            ? result.happinessRate >= 50
-              ? (
-                <p>Great job! More than half of your citizens were happy with the metro service.</p>
-              )
-              : (
-                <p>Citizens are unhappy with the service. Try using your budget to expand the network!</p>
-              )
-            : (
-              <p>Too many citizens were unhappy with the metro service. You have no budget to make further improvements.</p>
-            )}
-        </div>
-        
-        <button className="btn-large btn-primary" onClick={handleClick}>
-          {result.passed ? 'Continue to Next Day' : 'Game Over'}
+        <button className="btn-large btn-primary" onClick={onContinue}>
+          {'Continue to Next Day'}
         </button>
       </div>
     </div>

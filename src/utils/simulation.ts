@@ -605,34 +605,11 @@ import type { DayResult } from '../models';
  * Calculate the day result from current game state
  */
 export function calculateDayResult(gameState: GameState): DayResult {
-  const totalCitizens = gameState.stats.currentDayHappyCitizens + gameState.stats.currentDayUnhappyCitizens;
-  const happyCitizens = gameState.stats.currentDayHappyCitizens;
-  const unhappyCitizens = gameState.stats.currentDayUnhappyCitizens;
-  const happinessRate = totalCitizens > 0 ? (happyCitizens / totalCitizens) * 100 : 0;
-  const votersApprove = happinessRate >= 50;
-  
-  const budgetEarned = votersApprove
-    ? gameState.city.config.budgetBaseline + 
-      (happyCitizens * gameState.city.config.budgetBonusPerHappyCitizen)
-    : 0;
-
-  // If you have no budget to make improvements and citizens are unhappy, you fail the day
-  const totalBudget = gameState.city.budget + budgetEarned;
-  const passed = votersApprove
-    || totalBudget >= gameState.city.config.costPerStation
-    || totalBudget >= gameState.city.config.costPerTrackMileLand
-    || totalBudget >= gameState.city.config.costPerTrackMileWater
-    || totalBudget >= gameState.city.config.costPerTrain
-    ;
+  const budgetEarned = gameState.city.config.budgetBaseline;
 
   return {
     day: gameState.city.currentDay,
-    totalCitizens,
-    happyCitizens,
-    unhappyCitizens,
-    happinessRate,
     budgetEarned,
-    passed,
   };
 }
 
@@ -640,27 +617,13 @@ export function calculateDayResult(gameState: GameState): DayResult {
  * Roll over to the next day and calculate end-of-day statistics
  */
 export function rolloverToNextDay(gameState: GameState): GameState {
-  // Calculate day statistics from current day
-  const totalCitizens = gameState.stats.currentDayHappyCitizens + gameState.stats.currentDayUnhappyCitizens;
-  const happyCitizens = gameState.stats.currentDayHappyCitizens;
-  const unhappyCitizens = gameState.stats.currentDayUnhappyCitizens;
-  const happinessRate = totalCitizens > 0 ? (happyCitizens / totalCitizens) * 100 : 0;
-  const passed = happinessRate >= 50;
-
   // Calculate budget earned
-  const budgetEarned = gameState.city.config.budgetBaseline + 
-    (happyCitizens * gameState.city.config.budgetBonusPerHappyCitizen);
+  const budgetEarned = gameState.city.config.budgetBaseline;
 
   // Update statistics
   const updatedStats = {
     ...gameState.stats,
     totalDaysPlayed: gameState.stats.totalDaysPlayed + 1,
-    totalCitizensTransported: gameState.stats.totalCitizensTransported + totalCitizens,
-    totalHappyCitizens: gameState.stats.totalHappyCitizens + happyCitizens,
-    totalUnhappyCitizens: gameState.stats.totalUnhappyCitizens + unhappyCitizens,
-    currentDayHappyCitizens: 0, // Reset for new day
-    currentDayUnhappyCitizens: 0, // Reset for new day
-    happinessRate: 0, // Reset for new day
     totalMoneyEarned: gameState.stats.totalMoneyEarned + budgetEarned,
   };
 
@@ -677,7 +640,6 @@ export function rolloverToNextDay(gameState: GameState): GameState {
     simulationTime: gameState.simulationTime, // Continue tracking total time
     isSimulating: false, // Stop simulation
     citizens: new Map(), // Clear citizens for new day
-    status: passed ? gameState.status : 'game-over',
   };
 }
 
@@ -854,12 +816,6 @@ export function tickSimulation(
     activeNeighborhoods,
     updatedCitizens
   );
-
-  // Update current day statistics
-  const totalCitizens = updatedCitizens.size;
-  const happyCitizens = Array.from(updatedCitizens.values()).filter(c => c.isHappy).length;
-  const unhappyCitizens = totalCitizens - happyCitizens;
-  const currentHappinessRate = totalCitizens > 0 ? (happyCitizens / totalCitizens) : 0;
   
   // Update the neighborhoods in the city config with the updated waiting lists
   const updatedConfig = {
@@ -886,11 +842,5 @@ export function tickSimulation(
       trains: updatedTrains,
     },
     citizens: updatedCitizens,
-    stats: {
-      ...gameState.stats,
-      currentDayHappyCitizens: happyCitizens,
-      currentDayUnhappyCitizens: unhappyCitizens,
-      happinessRate: currentHappinessRate,
-    },
   };
 }

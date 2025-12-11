@@ -43,20 +43,6 @@ export function GameStats({ stats, budget, currentDay }: GameStatsProps) {
         </div>
         
         <div className="stat-item">
-          <span className="stat-label">Happiness Rate</span>
-          <span className={`stat-value ${stats.happinessRate >= 50 ? 'happy' : 'unhappy'}`}>
-            {stats.happinessRate.toFixed(1)}%
-          </span>
-        </div>
-        
-        <div className="stat-item">
-          <span className="stat-label">Today: Happy / Unhappy</span>
-          <span className="stat-value">
-            {stats.currentDayHappyCitizens} / {stats.currentDayUnhappyCitizens}
-          </span>
-        </div>
-        
-        <div className="stat-item">
           <span className="stat-label">Total Days</span>
           <span className="stat-value">{stats.totalDaysPlayed}</span>
         </div>

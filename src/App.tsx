@@ -49,11 +49,6 @@ const baseGameState: GameState = {
   stats: {
     totalDaysPlayed: 0,
     totalCitizensTransported: 0,
-    totalHappyCitizens: 0,
-    totalUnhappyCitizens: 0,
-    currentDayHappyCitizens: 0,
-    currentDayUnhappyCitizens: 0,
-    happinessRate: 0,
     totalMoneySpent: 0,
     totalMoneyEarned: 0,
     totalStationsBuilt: 2,

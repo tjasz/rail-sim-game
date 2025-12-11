@@ -9,3 +9,4 @@ TODO
 - save game state to local storage
 - unassign track from line when line moves
 - game over if station is full for too long
+- error where some Belltown and Bellevue riders get stuck on trains

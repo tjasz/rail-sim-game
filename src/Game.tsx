@@ -119,19 +119,10 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     setGameState((prevState) => {
       // Use budget earned from the day result
       const budgetEarned = dayResult.budgetEarned;
-      const totalCitizens = dayResult.totalCitizens;
-      const happyCitizens = dayResult.happyCitizens;
-      const unhappyCitizens = dayResult.unhappyCitizens;
       
       const updatedStats = {
         ...prevState.stats,
         totalDaysPlayed: prevState.stats.totalDaysPlayed + 1,
-        totalCitizensTransported: prevState.stats.totalCitizensTransported + totalCitizens,
-        totalHappyCitizens: prevState.stats.totalHappyCitizens + happyCitizens,
-        totalUnhappyCitizens: prevState.stats.totalUnhappyCitizens + unhappyCitizens,
-        currentDayHappyCitizens: 0,
-        currentDayUnhappyCitizens: 0,
-        happinessRate: 0,
         totalMoneyEarned: prevState.stats.totalMoneyEarned + budgetEarned,
       };
       
@@ -151,14 +142,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       };
     });
   }, [dayResult]);
-
-  const handleGameOver = useCallback(() => {
-    setDayResult(null);
-    setGameState((prevState) => ({
-      ...prevState,
-      status: 'game-over',
-    }));
-  }, []);
 
   const handlePurchaseTrain = useCallback(() => {
     setGameState((prevState) => {
@@ -933,7 +916,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           <DayResultModal
             result={dayResult}
             onContinue={handleContinueDay}
-            onGameOver={handleGameOver}
           />
         )}
 

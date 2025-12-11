@@ -243,14 +243,6 @@
   color: #27ae60;
 }
 
-.stat-value.happy {
-  color: #27ae60;
-}
-
-.stat-value.unhappy {
-  color: #e74c3c;
-}
-
 /* Tabs */
 .panel-tabs {
   display: flex;
@@ -551,16 +543,6 @@
   flex: 1;
 }
 
-.happy {
-  color: #27ae60;
-  font-weight: bold;
-}
-
-.unhappy {
-  color: #e74c3c;
-  font-weight: bold;
-}
-
 .state-summary {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -590,14 +572,6 @@
   background: #f8f9fa;
   border-radius: 4px;
   border-left: 3px solid #95a5a6;
-}
-
-.passenger-item.happy {
-  border-left-color: #27ae60;
-}
-
-.passenger-item.unhappy {
-  border-left-color: #e74c3c;
 }
 
 .passenger-route {

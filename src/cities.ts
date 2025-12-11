@@ -4454,7 +4454,6 @@ export const SeattleConfig : CityState = {
       activeNeighborhoodsAtTime : (elapsedMinutes: number) => Math.min(3 + Math.floor(elapsedMinutes / 100), 400),
       initialBudget: 10000,
       budgetBaseline: 1000,
-      budgetBonusPerHappyCitizen: 0,
       trainSpeed: 0.25,
       timePerStationStop: 1,
       costPerStation: 500,

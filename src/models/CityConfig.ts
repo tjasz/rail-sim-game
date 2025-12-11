@@ -15,7 +15,6 @@ export interface CityConfig {
   // Economic settings
   initialBudget: number;
   budgetBaseline: number; // fixed amount per day
-  budgetBonusPerHappyCitizen: number;
   
   // Transit settings
   trainSpeed: number; // grid squares per minute

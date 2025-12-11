@@ -29,7 +29,6 @@ export interface Citizen {
   destinationNeighborhoodId: string;
   state: CitizenState;
   currentPosition: Position;
-  isHappy: boolean; // true if trip time is acceptable
   tripStartTime: number; // simulation time in minutes
   tripEndTime?: number; // simulation time in minutes
   currentTrainId?: string; // if riding a train

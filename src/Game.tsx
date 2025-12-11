@@ -13,7 +13,8 @@ import {
   StationsList,
   DayResultModal,
   StationAssignmentModal,
-  LeafletMap
+  LeafletMap,
+  PlaybackControl
 } from './components';
 import { SelectionProvider } from './contexts/SelectionContext';
 import type { GameState, DayResult, Neighborhood } from './models';
@@ -752,42 +753,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               />
             </div>
           </div>
-        <div className="game-controls">
-          <div className="speed-controls">
-            <button
-              className={`speed-btn ${gameState.simulationSpeed === 1 ? 'active' : ''}`}
-              onClick={() => handleSpeedChange(1)}
-              disabled={!gameState.isSimulating}
-            >
-              1x
-            </button>
-            <button
-              className={`speed-btn ${gameState.simulationSpeed === 2 ? 'active' : ''}`}
-              onClick={() => handleSpeedChange(2)}
-              disabled={!gameState.isSimulating}
-            >
-              2x
-            </button>
-            <button
-              className={`speed-btn ${gameState.simulationSpeed === 5 ? 'active' : ''}`}
-              onClick={() => handleSpeedChange(5)}
-              disabled={!gameState.isSimulating}
-            >
-              5x
-            </button>
-            <button
-              className={`speed-btn ${gameState.simulationSpeed === 10 ? 'active' : ''}`}
-              onClick={() => handleSpeedChange(10)}
-              disabled={!gameState.isSimulating}
-            >
-              10x
-            </button>
-          </div>
-          <button className="btn-primary" onClick={handleStartPause}>
-            {gameState.isSimulating ? '⏸ Pause' : '▶ Start Day'}
-          </button>
         </div>
-      </div>
       
       <div className="game-content">
         <div className="left-panel">
@@ -877,6 +843,12 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             gridWidth={gameState.city.config.gridWidth}
             gridHeight={gameState.city.config.gridHeight}
           >
+            <PlaybackControl
+              isSimulating={gameState.isSimulating}
+              simulationSpeed={gameState.simulationSpeed}
+              onStartPause={handleStartPause}
+              onSpeedChange={handleSpeedChange}
+            />
             <CityGrid config={gameState.city.config} />
             <MapClickHandler
               onMapClick={buildTrackState.isBuilding ? handleMapClick : undefined}

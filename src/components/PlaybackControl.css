@@ -1,0 +1,50 @@
+.leaflet-playback-control {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+}
+
+.playback-btn {
+  background: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playback-btn:hover:not(:disabled) {
+  background: #f4f4f4;
+}
+
+.playback-btn:active:not(:disabled) {
+  background: #e8e8e8;
+}
+
+.playback-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pause-play-btn {
+  font-size: 16px;
+  min-width: 44px;
+}
+
+.speed-btn.active {
+  background: #4CAF50;
+  color: white;
+}
+
+.speed-btn.active:hover {
+  background: #45a049;
+}

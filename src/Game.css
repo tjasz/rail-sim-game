@@ -79,31 +79,6 @@
   border-radius: 4px;
 }
 
-.speed-btn {
-  padding: 0.35rem 0.6rem;
-  border: none;
-  background: transparent;
-  color: white;
-  cursor: pointer;
-  font-size: 0.85rem;
-  border-radius: 3px;
-  transition: all 0.2s;
-}
-
-.speed-btn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.speed-btn.active {
-  background: #3498db;
-  font-weight: bold;
-}
-
-.speed-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 .btn-primary, .btn-secondary {
   padding: 0.5rem 1rem;
   border: none;

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   GameStats,
-  NetworkStats,
   CityGrid,
   TrackOverlay,
   DraftTrackOverlay,
@@ -748,7 +747,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             budget={gameState.city.budget}
             currentDay={gameState.city.currentDay}
           />
-          <NetworkStats network={gameState.railNetwork} />
           
           {/* Build Track Controls */}
           <div className="panel build-track-panel">

@@ -64,7 +64,7 @@ export function PlaybackControl({
     const dayProgressDiv = L.DomUtil.create('div', 'day-progress', container);
     dayProgressDiv.innerHTML = `<div>
       <svg viewBox="-10 -10 20 20" width="28" height="28">
-        <path d="M0 0L0 -10 A10 10 0 ${dayProgress > 0.5 ? 1 : 0} 1 ${clockPoint.x} ${clockPoint.y}Z" fill="black" />
+        <path id="day-progress-path" d="M0 0L0 -10 A10 10 0 ${dayProgress > 0.5 ? 1 : 0} 1 ${clockPoint.x} ${clockPoint.y}Z" fill="black" />
       </svg>
       <div class="day-label">Day ${currentDay}</div>
     </div>`;
@@ -95,7 +95,21 @@ export function PlaybackControl({
         onSpeedChange(speed);
       };
     });
-  }, [dayProgress, isSimulating, simulationSpeed, onStartPause, onSpeedChange]);
+  }, [currentDay, isSimulating, simulationSpeed, onStartPause, onSpeedChange]);
+
+  // Update day progress path when dayProgress changes
+  useEffect(() => {
+    if (!controlRef.current) return;
+
+    const container = controlRef.current.getContainer();
+    if (!container) return;
+
+    const path = container.querySelector('#day-progress-path');
+    if (!path) return;
+
+    const clockPoint = polarToCartesian(10, dayProgress * 360);
+    path.setAttribute('d', `M0 0L0 -10 A10 10 0 ${dayProgress > 0.5 ? 1 : 0} 1 ${clockPoint.x} ${clockPoint.y}Z`);
+  }, [dayProgress]);
 
   return null;
 }

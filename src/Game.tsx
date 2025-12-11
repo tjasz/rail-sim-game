@@ -788,7 +788,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     <SelectionProvider>
       <div className="game-container">
         <div className="game-header">
-          <h1>Rails Game</h1>
+          <h1 onContextMenu={() => console.log(gameState)}>Rails Game</h1>
         </div>
       
       <div className="game-content">

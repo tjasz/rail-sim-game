@@ -9,7 +9,6 @@ import {
   StationMarkers,
   MapClickHandler,
   LinesList,
-  StationsList,
   DayResultModal,
   StationAssignmentModal,
   LeafletMap,
@@ -40,7 +39,6 @@ interface BuildTrackState {
 
 export function Game({ gameState: initialGameState, onGameStateChange }: GameProps) {
   const [gameState, setGameState] = useState<GameState>(initialGameState);
-  const [activeTab, setActiveTab] = useState<'lines' | 'stations' | 'passengers' | 'trips'>('trips');
   const [dayResult, setDayResult] = useState<DayResult | null>(null);
   const [buildTrackState, setBuildTrackState] = useState<BuildTrackState>({
     isBuilding: false,
@@ -784,40 +782,17 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             )}
           </div>
           
-          <div className="panel-tabs">
-            <button
-              className={`tab ${activeTab === 'lines' ? 'active' : ''}`}
-              onClick={() => setActiveTab('lines')}
-            >
-              Lines
-            </button>
-            <button
-              className={`tab ${activeTab === 'stations' ? 'active' : ''}`}
-              onClick={() => setActiveTab('stations')}
-            >
-              Stations
-            </button>
-          </div>
-          
           <div className="panel-content">
-            {activeTab === 'lines' && (
-              <LinesList
-                lines={gameState.railNetwork.lines}
-                trains={gameState.railNetwork.trains}
-                neighborhoods={gameState.city.config.neighborhoods}
-                budget={gameState.city.budget}
-                trainCost={gameState.city.config.costPerTrain}
-                onPurchaseTrain={handlePurchaseTrain}
-                onAssignTrainToLine={handleAssignTrainToLine}
-                onRemoveTrainFromLine={handleRemoveTrainFromLine}
-              />
-            )}
-            {activeTab === 'stations' && (
-              <StationsList
-                neighborhoods={gameState.city.config.neighborhoods}
-                lines={gameState.railNetwork.lines}
-              />
-            )}
+            <LinesList
+              lines={gameState.railNetwork.lines}
+              trains={gameState.railNetwork.trains}
+              neighborhoods={gameState.city.config.neighborhoods}
+              budget={gameState.city.budget}
+              trainCost={gameState.city.config.costPerTrain}
+              onPurchaseTrain={handlePurchaseTrain}
+              onAssignTrainToLine={handleAssignTrainToLine}
+              onRemoveTrainFromLine={handleRemoveTrainFromLine}
+            />
           </div>
         </div>
         

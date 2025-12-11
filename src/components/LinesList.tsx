@@ -78,16 +78,16 @@ export function LinesList({
             <button 
               className="btn-train-action"
               disabled={true}
-              title="Cannot add trains to unassigned pool"
+              title="Assign trains from the lines below"
             >
-              +
+              -
             </button>
             <button 
               className="btn-train-action"
               disabled={true}
-              title="Assign trains from the lines below"
+              title="Cannot add trains to unassigned pool"
             >
-              -
+              +
             </button>
           </div>
         </div>
@@ -117,19 +117,19 @@ export function LinesList({
                 <div className="line-actions">
                   <button 
                     className="btn-train-action"
-                    onClick={() => handleAddTrainToLine(line.id)}
-                    disabled={!hasUnassignedTrains}
-                    title={hasUnassignedTrains ? "Assign train from unassigned pool" : "No unassigned trains available"}
-                  >
-                    +
-                  </button>
-                  <button 
-                    className="btn-train-action"
                     onClick={() => handleRemoveTrainFromLine(line.id)}
                     disabled={!hasTrainsOnLine}
                     title={hasTrainsOnLine ? "Remove train from line" : "No trains on this line"}
                   >
                     -
+                  </button>
+                  <button 
+                    className="btn-train-action"
+                    onClick={() => handleAddTrainToLine(line.id)}
+                    disabled={!hasUnassignedTrains}
+                    title={hasUnassignedTrains ? "Assign train from unassigned pool" : "No unassigned trains available"}
+                  >
+                    +
                   </button>
                 </div>
               </div>

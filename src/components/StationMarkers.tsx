@@ -17,6 +17,7 @@ interface StationMarkersProps {
   onStationClick?: (neighborhoodId: string) => void;
   onStationClickForDraw?: (neighborhoodId: string, lineId: string, trackIds: string[]) => void;
   tracks?: Map<string, import('../models').Track>;
+  stationCrowdingTimeLimit: number;
 }
 
 export function StationMarkers({ 
@@ -26,7 +27,8 @@ export function StationMarkers({
   drawingLineId,
   onStationClick,
   onStationClickForDraw,
-  tracks
+  tracks,
+  stationCrowdingTimeLimit,
 }: StationMarkersProps) {
   const { setSelectedObject } = useSelection();
 
@@ -40,32 +42,63 @@ export function StationMarkers({
           []
         );
 
+        // Calculate crowding gradient
+        const crowdingTime = neighborhood.crowdingTime || 0;
+        const crowdingRatio = Math.min(crowdingTime / stationCrowdingTimeLimit, 1);
+        
+        // Calculate gradient offset (0% = top, 100% = bottom)
+        // When crowdingRatio = 0, transition is at 100% (no fill)
+        // When crowdingRatio = 1, transition is at 0% (full fill)
+        const transitionPoint = (1 - crowdingRatio) * 100;
+        
+        // Create unique gradient ID for this station
+        const gradientId = `crowding-gradient-${neighborhood.id}`;
+        
         // Build SVG for station marker with concentric circles for each line
         const lineIds = neighborhood.lineIds ?? [];
         let circlesHtml = '';
         if (lineIds.length === 0) {
-          // Station with no lines - dashed circle
+          // Station with no lines - dashed circle with crowding gradient
           circlesHtml = `
+            <defs>
+              <linearGradient id="${gradientId}" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#6668;stop-opacity:1" />
+                <stop offset="${transitionPoint}%" style="stop-color:#6668;stop-opacity:1" />
+                <stop offset="${transitionPoint}%" style="stop-color:#6664;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#6664;stop-opacity:1" />
+              </linearGradient>
+            </defs>
             <circle
               cx="${0}"
               cy="${0}"
               r="${STATION_MARKER_RADIUS}"
-              fill="#6668"
+              fill="url(#${gradientId})"
               stroke="#888"
               stroke-width="2"
               stroke-dasharray="4,4"
             />
           `;
         } else {
-          // Station with lines - concentric circles
+          // Station with lines - concentric circles with crowding gradient on innermost
           circlesHtml = lineIds.map((lineId: string, idx: number) => {
             const lineColor = lines.get(lineId)?.color || '#888';
+            const fillValue = idx > 0 ? 'none' : `url(#${gradientId})`;
             return `
+              ${idx === 0 ? `
+              <defs>
+                <linearGradient id="${gradientId}" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#6668;stop-opacity:1" />
+                  <stop offset="${transitionPoint}%" style="stop-color:#6668;stop-opacity:1" />
+                  <stop offset="${transitionPoint}%" style="stop-color:#6664;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#6664;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              ` : ''}
               <circle
                 cx="${0}"
                 cy="${0}"
                 r="${STATION_MARKER_RADIUS + idx * 2}"
-                fill="${idx > 0 ? 'none' : '#6668'}"
+                fill="${fillValue}"
                 stroke="${lineColor}"
                 stroke-width="2"
               />

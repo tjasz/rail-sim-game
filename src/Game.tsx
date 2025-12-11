@@ -926,6 +926,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               drawingLineId={drawingLineId}
               onStationClick={!buildTrackState.isBuilding && !drawingLineId ? setSelectedStationForAssignment : undefined}
               onStationClickForDraw={drawingLineId ? handleAssignNeighborhoodToLine : undefined}
+              stationCrowdingTimeLimit={gameState.city.config.stationCrowdingTimeLimit}
             />
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}

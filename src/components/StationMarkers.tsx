@@ -53,6 +53,12 @@ export function StationMarkers({
         
         // Create unique gradient ID for this station
         const gradientId = `crowding-gradient-${neighborhood.id}`;
+        const gradient = `<linearGradient id="${gradientId}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#6664;stop-opacity:1" />
+          <stop offset="${transitionPoint}%" style="stop-color:#6664;stop-opacity:1" />
+          <stop offset="${transitionPoint}%" style="stop-color:#6668;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#6668;stop-opacity:1" />
+        </linearGradient>`;
         
         // Build SVG for station marker with concentric circles for each line
         const lineIds = neighborhood.lineIds ?? [];
@@ -61,12 +67,7 @@ export function StationMarkers({
           // Station with no lines - dashed circle with crowding gradient
           circlesHtml = `
             <defs>
-              <linearGradient id="${gradientId}" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#6668;stop-opacity:1" />
-                <stop offset="${transitionPoint}%" style="stop-color:#6668;stop-opacity:1" />
-                <stop offset="${transitionPoint}%" style="stop-color:#6664;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#6664;stop-opacity:1" />
-              </linearGradient>
+              ${gradient}
             </defs>
             <circle
               cx="${0}"
@@ -86,12 +87,7 @@ export function StationMarkers({
             return `
               ${idx === 0 ? `
               <defs>
-                <linearGradient id="${gradientId}" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" style="stop-color:#6668;stop-opacity:1" />
-                  <stop offset="${transitionPoint}%" style="stop-color:#6668;stop-opacity:1" />
-                  <stop offset="${transitionPoint}%" style="stop-color:#6664;stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#6664;stop-opacity:1" />
-                </linearGradient>
+                ${gradient}
               </defs>
               ` : ''}
               <circle

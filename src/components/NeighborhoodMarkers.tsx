@@ -42,26 +42,14 @@ export function NeighborhoodMarkers({
                 d="${iconPaths[neighborhood.icon] ?? neighborhood.icon}"
               />
             </svg>
-            <div style="
-              margin-top: 2px;
-              font-size: 6px;
-              font-weight: bold;
-              color: #000;
-              opacity: ${opacity};
-              text-align: center;
-              white-space: nowrap;
-              text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white;
-            ">
-              ${neighborhood.name}
-            </div>
           </div>
         `;
 
         const icon = new DivIcon({
           html: neighborhoodHtml,
           className: 'neighborhood-marker',
-          iconSize: [NEIGHBORHOOD_ICON_SIZE, NEIGHBORHOOD_ICON_SIZE + 12],
-          iconAnchor: [NEIGHBORHOOD_ICON_SIZE / 2, (NEIGHBORHOOD_ICON_SIZE + 12) / 2],
+          iconSize: [NEIGHBORHOOD_ICON_SIZE, NEIGHBORHOOD_ICON_SIZE],
+          iconAnchor: [NEIGHBORHOOD_ICON_SIZE / 2, (NEIGHBORHOOD_ICON_SIZE) / 2],
         });
 
         // In Simple CRS, coordinates are [y, x] (row, col)

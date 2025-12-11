@@ -4,7 +4,7 @@ import type { Line, Citizen, Neighborhood } from '../models';
 import { useSelection } from '../contexts/SelectionContext';
 import { renderCitizenIcon } from './CitizenMarkers';
 
-const STATION_MARKER_RADIUS = 20; // in pixels
+const STATION_MARKER_RADIUS = 12; // in pixels
 const RIDER_SIZE = [10, 10]; // [width, height] in pixels
 const RIDER_COLS = 5;
 const RIDER_MARGIN = 0;

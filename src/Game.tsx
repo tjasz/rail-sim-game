@@ -26,7 +26,6 @@ import {
   calculateDayResult, 
   formatTime, 
   MINUTES_PER_DAY,
-  initializeDay,
   calculateDistance,
   calculateCitizenRoutes
 } from './utils';
@@ -142,16 +141,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       
       const newDay = prevState.city.currentDay + 1;
       
-      // Initialize new day with continuous trip generation system
-      const dayStartTime = newDay * MINUTES_PER_DAY;
-      const { tripMatrix, citizens, updatedNetwork, nextTripGenerationTime } = initializeDay(
-        prevState.city.config,
-        newDay,
-        prevState.activeNeighborhoodCount,
-        prevState.railNetwork,
-        dayStartTime
-      );
-      
       return {
         ...prevState,
         city: {
@@ -162,11 +151,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         stats: updatedStats,
         simulationTime: newDay * MINUTES_PER_DAY, // Start of new day
         isSimulating: false,
-        activeNeighborhoodCount: prevState.activeNeighborhoodCount,
-        citizens,
-        currentTripMatrix: tripMatrix,
-        railNetwork: updatedNetwork,
-        nextTripGenerationTime,
         tripsGeneratedToday: 0,
       };
     });

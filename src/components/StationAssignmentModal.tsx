@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import type { Neighborhood, Line, RailNetwork } from '../models';
 import { areStationsConnected, findShortestTrackPath, generateLineColor } from '../utils';
 import './StationAssignmentModal.css';
@@ -22,9 +21,6 @@ export function StationAssignmentModal({
   onUnassignLine,
   onCreateNewLine,
 }: StationAssignmentModalProps) {
-  const [newLineName, setNewLineName] = useState('');
-  const [isCreatingLine, setIsCreatingLine] = useState(false);
-
   // Get currently assigned lines
   const lineIds = neighborhood.lineIds ?? [];
   const assignedLines = lineIds
@@ -76,14 +72,10 @@ export function StationAssignmentModal({
   };
 
   const handleCreateNewLine = () => {
-    if (!newLineName.trim()) return;
-
     const existingColors = Array.from(railNetwork.lines.values()).map(line => line.color);
     const newColor = generateLineColor(existingColors);
 
-    onCreateNewLine(neighborhood.id, newLineName.trim(), newColor);
-    setNewLineName('');
-    setIsCreatingLine(false);
+    onCreateNewLine(neighborhood.id, `${railNetwork.lines.size + 1}`, newColor);
   };
 
   return (
@@ -160,48 +152,12 @@ export function StationAssignmentModal({
           {/* Create New Line */}
           <section className="modal-section">
             <h3>Create New Line</h3>
-            {!isCreatingLine ? (
               <button 
                 className="btn-primary"
-                onClick={() => setIsCreatingLine(true)}
+                onClick={() => handleCreateNewLine()}
               >
                 + Create New Line
               </button>
-            ) : (
-              <div className="create-line-form">
-                <input
-                  type="text"
-                  className="line-name-input"
-                  placeholder="Enter line name..."
-                  value={newLineName}
-                  onChange={(e) => setNewLineName(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-                      handleCreateNewLine();
-                    }
-                  }}
-                  autoFocus
-                />
-                <div className="create-line-buttons">
-                  <button 
-                    className="btn-primary"
-                    onClick={handleCreateNewLine}
-                    disabled={!newLineName.trim()}
-                  >
-                    Create
-                  </button>
-                  <button 
-                    className="btn-secondary"
-                    onClick={() => {
-                      setIsCreatingLine(false);
-                      setNewLineName('');
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            )}
           </section>
         </div>
       </div>

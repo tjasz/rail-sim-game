@@ -4,6 +4,7 @@ import L from 'leaflet';
 import './PlaybackControl.css';
 
 interface PlaybackControlProps {
+  dayProgress: number;
   isSimulating: boolean;
   simulationSpeed: number;
   onStartPause: () => void;
@@ -11,6 +12,7 @@ interface PlaybackControlProps {
 }
 
 export function PlaybackControl({
+  dayProgress,
   isSimulating,
   simulationSpeed,
   onStartPause,
@@ -54,6 +56,10 @@ export function PlaybackControl({
     // Clear existing content
     container.innerHTML = '';
 
+    // Add day progress display
+    const dayProgressDiv = L.DomUtil.create('div', 'day-progress', container);
+    dayProgressDiv.innerHTML = `${Math.round(dayProgress * 100).toFixed(0)}%`;
+
     // Create pause/play button
     const pausePlayBtn = L.DomUtil.create('button', 'playback-btn pause-play-btn', container);
     pausePlayBtn.innerHTML = isSimulating ? '⏸' : '▶';
@@ -80,7 +86,7 @@ export function PlaybackControl({
         onSpeedChange(speed);
       };
     });
-  }, [isSimulating, simulationSpeed, onStartPause, onSpeedChange]);
+  }, [dayProgress, isSimulating, simulationSpeed, onStartPause, onSpeedChange]);
 
   return null;
 }

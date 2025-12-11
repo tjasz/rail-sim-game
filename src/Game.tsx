@@ -734,7 +734,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
   const currentDay = gameState.city.currentDay;
   const dayStartTime = currentDay * MINUTES_PER_DAY;
   const timeIntoCurrentDay = gameState.simulationTime - dayStartTime;
-  const dayProgress = (timeIntoCurrentDay / MINUTES_PER_DAY) * 100;
+  const dayProgress = (timeIntoCurrentDay / MINUTES_PER_DAY);
   const neighborhoodMap: Map<string, Neighborhood> = new Map(gameState.city.config.neighborhoods.slice(0,gameState.activeNeighborhoodCount).map(n => [n.id, n]));
   return (
     <SelectionProvider>
@@ -844,6 +844,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             gridHeight={gameState.city.config.gridHeight}
           >
             <PlaybackControl
+              dayProgress={dayProgress}
               isSimulating={gameState.isSimulating}
               simulationSpeed={gameState.simulationSpeed}
               onStartPause={handleStartPause}

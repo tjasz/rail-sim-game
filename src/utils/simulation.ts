@@ -459,7 +459,7 @@ export function updateCitizens(
         if (updatedCitizen.route.segments.length === 0) {
           // This was the last segment - we're at destination
           updatedCitizen.state = 'at-destination';
-          updatedCitizen.tripEndTime = currentTime;          
+          updatedCitizen.tripEndTime = currentTime;
         } else {
           // If next segment is a ride, wait at this neighborhood for the train
           const nextSegment = updatedCitizen.route.segments[0];
@@ -841,5 +841,9 @@ export function tickSimulation(
       trains: updatedTrains,
     },
     citizens: updatedCitizens,
+    stats: {
+      ...gameState.stats,
+      totalCitizensTransported: gameState.stats.totalCitizensTransported + (Array.from(updatedCitizens.values()).filter(c => c.state === 'at-destination').length),
+    },
   };
 }

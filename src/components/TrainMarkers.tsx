@@ -3,8 +3,8 @@ import { DivIcon } from 'leaflet';
 import type { Train, Line, Citizen, Neighborhood } from '../models';
 import { renderCitizenIcon } from './CitizenMarkers';
 
-const RIDER_SIZE = [10, 13]; // [width, height] in pixels
-const RIDER_MARGIN = 2; // margin between riders in pixels
+const RIDER_SIZE = [10, 10]; // [width, height] in pixels
+const RIDER_MARGIN = 1; // margin between riders in pixels
 const RIDER_COLS = 2;
 
 interface TrainMarkersProps {

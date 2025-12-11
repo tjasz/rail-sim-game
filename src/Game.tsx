@@ -729,6 +729,50 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
 
   const handleStartDrawLine = useCallback((lineId: string) => {
     setDrawingLineId(lineId);
+    // Remove current stops from line
+    // Remove line from neighborhoods and tracks
+    setGameState((prevState) => {
+      const line = prevState.railNetwork.lines.get(lineId);
+      if (!line) return prevState;
+      const updatedLines = new Map(prevState.railNetwork.lines);
+      updatedLines.set(lineId, {
+        ...line,
+        neighborhoodIds: [],
+      });
+
+      const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n => ({
+        ...n,
+        lineIds: (n.lineIds ?? []).filter(id => id !== lineId),
+      }));
+      
+      const updatedTracks = new Map(prevState.railNetwork.tracks);
+      updatedTracks.forEach((track, trackId) => {
+        if (track.lineIds.includes(lineId)) {
+          updatedTracks.set(trackId, {
+            ...track,
+            lineIds: track.lineIds.filter(id => id !== lineId),
+          });
+        }
+      });
+
+      const updatedRailNetwork = {
+        ...prevState.railNetwork,
+        lines: updatedLines,
+        tracks: updatedTracks,
+      };
+
+      return {
+        ...prevState,
+        city: {
+          ...prevState.city,
+          config: {
+            ...prevState.city.config,
+            neighborhoods: updatedNeighborhoods,
+          },
+        },
+        railNetwork: updatedRailNetwork,
+      };
+    });
   }, []);
 
   const handleStopDrawLine = useCallback(() => {

@@ -124,6 +124,11 @@ export function StationMarkers({
                     console.warn('Station is already on this line');
                     return;
                   }
+
+                  if (line.neighborhoodIds.length === 0) {
+                    onStationClickForDraw(neighborhood.id, drawingLineId, []);
+                    return;
+                  }
                   
                   // Find connecting tracks
                   const connectingTracks: string[] = [];

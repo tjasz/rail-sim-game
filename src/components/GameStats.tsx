@@ -4,10 +4,9 @@ import type { GameStats } from '../models';
 interface GameStatsProps {
   stats: GameStats;
   budget: number;
-  currentDay: number;
 }
 
-export function GameStats({ stats, budget, currentDay }: GameStatsProps) {
+export function GameStats({ stats, budget }: GameStatsProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   
   return (
@@ -32,11 +31,6 @@ export function GameStats({ stats, budget, currentDay }: GameStatsProps) {
       </div>
       
       {!isCollapsed && <div className="stats-grid">
-        <div className="stat-item">
-          <span className="stat-label">Day</span>
-          <span className="stat-value">{currentDay}</span>
-        </div>
-        
         <div className="stat-item budget">
           <span className="stat-label">Budget</span>
           <span className="stat-value">${budget.toLocaleString()}</span>

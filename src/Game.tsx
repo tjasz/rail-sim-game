@@ -745,7 +745,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           <GameStats 
             stats={gameState.stats}
             budget={gameState.city.budget}
-            currentDay={gameState.city.currentDay}
           />
           
           {/* Build Track Controls */}
@@ -828,6 +827,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             gridHeight={gameState.city.config.gridHeight}
           >
             <PlaybackControl
+              currentDay={gameState.city.currentDay}
               dayProgress={dayProgress}
               isSimulating={gameState.isSimulating}
               simulationSpeed={gameState.simulationSpeed}

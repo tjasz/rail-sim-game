@@ -722,7 +722,7 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .game-header h1 {
+  .game-header {
     display: none;
   }
 

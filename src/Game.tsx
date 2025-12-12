@@ -64,6 +64,32 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     onGameStateChange?.(gameState);
   }, [gameState, onGameStateChange]);
 
+  // Set initial map bounds on game start
+  useEffect(() => {
+    const activeCount = gameState.activeNeighborhoodCount;
+    const neighborhoods = gameState.city.config.neighborhoods;
+    const relevantNeighborhoods = neighborhoods.slice(0, Math.min(activeCount + 5, neighborhoods.length));
+    
+    if (relevantNeighborhoods.length > 0) {
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      
+      relevantNeighborhoods.forEach(n => {
+        minX = Math.min(minX, n.position.x);
+        minY = Math.min(minY, n.position.y);
+        maxX = Math.max(maxX, n.position.x);
+        maxY = Math.max(maxY, n.position.y);
+      });
+      
+      // Add 0.5 units padding in each direction
+      setMapBounds({
+        minX: minX - 0.5,
+        minY: minY - 0.5,
+        maxX: maxX + 0.5,
+        maxY: maxY + 0.5,
+      });
+    }
+  }, []); // Run only once on mount
+
   // Detect day rollover and show result modal
   useEffect(() => {
     const currentDay = gameState.city.currentDay;

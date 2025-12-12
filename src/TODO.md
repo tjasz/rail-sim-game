@@ -4,7 +4,6 @@ TODO
 - light-dark
 - individualize recreation factor in neighborhoods
 - individualize icons for neighborhoods
-- leaflet fit bounds on each day start and fit bounds button
 - make trains accelerate and decelerate
 - save game state to local storage
 - unassign track from line when line moves

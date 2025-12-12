@@ -976,7 +976,10 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               citizens={gameState.citizens}
               tracks={gameState.railNetwork.tracks}
               drawingLineId={drawingLineId}
-              onStationClick={!buildTrackState.isBuilding && !drawingLineId ? setSelectedStationForAssignment : undefined}
+              onStationClick={!buildTrackState.isBuilding && !drawingLineId
+                ? (neighborhood) => setSelectedStationForAssignment(neighborhood.id)
+                : (neighborhood) => handleMapClick(neighborhood.position.x, neighborhood.position.y)
+              }
               onStationClickForDraw={drawingLineId ? handleAssignNeighborhoodToLine : undefined}
               stationCrowdingTimeLimit={gameState.city.config.stationCrowdingTimeLimit}
             />

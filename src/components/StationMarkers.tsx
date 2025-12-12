@@ -15,7 +15,7 @@ interface StationMarkersProps {
   lines: Map<string, Line>;
   citizens: Map<string, Citizen>;
   drawingLineId?: string | null;
-  onStationClick?: (neighborhoodId: string) => void;
+  onStationClick?: (neighborhood: Neighborhood) => void;
   onStationClickForDraw?: (neighborhoodId: string, lineId: string, trackIds: string[]) => void;
   tracks?: Map<string, import('../models').Track>;
   stationCrowdingTimeLimit: number;
@@ -181,7 +181,7 @@ export function StationMarkers({
                 }
                 // If there's a station click handler, use it (for assignment modal)
                 else if (onStationClick) {
-                  onStationClick(neighborhood.id);
+                  onStationClick(neighborhood);
                 } else {
                   // Otherwise use the selection context (for inspector)
                   setSelectedObject(neighborhood);

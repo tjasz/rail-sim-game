@@ -12,6 +12,7 @@ const neighborhoods = SeattleConfig.config.neighborhoods
     lineIds: [],
     waitingCitizens: new Map(),
   }));
+neighborhoods.sort((a, b) => b.residents - a.residents); // Sort by residents descending
 
 const baseGameState: GameState = {
   status: 'playing',

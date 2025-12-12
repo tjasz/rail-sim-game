@@ -13,7 +13,8 @@ import {
   GameOverModal,
   StationAssignmentModal,
   LeafletMap,
-  PlaybackControl
+  PlaybackControl,
+  GameStatsControl
 } from './components';
 import { SelectionProvider } from './contexts/SelectionContext';
 import type { GameState, DayResult, Neighborhood } from './models';
@@ -954,6 +955,10 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             gridHeight={gameState.city.config.gridHeight}
             fitBounds={mapBounds}
           >
+            <GameStatsControl
+              budget={gameState.city.budget}
+              totalCitizensTransported={gameState.stats.totalCitizensTransported}
+            />
             <PlaybackControl
               currentDay={gameState.city.currentDay}
               dayProgress={dayProgress}

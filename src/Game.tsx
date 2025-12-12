@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import {
-  GameStats,
   CityGrid,
   TrackOverlay,
   DraftTrackOverlay,
@@ -889,11 +888,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       
       <div className="game-content">
         <div className="left-panel">
-          <GameStats 
-            stats={gameState.stats}
-            budget={gameState.city.budget}
-          />
-          
           {/* Build Track Controls */}
           <div className="panel build-track-panel">
             {!buildTrackState.isBuilding ? (

@@ -555,49 +555,20 @@ export function updateCitizens(
     }
   });
 
-  // 5. Update citizens at destination - check if they need to start their next trip
+  // 5. Update citizens at destination - move them to completed state
   const atDestination = citizensByState.get('at-destination') || [];
   for (const citizen of atDestination) {
     const updatedCitizen = { ...citizen };
-    
-    // Check if there's a next trip in their daily schedule
-    const nextTripIndex = citizen.currentTripIndex + 1;
-    
-    if (nextTripIndex < citizen.dailySchedule.length) {
-      const nextTrip = citizen.dailySchedule[nextTripIndex];
-      
-      // Check if it's time to start the next trip (convert hours to minutes)
-      const nextTripStartTime = nextTrip.departureTime * 60;
-      
-      if (currentTime >= nextTripStartTime) {
-        // Find the origin neighborhood to set position
-        const originNeighborhood = neighborhoodMap.get(nextTrip.originNeighborhoodId);
-        
-        // Time to start the next trip!
-        updatedCitizen.currentTripIndex = nextTripIndex;
-        updatedCitizen.originNeighborhoodId = nextTrip.originNeighborhoodId;
-        updatedCitizen.destinationNeighborhoodId = nextTrip.destinationNeighborhoodId;
-        updatedCitizen.state = 'waiting-at-origin';
-        updatedCitizen.tripStartTime = nextTripStartTime;
-        updatedCitizen.tripEndTime = undefined;
-        updatedCitizen.route = undefined; // Route will be recalculated
-        updatedCitizen.currentTrainId = undefined;
-        updatedCitizen.currentNeighborhoodId = undefined;
-        
-        // Update position to origin neighborhood
-        if (originNeighborhood) {
-          updatedCitizen.currentPosition = { ...originNeighborhood.position };
-        }
-        
-        updatedCitizens.set(citizen.id, updatedCitizen);
-      }
-    } else {
-      // No more trips today - mark as completed
-      if (citizen.state !== 'completed') {
-        updatedCitizen.state = 'completed';
-        updatedCitizens.set(citizen.id, updatedCitizen);
-      }
+    if (citizen.state !== 'completed') {
+      updatedCitizen.state = 'completed';
+      updatedCitizens.set(citizen.id, updatedCitizen);
     }
+  }
+
+  // Remove citizens who were already in completed state
+  const completedCitizens = citizensByState.get('completed') || [];
+  for (const citizen of completedCitizens) {
+    updatedCitizens.delete(citizen.id);
   }
 
   return updatedCitizens;
@@ -881,7 +852,7 @@ export function tickSimulation(
     citizens: updatedCitizens,
     stats: {
       ...gameState.stats,
-      totalCitizensTransported: gameState.stats.totalCitizensTransported + (Array.from(updatedCitizens.values()).filter(c => c.state === 'at-destination').length),
+      totalCitizensTransported: gameState.stats.totalCitizensTransported + (Array.from(updatedCitizens.values()).filter(c => c.state === 'completed').length),
     },
   };
 }

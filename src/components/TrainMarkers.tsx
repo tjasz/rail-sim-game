@@ -11,7 +11,7 @@ interface TrainMarkersProps {
   trains: Map<string, Train>;
   lines: Map<string, Line>;
   citizens: Map<string, Citizen>;
-  neighborhoods: Neighborhood[];
+  neighborhoods: Map<string, Neighborhood>;
 }
 
 export function TrainMarkers({ trains, lines, citizens, neighborhoods }: TrainMarkersProps) {

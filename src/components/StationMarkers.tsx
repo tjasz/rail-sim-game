@@ -3,6 +3,7 @@ import { DivIcon } from 'leaflet';
 import type { Line, Citizen, Neighborhood } from '../models';
 import { useSelection } from '../contexts/SelectionContext';
 import { renderCitizenIcon } from './CitizenMarkers';
+import { findShortestTrackPath } from '../utils';
 
 const STATION_MARKER_RADIUS = 12; // in pixels
 const RIDER_SIZE = [10, 10]; // [width, height] in pixels
@@ -10,7 +11,7 @@ const RIDER_COLS = 5;
 const RIDER_MARGIN = 0;
 
 interface StationMarkersProps {
-  neighborhoods: Neighborhood[];
+  neighborhoods: Map<string, Neighborhood>;
   lines: Map<string, Line>;
   citizens: Map<string, Citizen>;
   drawingLineId?: string | null;
@@ -32,7 +33,7 @@ export function StationMarkers({
 }: StationMarkersProps) {
   const { setSelectedObject } = useSelection();
 
-  const stations = neighborhoods;
+  const stations = Array.from(neighborhoods.values());
 
   return (
     <>
@@ -159,37 +160,24 @@ export function StationMarkers({
                     return;
                   }
                   
-                  // Find connecting tracks
-                  const connectingTracks: string[] = [];
-                  tracks.forEach((track, trackId) => {
-                    // Check if track connects to this neighborhood
-                    const connectsToNeighborhood = 
-                      (track.from.x === neighborhood.position.x && track.from.y === neighborhood.position.y) ||
-                      (track.to.x === neighborhood.position.x && track.to.y === neighborhood.position.y);
-                    
-                    if (!connectsToNeighborhood) return;
-                    
-                    // Check if the other end connects to a neighborhood on the line
-                    const otherEnd = 
-                      track.from.x === neighborhood.position.x && track.from.y === neighborhood.position.y
-                        ? track.to
-                        : track.from;
-                    
-                    const connectedNeighborhood = neighborhoods.find(
-                      n => n.position.x === otherEnd.x && n.position.y === otherEnd.y
-                    );
-                    
-                    if (connectedNeighborhood && line.neighborhoodIds.includes(connectedNeighborhood.id)) {
-                      connectingTracks.push(trackId);
+                  // Find the closest station on this line
+                  let closestStation: Neighborhood | null = null;
+                  let shortestPath: string[] | null = null;
+              
+                  for (const stationId of line.neighborhoodIds) {
+                    const otherStation = neighborhoods.get(stationId);
+                    if (!otherStation) continue;
+              
+                    const path = findShortestTrackPath(neighborhood, otherStation, tracks);
+                    if (path && (shortestPath === null || path.length < shortestPath.length)) {
+                      closestStation = otherStation;
+                      shortestPath = path;
                     }
-                  });
-                  
-                  if (connectingTracks.length === 0) {
-                    console.warn('No tracks connect this station to the line');
-                    return;
                   }
-                  
-                  onStationClickForDraw(neighborhood.id, drawingLineId, connectingTracks);
+              
+                  if (closestStation && shortestPath) {
+                    onStationClickForDraw(neighborhood.id, drawingLineId, shortestPath);
+                  }
                 }
                 // If there's a station click handler, use it (for assignment modal)
                 else if (onStationClick) {

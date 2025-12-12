@@ -919,7 +919,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               activeNeighborhoodCount={gameState.activeNeighborhoodCount}
             />
             <StationMarkers
-              neighborhoods={[...neighborhoodMap.values()]}
+              neighborhoods={neighborhoodMap}
               lines={gameState.railNetwork.lines}
               citizens={gameState.citizens}
               tracks={gameState.railNetwork.tracks}
@@ -941,7 +941,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               trains={gameState.railNetwork.trains}
               lines={gameState.railNetwork.lines}
               citizens={gameState.citizens}
-              neighborhoods={gameState.city.config.neighborhoods}
+              neighborhoods={neighborhoodMap}
             />
           </LeafletMap>
         </div>

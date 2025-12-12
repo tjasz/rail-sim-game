@@ -1,7 +1,6 @@
 import { Marker } from 'react-leaflet';
 import { DivIcon } from 'leaflet';
 import type { Neighborhood } from '../models';
-import { useSelection } from '../contexts/SelectionContext';
 import { iconPaths } from '../iconPaths';
 
 const NEIGHBORHOOD_ICON_SIZE = 20; // in pixels
@@ -15,8 +14,6 @@ export function NeighborhoodMarkers({
   neighborhoods,
   activeNeighborhoodCount
 }: NeighborhoodMarkersProps) {
-  const { setSelectedObject } = useSelection();
-
   return (
     <>
       {neighborhoods.slice(0,activeNeighborhoodCount+5).map((neighborhood, index) => {
@@ -60,15 +57,6 @@ export function NeighborhoodMarkers({
             key={neighborhood.id} 
             position={position} 
             icon={icon}
-            eventHandlers={{
-              click: () => {
-                setSelectedObject(neighborhood);
-              },
-              contextmenu: (e) => {
-                e.originalEvent.preventDefault();
-                console.log(neighborhood);
-              }
-            }}
           />
         );
       })}

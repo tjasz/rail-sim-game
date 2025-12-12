@@ -8,5 +8,6 @@ TODO
 - make trains accelerate and decelerate
 - save game state to local storage
 - unassign track from line when line moves
-- game over if station is full for too long
 - error where some Belltown and Bellevue riders get stuck on trains
+- spread out trains when adding to line
+- route and rail network calculations need to be faster so click response is better

@@ -375,7 +375,6 @@ export function updateCitizens(
 ): Map<string, Citizen> {
   const updatedCitizens = new Map(citizens);
   const updatedTrains = new Map(trains);
-  const neighborhoodMap = new Map(neighborhoods.map((n: Neighborhood) => [n.id, n]));
 
   // Group citizens by state
   const citizensByState = new Map<string, Citizen[]>();

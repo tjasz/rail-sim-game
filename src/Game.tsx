@@ -50,6 +50,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
   });
   const [selectedStationForAssignment, setSelectedStationForAssignment] = useState<string | null>(null);
   const [drawingLineId, setDrawingLineId] = useState<string | null>(null);
+  const [mapBounds, setMapBounds] = useState<{ minX: number; minY: number; maxX: number; maxY: number } | null>(null);
   const prevDayRef = useRef<number>(initialGameState.city.currentDay);
   const prevSimulatingRef = useRef<boolean>(initialGameState.isSimulating);
 
@@ -150,7 +151,31 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         tripsGeneratedToday: 0,
       };
     });
-  }, [dayResult]);
+    
+    // Update map bounds to fit active neighborhoods + next 5
+    const activeCount = gameState.activeNeighborhoodCount;
+    const neighborhoods = gameState.city.config.neighborhoods;
+    const relevantNeighborhoods = neighborhoods.slice(0, Math.min(activeCount + 5, neighborhoods.length));
+    
+    if (relevantNeighborhoods.length > 0) {
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      
+      relevantNeighborhoods.forEach(n => {
+        minX = Math.min(minX, n.position.x);
+        minY = Math.min(minY, n.position.y);
+        maxX = Math.max(maxX, n.position.x);
+        maxY = Math.max(maxY, n.position.y);
+      });
+      
+      // Add 0.5 units padding in each direction
+      setMapBounds({
+        minX: minX - 0.5,
+        minY: minY - 0.5,
+        maxX: maxX + 0.5,
+        maxY: maxY + 0.5,
+      });
+    }
+  }, [dayResult, gameState.activeNeighborhoodCount, gameState.city.config.neighborhoods]);
 
   const handlePurchaseTrain = useCallback(() => {
     setGameState((prevState) => {
@@ -901,6 +926,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           <LeafletMap 
             gridWidth={gameState.city.config.gridWidth}
             gridHeight={gameState.city.config.gridHeight}
+            fitBounds={mapBounds}
           >
             <PlaybackControl
               currentDay={gameState.city.currentDay}

@@ -1,15 +1,33 @@
 import type { ReactNode } from 'react';
-import { MapContainer } from 'react-leaflet';
+import { useEffect } from 'react';
+import { MapContainer, useMap } from 'react-leaflet';
 import { CRS, LatLngBounds } from 'leaflet';
 import './LeafletMap.css';
 
 interface LeafletMapProps {
   gridWidth: number;
   gridHeight: number;
+  fitBounds?: { minX: number; minY: number; maxX: number; maxY: number } | null;
   children: ReactNode;
 }
 
-export function LeafletMap({ gridWidth, gridHeight, children }: LeafletMapProps) {
+function BoundsUpdater({ fitBounds }: { fitBounds?: { minX: number; minY: number; maxX: number; maxY: number } | null }) {
+  const map = useMap();
+  
+  useEffect(() => {
+    if (fitBounds) {
+      const bounds = new LatLngBounds(
+        [fitBounds.minY, fitBounds.minX],
+        [fitBounds.maxY, fitBounds.maxX]
+      );
+      map.fitBounds(bounds, { animate: true, duration: 1 });
+    }
+  }, [map, fitBounds]);
+  
+  return null;
+}
+
+export function LeafletMap({ gridWidth, gridHeight, fitBounds, children }: LeafletMapProps) {
   // Calculate bounds in simple CRS coordinates
   // In simple CRS, coordinates map directly to pixels
   const bounds = new LatLngBounds(
@@ -34,6 +52,7 @@ export function LeafletMap({ gridWidth, gridHeight, children }: LeafletMapProps)
         maxBoundsViscosity={0.5}
         attributionControl={false}
       >
+        <BoundsUpdater fitBounds={fitBounds} />
         {children}
       </MapContainer>
     </div>

@@ -2,24 +2,14 @@
   background: white;
   border-radius: 4px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
-  padding: 8px 12px;
+  padding: 4px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  min-width: 180px;
 }
 
 .leaflet-game-stats-control .stat-row {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 12px;
-}
-
-.leaflet-game-stats-control .stat-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #555;
 }
 
 .leaflet-game-stats-control .stat-value {

@@ -53,14 +53,12 @@ export function GameStatsControl({
     // Add budget display
     const budgetDiv = L.DomUtil.create('div', 'stat-row', container);
     budgetDiv.innerHTML = `
-      <span class="stat-label">Budget:</span>
       <span class="stat-value">$${budget.toLocaleString()}</span>
     `;
 
     // Add transported citizens display
     const transportedDiv = L.DomUtil.create('div', 'stat-row', container);
     transportedDiv.innerHTML = `
-      <span class="stat-label">Transported:</span>
       <span class="stat-value">${totalCitizensTransported.toLocaleString()}</span>
     `;
   }, [budget, totalCitizensTransported]);

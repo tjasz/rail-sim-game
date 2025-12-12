@@ -5,26 +5,70 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const SeattleTiles = [
+  [ "w", "w", "w", "w", "w", "w", "w", "w", "w", "w", "w", "w", "l", "w", "w", "w", "w", "w", "w", "w" ],
+  [ "w", "w", "w", "w", "w", "w", "l", "w", "w", "w", "w", "l", "l", "w", "w", "w", "w", "w", "w", "w" ],
+  [ "w", "w", "l", "l", "l", "l", "l", "l", "w", "w", "l", "l", "l", "l", "l", "l", "w", "w", "w", "l" ],
+  [ "w", "l", "l", "l", "l", "l", "l", "w", "w", "w", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "w", "l", "l", "l", "l", "w", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "w", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "w", "w", "l", "l", "w", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "w", "w", "w", "w", "w", "w", "w", "w", "l", "w", "w", "w", "w", "w", "l" ],
+  [ "l", "l", "w", "w", "w", "w", "l", "l", "w", "l", "l", "w", "w", "w", "w", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "w", "w", "l", "l", "l", "w", "w", "l", "l", "l", "w", "w", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "w", "w", "w", "w", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "w", "w", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "w", "w", "w", "w", "w", "w", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+];
+
 // Read the GeoJSON file
-const inputFile = path.join(__dirname, 'joined-grid.geojson');
+const inputFile = path.join(__dirname, 'joined-grid-2.geojson');
 const outputFile = path.join(__dirname, 'transformed-neighborhoods.js');
 
 const geojson = JSON.parse(fs.readFileSync(inputFile, 'utf8'));
 
-// Transform each feature
-const neighborhoods = geojson.features.map(feature => {
+// Calculate bounding box
+let minleft = Infinity, minbottom = Infinity, maxright = -Infinity, maxtop = -Infinity;
+let maxResidents = 0, maxJobs = 0;
+for (const feature of geojson.features) {
   const props = feature.properties;
-  const x = props.x;
-  const y = props.y;
+  if (props.left < minleft) minleft = props.left;
+  if (props.right > maxright) maxright = props.right;
+  if (props.bottom < minbottom) minbottom = props.bottom;
+  if (props.top > maxtop) maxtop = props.top;
+  if (props["Workers Co"] != null && props["Workers Co"] > maxResidents) {
+    maxResidents = props["Workers Co"];
+  }
+  if (props["Jobs Count"] != null && props["Jobs Count"] > maxJobs) {
+    maxJobs = props["Jobs Count"];
+  }
+}
+const horizontalStepSize = geojson.features[0].properties.right - geojson.features[0].properties.left;
+const verticalStepSize = geojson.features[0].properties.top - geojson.features[0].properties.bottom;
+const horizontalSpan = Math.round((maxright - minleft) / horizontalStepSize);
+console.log(`Bounding Box: left=${minleft}, bottom=${minbottom}, right=${maxright}, top=${maxtop}, horizontalStepSize=${horizontalStepSize}, verticalStepSize=${verticalStepSize}`);
+
+// Transform each feature
+let neighborhoods = geojson.features.map(feature => {
+  const props = feature.properties;
+  const x = Math.round((props.left - minleft) / horizontalStepSize);
+  const y = Math.round((props.bottom - minbottom) / verticalStepSize);
   
-  // Calculate residents: "Workrs_PSQ_mean" / 1000, rounded, or 0 if null
-  const residents = props["Workrs_PSQ_mean"] != null 
-    ? Math.round(props["Workrs_PSQ_mean"] / 1000) 
+  // Calculate residents: "Workers Co", rounded, or 0 if null
+  const residents = props["Workers Co"] != null 
+    ? Math.round(props["Workers Co"]) 
     : 0;
   
-  // Calculate proportionOfJobs: "Jobs_PSQ_mean" / 1000, rounded, or 0 if null
-  const proportionOfJobs = props["Jobs_PSQ_mean"] != null 
-    ? Math.round(props["Jobs_PSQ_mean"] / 1000) 
+  // Calculate proportionOfJobs: "Jobs Count", rounded, or 0 if null
+  const proportionOfJobs = props["Jobs Count"] != null 
+    ? Math.round(props["Jobs Count"]) 
     : 0;
   
   return {
@@ -40,6 +84,15 @@ const neighborhoods = geojson.features.map(feature => {
   };
 });
 
+neighborhoods = neighborhoods
+  .filter(n => 
+    SeattleTiles[n.position.x][n.position.y] !== 'w' && (n.residents > 0 || n.proportionOfJobs > 0)
+  );
+const getNeighborhoodPriority = (neighborhood) => {
+  return Math.max(neighborhood.residents / maxResidents, neighborhood.proportionOfJobs / maxJobs);
+}
+neighborhoods.sort((a, b) => getNeighborhoodPriority(b) - getNeighborhoodPriority(a));
+
 // Format as JavaScript code
 let output = '// Generated neighborhoods from GeoJSON\n';
 output += 'const neighborhoods = [\n';
@@ -49,7 +102,7 @@ neighborhoods.forEach((neighborhood, index) => {
   output += `    id: '${neighborhood.id}',\n`;
   output += `    name: '${neighborhood.name}',\n`;
   output += `    position: { x: ${neighborhood.position.x}, y: ${neighborhood.position.y} },\n`;
-  output += `    icon: Object.keys(iconPaths)[${20*neighborhood.position.x}+${neighborhood.position.y}],\n`;
+  output += `    icon: Object.keys(iconPaths)[${horizontalSpan*neighborhood.position.x}+${neighborhood.position.y}],\n`;
   output += `    color: '${neighborhood.color}',\n`;
   output += `    residents: ${neighborhood.residents},\n`;
   output += `    proportionOfJobs: ${neighborhood.proportionOfJobs},\n`;

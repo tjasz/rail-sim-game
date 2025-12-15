@@ -55,10 +55,10 @@ export function StationMarkers({
         // Create unique gradient ID for this station
         const gradientId = `crowding-gradient-${neighborhood.id}`;
         const gradient = `<linearGradient id="${gradientId}" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#6664;stop-opacity:1" />
-          <stop offset="${transitionPoint}%" style="stop-color:#6664;stop-opacity:1" />
-          <stop offset="${transitionPoint}%" style="stop-color:#6668;stop-opacity:1" />
-          <stop offset="100%" style="stop-color:#6668;stop-opacity:1" />
+          <stop offset="0%" style="stop-color:#6662;stop-opacity:1" />
+          <stop offset="${transitionPoint}%" style="stop-color:#6662;stop-opacity:1" />
+          <stop offset="${transitionPoint}%" style="stop-color:#666c;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#666c;stop-opacity:1" />
         </linearGradient>`;
         
         // Build SVG for station marker with concentric circles for each line

@@ -49,7 +49,7 @@
 .citizen-marker {
   border: none;
   background: transparent;
-  cursor: pointer;
+  cursor: inherit;
 }
 
 .station-placement-indicator {

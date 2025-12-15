@@ -110,15 +110,8 @@ export function StationMarkers({
         // Create custom HTML for the station marker
         const stationHtml = `
           <div ${crowdingTime > 0 ? 'class="crowded"' : ''}>
-            <svg viewBox="${-maxRadius} ${-maxRadius} ${svgSize + RIDER_SIZE[0] * RIDER_COLS} ${svgSize}" style="overflow: visible;">
+            <svg viewBox="${-maxRadius} ${-maxRadius} ${svgSize} ${svgSize}" style="overflow: visible;">
               ${circlesHtml}
-              ${waitingPassengers.map((citizenId: string, idx: number) => {
-                const row = Math.floor(idx / RIDER_COLS);
-                const col = idx % RIDER_COLS;
-                const x = maxRadius*Math.sqrt(3)/2 + RIDER_MARGIN + col * (RIDER_SIZE[0] + RIDER_MARGIN);
-                const y = maxRadius/2 + RIDER_MARGIN + row * (RIDER_SIZE[1] + RIDER_MARGIN);
-                return renderCitizenIcon([x,y], RIDER_SIZE[0], citizens.get(citizenId)!, neighborhoods);
-              }).join('')}
             </svg>
           </div>
         `;
@@ -126,14 +119,38 @@ export function StationMarkers({
         const icon = new DivIcon({
           html: stationHtml,
           className: 'station-marker',
-          iconSize: [svgSize + RIDER_SIZE[0] * RIDER_COLS, svgSize],
+          iconSize: [svgSize, svgSize],
           iconAnchor: [maxRadius, maxRadius],
         });
+
+        // Create custom HTML for the waiting citizens marker
+        const citizensHtml = `
+          <div ${crowdingTime > 0 ? 'class="crowded"' : ''}>
+            <svg viewBox="0 0 ${RIDER_SIZE[0] * RIDER_COLS} ${RIDER_SIZE[1] * Math.ceil(waitingPassengers.length / RIDER_COLS)}" style="overflow: visible;">
+              ${waitingPassengers.map((citizenId: string, idx: number) => {
+                const row = Math.floor(idx / RIDER_COLS);
+                const col = idx % RIDER_COLS;
+                const x = RIDER_MARGIN + col * (RIDER_SIZE[0] + RIDER_MARGIN);
+                const y = RIDER_MARGIN + row * (RIDER_SIZE[1] + RIDER_MARGIN);
+                return renderCitizenIcon([x,y], RIDER_SIZE[0], citizens.get(citizenId)!, neighborhoods);
+              }).join('')}
+            </svg>
+          </div>
+        `;
+
+        const citizensIcon = new DivIcon({
+          html: citizensHtml,
+          className: 'citizen-marker',
+          iconSize: [RIDER_SIZE[0] * RIDER_COLS, RIDER_SIZE[1] * Math.ceil(waitingPassengers.length / RIDER_COLS)],
+          iconAnchor: [-Math.sqrt(3)/2 * maxRadius, -maxRadius / 2],
+        });
+
 
         // In Simple CRS, coordinates are [y, x] (row, col)
         const position: [number, number] = [neighborhood.position.y, neighborhood.position.x];
 
         return (
+          <>
           <Marker 
             key={neighborhood.id} 
             position={position} 
@@ -193,6 +210,12 @@ export function StationMarkers({
               }
             }}
           />
+          <Marker
+            key={neighborhood.id + '-citizens'}
+            position={position}
+            icon={citizensIcon}
+          />
+          </>
         );
       })}
     </>

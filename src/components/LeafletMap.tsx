@@ -51,6 +51,7 @@ export function LeafletMap({ gridWidth, gridHeight, fitBounds, children }: Leafl
         maxBounds={bounds}
         maxBoundsViscosity={0.5}
         attributionControl={false}
+        doubleClickZoom={false}
       >
         <BoundsUpdater fitBounds={fitBounds} />
         {children}

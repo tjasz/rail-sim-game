@@ -10,3 +10,5 @@ TODO
 - error where some Belltown and Bellevue riders get stuck on trains
 - spread out trains when adding to line
 - route and rail network calculations need to be faster so click response is better
+- start drawing when adding new line
+- assign trains automatically to new lines if available

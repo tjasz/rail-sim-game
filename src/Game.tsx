@@ -26,8 +26,8 @@ import {
   generateLineColor,
   initializeDay
 } from './utils';
-import { SeattleConfig } from './cities';
 import './Game.css';
+import { baseGameState } from './baseGameState';
 
 interface GameProps {
   gameState: GameState;
@@ -878,44 +878,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
 
   const handleRetry = useCallback(() => {
     // Reset to base game state with initialized day
-    const neighborhoods = SeattleConfig.config.neighborhoods
-      .map(n => ({
-        ...n,
-        lineIds: [],
-        waitingCitizens: new Map(),
-      }));
-    neighborhoods.sort((a, b) => b.residents - a.residents);
-
-    const baseGameState: GameState = {
-      status: 'playing',
-      city: {
-        ...SeattleConfig,
-        config: {
-          ...SeattleConfig.config,
-          neighborhoods,
-        },
-      },
-      railNetwork: {
-        tracks: new Map(),
-        lines: new Map(),
-        trains: new Map(),
-      },
-      currentTripMatrix: undefined,
-      citizens: new Map(),
-      isSimulating: false,
-      simulationTime: 0,
-      simulationSpeed: 1,
-      activeNeighborhoodCount: SeattleConfig.config.activeNeighborhoodsAtTime(0),
-      totalTripsStarted: 0,
-      stats: {
-        totalCitizensTransported: 0,
-        totalMoneySpent: 0,
-        totalMoneyEarned: 0,
-        totalStationsBuilt: 2,
-        totalTrackMilesBuilt: 2.24,
-        totalTrainsPurchased: 1,
-      },
-    };
 
     // Initialize the first day
     const { tripMatrix, citizens, updatedNetwork } = initializeDay(
@@ -945,7 +907,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
 
     // Reset map bounds
     const activeCount = baseGameState.activeNeighborhoodCount;
-    const relevantNeighborhoods = neighborhoods.slice(0, Math.min(activeCount + 5, neighborhoods.length));
+    const relevantNeighborhoods = baseGameState.city.config.neighborhoods.slice(0, Math.min(activeCount + 5, baseGameState.city.config.neighborhoods.length));
     
     if (relevantNeighborhoods.length > 0) {
       let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;

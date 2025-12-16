@@ -928,6 +928,26 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     }
   }, []);
 
+  const handleContinueEndless = useCallback(() => {
+    // Continue game in endless mode with modified config
+    setGameState((prevState) => ({
+      ...prevState,
+      status: 'playing',
+      city: {
+        ...prevState.city,
+        config: {
+          ...prevState.city.config,
+          stationCapacity: 10000,
+          stationCrowdingTimeLimit: 100000,
+          costPerStation: 0,
+          costPerTrackMileLand: 0,
+          costPerTrackMileWater: 0,
+          costPerTrain: 0,
+        },
+      },
+    }));
+  }, []);
+
   const currentDay = gameState.city.currentDay;
   const dayStartTime = currentDay * MINUTES_PER_DAY;
   const timeIntoCurrentDay = gameState.simulationTime - dayStartTime;
@@ -1068,6 +1088,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           <GameOverModal
             gameState={gameState}
             onRestart={handleRetry}
+            onContinueEndless={handleContinueEndless}
           />
         )}
 

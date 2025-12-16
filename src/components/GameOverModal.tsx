@@ -3,9 +3,10 @@ import type { GameState } from '../models';
 interface GameOverModalProps {
   gameState: GameState;
   onRestart?: () => void;
+  onContinueEndless?: () => void;
 }
 
-export function GameOverModal({ gameState, onRestart }: GameOverModalProps) {
+export function GameOverModal({ gameState, onRestart, onContinueEndless }: GameOverModalProps) {
   // Find the neighborhood that caused the game over
   const crowdedStation = gameState.city.config.neighborhoods.find(
     n => (n.crowdingTime || 0) >= gameState.city.config.stationCrowdingTimeLimit
@@ -54,11 +55,18 @@ export function GameOverModal({ gameState, onRestart }: GameOverModalProps) {
           </div>
         </div>
         
-        {onRestart && (
-          <button className="btn-large btn-primary" onClick={onRestart}>
-            {'Restart Game'}
-          </button>
-        )}
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+          {onContinueEndless && (
+            <button className="btn-large btn-primary" onClick={onContinueEndless}>
+              {'Continue in Endless Mode'}
+            </button>
+          )}
+          {onRestart && (
+            <button className="btn-large btn-primary" onClick={onRestart}>
+              {'Restart Game'}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

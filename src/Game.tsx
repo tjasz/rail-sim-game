@@ -23,8 +23,10 @@ import {
   MINUTES_PER_DAY,
   calculateDistance,
   calculateCitizenRoutes,
-  generateLineColor
+  generateLineColor,
+  initializeDay
 } from './utils';
+import { SeattleConfig } from './cities';
 import './Game.css';
 
 interface GameProps {
@@ -874,6 +876,96 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     setDrawingLineId(null);
   }, []);
 
+  const handleRetry = useCallback(() => {
+    // Reset to base game state with initialized day
+    const neighborhoods = SeattleConfig.config.neighborhoods
+      .map(n => ({
+        ...n,
+        lineIds: [],
+        waitingCitizens: new Map(),
+      }));
+    neighborhoods.sort((a, b) => b.residents - a.residents);
+
+    const baseGameState: GameState = {
+      status: 'playing',
+      city: {
+        ...SeattleConfig,
+        config: {
+          ...SeattleConfig.config,
+          neighborhoods,
+        },
+      },
+      railNetwork: {
+        tracks: new Map(),
+        lines: new Map(),
+        trains: new Map(),
+      },
+      currentTripMatrix: undefined,
+      citizens: new Map(),
+      isSimulating: false,
+      simulationTime: 0,
+      simulationSpeed: 1,
+      activeNeighborhoodCount: SeattleConfig.config.activeNeighborhoodsAtTime(0),
+      totalTripsStarted: 0,
+      stats: {
+        totalCitizensTransported: 0,
+        totalMoneySpent: 0,
+        totalMoneyEarned: 0,
+        totalStationsBuilt: 2,
+        totalTrackMilesBuilt: 2.24,
+        totalTrainsPurchased: 1,
+      },
+    };
+
+    // Initialize the first day
+    const { tripMatrix, citizens, updatedNetwork } = initializeDay(
+      baseGameState.city.config,
+      baseGameState.city.currentDay,
+      baseGameState.activeNeighborhoodCount,
+      baseGameState.railNetwork,
+    );
+
+    setGameState({
+      ...baseGameState,
+      currentTripMatrix: tripMatrix,
+      citizens,
+      railNetwork: updatedNetwork,
+    });
+
+    // Reset other UI state
+    setDayResult(null);
+    setBuildTrackState({
+      isBuilding: false,
+      points: [],
+      totalDistance: 0,
+      totalCost: 0,
+    });
+    setSelectedStationForAssignment(null);
+    setDrawingLineId(null);
+
+    // Reset map bounds
+    const activeCount = baseGameState.activeNeighborhoodCount;
+    const relevantNeighborhoods = neighborhoods.slice(0, Math.min(activeCount + 5, neighborhoods.length));
+    
+    if (relevantNeighborhoods.length > 0) {
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      
+      relevantNeighborhoods.forEach(n => {
+        minX = Math.min(minX, n.position.x);
+        minY = Math.min(minY, n.position.y);
+        maxX = Math.max(maxX, n.position.x);
+        maxY = Math.max(maxY, n.position.y);
+      });
+      
+      setMapBounds({
+        minX: minX - 0.5,
+        minY: minY - 0.5,
+        maxX: maxX + 0.5,
+        maxY: maxY + 0.5,
+      });
+    }
+  }, []);
+
   const currentDay = gameState.city.currentDay;
   const dayStartTime = currentDay * MINUTES_PER_DAY;
   const timeIntoCurrentDay = gameState.simulationTime - dayStartTime;
@@ -1013,6 +1105,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         {gameState.status === 'game-over' && (
           <GameOverModal
             gameState={gameState}
+            onRestart={handleRetry}
           />
         )}
 

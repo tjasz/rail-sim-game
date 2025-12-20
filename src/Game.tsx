@@ -7,7 +7,7 @@ import {
   NeighborhoodMarkers,
   StationMarkers,
   MapClickHandler,
-  LinesList,
+  LinesControl,
   DayResultModal,
   GameOverModal,
   StationAssignmentModal,
@@ -740,8 +740,10 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
   }, []);
 
   const handleDrawNewLine = useCallback(() => {
+    let newLineId: string;
+    
     setGameState((prevState) => {
-      const newLineId = `line-${Date.now()}`;
+      newLineId = `line-${Date.now()}`;
 
       const existingColors = Array.from(prevState.railNetwork.lines.values()).map(line => line.color);
       const newColor = generateLineColor(existingColors);
@@ -753,15 +755,38 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         name: name,
         color: newColor,
         neighborhoodIds: [],
-        trainIds: [],
+        trainIds: [] as string[],
         isActive: false,
       };
       const updatedLines = new Map(prevState.railNetwork.lines);
       updatedLines.set(newLineId, newLine);
 
+      // Find first unassigned train
+      const unassignedTrain = Array.from(prevState.railNetwork.trains.values()).find(
+        train => train.lineId === 'unassigned'
+      );
+
+      let updatedTrains = prevState.railNetwork.trains;
+      let updatedLine = newLine;
+
+      // If there's an unassigned train, assign it to the new line
+      if (unassignedTrain) {
+        updatedTrains = new Map(prevState.railNetwork.trains);
+        updatedTrains.set(unassignedTrain.id, {
+          ...unassignedTrain,
+          lineId: newLineId,
+        });
+        updatedLine = {
+          ...newLine,
+          trainIds: [unassignedTrain.id],
+        };
+        updatedLines.set(newLineId, updatedLine);
+      }
+
       const updatedRailNetwork = {
         ...prevState.railNetwork,
         lines: updatedLines,
+        trains: updatedTrains,
       };
       
       return {
@@ -769,6 +794,11 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         railNetwork: updatedRailNetwork,
       };
     });
+
+    // Start drawing the new line immediately
+    setTimeout(() => {
+      setDrawingLineId(newLineId!);
+    }, 50);
   }, []);
 
   const handleCreateNewLine = useCallback((neighborhoodId: string, lineName: string, lineColor: string) => {
@@ -963,12 +993,16 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         </div>
       
       <div className="game-content">
-        <div className="left-panel">
-          <div className="panel-content">
-            <LinesList
+        <div className="map-panel">
+          <LeafletMap 
+            gridWidth={gameState.city.config.gridWidth}
+            gridHeight={gameState.city.config.gridHeight}
+            fitBounds={mapBounds}
+          >
+            <LinesControl
               lines={gameState.railNetwork.lines}
               trains={gameState.railNetwork.trains}
-              neighborhoods={gameState.city.config.neighborhoods}
+              tracks={gameState.railNetwork.tracks}
               drawingLineId={drawingLineId}
               onAssignTrainToLine={handleAssignTrainToLine}
               onRemoveTrainFromLine={handleRemoveTrainFromLine}
@@ -976,15 +1010,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               onStopDrawLine={handleStopDrawLine}
               onDrawNewLine={handleDrawNewLine}
             />
-          </div>
-        </div>
-        
-        <div className="map-panel">
-          <LeafletMap 
-            gridWidth={gameState.city.config.gridWidth}
-            gridHeight={gameState.city.config.gridHeight}
-            fitBounds={mapBounds}
-          >
             <PurchaseTrainControl
               budget={gameState.city.budget}
               trainCost={gameState.city.config.costPerTrain}

@@ -1,0 +1,183 @@
+.leaflet-lines-control {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 400px;
+}
+
+/* Circles Row (Bottom Row - Always Visible) */
+.lines-circles-row {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.lines-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.lines-circle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.lines-circle.selected {
+  border-color: #333;
+  border-width: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.lines-circle.drawing {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(0, 0, 0, 0);
+  }
+}
+
+.lines-add-circle {
+  background: #4CAF50 !important;
+  color: white;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.lines-add-circle:hover {
+  background: #45a049 !important;
+}
+
+/* Details Row (Top Row - Conditionally Visible) */
+.lines-details-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  position: relative;
+}
+
+.lines-close-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  color: #666;
+  padding: 0;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.lines-close-btn:hover {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.lines-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 24px;
+}
+
+.lines-color-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.lines-detail-name {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+.lines-stats-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.lines-stat {
+  display: flex;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.lines-stat-label {
+  color: #666;
+}
+
+.lines-stat-value {
+  font-weight: bold;
+  color: #333;
+}
+
+.lines-actions-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.lines-action-btn {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.lines-action-btn:hover:not(:disabled) {
+  background: #f0f0f0;
+  border-color: #999;
+}
+
+.lines-action-btn:active:not(:disabled) {
+  background: #e0e0e0;
+}
+
+.lines-action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.lines-draw-btn.drawing {
+  background: #4CAF50;
+  color: white;
+  border-color: #4CAF50;
+}
+
+.lines-draw-btn.drawing:hover:not(:disabled) {
+  background: #45a049;
+  border-color: #45a049;
+}

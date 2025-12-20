@@ -113,20 +113,12 @@
   overflow: hidden;
 }
 
-.left-panel {
-  width: 350px;
-  background: white;
-  border-right: 1px solid #ddd;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-}
-
 .map-panel {
   flex: 1;
   display: flex;
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 .map-container {
@@ -739,10 +731,6 @@
 @media (max-width: 1024px) {
   .game-header {
     display: none;
-  }
-
-  .left-panel {
-    width: 200px;
   }
   
   .stats-grid {

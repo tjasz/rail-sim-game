@@ -9,6 +9,7 @@ export { NeighborhoodMarkers } from './NeighborhoodMarkers';
 export { StationMarkers } from './StationMarkers';
 export { MapClickHandler } from './MapClickHandler';
 export { LinesList } from './LinesList';
+export { LinesControl } from './LinesControl';
 export { StationsList } from './StationsList';
 export { DayResultModal } from './DayResultModal';
 export { GameOverModal } from './GameOverModal';

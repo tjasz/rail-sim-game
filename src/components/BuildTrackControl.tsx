@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 import './BuildTrackControl.css';
+import { iconPaths } from '../iconPaths';
 
 interface BuildTrackControlProps {
   isBuilding: boolean;
@@ -63,9 +64,9 @@ export function BuildTrackControl({
     container.innerHTML = '';
 
     if (!isBuilding) {
-      // Show single "RR" button
+      // Show single "RR" button with track icon
       const rrBtn = L.DomUtil.create('button', 'build-track-btn rr-btn', container);
-      rrBtn.innerHTML = '+Track';
+      rrBtn.innerHTML = `<svg viewBox="0 0 15 15" width="20" height="20"><path d="${iconPaths['temaki-railway_track_partial']}"/></svg>`;
       rrBtn.title = 'Build Track';
       rrBtn.onclick = (e) => {
         e.stopPropagation();

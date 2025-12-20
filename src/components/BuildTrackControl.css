@@ -3,15 +3,14 @@
   border-radius: 4px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
   padding: 0;
-  min-width: 34px;
 }
 
 .build-track-btn {
-  width: 34px;
-  height: 34px;
   border: none;
   background: white;
   cursor: pointer;
+  width: 30px;
+  padding: 4px;
   font-size: 16px;
   font-weight: bold;
   display: flex;
@@ -31,8 +30,6 @@
 
 .rr-btn {
   border-radius: 4px;
-  width: 100%;
-  height: 100%;
   font-family: monospace;
   color: #333;
 }

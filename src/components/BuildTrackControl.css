@@ -1,0 +1,75 @@
+.leaflet-build-track-control {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+  padding: 0;
+  min-width: 34px;
+}
+
+.build-track-btn {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.build-track-btn:hover:not(.disabled) {
+  background-color: #f4f4f4;
+}
+
+.build-track-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rr-btn {
+  border-radius: 4px;
+  width: 100%;
+  height: 100%;
+  font-family: monospace;
+  color: #333;
+}
+
+.build-track-info {
+  padding: 8px 10px;
+  font-size: 12px;
+  background: white;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap;
+}
+
+.info-row {
+  margin: 2px 0;
+  color: #333;
+}
+
+.build-track-buttons {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+.confirm-btn {
+  border-right: 1px solid #ddd;
+  color: #27ae60;
+  border-radius: 0 0 0 4px;
+}
+
+.confirm-btn:hover:not(.disabled) {
+  background-color: #e8f5e9;
+}
+
+.cancel-btn {
+  color: #e74c3c;
+  border-radius: 0 0 4px 0;
+}
+
+.cancel-btn:hover {
+  background-color: #ffebee;
+}

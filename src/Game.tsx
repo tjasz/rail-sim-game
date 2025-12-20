@@ -13,7 +13,8 @@ import {
   StationAssignmentModal,
   LeafletMap,
   PlaybackControl,
-  GameStatsControl
+  GameStatsControl,
+  BuildTrackControl
 } from './components';
 import { SelectionProvider } from './contexts/SelectionContext';
 import type { GameState, DayResult, Neighborhood } from './models';
@@ -962,43 +963,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       
       <div className="game-content">
         <div className="left-panel">
-          {/* Build Track Controls */}
-          <div className="panel build-track-panel">
-            {!buildTrackState.isBuilding ? (
-              <button 
-                className="btn-primary" 
-                onClick={handleStartBuildTrack}
-              >
-                🔧 Start Building Track
-              </button>
-            ) : (
-              <div className="build-track-controls">
-                <div className="build-track-info">
-                  <p>Click on map to place track points</p>
-                  <p>Points: {buildTrackState.points.length}</p>
-                  <p>Distance: {buildTrackState.totalDistance.toFixed(2)} units</p>
-                  <p>Cost: ${Math.round(buildTrackState.totalCost).toLocaleString()}</p>
-                  <p>Budget: ${Math.round(gameState.city.budget).toLocaleString()}</p>
-                </div>
-                <div className="build-track-buttons">
-                  <button 
-                    className="btn-primary" 
-                    onClick={handleConfirmBuildTrack}
-                    disabled={buildTrackState.points.length < 2 || buildTrackState.totalCost > gameState.city.budget}
-                  >
-                    ✓ Confirm Track
-                  </button>
-                  <button 
-                    className="btn-secondary" 
-                    onClick={handleCancelBuildTrack}
-                  >
-                    ✗ Cancel Track
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-          
           <div className="panel-content">
             <LinesList
               lines={gameState.railNetwork.lines}
@@ -1023,6 +987,16 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             gridHeight={gameState.city.config.gridHeight}
             fitBounds={mapBounds}
           >
+            <BuildTrackControl
+              isBuilding={buildTrackState.isBuilding}
+              points={buildTrackState.points}
+              totalDistance={buildTrackState.totalDistance}
+              totalCost={buildTrackState.totalCost}
+              budget={gameState.city.budget}
+              onStartBuilding={handleStartBuildTrack}
+              onConfirmTrack={handleConfirmBuildTrack}
+              onCancelTrack={handleCancelBuildTrack}
+            />
             <GameStatsControl
               budget={gameState.city.budget}
               totalCitizensTransported={gameState.stats.totalCitizensTransported}

@@ -14,7 +14,8 @@ import {
   LeafletMap,
   PlaybackControl,
   GameStatsControl,
-  BuildTrackControl
+  BuildTrackControl,
+  PurchaseTrainControl
 } from './components';
 import { SelectionProvider } from './contexts/SelectionContext';
 import type { GameState, DayResult, Neighborhood } from './models';
@@ -968,10 +969,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               lines={gameState.railNetwork.lines}
               trains={gameState.railNetwork.trains}
               neighborhoods={gameState.city.config.neighborhoods}
-              budget={gameState.city.budget}
-              trainCost={gameState.city.config.costPerTrain}
               drawingLineId={drawingLineId}
-              onPurchaseTrain={handlePurchaseTrain}
               onAssignTrainToLine={handleAssignTrainToLine}
               onRemoveTrainFromLine={handleRemoveTrainFromLine}
               onStartDrawLine={handleStartDrawLine}
@@ -987,6 +985,11 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             gridHeight={gameState.city.config.gridHeight}
             fitBounds={mapBounds}
           >
+            <PurchaseTrainControl
+              budget={gameState.city.budget}
+              trainCost={gameState.city.config.costPerTrain}
+              onPurchaseTrain={handlePurchaseTrain}
+            />
             <BuildTrackControl
               isBuilding={buildTrackState.isBuilding}
               points={buildTrackState.points}

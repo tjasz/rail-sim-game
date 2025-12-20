@@ -4,10 +4,7 @@ interface LinesListProps {
   lines: Map<string, Line>;
   trains: Map<string, Train>;
   neighborhoods: Neighborhood[];
-  budget: number;
-  trainCost: number;
   drawingLineId: string | null;
-  onPurchaseTrain: () => void;
   onAssignTrainToLine: (trainId: string, lineId: string) => void;
   onRemoveTrainFromLine: (trainId: string) => void;
   onStartDrawLine: (lineId: string) => void;
@@ -19,18 +16,13 @@ export function LinesList({
   lines, 
   trains,
   neighborhoods: _neighborhoods,
-  budget,
-  trainCost,
   drawingLineId,
-  onPurchaseTrain,
   onAssignTrainToLine,
   onRemoveTrainFromLine,
   onStartDrawLine,
   onStopDrawLine,
   onDrawNewLine,
 }: LinesListProps) {
-  const canAffordTrain = budget >= trainCost;
-  
   // Get unassigned trains
   const unassignedTrains = Array.from(trains.values()).filter(
     train => train.lineId === 'unassigned'
@@ -59,14 +51,6 @@ export function LinesList({
     <div className="lines-list">
       <div className="lines-header">
         <h3>Metro Lines</h3>
-        <button 
-          className="btn-purchase-train"
-          onClick={onPurchaseTrain}
-          disabled={!canAffordTrain}
-          title={!canAffordTrain ? `Insufficient budget (need $${trainCost.toLocaleString()})` : `Purchase train for $${trainCost.toLocaleString()}`}
-        >
-          + Purchase Train (${trainCost.toLocaleString()})
-        </button>
       </div>
       
       {/* Unassigned Trains Row */}

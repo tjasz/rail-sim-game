@@ -17,3 +17,4 @@ export { LeafletMap } from './LeafletMap';
 export { PlaybackControl } from './PlaybackControl';
 export { GameStatsControl } from './GameStatsControl';
 export { BuildTrackControl } from './BuildTrackControl';
+export { PurchaseTrainControl } from './PurchaseTrainControl';

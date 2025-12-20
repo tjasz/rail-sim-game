@@ -1,0 +1,35 @@
+.leaflet-purchase-train-control {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+}
+
+.purchase-train-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 40px;
+  border: none;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+  transition: background-color 0.2s;
+  border-radius: 4px;
+}
+
+.purchase-train-btn:hover:not(:disabled) {
+  background: #f0f0f0;
+}
+
+.purchase-train-btn:active:not(:disabled) {
+  background: #e0e0e0;
+}
+
+.purchase-train-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: #999;
+}

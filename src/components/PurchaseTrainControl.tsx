@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 import './PurchaseTrainControl.css';
+import { iconPaths } from '../iconPaths';
 
 interface PurchaseTrainControlProps {
   budget: number;
@@ -56,7 +57,7 @@ export function PurchaseTrainControl({
 
     // Create purchase train button
     const purchaseBtn = L.DomUtil.create('button', 'purchase-train-btn', container);
-    purchaseBtn.innerHTML = '+Train';
+    purchaseBtn.innerHTML = `<svg viewBox="0 0 15 15" width="20" height="20"><path d="${iconPaths['temaki-train']}"/></svg>`;
     purchaseBtn.title = canAfford 
       ? `Purchase train for $${trainCost.toLocaleString()}` 
       : `Insufficient budget (need $${trainCost.toLocaleString()})`;

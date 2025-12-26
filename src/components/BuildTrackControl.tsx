@@ -76,10 +76,7 @@ export function BuildTrackControl({
       // Show info and action buttons
       const infoDiv = L.DomUtil.create('div', 'build-track-info', container);
       infoDiv.innerHTML = `
-        <div class="info-row">Points: ${points.length}</div>
-        <div class="info-row">Distance: ${totalDistance.toFixed(2)}</div>
-        <div class="info-row">Cost: $${Math.round(totalCost).toLocaleString()}</div>
-        <div class="info-row">Budget: $${Math.round(budget).toLocaleString()}</div>
+        <div class="info-row">$${Math.round(totalCost).toLocaleString()}</div>
       `;
 
       const btnContainer = L.DomUtil.create('div', 'build-track-buttons', container);

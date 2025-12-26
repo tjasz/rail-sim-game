@@ -53,13 +53,10 @@ export function NeighborhoodMarker({
       d={iconPaths[neighborhood.icon] ?? neighborhood.icon}
     >
       {crowdingTime > 0 && (
-        <animateTransform
-          attributeName="transform"
-          attributeType="XML"
-          type="translate"
-          by="1 0"
-          dur="2s"
-          repeatCount="indefinite" />
+        <animateMotion
+          dur="1s"
+          repeatCount="indefinite"
+          path="m0 0 h-0.025 h.075 h-0.15 h0.2 h-0.2 h0.2 h-0.2 h0.15 h-0.075 z" />
       )}
     </path>
   </g>)

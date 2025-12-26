@@ -86,10 +86,10 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       
       // Add 0.5 units padding in each direction
       setMapBounds({
-        minX: minX - 0.5,
-        minY: minY - 0.5,
-        maxX: maxX + 0.5,
-        maxY: maxY + 0.5,
+        minX: minX - 1.5,
+        minY: minY - 1.5,
+        maxX: maxX + 1.5,
+        maxY: maxY + 1.5,
       });
     }
   }, []); // Run only once on mount
@@ -952,10 +952,10 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       });
       
       setMapBounds({
-        minX: minX - 0.5,
-        minY: minY - 0.5,
-        maxX: maxX + 0.5,
-        maxY: maxY + 0.5,
+        minX: minX - 1.5,
+        minY: minY - 1.5,
+        maxX: maxX + 1.5,
+        maxY: maxY + 1.5,
       });
     }
   }, []);

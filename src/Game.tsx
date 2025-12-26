@@ -1040,13 +1040,14 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             />
             <LeafletSvgOverlay config={gameState.city.config}>
               <CityGrid config={gameState.city.config} />
+              <NeighborhoodMarkers
+                config={gameState.city.config}
+                neighborhoods={gameState.city.config.neighborhoods}
+                activeNeighborhoodCount={gameState.activeNeighborhoodCount}
+              />
             </LeafletSvgOverlay>
             <MapClickHandler
               onMapClick={buildTrackState.isBuilding ? handleMapClick : undefined}
-            />
-            <NeighborhoodMarkers
-              neighborhoods={gameState.city.config.neighborhoods}
-              activeNeighborhoodCount={gameState.activeNeighborhoodCount}
             />
             <StationMarkers
               neighborhoods={neighborhoodMap}

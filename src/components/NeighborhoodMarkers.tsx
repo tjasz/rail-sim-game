@@ -1,16 +1,14 @@
-import { Marker } from 'react-leaflet';
-import { DivIcon } from 'leaflet';
-import type { Neighborhood } from '../models';
-import { iconPaths } from '../iconPaths';
-
-const NEIGHBORHOOD_ICON_SIZE = 20; // in pixels
+import type { CityConfig, Neighborhood } from '../models';
+import { NeighborhoodMarker } from './NeighborhoodMarker';
 
 interface NeighborhoodMarkersProps {
+  config: CityConfig;
   neighborhoods: Neighborhood[];
   activeNeighborhoodCount: number;
 }
 
 export function NeighborhoodMarkers({ 
+  config,
   neighborhoods,
   activeNeighborhoodCount
 }: NeighborhoodMarkersProps) {
@@ -28,35 +26,15 @@ export function NeighborhoodMarkers({
           opacity = Math.pow(0.5, stepsFromActive);
         }
 
-        // Create custom HTML for the neighborhood marker
-        const neighborhoodHtml = `
-          <div style="position: relative; width: ${NEIGHBORHOOD_ICON_SIZE}px; height: ${NEIGHBORHOOD_ICON_SIZE + 12}px; display: flex; flex-direction: column; align-items: center;">
-            <svg width="${NEIGHBORHOOD_ICON_SIZE}" height="${NEIGHBORHOOD_ICON_SIZE}" style="overflow: visible;">
-              <path
-                transform="scale(${NEIGHBORHOOD_ICON_SIZE / 15})"
-                fill="${neighborhood.color}"
-                opacity="${opacity}"
-                d="${iconPaths[neighborhood.icon] ?? neighborhood.icon}"
-              />
-            </svg>
-          </div>
-        `;
-
-        const icon = new DivIcon({
-          html: neighborhoodHtml,
-          className: 'neighborhood-marker',
-          iconSize: [NEIGHBORHOOD_ICON_SIZE, NEIGHBORHOOD_ICON_SIZE],
-          iconAnchor: [NEIGHBORHOOD_ICON_SIZE / 2, (NEIGHBORHOOD_ICON_SIZE) / 2],
-        });
-
-        // In Simple CRS, coordinates are [y, x] (row, col)
-        const position: [number, number] = [neighborhood.position.y, neighborhood.position.x];
-
         return (
-          <Marker 
+          <NeighborhoodMarker
             key={neighborhood.id} 
-            position={position} 
-            icon={icon}
+            row={config.gridHeight - neighborhood.position.y}
+            col={neighborhood.position.x}
+            neighborhood={neighborhood}
+            neighborhoodIndex={index}
+            activeNeighborhoodCount={activeNeighborhoodCount}
+            cellSize={1}
           />
         );
       })}

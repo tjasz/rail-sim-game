@@ -3,7 +3,7 @@ import type { Neighborhood } from '../models';
 import { useSelection } from '../contexts/SelectionContext';
 import { iconPaths } from '../iconPaths';
 
-const NEIGHBORHOOD_ICON_SIZE = 20; // in pixels
+const NEIGHBORHOOD_ICON_SIZE = 0.5; // in pixels
 
 interface NeighborhoodMarkerProps {
   row: number;
@@ -50,16 +50,5 @@ export function NeighborhoodMarker({
       opacity={opacity}
       d={iconPaths[neighborhood.icon] ?? neighborhood.icon}
       />
-    <text
-      x={col * cellSize + cellSize / 2}
-      y={(row+1) * cellSize - 5}
-      textAnchor="middle"
-      fontSize="6"
-      fill="#000"
-      fontWeight="bold"
-      opacity={opacity}
-    >
-      {neighborhood.name}
-    </text>
   </g>)
 }

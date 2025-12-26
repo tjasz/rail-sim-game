@@ -35,6 +35,7 @@ export function NeighborhoodMarkers({
             neighborhoodIndex={index}
             activeNeighborhoodCount={activeNeighborhoodCount}
             cellSize={1}
+            stationCrowdingTimeLimit={config.stationCrowdingTimeLimit}
           />
         );
       })}

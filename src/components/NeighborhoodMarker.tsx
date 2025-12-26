@@ -12,6 +12,7 @@ interface NeighborhoodMarkerProps {
   neighborhoodIndex: number;
   activeNeighborhoodCount: number;
   cellSize: number;
+  stationCrowdingTimeLimit: number;
 }
 
 export function NeighborhoodMarker({ 
@@ -20,7 +21,8 @@ export function NeighborhoodMarker({
   neighborhood, 
   neighborhoodIndex,
   activeNeighborhoodCount,
-  cellSize 
+  cellSize,
+  stationCrowdingTimeLimit,
 }: NeighborhoodMarkerProps) {
   const { setSelectedObject } = useSelection();
   
@@ -40,6 +42,12 @@ export function NeighborhoodMarker({
   }
 
   const crowdingTime = neighborhood.crowdingTime || 0;
+  const crowdingRatio = Math.min(crowdingTime / stationCrowdingTimeLimit, 1);
+
+  // Calculate gradient offset (0% = top, 100% = bottom)
+  // When crowdingRatio = 0, transition is at 100% (no fill)
+  // When crowdingRatio = 1, transition is at 0% (full fill)
+  const transitionPoint = (1 - crowdingRatio) * 100;
 
   return (
   <g
@@ -59,5 +67,23 @@ export function NeighborhoodMarker({
           path="m0 0 h-0.025 h.075 h-0.15 h0.2 h-0.2 h0.2 h-0.2 h0.15 h-0.075 z" />
       )}
     </path>
+    {crowdingTime > 0 && <defs>
+      <linearGradient id={`crowding-gradient-${neighborhood.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style={{ stopColor: '#6662', stopOpacity: 1 }} />
+        <stop offset={`${transitionPoint}%`} style={{ stopColor: '#6662', stopOpacity: 1 }} />
+        <stop offset={`${transitionPoint}%`} style={{ stopColor: '#666c', stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: '#666c', stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>}
+    <circle
+      cx={(col+0.5) * cellSize}
+      cy={(row+0.5) * cellSize}
+      r={NEIGHBORHOOD_ICON_SIZE / 2}
+      fill={crowdingTime > 0 ? `url(#crowding-gradient-${neighborhood.id})` : '#6662'}
+      stroke="#000"
+      strokeWidth={0.02}
+      strokeDasharray="0.04, 0.04"
+      opacity={opacity}
+    />
   </g>)
 }

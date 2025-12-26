@@ -50,16 +50,16 @@ export function GameStatsControl({
     // Clear existing content
     container.innerHTML = '';
 
-    // Add budget display
-    const budgetDiv = L.DomUtil.create('div', 'stat-row', container);
-    budgetDiv.innerHTML = `
-      <span class="stat-value">$${budget.toLocaleString()}</span>
-    `;
-
     // Add transported citizens display
     const transportedDiv = L.DomUtil.create('div', 'stat-row', container);
     transportedDiv.innerHTML = `
       <span class="stat-value">${totalCitizensTransported.toLocaleString()}</span>
+    `;
+
+    // Add budget display
+    const budgetDiv = L.DomUtil.create('div', 'stat-row', container);
+    budgetDiv.innerHTML = `
+      <span class="stat-value">$${budget.toLocaleString()}</span>
     `;
   }, [budget, totalCitizensTransported]);
 

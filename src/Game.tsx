@@ -999,6 +999,10 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             gridHeight={gameState.city.config.gridHeight}
             fitBounds={mapBounds}
           >
+            <GameStatsControl
+              budget={gameState.city.budget}
+              totalCitizensTransported={gameState.stats.totalCitizensTransported}
+            />
             <LinesControl
               lines={gameState.railNetwork.lines}
               trains={gameState.railNetwork.trains}
@@ -1024,10 +1028,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               onStartBuilding={handleStartBuildTrack}
               onConfirmTrack={handleConfirmBuildTrack}
               onCancelTrack={handleCancelBuildTrack}
-            />
-            <GameStatsControl
-              budget={gameState.city.budget}
-              totalCitizensTransported={gameState.stats.totalCitizensTransported}
             />
             <PlaybackControl
               currentDay={gameState.city.currentDay}

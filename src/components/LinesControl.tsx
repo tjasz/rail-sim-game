@@ -135,13 +135,6 @@ export function LinesControl({
           setSelectedLineId(null);
         };
 
-        // Line name with color indicator
-        const lineHeader = L.DomUtil.create('div', 'lines-detail-header', detailsRow);
-        const colorDot = L.DomUtil.create('div', 'lines-color-dot', lineHeader);
-        colorDot.style.backgroundColor = selectedLine.color;
-        const lineName = L.DomUtil.create('span', 'lines-detail-name', lineHeader);
-        lineName.textContent = selectedLine.name;
-
         // Stats
         const statsRow = L.DomUtil.create('div', 'lines-stats-row', detailsRow);
         const trainsStat = L.DomUtil.create('div', 'lines-stat', statsRow);

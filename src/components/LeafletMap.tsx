@@ -46,6 +46,7 @@ export function LeafletMap({ gridWidth, gridHeight, fitBounds, children }: Leafl
         zoomSnap={0}
         minZoom={3}
         maxZoom={9}
+        zoomControl={false}
         crs={CRS.Simple}
         style={{ height: '100%', width: '100%', background: '#1a1a2e' }}
         maxBounds={bounds}

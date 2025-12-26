@@ -1,4 +1,3 @@
-import { SVGOverlay } from 'react-leaflet';
 import type { CityConfig } from '../models';
 import { GridCell } from './GridCell';
 
@@ -8,21 +7,9 @@ interface CityGridProps {
 
 export function CityGrid({ config }: CityGridProps) {
   const cellSize = 1; // Each cell is 1 unit in Simple CRS
-  const width = config.gridWidth * cellSize;
-  const height = config.gridHeight * cellSize;
-  
-  // Define bounds for the SVG overlay
-  const bounds: [[number, number], [number, number]] = [
-    [-0.5, -0.5], // Southwest corner
-    [config.gridHeight - 0.5, config.gridWidth - 0.5] // Northeast corner
-  ];
   
   return (
-    <SVGOverlay bounds={bounds} attributes={{ className: 'city-grid-overlay' }}>
-      <svg 
-        viewBox={`0 0 ${width} ${height}`}
-        style={{ pointerEvents: 'none' }}
-      >
+    <>
         {/* Draw grid cells */}
         {Array.from({ length: config.gridWidth }).map((_, x) =>
           Array.from({ length: config.gridHeight }).map((_, y) => {
@@ -31,12 +18,11 @@ export function CityGrid({ config }: CityGridProps) {
             return (
               <g key={`${x}-${y}`}>
                 {/* Cell background */}
-                <GridCell row={config.gridHeight - 1 - y} col={x} isWater={isWater} cellSize={cellSize} />
+                <GridCell row={config.gridHeight - y} col={x} isWater={isWater} cellSize={cellSize} />
               </g>
             );
           })
         )}
-      </svg>
-    </SVGOverlay>
+    </>
   );
 }

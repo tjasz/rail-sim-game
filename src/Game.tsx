@@ -30,6 +30,7 @@ import {
 } from './utils';
 import './Game.css';
 import { baseGameState } from './baseGameState';
+import { LeafletSvgOverlay } from './components/LeafletSvgOverlay';
 
 interface GameProps {
   gameState: GameState;
@@ -1037,7 +1038,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               onStartPause={handleStartPause}
               onSpeedChange={handleSpeedChange}
             />
-            <CityGrid config={gameState.city.config} />
+            <LeafletSvgOverlay config={gameState.city.config}>
+              <CityGrid config={gameState.city.config} />
+            </LeafletSvgOverlay>
             <MapClickHandler
               onMapClick={buildTrackState.isBuilding ? handleMapClick : undefined}
             />

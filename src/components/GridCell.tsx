@@ -18,8 +18,8 @@ export function GridCell({ row, col, isWater, cellSize }: GridCellProps) {
   return (<rect
             onClick={handleClick}
             onContextMenu={(e) => { e.preventDefault(); console.log({ row, col, isWater }); }}
-            x={col * cellSize}
-            y={row * cellSize}
+            x={(col) * cellSize}
+            y={(row) * cellSize}
             width={cellSize}
             height={cellSize}
             fill={isWater ? 'paleturquoise' : 'linen'}

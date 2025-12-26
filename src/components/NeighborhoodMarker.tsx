@@ -39,6 +39,8 @@ export function NeighborhoodMarker({
     opacity = Math.pow(0.5, stepsFromActive);
   }
 
+  const crowdingTime = neighborhood.crowdingTime || 0;
+
   return (
   <g
     onClick={handleClick}
@@ -49,6 +51,16 @@ export function NeighborhoodMarker({
       fill={neighborhood.color}
       opacity={opacity}
       d={iconPaths[neighborhood.icon] ?? neighborhood.icon}
-      />
+    >
+      {crowdingTime > 0 && (
+        <animateTransform
+          attributeName="transform"
+          attributeType="XML"
+          type="translate"
+          by="1 0"
+          dur="2s"
+          repeatCount="indefinite" />
+      )}
+    </path>
   </g>)
 }

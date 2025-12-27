@@ -25,7 +25,8 @@ import {
   calculateDistance,
   calculateCitizenRoutes,
   generateLineColor,
-  initializeDay
+  initializeDay,
+  findShortestTrackPath
 } from './utils';
 import './Game.css';
 import { baseGameState } from './baseGameState';
@@ -468,6 +469,170 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
   }, []);
 
   const handleMapClick = useCallback((x: number, y: number) => {    
+    // Handle line drawing mode
+    if (drawingLineId) {
+      // Find neighborhood at clicked position
+      const neighborhood = gameState.city.config.neighborhoods.find(
+        n => n.position.x === x && n.position.y === y
+      );
+      
+      if (!neighborhood) {
+        console.warn('No neighborhood at this position');
+        return;
+      }
+      
+      const line = gameState.railNetwork.lines.get(drawingLineId);
+      if (!line) {
+        console.warn('Line not found');
+        return;
+      }
+      
+      // Check if neighborhood is already on this line
+      if (line.neighborhoodIds.includes(neighborhood.id)) {
+        console.warn('Station is already on this line');
+        return;
+      }
+      
+      // If line has no neighborhoods yet, add this one directly
+      if (line.neighborhoodIds.length === 0) {
+        // Call the actual handler by updating state directly
+        setGameState((prevState) => {
+          const line = prevState.railNetwork.lines.get(drawingLineId);
+          if (!line) return prevState;
+          
+          const updatedLines = new Map(prevState.railNetwork.lines);
+          updatedLines.set(drawingLineId, {
+            ...line,
+            neighborhoodIds: [neighborhood.id],
+          });
+          
+          const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n =>
+            n.id === neighborhood.id
+              ? { ...n, lineIds: [...(n.lineIds ?? []), drawingLineId] }
+              : n
+          );
+          
+          return {
+            ...prevState,
+            city: {
+              ...prevState.city,
+              config: {
+                ...prevState.city.config,
+                neighborhoods: updatedNeighborhoods,
+              },
+            },
+            railNetwork: {
+              ...prevState.railNetwork,
+              lines: updatedLines,
+            },
+          };
+        });
+        return;
+      }
+      
+      // Find the closest station on this line with a track path
+      const neighborhoodsMap = new Map(gameState.city.config.neighborhoods.map(n => [n.id, n]));
+      let shortestPath: string[] | null = null;
+      
+      for (const stationId of line.neighborhoodIds) {
+        const otherStation = neighborhoodsMap.get(stationId);
+        if (!otherStation) continue;
+        
+        const path = findShortestTrackPath(neighborhood, otherStation, gameState.railNetwork.tracks);
+        if (path && (shortestPath === null || path.length < shortestPath.length)) {
+          shortestPath = path;
+        }
+      }
+      
+      if (shortestPath) {
+        // Call the actual handler by updating state with the track path
+        setGameState((prevState) => {
+          const line = prevState.railNetwork.lines.get(drawingLineId);
+          if (!line) return prevState;
+          
+          // Find where to insert the neighborhood in the line's neighborhood list
+          let insertIndex = line.neighborhoodIds.length;
+          for (let i = 0; i < line.neighborhoodIds.length; i++) {
+            const existingNeighborhoodId = line.neighborhoodIds[i];
+            const existingNeighborhood = prevState.city.config.neighborhoods.find(n => n.id === existingNeighborhoodId);
+            if (existingNeighborhood && shortestPath.length > 0) {
+              const firstTrack = prevState.railNetwork.tracks.get(shortestPath[0]);
+              if (firstTrack) {
+                const isConnected = 
+                  (firstTrack.from.x === existingNeighborhood.position.x && firstTrack.from.y === existingNeighborhood.position.y) ||
+                  (firstTrack.to.x === existingNeighborhood.position.x && firstTrack.to.y === existingNeighborhood.position.y);
+                
+                if (isConnected) {
+                  insertIndex = i + 1;
+                  break;
+                }
+              }
+            }
+          }
+          
+          // Add neighborhood to line at the correct position
+          const updatedLines = new Map(prevState.railNetwork.lines);
+          const newNeighborhoodIds = [...line.neighborhoodIds];
+          newNeighborhoodIds.splice(insertIndex, 0, neighborhood.id);
+          
+          updatedLines.set(drawingLineId, {
+            ...line,
+            neighborhoodIds: newNeighborhoodIds,
+          });
+          
+          // Update neighborhood to include this line
+          const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n =>
+            n.id === neighborhood.id
+              ? { ...n, lineIds: [...(n.lineIds ?? []), drawingLineId] }
+              : n
+          );
+          
+          // Update tracks to reference this line
+          const updatedTracks = new Map(prevState.railNetwork.tracks);
+          shortestPath.forEach(trackId => {
+            const track = prevState.railNetwork.tracks.get(trackId);
+            if (track && !track.lineIds.includes(drawingLineId)) {
+              updatedTracks.set(trackId, {
+                ...track,
+                lineIds: [...track.lineIds, drawingLineId],
+              });
+            }
+          });
+          
+          const updatedRailNetwork = {
+            ...prevState.railNetwork,
+            tracks: updatedTracks,
+            lines: updatedLines,
+          };
+          
+          // Recalculate citizen routes with updated network
+          const updatedCitizens = calculateCitizenRoutes(
+            prevState.citizens,
+            updatedNeighborhoods,
+            prevState.city.config,
+            updatedRailNetwork
+          );
+          
+          return {
+            ...prevState,
+            city: {
+              ...prevState.city,
+              config: {
+                ...prevState.city.config,
+                neighborhoods: updatedNeighborhoods,
+              },
+            },
+            railNetwork: updatedRailNetwork,
+            citizens: updatedCitizens,
+          };
+        });
+      } else {
+        console.warn('No track connection found to any station on this line');
+      }
+      
+      return;
+    }
+    
     // Handle track building
     if (!buildTrackState.isBuilding) return;
 
@@ -512,7 +677,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         totalCost: prev.totalCost + segmentCost,
       };
     });
-  }, [buildTrackState.isBuilding, gameState.city.config, gameState.city.budget, gameState.railNetwork.tracks]);
+  }, [buildTrackState.isBuilding, drawingLineId, gameState.city.config, gameState.railNetwork]);
 
   const handleConfirmBuildTrack = useCallback(() => {
     if (buildTrackState.points.length < 2) {
@@ -1048,7 +1213,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               />
             </LeafletSvgOverlay>
             <MapClickHandler
-              onMapClick={buildTrackState.isBuilding ? handleMapClick : undefined}
+              onMapClick={buildTrackState.isBuilding || drawingLineId ? handleMapClick : undefined}
             />
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}

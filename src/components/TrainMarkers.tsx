@@ -1,7 +1,7 @@
 import { Marker } from 'react-leaflet';
 import { DivIcon } from 'leaflet';
 import type { Train, Line, Citizen, Neighborhood } from '../models';
-import { renderCitizenIcon } from './CitizenMarkers';
+import { renderCitizenIcon, renderCitizenIconAsText } from './CitizenMarkers';
 
 const RIDER_SIZE = [10, 10]; // [width, height] in pixels
 const RIDER_MARGIN = 1; // margin between riders in pixels
@@ -44,7 +44,7 @@ export function TrainMarkers({ trains, lines, citizens, neighborhoods }: TrainMa
                 const col = idx % RIDER_COLS;
                 const x = RIDER_MARGIN + col * (RIDER_SIZE[0] + RIDER_MARGIN);
                 const y = RIDER_MARGIN + row * (RIDER_SIZE[1] + RIDER_MARGIN);
-                return renderCitizenIcon([x,y], RIDER_SIZE[0], citizens.get(train.passengerIds[idx])!, neighborhoods);
+                return renderCitizenIconAsText([x,y], RIDER_SIZE[0], citizens.get(train.passengerIds[idx])!, neighborhoods);
               }).join('')}
             </svg>
           </div>

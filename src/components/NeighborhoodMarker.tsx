@@ -79,7 +79,7 @@ export function NeighborhoodMarker({
         <stop offset="100%" style={{ stopColor: '#666c', stopOpacity: 1 }} />
       </linearGradient>
     </defs>}
-    {lineIds.length === 0
+    {neighborhoodIndex < activeNeighborhoodCount && lineIds.length === 0
     ? <circle
       cx={(col+0.5) * cellSize}
       cy={(row+0.5) * cellSize}

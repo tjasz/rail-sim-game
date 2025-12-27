@@ -5,7 +5,6 @@ import {
   DraftTrackOverlay,
   TrainMarkers,
   NeighborhoodMarkers,
-  StationMarkers,
   MapClickHandler,
   LinesControl,
   DayResultModal,
@@ -1050,19 +1049,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             </LeafletSvgOverlay>
             <MapClickHandler
               onMapClick={buildTrackState.isBuilding ? handleMapClick : undefined}
-            />
-            <StationMarkers
-              neighborhoods={neighborhoodMap}
-              lines={gameState.railNetwork.lines}
-              citizens={gameState.citizens}
-              tracks={gameState.railNetwork.tracks}
-              drawingLineId={drawingLineId}
-              onStationClick={!buildTrackState.isBuilding && !drawingLineId
-                ? (neighborhood) => setSelectedStationForAssignment(neighborhood.id)
-                : (neighborhood) => handleMapClick(neighborhood.position.x, neighborhood.position.y)
-              }
-              onStationClickForDraw={drawingLineId ? handleAssignNeighborhoodToLine : undefined}
-              stationCrowdingTimeLimit={gameState.city.config.stationCrowdingTimeLimit}
             />
             <TrackOverlay
               tracks={gameState.railNetwork.tracks}

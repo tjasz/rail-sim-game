@@ -1,5 +1,5 @@
 
-import type { Neighborhood } from '../models';
+import type { Line, Neighborhood } from '../models';
 import { useSelection } from '../contexts/SelectionContext';
 import { iconPaths } from '../iconPaths';
 
@@ -13,6 +13,7 @@ interface NeighborhoodMarkerProps {
   activeNeighborhoodCount: number;
   cellSize: number;
   stationCrowdingTimeLimit: number;
+  lines: Map<string, Line>;
 }
 
 export function NeighborhoodMarker({ 
@@ -23,6 +24,7 @@ export function NeighborhoodMarker({
   activeNeighborhoodCount,
   cellSize,
   stationCrowdingTimeLimit,
+  lines,
 }: NeighborhoodMarkerProps) {
   const { setSelectedObject } = useSelection();
   
@@ -48,6 +50,8 @@ export function NeighborhoodMarker({
   // When crowdingRatio = 0, transition is at 100% (no fill)
   // When crowdingRatio = 1, transition is at 0% (full fill)
   const transitionPoint = (1 - crowdingRatio) * 100;
+
+  const lineIds = neighborhood.lineIds ?? [];
 
   return (
   <g
@@ -75,7 +79,8 @@ export function NeighborhoodMarker({
         <stop offset="100%" style={{ stopColor: '#666c', stopOpacity: 1 }} />
       </linearGradient>
     </defs>}
-    <circle
+    {lineIds.length === 0
+    ? <circle
       cx={(col+0.5) * cellSize}
       cy={(row+0.5) * cellSize}
       r={NEIGHBORHOOD_ICON_SIZE / 2}
@@ -85,5 +90,20 @@ export function NeighborhoodMarker({
       strokeDasharray="0.04, 0.04"
       opacity={opacity}
     />
+    : lineIds.map((lineId: string, idx: number) => {
+      const lineColor = lines.get(lineId)?.color || '#888';
+      const fillValue = idx > 0 ? 'none' : crowdingTime > 0 ? `url(#crowding-gradient-${neighborhood.id})` : '#6662';
+      return <circle
+        key={lineId}
+        cx={(col+0.5) * cellSize}
+        cy={(row+0.5) * cellSize}
+        r={NEIGHBORHOOD_ICON_SIZE / 2 + idx * 0.05}
+        fill={fillValue}
+        stroke={lineColor}
+        strokeWidth={0.02}
+        opacity={opacity}
+      />
+    })
+    }
   </g>)
 }

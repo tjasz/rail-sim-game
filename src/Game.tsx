@@ -1044,6 +1044,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
                 config={gameState.city.config}
                 neighborhoods={gameState.city.config.neighborhoods}
                 activeNeighborhoodCount={gameState.activeNeighborhoodCount}
+                lines={gameState.railNetwork.lines}
               />
             </LeafletSvgOverlay>
             <MapClickHandler

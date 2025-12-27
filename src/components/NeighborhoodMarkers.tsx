@@ -1,16 +1,18 @@
-import type { CityConfig, Neighborhood } from '../models';
+import type { CityConfig, Line, Neighborhood } from '../models';
 import { NeighborhoodMarker } from './NeighborhoodMarker';
 
 interface NeighborhoodMarkersProps {
   config: CityConfig;
   neighborhoods: Neighborhood[];
   activeNeighborhoodCount: number;
+  lines: Map<string, Line>;
 }
 
 export function NeighborhoodMarkers({ 
   config,
   neighborhoods,
-  activeNeighborhoodCount
+  activeNeighborhoodCount,
+  lines,
 }: NeighborhoodMarkersProps) {
   return (
     <>
@@ -36,6 +38,7 @@ export function NeighborhoodMarkers({
             activeNeighborhoodCount={activeNeighborhoodCount}
             cellSize={1}
             stationCrowdingTimeLimit={config.stationCrowdingTimeLimit}
+            lines={lines}
           />
         );
       })}

@@ -122,9 +122,9 @@ export function NeighborhoodMarker({
     }
     {waitingPassengers.map((citizenId: string, idx: number) => {
       const row = Math.floor(idx / RIDER_COLS);
-      const col = idx % RIDER_COLS;
+      const col = idx % RIDER_COLS - (RIDER_COLS/2);
       const x = center[0] + RIDER_MARGIN + col * (RIDER_SIZE[0] + RIDER_MARGIN);
-      const y = center[1] + 0.5 + RIDER_MARGIN + row * (RIDER_SIZE[1] + RIDER_MARGIN);
+      const y = center[1] + NEIGHBORHOOD_ICON_SIZE / 2 + RIDER_MARGIN + row * (RIDER_SIZE[1] + RIDER_MARGIN);
       return renderCitizenIcon([x,y], RIDER_SIZE[0], citizens.get(citizenId)!, neighborhoods);
     })}
   </g>)

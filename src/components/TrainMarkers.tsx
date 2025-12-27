@@ -1,7 +1,7 @@
 import { Marker } from 'react-leaflet';
 import { DivIcon } from 'leaflet';
 import type { Train, Line, Citizen, Neighborhood } from '../models';
-import { renderCitizenIcon, renderCitizenIconAsText } from './CitizenMarkers';
+import { renderCitizenIconAsText } from './CitizenMarkers';
 
 const RIDER_SIZE = [10, 10]; // [width, height] in pixels
 const RIDER_MARGIN = 1; // margin between riders in pixels

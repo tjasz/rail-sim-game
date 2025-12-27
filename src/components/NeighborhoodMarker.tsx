@@ -1,9 +1,13 @@
 
-import type { Line, Neighborhood } from '../models';
+import type { Citizen, Line, Neighborhood } from '../models';
 import { useSelection } from '../contexts/SelectionContext';
 import { iconPaths } from '../iconPaths';
+import { renderCitizenIcon } from './CitizenMarkers';
 
 const NEIGHBORHOOD_ICON_SIZE = 0.5; // in pixels
+const RIDER_SIZE = [0.2, 0.2]; // [width, height] in pixels
+const RIDER_COLS = 5;
+const RIDER_MARGIN = 0;
 
 interface NeighborhoodMarkerProps {
   row: number;
@@ -14,6 +18,8 @@ interface NeighborhoodMarkerProps {
   cellSize: number;
   stationCrowdingTimeLimit: number;
   lines: Map<string, Line>;
+  neighborhoods: Map<string, Neighborhood>;
+  citizens: Map<string, Citizen>;
 }
 
 export function NeighborhoodMarker({ 
@@ -25,12 +31,19 @@ export function NeighborhoodMarker({
   cellSize,
   stationCrowdingTimeLimit,
   lines,
+  neighborhoods,
+  citizens,
 }: NeighborhoodMarkerProps) {
   const { setSelectedObject } = useSelection();
   
   const handleClick = () => {
     setSelectedObject(neighborhood);
   };
+
+  const waitingPassengers = Array.from((neighborhood.waitingCitizens ?? new Map()).values()).reduce(
+    (sum, list) => [...sum, ...list], 
+    []
+  );
 
   // Calculate opacity based on activation status
   // Active neighborhoods: opacity 1
@@ -53,13 +66,15 @@ export function NeighborhoodMarker({
 
   const lineIds = neighborhood.lineIds ?? [];
 
+  const center = [(col + 0.5) * cellSize, (row + 0.5) * cellSize];
+
   return (
   <g
     onClick={handleClick}
     onContextMenu={(e) => { e.preventDefault(); console.log(neighborhood); }}
   >
     <path
-      transform={`translate(${(col+0.5) * cellSize - NEIGHBORHOOD_ICON_SIZE / 2}, ${(row+0.5) * cellSize - NEIGHBORHOOD_ICON_SIZE / 2}) scale(${NEIGHBORHOOD_ICON_SIZE / 15})`}
+      transform={`translate(${center[0] - NEIGHBORHOOD_ICON_SIZE / 2}, ${center[1] - NEIGHBORHOOD_ICON_SIZE / 2}) scale(${NEIGHBORHOOD_ICON_SIZE / 15})`}
       fill={neighborhood.color}
       opacity={opacity}
       d={iconPaths[neighborhood.icon] ?? neighborhood.icon}
@@ -80,30 +95,37 @@ export function NeighborhoodMarker({
       </linearGradient>
     </defs>}
     {neighborhoodIndex < activeNeighborhoodCount && lineIds.length === 0
-    ? <circle
-      cx={(col+0.5) * cellSize}
-      cy={(row+0.5) * cellSize}
-      r={NEIGHBORHOOD_ICON_SIZE / 2}
-      fill={crowdingTime > 0 ? `url(#crowding-gradient-${neighborhood.id})` : '#6662'}
-      stroke="#000"
-      strokeWidth={0.02}
-      strokeDasharray="0.04, 0.04"
-      opacity={opacity}
-    />
-    : lineIds.map((lineId: string, idx: number) => {
-      const lineColor = lines.get(lineId)?.color || '#888';
-      const fillValue = idx > 0 ? 'none' : crowdingTime > 0 ? `url(#crowding-gradient-${neighborhood.id})` : '#6662';
-      return <circle
-        key={lineId}
-        cx={(col+0.5) * cellSize}
-        cy={(row+0.5) * cellSize}
-        r={NEIGHBORHOOD_ICON_SIZE / 2 + idx * 0.05}
-        fill={fillValue}
-        stroke={lineColor}
+      ? <circle
+        cx={center[0]}
+        cy={center[1]}
+        r={NEIGHBORHOOD_ICON_SIZE / 2}
+        fill={crowdingTime > 0 ? `url(#crowding-gradient-${neighborhood.id})` : '#6662'}
+        stroke="#000"
         strokeWidth={0.02}
+        strokeDasharray="0.04, 0.04"
         opacity={opacity}
       />
-    })
+      : lineIds.map((lineId: string, idx: number) => {
+        const lineColor = lines.get(lineId)?.color || '#888';
+        const fillValue = idx > 0 ? 'none' : crowdingTime > 0 ? `url(#crowding-gradient-${neighborhood.id})` : '#6662';
+        return <circle
+          key={lineId}
+          cx={center[0]}
+          cy={center[1]}
+          r={NEIGHBORHOOD_ICON_SIZE / 2 + idx * 0.05}
+          fill={fillValue}
+          stroke={lineColor}
+          strokeWidth={0.02}
+          opacity={opacity}
+        />
+      })
     }
+    {waitingPassengers.map((citizenId: string, idx: number) => {
+      const row = Math.floor(idx / RIDER_COLS);
+      const col = idx % RIDER_COLS;
+      const x = center[0] + RIDER_MARGIN + col * (RIDER_SIZE[0] + RIDER_MARGIN);
+      const y = center[1] + 0.5 + RIDER_MARGIN + row * (RIDER_SIZE[1] + RIDER_MARGIN);
+      return renderCitizenIcon([x,y], RIDER_SIZE[0], citizens.get(citizenId)!, neighborhoods);
+    })}
   </g>)
 }

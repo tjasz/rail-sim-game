@@ -1,4 +1,4 @@
-import type { CityConfig, Line, Neighborhood } from '../models';
+import type { Citizen, CityConfig, Line, Neighborhood } from '../models';
 import { NeighborhoodMarker } from './NeighborhoodMarker';
 
 interface NeighborhoodMarkersProps {
@@ -6,6 +6,7 @@ interface NeighborhoodMarkersProps {
   neighborhoods: Neighborhood[];
   activeNeighborhoodCount: number;
   lines: Map<string, Line>;
+  citizens: Map<string, Citizen>;
 }
 
 export function NeighborhoodMarkers({ 
@@ -13,6 +14,7 @@ export function NeighborhoodMarkers({
   neighborhoods,
   activeNeighborhoodCount,
   lines,
+  citizens,
 }: NeighborhoodMarkersProps) {
   return (
     <>
@@ -39,6 +41,8 @@ export function NeighborhoodMarkers({
             cellSize={1}
             stationCrowdingTimeLimit={config.stationCrowdingTimeLimit}
             lines={lines}
+            neighborhoods={new Map(neighborhoods.map(n => [n.id, n]))}
+            citizens={citizens}
           />
         );
       })}

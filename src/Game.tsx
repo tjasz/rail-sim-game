@@ -1204,6 +1204,11 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             />
             <LeafletSvgOverlay config={gameState.city.config}>
               <CityGrid config={gameState.city.config} />
+              <TrackOverlay
+                config={gameState.city.config}
+                tracks={gameState.railNetwork.tracks}
+                lines={gameState.railNetwork.lines}
+              />
               <NeighborhoodMarkers
                 config={gameState.city.config}
                 neighborhoods={gameState.city.config.neighborhoods}
@@ -1221,10 +1226,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             </LeafletSvgOverlay>
             <MapClickHandler
               onMapClick={buildTrackState.isBuilding || drawingLineId ? handleMapClick : undefined}
-            />
-            <TrackOverlay
-              tracks={gameState.railNetwork.tracks}
-              lines={gameState.railNetwork.lines}
             />
             {buildTrackState.isBuilding && (
               <DraftTrackOverlay

@@ -1203,7 +1203,11 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               onSpeedChange={handleSpeedChange}
             />
             <LeafletSvgOverlay config={gameState.city.config}>
-              <CityGrid config={gameState.city.config} />
+              <CityGrid
+                gridWidth={gameState.city.config.gridWidth}
+                gridHeight={gameState.city.config.gridHeight}
+                tiles={gameState.city.config.tiles}
+              />
               <TrackOverlay
                 config={gameState.city.config}
                 tracks={gameState.railNetwork.tracks}

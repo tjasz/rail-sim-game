@@ -31,6 +31,13 @@ export const SeattleConfig : CityState = {
       gridWidth: 20,
       gridHeight: 20,
       tiles: SeattleTiles,
+      water: [
+        "M0 0 v20 h4 v-1 h-1 v-1 h-1 v-4 h-1 v-1 h1 v-1 h1 v1 h1 v-1 h1 v-1 h-1 v-1 h-2 v-1 h-1 v-1 h-1 v-1 h2 v-3 h1 v-3 h-1 v-1 z", // Puget Sound
+        "M4 6 v1 h1 v-1 z", // Green Lake
+        "M5 9 v1 h1 v-1 z", // Lake Union
+        "M8 1 v5 h1 v1 h-1 v1 h-1 v1 h1 v2 h-1 v2 h1 v2 h1 v3 h2 v-1 h1 v-4 h-1 v3 h-1 v-2 h-1 v-2 h1 v1 h1 v-2 h-2 v-2 h1 v-1 h1 v-2 h-1 v-1 h-1 v-4 z", // Lake Washington
+        "M16 8 v3 h-1 v2 h1 v1 h1 v-6 z", // Lake Sammamish
+      ],
       neighborhoods: neighborhoods,
       // Total number of trips grows quadratically, so that trips per day grows linearly
       totalTripsStartedAtTime: (elapsedMinutes: number) => {

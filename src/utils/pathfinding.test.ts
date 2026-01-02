@@ -20,6 +20,7 @@ const testCityConfig: CityConfig = {
     ['l', 'l', 'l', 'l', 'l'],
     ['l', 'l', 'l', 'l', 'l'],
   ],
+  water: [],
   neighborhoods: [
     {
       id: 'downtown',

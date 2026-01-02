@@ -1206,7 +1206,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               <CityGrid
                 gridWidth={gameState.city.config.gridWidth}
                 gridHeight={gameState.city.config.gridHeight}
-                tiles={gameState.city.config.tiles}
+                water={gameState.city.config.water}
               />
               <TrackOverlay
                 config={gameState.city.config}

@@ -7,6 +7,7 @@ export interface CityConfig {
   gridWidth: number;
   gridHeight: number;
   tiles: TileType[][]; // [x][y] - 'l' for land or 'w' for water
+  water: string[]; // list of water SVG paths
   neighborhoods: Neighborhood[];
   
   totalTripsStartedAtTime: (elapsedMinutes: number) => number; // function that computes the total number of trips started at a given time

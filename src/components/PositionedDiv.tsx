@@ -56,7 +56,6 @@ export function PositionedDiv({ position, dimensions, children }: PositionedDivP
         transform: 'translate(-50%, -50%)',
         pointerEvents: 'auto',
         zIndex: 600,
-        overflow: 'hidden',
       }}
     >
       {children}

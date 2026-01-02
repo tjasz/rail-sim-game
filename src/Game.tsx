@@ -1216,14 +1216,14 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
                 lines={gameState.railNetwork.lines}
                 citizens={gameState.citizens}
               />
-              <TrainMarkers
-                config={gameState.city.config}
-                trains={gameState.railNetwork.trains}
-                lines={gameState.railNetwork.lines}
-                citizens={gameState.citizens}
-                neighborhoods={neighborhoodMap}
-              />
             </LeafletSvgOverlay>
+            <TrainMarkers
+              config={gameState.city.config}
+              trains={gameState.railNetwork.trains}
+              lines={gameState.railNetwork.lines}
+              citizens={gameState.citizens}
+              neighborhoods={neighborhoodMap}
+            />
             <MapClickHandler
               onMapClick={buildTrackState.isBuilding || drawingLineId ? handleMapClick : undefined}
             />

@@ -111,6 +111,38 @@ Each city configuration includes the following parameters:
 The game is a React TypeScript application running fully in the player's web browser client.
 It is built and run with vite.
 
+### Progressive Web App (PWA)
+
+This application is configured as a Progressive Web App with offline capabilities. Key features:
+
+- **Installable**: Users can install the app on their devices for a native-like experience
+- **Offline Support**: The app works offline after the first visit using a service worker
+- **Auto-Updates**: The service worker automatically updates when new versions are deployed
+- **Asset Caching**: All game assets (GeoJSON, shapefiles, images, etc.) are cached for offline use
+
+#### PWA Icons
+
+PWA icons are automatically generated from the icon script. To regenerate icons:
+
+```bash
+npm run generate-icons
+```
+
+The icons are stored in the `public/` directory:
+- `pwa-192x192.png` - Used for mobile home screen and app drawer
+- `pwa-512x512.png` - Used for splash screen and app details
+
+You can customize the icon design by editing `generate-icons.js`.
+
+#### Service Worker
+
+The service worker is automatically generated during the build process using Workbox. It:
+- Precaches all application assets
+- Caches external dependencies (like Leaflet tiles from unpkg.com)
+- Enables offline functionality
+
+In development mode, the service worker is enabled so you can test PWA features locally.
+
 ### React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

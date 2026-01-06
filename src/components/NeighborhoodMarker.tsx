@@ -98,10 +98,10 @@ export function NeighborhoodMarker({
       ? <circle
         cx={center[0]}
         cy={center[1]}
-        r={NEIGHBORHOOD_ICON_SIZE / 2}
+        r={NEIGHBORHOOD_ICON_SIZE / 2 + 0.05}
         fill={crowdingTime > 0 ? `url(#crowding-gradient-${neighborhood.id})` : '#6662'}
         stroke="#000"
-        strokeWidth={0.02}
+        strokeWidth={0.05}
         strokeDasharray="0.04, 0.04"
         opacity={opacity}
       />
@@ -112,10 +112,10 @@ export function NeighborhoodMarker({
           key={lineId}
           cx={center[0]}
           cy={center[1]}
-          r={NEIGHBORHOOD_ICON_SIZE / 2 + idx * 0.05}
+          r={NEIGHBORHOOD_ICON_SIZE / 2 + (idx + 1) * 0.05}
           fill={fillValue}
           stroke={lineColor}
-          strokeWidth={0.02}
+          strokeWidth={0.05}
           opacity={opacity}
         />
       })

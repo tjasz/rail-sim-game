@@ -5,28 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const SeattleTiles = [
-  [ "w", "w", "w", "w", "w", "w", "w", "w", "w", "w", "w", "w", "l", "w", "w", "w", "w", "w", "w", "w" ],
-  [ "w", "w", "w", "w", "w", "w", "l", "w", "w", "w", "w", "l", "l", "w", "w", "w", "w", "w", "w", "w" ],
-  [ "w", "w", "l", "l", "l", "l", "l", "l", "w", "w", "l", "l", "l", "l", "l", "l", "w", "w", "w", "l" ],
-  [ "w", "l", "l", "l", "l", "l", "l", "w", "w", "w", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "l", "l", "l", "l", "l", "w", "l", "l", "l", "l", "w", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "w", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "l", "l", "l", "l", "w", "w", "l", "l", "w", "l", "l", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "l", "l", "w", "w", "w", "w", "w", "w", "w", "w", "l", "w", "w", "w", "w", "w", "l" ],
-  [ "l", "l", "w", "w", "w", "w", "l", "l", "w", "l", "l", "w", "w", "w", "w", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "w", "w", "l", "l", "l", "w", "w", "l", "l", "l", "w", "w", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "w", "w", "w", "w", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "l", "l", "l", "l", "w", "w", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "l", "l", "l", "w", "w", "w", "w", "w", "w", "l", "l", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
-  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
-];
+const SeattleTiles = Array(20).fill(Array(20).fill('l'));
 
 // Read the GeoJSON file
 const inputFile = path.join(__dirname, 'joined-grid-2.geojson');
@@ -88,10 +67,52 @@ neighborhoods = neighborhoods
   .filter(n => 
     SeattleTiles[n.position.x][n.position.y] !== 'w' && (n.residents > 0 || n.proportionOfJobs > 0)
   );
-const getNeighborhoodPriority = (neighborhood) => {
-  return Math.max(neighborhood.residents / maxResidents, neighborhood.proportionOfJobs / maxJobs);
+
+// Custom sort: balance residents and jobs
+const sortedNeighborhoods = [];
+const remaining = [...neighborhoods];
+
+// Start with the neighborhood with the most residents
+let maxResidentsIdx = 0;
+for (let i = 1; i < remaining.length; i++) {
+  if (remaining[i].residents > remaining[maxResidentsIdx].residents) {
+    maxResidentsIdx = i;
+  }
 }
-neighborhoods.sort((a, b) => getNeighborhoodPriority(b) - getNeighborhoodPriority(a));
+sortedNeighborhoods.push(remaining[maxResidentsIdx]);
+remaining.splice(maxResidentsIdx, 1);
+
+// For each subsequent neighborhood, balance residents and jobs
+let totalResidents = sortedNeighborhoods[0].residents;
+let totalJobs = sortedNeighborhoods[0].proportionOfJobs;
+
+while (remaining.length > 0) {
+  let nextIdx = 0;
+  
+  if (totalResidents > totalJobs) {
+    // Pick the neighborhood with the most jobs
+    for (let i = 1; i < remaining.length; i++) {
+      if (remaining[i].proportionOfJobs > remaining[nextIdx].proportionOfJobs) {
+        nextIdx = i;
+      }
+    }
+  } else {
+    // Pick the neighborhood with the most residents
+    for (let i = 1; i < remaining.length; i++) {
+      if (remaining[i].residents > remaining[nextIdx].residents) {
+        nextIdx = i;
+      }
+    }
+  }
+  
+  const next = remaining[nextIdx];
+  sortedNeighborhoods.push(next);
+  totalResidents += next.residents;
+  totalJobs += next.proportionOfJobs;
+  remaining.splice(nextIdx, 1);
+}
+
+neighborhoods = sortedNeighborhoods;
 
 // Format as JavaScript code
 let output = '// Generated neighborhoods from GeoJSON\n';

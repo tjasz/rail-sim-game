@@ -530,21 +530,15 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         return;
       }
       
-      // Find the closest station on this line with a track path
-      const neighborhoodsMap = new Map(gameState.city.config.neighborhoods.map(n => [n.id, n]));
-      let shortestPath: string[] | null = null;
-      let shortestDistance = Infinity;
-      
-      for (const stationId of line.neighborhoodIds) {
-        const otherStation = neighborhoodsMap.get(stationId);
-        if (!otherStation) continue;
-        
-        const result = findShortestTrackPath(neighborhood, otherStation, gameState.railNetwork.tracks);
-        if (result && result.distance < shortestDistance) {
-          shortestPath = result.path;
-          shortestDistance = result.distance;
-        }
+      // Find the shortest path from the last station to this one
+      const stationId = line.neighborhoodIds[line.neighborhoodIds.length - 1];
+      const otherStation = gameState.city.config.neighborhoods.find(n => n.id === stationId);
+      if (!otherStation) {
+        console.warn('Previous station not found');
+        return;
       }
+      
+      const shortestPath = findShortestTrackPath(neighborhood, otherStation, gameState.railNetwork.tracks)?.path ?? null;
       
       if (shortestPath) {
         // Call the actual handler by updating state with the track path
@@ -552,30 +546,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           const line = prevState.railNetwork.lines.get(drawingLineId);
           if (!line) return prevState;
           
-          // Find where to insert the neighborhood in the line's neighborhood list
-          let insertIndex = line.neighborhoodIds.length;
-          for (let i = 0; i < line.neighborhoodIds.length; i++) {
-            const existingNeighborhoodId = line.neighborhoodIds[i];
-            const existingNeighborhood = prevState.city.config.neighborhoods.find(n => n.id === existingNeighborhoodId);
-            if (existingNeighborhood && shortestPath.length > 0) {
-              const firstTrack = prevState.railNetwork.tracks.get(shortestPath[0]);
-              if (firstTrack) {
-                const isConnected = 
-                  (firstTrack.from.x === existingNeighborhood.position.x && firstTrack.from.y === existingNeighborhood.position.y) ||
-                  (firstTrack.to.x === existingNeighborhood.position.x && firstTrack.to.y === existingNeighborhood.position.y);
-                
-                if (isConnected) {
-                  insertIndex = i + 1;
-                  break;
-                }
-              }
-            }
-          }
-          
-          // Add neighborhood to line at the correct position
+          // Add neighborhood to end of line
           const updatedLines = new Map(prevState.railNetwork.lines);
-          const newNeighborhoodIds = [...line.neighborhoodIds];
-          newNeighborhoodIds.splice(insertIndex, 0, neighborhood.id);
+          const newNeighborhoodIds = [...line.neighborhoodIds, neighborhood.id];
           
           updatedLines.set(drawingLineId, {
             ...line,

@@ -3,24 +3,24 @@
 import type { Position, Track, Neighborhood } from '../models';
 
 /**
- * Find the shortest path between two stations using BFS on the track network
- * Returns an array of track IDs that form the path, or null if no path exists
+ * Find the shortest path between two stations using Dijkstra's algorithm on the track network
+ * Returns an object with the path (array of track IDs) and total distance, or null if no path exists
  */
 export function findShortestTrackPath(
   fromStation: Neighborhood,
   toStation: Neighborhood,
   tracks: Map<string, Track>
-): string[] | null {
+): { path: string[]; distance: number } | null {
   if (fromStation.id === toStation.id) {
-    return [];
+    return { path: [], distance: 0 };
   }
 
   const posKey = (pos: Position) => `${pos.x},${pos.y}`;
   const startKey = posKey(fromStation.position);
   const endKey = posKey(toStation.position);
 
-  // Build adjacency map: position -> array of { position, trackId }
-  const adjacency = new Map<string, Array<{ position: Position; trackId: string }>>();
+  // Build adjacency map: position -> array of { position, trackId, distance }
+  const adjacency = new Map<string, Array<{ position: Position; trackId: string; distance: number }>>();
 
   for (const [trackId, track] of tracks.entries()) {
     const fromKey = posKey(track.from);
@@ -30,36 +30,52 @@ export function findShortestTrackPath(
     if (!adjacency.has(toKey)) adjacency.set(toKey, []);
 
     // Add edges in both directions
-    adjacency.get(fromKey)!.push({ position: track.to, trackId });
-    adjacency.get(toKey)!.push({ position: track.from, trackId });
+    adjacency.get(fromKey)!.push({ position: track.to, trackId, distance: track.distance });
+    adjacency.get(toKey)!.push({ position: track.from, trackId, distance: track.distance });
   }
 
-  // BFS to find shortest path
+  // Dijkstra's algorithm to find shortest path
   interface QueueItem {
     position: Position;
     path: string[]; // track IDs
+    distance: number; // total distance so far
   }
 
-  const queue: QueueItem[] = [{ position: fromStation.position, path: [] }];
-  const visited = new Set<string>();
-  visited.add(startKey);
+  const distances = new Map<string, number>();
+  const previous = new Map<string, { trackId: string; prevKey: string } | null>();
+  const queue: QueueItem[] = [{ position: fromStation.position, path: [], distance: 0 }];
+  
+  distances.set(startKey, 0);
+  previous.set(startKey, null);
 
   while (queue.length > 0) {
-    const current = queue.shift()!;
+    // Find node with minimum distance
+    let minIndex = 0;
+    for (let i = 1; i < queue.length; i++) {
+      if (queue[i].distance < queue[minIndex].distance) {
+        minIndex = i;
+      }
+    }
+    const current = queue.splice(minIndex, 1)[0];
     const currentKey = posKey(current.position);
 
     if (currentKey === endKey) {
-      return current.path;
+      return { path: current.path, distance: current.distance };
     }
 
     const neighbors = adjacency.get(currentKey) || [];
     for (const neighbor of neighbors) {
       const neighborKey = posKey(neighbor.position);
-      if (!visited.has(neighborKey)) {
-        visited.add(neighborKey);
+      const newDistance = current.distance + neighbor.distance;
+      
+      const existingDistance = distances.get(neighborKey);
+      if (existingDistance === undefined || newDistance < existingDistance) {
+        distances.set(neighborKey, newDistance);
+        previous.set(neighborKey, { trackId: neighbor.trackId, prevKey: currentKey });
         queue.push({
           position: neighbor.position,
-          path: [...current.path, neighbor.trackId]
+          path: [...current.path, neighbor.trackId],
+          distance: newDistance
         });
       }
     }

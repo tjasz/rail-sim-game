@@ -533,14 +533,16 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       // Find the closest station on this line with a track path
       const neighborhoodsMap = new Map(gameState.city.config.neighborhoods.map(n => [n.id, n]));
       let shortestPath: string[] | null = null;
+      let shortestDistance = Infinity;
       
       for (const stationId of line.neighborhoodIds) {
         const otherStation = neighborhoodsMap.get(stationId);
         if (!otherStation) continue;
         
-        const path = findShortestTrackPath(neighborhood, otherStation, gameState.railNetwork.tracks);
-        if (path && (shortestPath === null || path.length < shortestPath.length)) {
-          shortestPath = path;
+        const result = findShortestTrackPath(neighborhood, otherStation, gameState.railNetwork.tracks);
+        if (result && result.distance < shortestDistance) {
+          shortestPath = result.path;
+          shortestDistance = result.distance;
         }
       }
       

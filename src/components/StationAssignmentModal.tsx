@@ -54,15 +54,17 @@ export function StationAssignmentModal({
     // Find the closest station on this line
     let closestStation: Neighborhood | null = null;
     let shortestPath: string[] | null = null;
+    let shortestDistance = Infinity;
 
     for (const stationId of line.neighborhoodIds) {
       const otherStation = neighborhoods.get(stationId);
       if (!otherStation) continue;
 
-      const path = findShortestTrackPath(neighborhood, otherStation, railNetwork.tracks);
-      if (path && (shortestPath === null || path.length < shortestPath.length)) {
+      const result = findShortestTrackPath(neighborhood, otherStation, railNetwork.tracks);
+      if (result && result.distance < shortestDistance) {
         closestStation = otherStation;
-        shortestPath = path;
+        shortestPath = result.path;
+        shortestDistance = result.distance;
       }
     }
 

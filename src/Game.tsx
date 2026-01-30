@@ -470,10 +470,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
   }, []);
 
   const handleDragMove = useCallback((x: number, y: number) => {
-    console.log({x,y})
     // Only handle if we're drawing a line
     if (!drawingLineId) {
-      console.log('handleDragMove: Not drawing a line, ignoring drag move');
       return;
     }
 
@@ -483,25 +481,21 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     );
     
     if (!neighborhood) {
-      console.log('handleDragMove: No neighborhood found at this position, ignoring drag move');
       return;
     }
     
     const line = gameState.railNetwork.lines.get(drawingLineId);
     if (!line) {
-      console.log('handleDragMove: Line not found, ignoring drag move');
       return;
     }
     
     // Check if neighborhood is already on this line
     if (line.neighborhoodIds.includes(neighborhood.id)) {
-      console.log('handleDragMove: Neighborhood already on this line, ignoring drag move');
       return;
     }
 
     // Check if we've already visited this neighborhood in the current drag
     if (visitedNeighborhoodsInDrag.has(neighborhood.id)) {
-      console.log('handleDragMove: Neighborhood already visited in this drag, ignoring');
       return;
     }
 
@@ -510,10 +504,12 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     
     // If line has no neighborhoods yet, add this one directly
     if (line.neighborhoodIds.length === 0) {
-      console.log('handleDragMove: Line has no neighborhoods, adding this one directly');
       setGameState((prevState) => {
+        const existingLineIds = neighborhood.lineIds ?? [];
         const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n => 
-          n.id === neighborhood.id ? { ...n, lineIds: [...(n.lineIds ?? []), drawingLineId] } : n
+          n.id === neighborhood.id 
+            ? { ...n, lineIds: existingLineIds.includes(drawingLineId) ? existingLineIds : [...existingLineIds, drawingLineId] } 
+            : n
         );
 
         const updatedLines = new Map(prevState.railNetwork.lines);
@@ -554,18 +550,19 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     const stationId = line.neighborhoodIds[line.neighborhoodIds.length - 1];
     const otherStation = gameState.city.config.neighborhoods.find(n => n.id === stationId);
     if (!otherStation) {
-      console.log('handleDragMove: Last station not found, ignoring drag move');
       return;
     }
     
     const shortestPath = findShortestTrackPath(neighborhood, otherStation, gameState.railNetwork.tracks)?.path ?? null;
     
     if (shortestPath) {
-      console.log('handleDragMove: Shortest path found, adding neighborhood to line');
       // Add the neighborhood to the line with the track path
       setGameState((prevState) => {
+        const existingLineIds = neighborhood.lineIds ?? [];
         const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n => 
-          n.id === neighborhood.id ? { ...n, lineIds: [...(n.lineIds ?? []), drawingLineId] } : n
+          n.id === neighborhood.id 
+            ? { ...n, lineIds: existingLineIds.includes(drawingLineId) ? existingLineIds : [...existingLineIds, drawingLineId] } 
+            : n
         );
 
         const updatedLines = new Map(prevState.railNetwork.lines);

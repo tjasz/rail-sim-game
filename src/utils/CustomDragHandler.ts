@@ -17,10 +17,18 @@ export class CustomDragHandler extends L.Handler {
   }
 
   addHooks(): void {
-    // Add event listeners using native addEventListener
+    // Add mouse event listeners
     this._container.addEventListener('mousedown', this._onMouseDown);
     document.addEventListener('mousemove', this._onMouseMove);
     document.addEventListener('mouseup', this._onMouseUp);
+    
+    // Add touch event listeners
+    this._container.addEventListener('touchstart', this._onTouchStart);
+    document.addEventListener('touchmove', this._onTouchMove);
+    document.addEventListener('touchend', this._onTouchEnd);
+    document.addEventListener('touchcancel', this._onTouchCancel);
+    
+    // Add keyboard event listeners
     document.addEventListener('keydown', this._onKeyDown);
     document.addEventListener('keyup', this._onKeyUp);
 
@@ -31,10 +39,18 @@ export class CustomDragHandler extends L.Handler {
   }
 
   removeHooks(): void {
-    // Remove event listeners
+    // Remove mouse event listeners
     this._container.removeEventListener('mousedown', this._onMouseDown);
     document.removeEventListener('mousemove', this._onMouseMove);
     document.removeEventListener('mouseup', this._onMouseUp);
+    
+    // Remove touch event listeners
+    this._container.removeEventListener('touchstart', this._onTouchStart);
+    document.removeEventListener('touchmove', this._onTouchMove);
+    document.removeEventListener('touchend', this._onTouchEnd);
+    document.removeEventListener('touchcancel', this._onTouchCancel);
+    
+    // Remove keyboard event listeners
     document.removeEventListener('keydown', this._onKeyDown);
     document.removeEventListener('keyup', this._onKeyUp);
 
@@ -116,6 +132,71 @@ export class CustomDragHandler extends L.Handler {
 
     // If normal dragging was temporarily enabled, disable it again
     if (this._map.dragging && this._map.dragging.enabled() && !e.ctrlKey && !e.metaKey) {
+      this._map.dragging.disable();
+    }
+  };
+
+  private _onTouchStart = (e: TouchEvent): void => {
+    // For touch devices, check if this is a multi-touch gesture
+    if (e.touches.length === 1) {
+      // Single touch - custom behavior
+      console.log('CustomDragHandler: Custom touch drag mode - single finger detected');
+      this._dragging = true;
+      
+      // Prevent default behavior
+      e.preventDefault();
+      e.stopPropagation();
+    } else if (e.touches.length >= 2) {
+      // Multi-touch (pinch/zoom) - allow normal behavior
+      console.log('CustomDragHandler: Multi-touch detected, enabling normal drag');
+      if (this._map.dragging) {
+        this._map.dragging.enable();
+      }
+    }
+  };
+
+  private _onTouchMove = (e: TouchEvent): void => {
+    if (!this._dragging) {
+      return;
+    }
+
+    // Check if it's now a multi-touch gesture
+    if (e.touches.length >= 2) {
+      // Switch to normal dragging for multi-touch
+      this._dragging = false;
+      if (this._map.dragging) {
+        this._map.dragging.enable();
+      }
+      return;
+    }
+
+    // Custom touch drag behavior
+    console.log('CustomDragHandler: Custom touch drag move detected');
+    
+    // TODO: Implement custom touch drag behavior here
+    // For now, just log the event
+  };
+
+  private _onTouchEnd = (e: TouchEvent): void => {
+    if (this._dragging) {
+      console.log('CustomDragHandler: Custom touch drag ended');
+      this._dragging = false;
+    }
+
+    // If normal dragging was temporarily enabled, disable it again
+    if (this._map.dragging && this._map.dragging.enabled() && e.touches.length === 0) {
+      this._map.dragging.disable();
+    }
+  };
+
+  private _onTouchCancel = (): void => {
+    if (this._dragging) {
+      console.log('CustomDragHandler: Custom touch drag cancelled');
+      this._dragging = false;
+    }
+
+    // If normal dragging was temporarily enabled, disable it again
+    if (this._map.dragging && this._map.dragging.enabled()) {
       this._map.dragging.disable();
     }
   };

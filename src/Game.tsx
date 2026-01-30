@@ -483,6 +483,12 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     if (!neighborhood) {
       return;
     }
+
+    // Check if neighborhood is active
+    const neighborhoodIndex = gameState.city.config.neighborhoods.findIndex(n => n.id === neighborhood.id);
+    if (neighborhoodIndex >= gameState.activeNeighborhoodCount) {
+      return;
+    }
     
     const line = gameState.railNetwork.lines.get(drawingLineId);
     if (!line) {

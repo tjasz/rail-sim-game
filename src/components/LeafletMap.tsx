@@ -2,7 +2,6 @@ import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 import { MapContainer, useMap } from 'react-leaflet';
 import { CRS, LatLngBounds } from 'leaflet';
-import { CustomDragHandler } from '../utils/CustomDragHandler';
 import './LeafletMap.css';
 
 interface LeafletMapProps {
@@ -11,23 +10,6 @@ interface LeafletMapProps {
   fitBounds?: { minX: number; minY: number; maxX: number; maxY: number } | null;
   children: ReactNode;
 }
-
-const CustomDragHandlerComponent = () => {
-  const map = useMap();
-
-  useEffect(() => {
-    // Initialize and enable the custom drag handler
-    const handler = new CustomDragHandler(map);
-    handler.enable();
-
-    // Cleanup on unmount
-    return () => {
-      handler.disable();
-    };
-  }, [map]);
-
-  return null;
-};
 
 function BoundsUpdater({ fitBounds }: { fitBounds?: { minX: number; minY: number; maxX: number; maxY: number } | null }) {
   const map = useMap();
@@ -71,8 +53,8 @@ export function LeafletMap({ gridWidth, gridHeight, fitBounds, children }: Leafl
         maxBoundsViscosity={0.5}
         attributionControl={false}
         doubleClickZoom={false}
+        dragging={false}
       >
-        <CustomDragHandlerComponent />
         <BoundsUpdater fitBounds={fitBounds} />
         {children}
       </MapContainer>

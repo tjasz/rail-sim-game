@@ -56,6 +56,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
   const [selectedStationForAssignment, setSelectedStationForAssignment] = useState<string | null>(null);
   const [drawingLineId, setDrawingLineId] = useState<string | null>(null);
   const [mapBounds, setMapBounds] = useState<{ minX: number; minY: number; maxX: number; maxY: number } | null>(null);
+  const [visitedNeighborhoodsInDrag, setVisitedNeighborhoodsInDrag] = useState<Set<string>>(new Set());
   const prevDayRef = useRef<number>(initialGameState.city.currentDay);
   const prevSimulatingRef = useRef<boolean>(initialGameState.isSimulating);
 
@@ -466,6 +467,156 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       totalDistance: 0,
       totalCost: 0,
     });
+  }, []);
+
+  const handleDragMove = useCallback((x: number, y: number) => {
+    console.log({x,y})
+    // Only handle if we're drawing a line
+    if (!drawingLineId) {
+      console.log('handleDragMove: Not drawing a line, ignoring drag move');
+      return;
+    }
+
+    // Find neighborhood at this position
+    const neighborhood = gameState.city.config.neighborhoods.find(
+      n => n.position.x === x && n.position.y === y
+    );
+    
+    if (!neighborhood) {
+      console.log('handleDragMove: No neighborhood found at this position, ignoring drag move');
+      return;
+    }
+    
+    const line = gameState.railNetwork.lines.get(drawingLineId);
+    if (!line) {
+      console.log('handleDragMove: Line not found, ignoring drag move');
+      return;
+    }
+    
+    // Check if neighborhood is already on this line
+    if (line.neighborhoodIds.includes(neighborhood.id)) {
+      console.log('handleDragMove: Neighborhood already on this line, ignoring drag move');
+      return;
+    }
+
+    // Check if we've already visited this neighborhood in the current drag
+    if (visitedNeighborhoodsInDrag.has(neighborhood.id)) {
+      console.log('handleDragMove: Neighborhood already visited in this drag, ignoring');
+      return;
+    }
+
+    // Mark as visited for this drag session
+    setVisitedNeighborhoodsInDrag(prev => new Set([...prev, neighborhood.id]));
+    
+    // If line has no neighborhoods yet, add this one directly
+    if (line.neighborhoodIds.length === 0) {
+      console.log('handleDragMove: Line has no neighborhoods, adding this one directly');
+      setGameState((prevState) => {
+        const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n => 
+          n.id === neighborhood.id ? { ...n, lineIds: [...(n.lineIds ?? []), drawingLineId] } : n
+        );
+
+        const updatedLines = new Map(prevState.railNetwork.lines);
+        updatedLines.set(drawingLineId, {
+          ...line,
+          neighborhoodIds: [neighborhood.id],
+        });
+
+        const updatedRailNetwork = {
+          ...prevState.railNetwork,
+          lines: updatedLines,
+        };
+        
+        const updatedCitizens = calculateCitizenRoutes(
+          prevState.citizens,
+          updatedNeighborhoods,
+          prevState.city.config,
+          updatedRailNetwork
+        );
+        
+        return {
+          ...prevState,
+          city: {
+            ...prevState.city,
+            config: {
+              ...prevState.city.config,
+              neighborhoods: updatedNeighborhoods,
+            },
+          },
+          railNetwork: updatedRailNetwork,
+          citizens: updatedCitizens,
+        };
+      });
+      return;
+    }
+    
+    // Find the shortest path from the last station to this one
+    const stationId = line.neighborhoodIds[line.neighborhoodIds.length - 1];
+    const otherStation = gameState.city.config.neighborhoods.find(n => n.id === stationId);
+    if (!otherStation) {
+      console.log('handleDragMove: Last station not found, ignoring drag move');
+      return;
+    }
+    
+    const shortestPath = findShortestTrackPath(neighborhood, otherStation, gameState.railNetwork.tracks)?.path ?? null;
+    
+    if (shortestPath) {
+      console.log('handleDragMove: Shortest path found, adding neighborhood to line');
+      // Add the neighborhood to the line with the track path
+      setGameState((prevState) => {
+        const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n => 
+          n.id === neighborhood.id ? { ...n, lineIds: [...(n.lineIds ?? []), drawingLineId] } : n
+        );
+
+        const updatedLines = new Map(prevState.railNetwork.lines);
+        updatedLines.set(drawingLineId, {
+          ...line,
+          neighborhoodIds: [...line.neighborhoodIds, neighborhood.id],
+        });
+
+        const updatedTracks = new Map(prevState.railNetwork.tracks);
+        shortestPath.forEach(trackId => {
+          const track = prevState.railNetwork.tracks.get(trackId);
+          if (track && !track.lineIds.includes(drawingLineId)) {
+            updatedTracks.set(trackId, {
+              ...track,
+              lineIds: [...track.lineIds, drawingLineId],
+            });
+          }
+        });
+
+        const updatedRailNetwork = {
+          ...prevState.railNetwork,
+          lines: updatedLines,
+          tracks: updatedTracks,
+        };
+        
+        const updatedCitizens = calculateCitizenRoutes(
+          prevState.citizens,
+          updatedNeighborhoods,
+          prevState.city.config,
+          updatedRailNetwork
+        );
+        
+        return {
+          ...prevState,
+          city: {
+            ...prevState.city,
+            config: {
+              ...prevState.city.config,
+              neighborhoods: updatedNeighborhoods,
+            },
+          },
+          railNetwork: updatedRailNetwork,
+          citizens: updatedCitizens,
+        };
+      });
+    }
+  }, [drawingLineId, gameState.city.config.neighborhoods, gameState.railNetwork, visitedNeighborhoodsInDrag]);
+
+  const handleDragEnd = useCallback(() => {
+    // Clear visited neighborhoods when drag ends
+    setVisitedNeighborhoodsInDrag(new Set());
   }, []);
 
   const handleMapClick = useCallback((x: number, y: number) => {    
@@ -1205,6 +1356,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
             />
             <MapClickHandler
               onMapClick={buildTrackState.isBuilding || drawingLineId ? handleMapClick : undefined}
+              onDragMove={drawingLineId ? handleDragMove : undefined}
+              onDragEnd={drawingLineId ? handleDragEnd : undefined}
+              isDraggingEnabled={!!drawingLineId}
             />
             {buildTrackState.isBuilding && (
               <DraftTrackOverlay

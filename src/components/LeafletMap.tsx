@@ -2,9 +2,8 @@ import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 import { MapContainer, useMap } from 'react-leaflet';
 import { CRS, LatLngBounds } from 'leaflet';
+import { CustomDragHandler } from '../utils/CustomDragHandler';
 import './LeafletMap.css';
-import { GestureHandling } from 'leaflet-gesture-handling';
-import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
 
 interface LeafletMapProps {
   gridWidth: number;
@@ -13,24 +12,21 @@ interface LeafletMapProps {
   children: ReactNode;
 }
 
-const GestureHandler = () => {
+const CustomDragHandlerComponent = () => {
   const map = useMap();
 
   useEffect(() => {
-    // Add the gestureHandling handler to the map
-    map.addHandler('gestureHandling', GestureHandling);
-    // Enable the handler
-    // @ts-expect-error
-    map.gestureHandling.enable();
+    // Initialize and enable the custom drag handler
+    const handler = new CustomDragHandler(map);
+    handler.enable();
 
-    // Optional: clean up the handler if the component unmounts (though unlikely for a map)
+    // Cleanup on unmount
     return () => {
-      // @ts-expect-error
-      map.gestureHandling.disable();
+      handler.disable();
     };
-  }, [map]); // Dependency on 'map' ensures it runs once the map instance is available
+  }, [map]);
 
-  return null; // This component does not render anything
+  return null;
 };
 
 function BoundsUpdater({ fitBounds }: { fitBounds?: { minX: number; minY: number; maxX: number; maxY: number } | null }) {
@@ -76,7 +72,7 @@ export function LeafletMap({ gridWidth, gridHeight, fitBounds, children }: Leafl
         attributionControl={false}
         doubleClickZoom={false}
       >
-        <GestureHandler />
+        <CustomDragHandlerComponent />
         <BoundsUpdater fitBounds={fitBounds} />
         {children}
       </MapContainer>

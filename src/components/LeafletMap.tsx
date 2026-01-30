@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { MapContainer, useMap } from 'react-leaflet';
 import { CRS, LatLngBounds } from 'leaflet';
 import './LeafletMap.css';
+import { GestureHandling } from 'leaflet-gesture-handling';
+import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css'
 
 interface LeafletMapProps {
   gridWidth: number;
@@ -10,6 +12,26 @@ interface LeafletMapProps {
   fitBounds?: { minX: number; minY: number; maxX: number; maxY: number } | null;
   children: ReactNode;
 }
+
+const GestureHandler = () => {
+  const map = useMap();
+
+  useEffect(() => {
+    // Add the gestureHandling handler to the map
+    map.addHandler('gestureHandling', GestureHandling);
+    // Enable the handler
+    // @ts-expect-error
+    map.gestureHandling.enable();
+
+    // Optional: clean up the handler if the component unmounts (though unlikely for a map)
+    return () => {
+      // @ts-expect-error
+      map.gestureHandling.disable();
+    };
+  }, [map]); // Dependency on 'map' ensures it runs once the map instance is available
+
+  return null; // This component does not render anything
+};
 
 function BoundsUpdater({ fitBounds }: { fitBounds?: { minX: number; minY: number; maxX: number; maxY: number } | null }) {
   const map = useMap();
@@ -54,6 +76,7 @@ export function LeafletMap({ gridWidth, gridHeight, fitBounds, children }: Leafl
         attributionControl={false}
         doubleClickZoom={false}
       >
+        <GestureHandler />
         <BoundsUpdater fitBounds={fitBounds} />
         {children}
       </MapContainer>

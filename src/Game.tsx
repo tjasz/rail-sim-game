@@ -508,6 +508,11 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     // Mark as visited for this drag session
     setVisitedNeighborhoodsInDrag(prev => new Set([...prev, neighborhood.id]));
     
+    // Trigger haptic feedback
+    if (navigator.vibrate) {
+      navigator.vibrate(100);
+    }
+    
     // If line has no neighborhoods yet, add this one directly
     if (line.neighborhoodIds.length === 0) {
       setGameState((prevState) => {

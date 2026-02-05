@@ -7,7 +7,7 @@ interface StationAssignmentModalProps {
   neighborhoods: Map<string, Neighborhood>;
   railNetwork: RailNetwork;
   onClose: () => void;
-  onAssignLine: (neighborhoodId: string, lineId: string, trackIds: string[]) => void;
+  onAssignLine: (neighborhoodId: string, lineId: string) => void;
   onUnassignLine: (neighborhoodId: string, lineId: string) => void;
   onCreateNewLine: (neighborhoodId: string, lineName: string, lineColor: string) => void;
 }
@@ -46,7 +46,7 @@ export function StationAssignmentModal({
 
   const handleAssignLine = (lineId: string) => {
     // Simply assign to the end of the line (no track pathfinding needed)
-    onAssignLine(neighborhood.id, lineId, []);
+    onAssignLine(neighborhood.id, lineId);
   };
 
 

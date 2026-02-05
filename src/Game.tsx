@@ -684,7 +684,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     }
   }, [drawingLineId, gameState.city.config.neighborhoods, gameState.railNetwork]);
 
-  const handleAssignNeighborhoodToLine = useCallback((neighborhoodId: string, lineId: string, _trackIds: string[]) => {
+  const handleAssignNeighborhoodToLine = useCallback((neighborhoodId: string, lineId: string) => {
     setGameState((prevState) => {
       const neighborhood = prevState.city.config.neighborhoods.find(n => n.id === neighborhoodId);
       const line = prevState.railNetwork.lines.get(lineId);

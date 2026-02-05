@@ -808,7 +808,13 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
 
       // Insert neighborhood into line at the specified position
       const newNeighborhoodIds = [...line.neighborhoodIds];
-      newNeighborhoodIds.splice(insertAfterIndex + 1, 0, neighborhoodId);
+      
+      // Special case: insertAfterIndex === -1 means insert at the beginning
+      if (insertAfterIndex === -1) {
+        newNeighborhoodIds.unshift(neighborhoodId);
+      } else {
+        newNeighborhoodIds.splice(insertAfterIndex + 1, 0, neighborhoodId);
+      }
 
       // Update line with new neighborhood order
       const updatedLines = new Map(prevState.railNetwork.lines);

@@ -153,80 +153,237 @@ export function TrackOverlay({ config, neighborhoods, lines, onInsertStation }: 
       style={{ pointerEvents: draggingSegment ? 'all' : 'none' } as any}
     >
       {Array.from(lines.values()).map((line, lineIndex) => {
-        // Draw lines between consecutive stations
-        return line.neighborhoodIds.map((neighborhoodId, idx) => {
-          if (idx === 0) return null; // Skip first station (no line before it)
-          
-          const fromNeighborhood = neighborhoodMap.get(line.neighborhoodIds[idx - 1]);
-          const toNeighborhood = neighborhoodMap.get(neighborhoodId);
-          
-          if (!fromNeighborhood || !toNeighborhood) return null;
-          
-          // Station positions in grid coordinates [x, y]
-          const fromPosBase: [number, number] = [fromNeighborhood.position.x + 0.5, config.gridHeight - fromNeighborhood.position.y + 0.5];
-          const toPosBase: [number, number] = [toNeighborhood.position.x + 0.5, config.gridHeight - toNeighborhood.position.y + 0.5];
-          
-          // Calculate perpendicular offset for parallel lines
-          const dx = toPosBase[0] - fromPosBase[0];
-          const dy = toPosBase[1] - fromPosBase[1];
-          const length = Math.sqrt(dx * dx + dy * dy);
-          
-          // Perpendicular unit vector (rotate 90 degrees)
-          const perpX = length > 0 ? -dy / length : 0;
-          const perpY = length > 0 ? dx / length : 0;
-          
-          // Offset amount based on line index (center around 0)
-          const offsetAmount = (lineIndex - (lines.size - 1) / 2) * 0.08;
-          
-          // Apply offset to both points
-          const fromPos: [number, number] = [
-            fromPosBase[0] + perpX * offsetAmount,
-            fromPosBase[1] + perpY * offsetAmount
-          ];
-          const toPos: [number, number] = [
-            toPosBase[0] + perpX * offsetAmount,
-            toPosBase[1] + perpY * offsetAmount
-          ];
-          
-          const isDragging = draggingSegment?.lineId === line.id && draggingSegment?.segmentIndex === idx - 1;
-          
-          return (
-            <g key={`${line.id}-${idx}`}>
-              {/* Visible line */}
+        if (line.neighborhoodIds.length === 0) return null;
+        
+        // Get first and last neighborhoods for T-markers
+        const firstNeighborhood = neighborhoodMap.get(line.neighborhoodIds[0]);
+        const lastNeighborhood = neighborhoodMap.get(line.neighborhoodIds[line.neighborhoodIds.length - 1]);
+        
+        if (!firstNeighborhood || !lastNeighborhood) return null;
+        
+        // Calculate positions
+        const firstPosBase: [number, number] = [firstNeighborhood.position.x + 0.5, config.gridHeight - firstNeighborhood.position.y + 0.5];
+        const lastPosBase: [number, number] = [lastNeighborhood.position.x + 0.5, config.gridHeight - lastNeighborhood.position.y + 0.5];
+        
+        // For start T-marker: direction from second station to first (or default if only one station)
+        let startDx = 0, startDy = -1;
+        if (line.neighborhoodIds.length > 1) {
+          const secondNeighborhood = neighborhoodMap.get(line.neighborhoodIds[1]);
+          if (secondNeighborhood) {
+            const secondPos: [number, number] = [secondNeighborhood.position.x + 0.5, config.gridHeight - secondNeighborhood.position.y + 0.5];
+            startDx = firstPosBase[0] - secondPos[0];
+            startDy = firstPosBase[1] - secondPos[1];
+            const startLength = Math.sqrt(startDx * startDx + startDy * startDy);
+            if (startLength > 0) {
+              startDx /= startLength;
+              startDy /= startLength;
+            }
+          }
+        }
+        
+        // For end T-marker: direction from second-to-last to last (or default if only one station)
+        let endDx = 0, endDy = 1;
+        if (line.neighborhoodIds.length > 1) {
+          const secondLastNeighborhood = neighborhoodMap.get(line.neighborhoodIds[line.neighborhoodIds.length - 2]);
+          if (secondLastNeighborhood) {
+            const secondLastPos: [number, number] = [secondLastNeighborhood.position.x + 0.5, config.gridHeight - secondLastNeighborhood.position.y + 0.5];
+            endDx = lastPosBase[0] - secondLastPos[0];
+            endDy = lastPosBase[1] - secondLastPos[1];
+            const endLength = Math.sqrt(endDx * endDx + endDy * endDy);
+            if (endLength > 0) {
+              endDx /= endLength;
+              endDy /= endLength;
+            }
+          }
+        }
+        
+        // Calculate perpendicular for T-bar (90 degree rotation)
+        const startPerpX = -startDy;
+        const startPerpY = startDx;
+        const endPerpX = -endDy;
+        const endPerpY = endDx;
+        
+        // Offset for parallel lines
+        const offsetAmount = (lineIndex - (lines.size - 1) / 2) * 0.08;
+        const startPerpOffsetX = (line.neighborhoodIds.length > 1 ? -startDy : 1) * offsetAmount;
+        const startPerpOffsetY = (line.neighborhoodIds.length > 1 ? startDx : 0) * offsetAmount;
+        const endPerpOffsetX = (line.neighborhoodIds.length > 1 ? -endDy : 1) * offsetAmount;
+        const endPerpOffsetY = (line.neighborhoodIds.length > 1 ? endDx : 0) * offsetAmount;
+        
+        // Start T-marker position (extend 0.25 units beyond first station)
+        const startTCenter: [number, number] = [
+          firstPosBase[0] + startDx * 0.33 + startPerpOffsetX,
+          firstPosBase[1] + startDy * 0.33 + startPerpOffsetY
+        ];
+        
+        // End T-marker position (extend 0.25 units beyond last station)
+        const endTCenter: [number, number] = [
+          lastPosBase[0] + endDx * 0.33 + endPerpOffsetX,
+          lastPosBase[1] + endDy * 0.33 + endPerpOffsetY
+        ];
+        
+        const isStartDragging = draggingSegment?.lineId === line.id && draggingSegment?.segmentIndex === -1;
+        const isEndDragging = draggingSegment?.lineId === line.id && draggingSegment?.segmentIndex === line.neighborhoodIds.length - 1;
+        
+        return (
+          <g key={`line-${line.id}`}>
+            {/* Start T-marker (insert before index 0) */}
+            <g key={`${line.id}-start-t`}>
+              {/* Stem of T */}
               <line
-                x1={fromPos[0]}
-                y1={fromPos[1]}
-                x2={toPos[0]}
-                y2={toPos[1]}
+                x1={firstPosBase[0] + startPerpOffsetX}
+                y1={firstPosBase[1] + startPerpOffsetY}
+                x2={startTCenter[0]}
+                y2={startTCenter[1]}
                 stroke={line.color}
                 strokeWidth={0.06}
                 strokeLinecap="round"
-                strokeLinejoin="round"
                 style={{ 
                   pointerEvents: 'none',
-                  opacity: isDragging ? 0.5 : 1 
+                  opacity: isStartDragging ? 0.5 : 1 
                 }}
               />
-              {/* Invisible wider line for easier interaction */}
+              {/* Bar of T */}
               <line
-                x1={fromPos[0]}
-                y1={fromPos[1]}
-                x2={toPos[0]}
-                y2={toPos[1]}
-                stroke="transparent"
-                strokeWidth={0.3}
+                x1={startTCenter[0] - startPerpX * 0.15}
+                y1={startTCenter[1] - startPerpY * 0.15}
+                x2={startTCenter[0] + startPerpX * 0.15}
+                y2={startTCenter[1] + startPerpY * 0.15}
+                stroke={line.color}
+                strokeWidth={0.06}
                 strokeLinecap="round"
-                strokeLinejoin="round"
                 style={{ 
-                  pointerEvents: onInsertStation ? 'stroke' : 'none',
+                  pointerEvents: 'none',
+                  opacity: isStartDragging ? 0.5 : 1 
+                }}
+              />
+              {/* Invisible wider area for interaction */}
+              <circle
+                cx={startTCenter[0]}
+                cy={startTCenter[1]}
+                r={0.2}
+                fill="transparent"
+                style={{ 
+                  pointerEvents: onInsertStation ? 'all' : 'none',
                   cursor: 'grab' 
                 }}
-                onMouseDown={(e) => handleSegmentMouseDown(e, line.id, idx - 1)}
-                onTouchStart={(e) => handleSegmentTouchStart(e, line.id, idx - 1)}
+                onMouseDown={(e) => handleSegmentMouseDown(e, line.id, -1)}
+                onTouchStart={(e) => handleSegmentTouchStart(e, line.id, -1)}
               />
             </g>
-          );
-        });
+            
+            {/* Line segments between stations */}
+            {line.neighborhoodIds.map((neighborhoodId, idx) => {
+              if (idx === 0) return null;
+              
+              const fromNeighborhood = neighborhoodMap.get(line.neighborhoodIds[idx - 1]);
+              const toNeighborhood = neighborhoodMap.get(neighborhoodId);
+              
+              if (!fromNeighborhood || !toNeighborhood) return null;
+              
+              const fromPosBase: [number, number] = [fromNeighborhood.position.x + 0.5, config.gridHeight - fromNeighborhood.position.y + 0.5];
+              const toPosBase: [number, number] = [toNeighborhood.position.x + 0.5, config.gridHeight - toNeighborhood.position.y + 0.5];
+              
+              const dx = toPosBase[0] - fromPosBase[0];
+              const dy = toPosBase[1] - fromPosBase[1];
+              const length = Math.sqrt(dx * dx + dy * dy);
+              
+              const perpX = length > 0 ? -dy / length : 0;
+              const perpY = length > 0 ? dx / length : 0;
+              
+              const fromPos: [number, number] = [
+                fromPosBase[0] + perpX * offsetAmount,
+                fromPosBase[1] + perpY * offsetAmount
+              ];
+              const toPos: [number, number] = [
+                toPosBase[0] + perpX * offsetAmount,
+                toPosBase[1] + perpY * offsetAmount
+              ];
+              
+              const isDragging = draggingSegment?.lineId === line.id && draggingSegment?.segmentIndex === idx - 1;
+              
+              return (
+                <g key={`${line.id}-${idx}`}>
+                  <line
+                    x1={fromPos[0]}
+                    y1={fromPos[1]}
+                    x2={toPos[0]}
+                    y2={toPos[1]}
+                    stroke={line.color}
+                    strokeWidth={0.06}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ 
+                      pointerEvents: 'none',
+                      opacity: isDragging ? 0.5 : 1 
+                    }}
+                  />
+                  <line
+                    x1={fromPos[0]}
+                    y1={fromPos[1]}
+                    x2={toPos[0]}
+                    y2={toPos[1]}
+                    stroke="transparent"
+                    strokeWidth={0.3}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ 
+                      pointerEvents: onInsertStation ? 'stroke' : 'none',
+                      cursor: 'grab' 
+                    }}
+                    onMouseDown={(e) => handleSegmentMouseDown(e, line.id, idx - 1)}
+                    onTouchStart={(e) => handleSegmentTouchStart(e, line.id, idx - 1)}
+                  />
+                </g>
+              );
+            })}
+            
+            {/* End T-marker (insert after last index) */}
+            <g key={`${line.id}-end-t`}>
+              {/* Stem of T */}
+              <line
+                x1={lastPosBase[0] + endPerpOffsetX}
+                y1={lastPosBase[1] + endPerpOffsetY}
+                x2={endTCenter[0]}
+                y2={endTCenter[1]}
+                stroke={line.color}
+                strokeWidth={0.06}
+                strokeLinecap="round"
+                style={{ 
+                  pointerEvents: 'none',
+                  opacity: isEndDragging ? 0.5 : 1 
+                }}
+              />
+              {/* Bar of T */}
+              <line
+                x1={endTCenter[0] - endPerpX * 0.15}
+                y1={endTCenter[1] - endPerpY * 0.15}
+                x2={endTCenter[0] + endPerpX * 0.15}
+                y2={endTCenter[1] + endPerpY * 0.15}
+                stroke={line.color}
+                strokeWidth={0.06}
+                strokeLinecap="round"
+                style={{ 
+                  pointerEvents: 'none',
+                  opacity: isEndDragging ? 0.5 : 1 
+                }}
+              />
+              {/* Invisible wider area for interaction */}
+              <circle
+                cx={endTCenter[0]}
+                cy={endTCenter[1]}
+                r={0.2}
+                fill="transparent"
+                style={{ 
+                  pointerEvents: onInsertStation ? 'all' : 'none',
+                  cursor: 'grab' 
+                }}
+                onMouseDown={(e) => handleSegmentMouseDown(e, line.id, line.neighborhoodIds.length - 1)}
+                onTouchStart={(e) => handleSegmentTouchStart(e, line.id, line.neighborhoodIds.length - 1)}
+              />
+            </g>
+          </g>
+        );
       })}
       
       {/* Show drag indicator */}

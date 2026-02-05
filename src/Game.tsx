@@ -786,6 +786,72 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     });
   }, []);
 
+  const handleInsertStationIntoLine = useCallback((lineId: string, insertAfterIndex: number, neighborhoodId: string) => {
+    setGameState((prevState) => {
+      const neighborhood = prevState.city.config.neighborhoods.find(n => n.id === neighborhoodId);
+      const line = prevState.railNetwork.lines.get(lineId);
+      
+      if (!neighborhood || !line) {
+        return prevState;
+      }
+
+      // Check if neighborhood is already on this line
+      if (line.neighborhoodIds.includes(neighborhoodId)) {
+        return prevState;
+      }
+
+      // Check if neighborhood is active
+      const neighborhoodIndex = prevState.city.config.neighborhoods.findIndex(n => n.id === neighborhoodId);
+      if (neighborhoodIndex >= prevState.activeNeighborhoodCount) {
+        return prevState;
+      }
+
+      // Insert neighborhood into line at the specified position
+      const newNeighborhoodIds = [...line.neighborhoodIds];
+      newNeighborhoodIds.splice(insertAfterIndex + 1, 0, neighborhoodId);
+
+      // Update line with new neighborhood order
+      const updatedLines = new Map(prevState.railNetwork.lines);
+      updatedLines.set(lineId, {
+        ...line,
+        neighborhoodIds: newNeighborhoodIds,
+      });
+
+      // Update neighborhood to include this line
+      const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n =>
+        n.id === neighborhoodId
+          ? { ...n, lineIds: [...(n.lineIds ?? []), lineId] }
+          : n
+      );
+
+      const updatedRailNetwork = {
+        ...prevState.railNetwork,
+        lines: updatedLines,
+      };
+      
+      // Recalculate citizen routes with updated network
+      const updatedCitizens = calculateCitizenRoutes(
+        prevState.citizens,
+        updatedNeighborhoods,
+        prevState.city.config,
+        updatedRailNetwork
+      );
+      
+      return {
+        ...prevState,
+        city: {
+          ...prevState.city,
+          config: {
+            ...prevState.city.config,
+            neighborhoods: updatedNeighborhoods,
+          },
+        },
+        railNetwork: updatedRailNetwork,
+        citizens: updatedCitizens,
+      };
+    });
+  }, []);
+
   const handleDrawNewLine = useCallback(() => {
     let newLineId: string;
     
@@ -1066,6 +1132,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
                 config={gameState.city.config}
                 neighborhoods={gameState.city.config.neighborhoods}
                 lines={gameState.railNetwork.lines}
+                onInsertStation={handleInsertStationIntoLine}
               />
               <NeighborhoodMarkers
                 config={gameState.city.config}

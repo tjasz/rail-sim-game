@@ -1,6 +1,6 @@
 // Utility functions for game simulation
 
-import type { GameState, Citizen, Train, Line, Neighborhood, Track, Position } from '../models';
+import type { GameState, Citizen, Train, Line, Neighborhood, Position } from '../models';
 import { generateSingleTrip } from './tripGeneration';
 
 export const MINUTES_PER_DAY = 300; // 300 minutes in a day
@@ -86,63 +86,13 @@ export function moveToward(
 }
 
 /**
- * Find a path of track waypoints between two neighborhoods
- * Uses BFS to find connected tracks that form a path
+ * Create a direct path between two neighborhoods (no track waypoints)
  */
-export function findTrackPath(
+export function findDirectPath(
   fromNeighborhood: Neighborhood,
-  toNeighborhood: Neighborhood,
-  tracks: Map<string, Track>,
-  lineId: string
+  toNeighborhood: Neighborhood
 ): Position[] {
-  // Build adjacency map of positions connected by tracks on this line
-  const adjacency = new Map<string, Position[]>();
-  const posKey = (pos: Position) => `${pos.x},${pos.y}`;
-  
-  tracks.forEach(track => {
-    if (!track.lineIds.includes(lineId)) return;
-    
-    const fromKey = posKey(track.from);
-    const toKey = posKey(track.to);
-    
-    if (!adjacency.has(fromKey)) adjacency.set(fromKey, []);
-    if (!adjacency.has(toKey)) adjacency.set(toKey, []);
-    
-    adjacency.get(fromKey)!.push(track.to);
-    adjacency.get(toKey)!.push(track.from);
-  });
-  
-  // BFS to find path
-  const startKey = posKey(fromNeighborhood.position);
-  const endKey = posKey(toNeighborhood.position);
-  
-  if (startKey === endKey) return [fromNeighborhood.position];
-  
-  const queue: { pos: Position; path: Position[] }[] = [
-    { pos: fromNeighborhood.position, path: [fromNeighborhood.position] }
-  ];
-  const visited = new Set<string>([startKey]);
-  
-  while (queue.length > 0) {
-    const { pos, path } = queue.shift()!;
-    const neighbors = adjacency.get(posKey(pos)) || [];
-    
-    for (const neighbor of neighbors) {
-      const nKey = posKey(neighbor);
-      if (visited.has(nKey)) continue;
-      
-      visited.add(nKey);
-      const newPath = [...path, neighbor];
-      
-      if (nKey === endKey) {
-        return newPath;
-      }
-      
-      queue.push({ pos: neighbor, path: newPath });
-    }
-  }
-  
-  // No path found via tracks, return direct line
+  // Just return direct line between the two neighborhoods
   return [fromNeighborhood.position, toNeighborhood.position];
 }
 
@@ -153,7 +103,6 @@ export function updateTrains(
   trains: Map<string, Train>,
   lines: Map<string, Line>,
   neighborhoods: Neighborhood[],
-  tracks: Map<string, Track>,
   deltaMinutes: number,
   currentTime: number
 ): Map<string, Train> {
@@ -213,8 +162,8 @@ export function updateTrains(
         const currentNeighborhood = neighborhoodMap.get(line.neighborhoodIds[updatedTrain.currentNeighborhoodIndex]);
 
         if (followingNeighborhood && currentNeighborhood) {
-          // Find track path between neighborhoods
-          const path = findTrackPath(currentNeighborhood, followingNeighborhood, tracks, line.id);
+          // Find direct path between neighborhoods
+          const path = findDirectPath(currentNeighborhood, followingNeighborhood);
           updatedTrain.currentPath = path;
           updatedTrain.currentPathIndex = 0;
           
@@ -236,7 +185,7 @@ export function updateTrains(
         // No path defined, initialize it
         const currentNeighborhood = neighborhoodMap.get(line.neighborhoodIds[train.currentNeighborhoodIndex]);
         if (currentNeighborhood && nextNeighborhood) {
-          const path = findTrackPath(currentNeighborhood, nextNeighborhood, tracks, line.id);
+          const path = findDirectPath(currentNeighborhood, nextNeighborhood);
           updatedTrain.currentPath = path;
           updatedTrain.currentPathIndex = 0;
         }
@@ -760,7 +709,6 @@ export function tickSimulation(
     gameState.railNetwork.trains,
     gameState.railNetwork.lines,
     activeNeighborhoods,
-    gameState.railNetwork.tracks,
     deltaMinutes,
     newTime
   );

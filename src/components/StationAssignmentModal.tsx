@@ -1,5 +1,5 @@
 import type { Neighborhood, Line, RailNetwork } from '../models';
-import { areStationsConnected, findShortestTrackPath, generateLineColor } from '../utils';
+import { generateLineColor } from '../utils';
 import './StationAssignmentModal.css';
 
 interface StationAssignmentModalProps {
@@ -27,51 +27,28 @@ export function StationAssignmentModal({
     .map(lineId => railNetwork.lines.get(lineId))
     .filter(line => line !== undefined) as Line[];
 
-  // Find assignable lines: lines that have at least one neighborhood connected to this neighborhood
+  // Find assignable lines: lines that already exist
   const assignableLines: Array<{ line: Line; connectedNeighborhoods: Neighborhood[] }> = [];
   
   for (const line of railNetwork.lines.values()) {
     // Skip if already assigned
     if (lineIds.includes(line.id)) continue;
     
-    // Check if any neighborhood on this line is connected to our neighborhood
-    // For now, we just check track connectivity
-    // In a complete implementation, we'd get neighborhoods from the game state
-    const connectedNeighborhoods: Neighborhood[] = line.neighborhoodIds
+    // Get all neighborhoods on this line
+    const lineNeighborhoods: Neighborhood[] = line.neighborhoodIds
       .map(neighborhoodId => neighborhoods.get(neighborhoodId))
-      .filter(s => s !== undefined)
-      .filter(s => areStationsConnected(neighborhood, s!, railNetwork.tracks)) as Neighborhood[];
+      .filter(s => s !== undefined) as Neighborhood[];
     
-    if (connectedNeighborhoods.length > 0) {
-      assignableLines.push({ line, connectedNeighborhoods });
+    if (lineNeighborhoods.length > 0) {
+      assignableLines.push({ line, connectedNeighborhoods: lineNeighborhoods });
     }
   }
 
   const handleAssignLine = (lineId: string) => {
-    const line = railNetwork.lines.get(lineId);
-    if (!line) return;
-
-    // Find the closest station on this line
-    let closestStation: Neighborhood | null = null;
-    let shortestPath: string[] | null = null;
-    let shortestDistance = Infinity;
-
-    for (const stationId of line.neighborhoodIds) {
-      const otherStation = neighborhoods.get(stationId);
-      if (!otherStation) continue;
-
-      const result = findShortestTrackPath(neighborhood, otherStation, railNetwork.tracks);
-      if (result && result.distance < shortestDistance) {
-        closestStation = otherStation;
-        shortestPath = result.path;
-        shortestDistance = result.distance;
-      }
-    }
-
-    if (closestStation && shortestPath) {
-      onAssignLine(neighborhood.id, lineId, shortestPath);
-    }
+    // Simply assign to the end of the line (no track pathfinding needed)
+    onAssignLine(neighborhood.id, lineId, []);
   };
+
 
   const handleCreateNewLine = () => {
     const existingColors = Array.from(railNetwork.lines.values()).map(line => line.color);

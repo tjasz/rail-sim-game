@@ -21,7 +21,6 @@ export const baseGameState: GameState = {
     },
   },
   railNetwork: {
-    tracks: new Map(),
     lines: new Map(),
     trains: new Map(),
   },
@@ -37,7 +36,6 @@ export const baseGameState: GameState = {
     totalMoneySpent: 0,
     totalMoneyEarned: 0,
     totalStationsBuilt: 2,
-    totalTrackMilesBuilt: 2.24,
     totalTrainsPurchased: 1,
   },
 };

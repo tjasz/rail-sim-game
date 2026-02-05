@@ -36,7 +36,6 @@ export interface GameStats {
   
   // Network stats
   totalStationsBuilt: number;
-  totalTrackMilesBuilt: number;
   totalTrainsPurchased: number;
 }
 

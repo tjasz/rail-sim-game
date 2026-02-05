@@ -1,6 +1,6 @@
 // Pathfinding utilities for calculating optimal routes through the city
 
-import type { Position, RailNetwork, Neighborhood, Line, Track } from '../models';
+import type { Position, RailNetwork, Neighborhood, Line } from '../models';
 import { calculateDistance } from './simulation';
 
 interface PathNode {
@@ -13,76 +13,13 @@ interface PathNode {
 }
 
 /**
- * Find the shortest path along tracks between two positions using BFS
+ * Calculate the distance between two neighborhoods on the same line using direct paths
  */
-function findTrackPath(
-  from: Position,
-  to: Position,
-  lineId: string,
-  tracks: Map<string, Track>
-): number {
-  const posKey = (pos: Position) => `${pos.x},${pos.y}`;
-  const startKey = posKey(from);
-  const endKey = posKey(to);
-  
-  if (startKey === endKey) return 0;
-  
-  // Build adjacency map for tracks on this line
-  const adjacency = new Map<string, Array<{ position: Position; distance: number }>>();
-  
-  for (const track of tracks.values()) {
-    if (!track.lineIds.includes(lineId)) continue;
-    
-    const fromKey = posKey(track.from);
-    const toKey = posKey(track.to);
-    
-    // Add edges in both directions
-    if (!adjacency.has(fromKey)) adjacency.set(fromKey, []);
-    if (!adjacency.has(toKey)) adjacency.set(toKey, []);
-    
-    adjacency.get(fromKey)!.push({ position: track.to, distance: track.distance });
-    adjacency.get(toKey)!.push({ position: track.from, distance: track.distance });
-  }
-  
-  // BFS to find shortest path
-  const queue: Array<{ position: Position; distance: number }> = [{ position: from, distance: 0 }];
-  const visited = new Set<string>();
-  visited.add(startKey);
-  
-  while (queue.length > 0) {
-    const current = queue.shift()!;
-    const currentKey = posKey(current.position);
-    
-    if (currentKey === endKey) {
-      return current.distance;
-    }
-    
-    const neighbors = adjacency.get(currentKey) || [];
-    for (const neighbor of neighbors) {
-      const neighborKey = posKey(neighbor.position);
-      if (!visited.has(neighborKey)) {
-        visited.add(neighborKey);
-        queue.push({
-          position: neighbor.position,
-          distance: current.distance + neighbor.distance
-        });
-      }
-    }
-  }
-  
-  // No path found along tracks
-  return Infinity;
-}
-
-/**
- * Calculate the distance along tracks between two neighborhoods on the same line
- */
-function getTrackDistanceBetweenNeighborhoods(
+function getDirectDistanceBetweenNeighborhoods(
   fromNeighborhoodId: string,
   toNeighborhoodId: string,
   line: Line,
-  neighborhoods: Neighborhood[],
-  tracks: Map<string, Track>
+  neighborhoods: Neighborhood[]
 ): number {
   const neighborhoodMap = new Map(neighborhoods.map(n => [n.id, n]));
   const fromIndex = line.neighborhoodIds.indexOf(fromNeighborhoodId);
@@ -95,7 +32,7 @@ function getTrackDistanceBetweenNeighborhoods(
   
   let totalDistance = 0;
   
-  // Sum up track distances between consecutive neighborhoods
+  // Sum up direct distances between consecutive neighborhoods
   for (let i = startIndex; i < endIndex; i++) {
     const currentNeighborhoodId = line.neighborhoodIds[i];
     const nextNeighborhoodId = line.neighborhoodIds[i + 1];
@@ -105,20 +42,9 @@ function getTrackDistanceBetweenNeighborhoods(
     
     if (!currentNeighborhood || !nextNeighborhood) return Infinity;
     
-    // Find path along tracks between these two consecutive neighborhoods
-    const trackDistance = findTrackPath(
-      currentNeighborhood.position,
-      nextNeighborhood.position,
-      line.id,
-      tracks
-    );
-    
-    // If no track path found, fall back to straight-line distance
-    if (trackDistance === Infinity) {
-      totalDistance += calculateDistance(currentNeighborhood.position, nextNeighborhood.position);
-    } else {
-      totalDistance += trackDistance;
-    }
+    // Use direct distance between neighborhoods
+    // Use direct distance between neighborhoods
+    totalDistance += calculateDistance(currentNeighborhood.position, nextNeighborhood.position);
   }
   
   return totalDistance;
@@ -132,7 +58,6 @@ function getTrainCost(
   toNeighborhoodId: string,
   line: Line,
   neighborhoods: Neighborhood[],
-  tracks: Map<string, Track>,
   trainSpeed: number,
   stopTimePerNeighborhood: number
 ): number {
@@ -141,8 +66,8 @@ function getTrainCost(
   
   if (fromIndex === -1 || toIndex === -1) return Infinity;
   
-  // Calculate distance along tracks
-  const distance = getTrackDistanceBetweenNeighborhoods(fromNeighborhoodId, toNeighborhoodId, line, neighborhoods, tracks);
+  // Calculate distance using direct paths
+  const distance = getDirectDistanceBetweenNeighborhoods(fromNeighborhoodId, toNeighborhoodId, line, neighborhoods);
   
   if (distance === Infinity) return Infinity;
   
@@ -203,7 +128,6 @@ export function buildCityGraph(
           otherNeighborhoodId,
           line,
           neighborhoods,
-          railNetwork.tracks,
           trainSpeed,
           stopTimePerNeighborhood
         );
@@ -376,13 +300,12 @@ function pathToRouteSegments(
         const endNeighborhood = neighborhoodMap.get(endNeighborhoodId);
         
         if (line && fromNeighborhood && endNeighborhood) {
-          // Use track distance instead of straight-line distance
-          const distance = getTrackDistanceBetweenNeighborhoods(
+          // Use direct distance instead of track distance
+          const distance = getDirectDistanceBetweenNeighborhoods(
             fromNeighborhoodId,
             endNeighborhoodId,
             line,
-            neighborhoods,
-            railNetwork.tracks
+            neighborhoods
           );
           const fromIndex = line.neighborhoodIds.indexOf(fromNeighborhoodId);
           const toIndex = line.neighborhoodIds.indexOf(endNeighborhoodId);

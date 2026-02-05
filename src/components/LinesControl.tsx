@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
-import type { Line, Train, Track } from '../models';
+import type { Line, Train } from '../models';
 import './LinesControl.css';
 
 interface LinesControlProps {
   lines: Map<string, Line>;
   trains: Map<string, Train>;
-  tracks: Map<string, Track>;
   drawingLineId: string | null;
   onAssignTrainToLine: (trainId: string, lineId: string) => void;
   onRemoveTrainFromLine: (trainId: string) => void;
@@ -19,7 +18,6 @@ interface LinesControlProps {
 export function LinesControl({
   lines,
   trains,
-  tracks,
   drawingLineId,
   onAssignTrainToLine,
   onRemoveTrainFromLine,
@@ -76,13 +74,6 @@ export function LinesControl({
       return Array.from(trains.values()).filter(train => train.lineId === lineId);
     };
 
-    // Helper function to calculate track length for a line
-    const getTrackLengthForLine = (lineId: string) => {
-      return Array.from(tracks.values())
-        .filter(track => track.lineIds.includes(lineId))
-        .reduce((sum, track) => sum + track.distance, 0);
-    };
-
     // Helper function to assign first unassigned train to a line
     const handleAddTrainToLine = (lineId: string) => {
       if (unassignedTrains.length > 0) {
@@ -121,7 +112,6 @@ export function LinesControl({
         const detailsRow = L.DomUtil.create('div', 'lines-details-row', container);
         
         const lineTrains = getTrainsForLine(selectedLineId);
-        const trackLength = getTrackLengthForLine(selectedLineId);
         const hasUnassignedTrains = unassignedTrains.length > 0;
         const hasTrainsOnLine = lineTrains.length > 0;
         const isDrawingThisLine = drawingLineId === selectedLineId;
@@ -141,8 +131,6 @@ export function LinesControl({
         trainsStat.innerHTML = `<span class="lines-stat-label">Trains:</span> <span class="lines-stat-value">${lineTrains.length}</span>`;
         const stopsStat = L.DomUtil.create('div', 'lines-stat', statsRow);
         stopsStat.innerHTML = `<span class="lines-stat-label">Stops:</span> <span class="lines-stat-value">${selectedLine.neighborhoodIds.length}</span>`;
-        const lengthStat = L.DomUtil.create('div', 'lines-stat', statsRow);
-        lengthStat.innerHTML = `<span class="lines-stat-label">Track:</span> <span class="lines-stat-value">${trackLength.toFixed(1)} mi</span>`;
 
         // Actions
         const actionsRow = L.DomUtil.create('div', 'lines-actions-row', detailsRow);
@@ -217,7 +205,7 @@ export function LinesControl({
       handleAddNewLine();
     };
 
-  }, [lines, trains, tracks, drawingLineId, selectedLineId, onAssignTrainToLine, onRemoveTrainFromLine, onStartDrawLine, onStopDrawLine, onDrawNewLine]);
+  }, [lines, trains, drawingLineId, selectedLineId, onAssignTrainToLine, onRemoveTrainFromLine, onStartDrawLine, onStopDrawLine, onDrawNewLine]);
 
   // Auto-select newly created line when drawing starts
   useEffect(() => {

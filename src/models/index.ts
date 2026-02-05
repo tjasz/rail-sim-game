@@ -11,7 +11,6 @@ export type {
   RideSegment,
   DailyTrip
 } from './Citizen';
-export type { Track } from './Track';
 export type { Line } from './Line';
 export type { Train, TrainDirection } from './Train';
 export type { RailNetwork, RailNetworkStats } from './RailNetwork';

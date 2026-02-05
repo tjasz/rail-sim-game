@@ -6,7 +6,6 @@ export { TrackOverlay } from './TrackOverlay';
 export { DraftTrackOverlay } from './DraftTrackOverlay';
 export { TrainMarkers } from './TrainMarkers';
 export { NeighborhoodMarkers } from './NeighborhoodMarkers';
-export { StationMarkers } from './StationMarkers';
 export { MapClickHandler } from './MapClickHandler';
 export { LinesList } from './LinesList';
 export { LinesControl } from './LinesControl';

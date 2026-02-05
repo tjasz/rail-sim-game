@@ -8,9 +8,6 @@ export {
   calculateCitizenRoutes
 } from './tripGeneration';
 export { calculateRoute, calculateAllRoutes } from './pathfinding';
-export { 
-  findShortestTrackPath, 
-  areStationsConnected, 
-  getConnectedStations,
+export {
   generateLineColor 
 } from './railNetwork';

@@ -387,17 +387,21 @@ export function TrackOverlay({ config, neighborhoods, lines, onInsertStation }: 
       })}
       
       {/* Show drag indicator */}
-      {draggingSegment && dragPosition && (
-        <circle
-          cx={dragPosition.x}
-          cy={dragPosition.y}
-          r={0.2}
-          fill="white"
-          stroke="#666"
-          strokeWidth={0.04}
-          style={{ pointerEvents: 'none' }}
-        />
-      )}
+      {draggingSegment && dragPosition && (() => {
+        const draggedLine = lines.get(draggingSegment.lineId);
+        const lineColor = draggedLine?.color || '#666';
+        return (
+          <circle
+            cx={dragPosition.x}
+            cy={dragPosition.y}
+            r={0.2}
+            fill="white"
+            stroke={lineColor}
+            strokeWidth={0.04}
+            style={{ pointerEvents: 'none' }}
+          />
+        );
+      })()}
     </g>
   );
 }

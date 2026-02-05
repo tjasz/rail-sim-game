@@ -152,7 +152,7 @@ export function TrackOverlay({ config, neighborhoods, lines, onInsertStation }: 
       onTouchEnd={handleTouchEnd}
       style={{ pointerEvents: draggingSegment ? 'all' : 'none' } as any}
     >
-      {Array.from(lines.values()).map(line => {
+      {Array.from(lines.values()).map((line, lineIndex) => {
         // Draw lines between consecutive stations
         return line.neighborhoodIds.map((neighborhoodId, idx) => {
           if (idx === 0) return null; // Skip first station (no line before it)
@@ -163,8 +163,30 @@ export function TrackOverlay({ config, neighborhoods, lines, onInsertStation }: 
           if (!fromNeighborhood || !toNeighborhood) return null;
           
           // Station positions in grid coordinates [x, y]
-          const fromPos: [number, number] = [fromNeighborhood.position.x + 0.5, config.gridHeight - fromNeighborhood.position.y + 0.5];
-          const toPos: [number, number] = [toNeighborhood.position.x + 0.5, config.gridHeight - toNeighborhood.position.y + 0.5];
+          const fromPosBase: [number, number] = [fromNeighborhood.position.x + 0.5, config.gridHeight - fromNeighborhood.position.y + 0.5];
+          const toPosBase: [number, number] = [toNeighborhood.position.x + 0.5, config.gridHeight - toNeighborhood.position.y + 0.5];
+          
+          // Calculate perpendicular offset for parallel lines
+          const dx = toPosBase[0] - fromPosBase[0];
+          const dy = toPosBase[1] - fromPosBase[1];
+          const length = Math.sqrt(dx * dx + dy * dy);
+          
+          // Perpendicular unit vector (rotate 90 degrees)
+          const perpX = length > 0 ? -dy / length : 0;
+          const perpY = length > 0 ? dx / length : 0;
+          
+          // Offset amount based on line index (center around 0)
+          const offsetAmount = (lineIndex - (lines.size - 1) / 2) * 0.08;
+          
+          // Apply offset to both points
+          const fromPos: [number, number] = [
+            fromPosBase[0] + perpX * offsetAmount,
+            fromPosBase[1] + perpY * offsetAmount
+          ];
+          const toPos: [number, number] = [
+            toPosBase[0] + perpX * offsetAmount,
+            toPosBase[1] + perpY * offsetAmount
+          ];
           
           const isDragging = draggingSegment?.lineId === line.id && draggingSegment?.segmentIndex === idx - 1;
           

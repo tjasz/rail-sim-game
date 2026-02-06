@@ -86,6 +86,14 @@ export function moveToward(
 }
 
 /**
+ * Check if a line is a loop (first and last stations are the same)
+ */
+export function isLoopLine(line: Line): boolean {
+  return line.neighborhoodIds.length > 2 && 
+         line.neighborhoodIds[0] === line.neighborhoodIds[line.neighborhoodIds.length - 1];
+}
+
+/**
  * Create a direct path between two neighborhoods (no track waypoints)
  */
 export function findDirectPath(
@@ -144,11 +152,26 @@ export function updateTrains(
       updatedTrain.currentPath = undefined;
       updatedTrain.currentPathIndex = undefined;
 
-      // Check if we need to reverse direction
-      if (train.direction === 'forward' && nextNeighborhoodIndex >= line.neighborhoodIds.length - 1) {
-        updatedTrain.direction = 'backward';
-      } else if (train.direction === 'backward' && nextNeighborhoodIndex <= 0) {
-        updatedTrain.direction = 'forward';
+      // Check if this is a loop line
+      const isLoop = isLoopLine(line);
+
+      // Check if we need to reverse direction or wrap around for loops
+      if (isLoop) {
+        // For loop lines, wrap around instead of reversing
+        if (train.direction === 'forward' && nextNeighborhoodIndex >= line.neighborhoodIds.length - 1) {
+          // At the end going forward - wrap to start (skip the duplicate last station)
+          updatedTrain.currentNeighborhoodIndex = 0;
+        } else if (train.direction === 'backward' && nextNeighborhoodIndex <= 0) {
+          // At the start going backward - wrap to end (go to the station before the duplicate)
+          updatedTrain.currentNeighborhoodIndex = line.neighborhoodIds.length - 1;
+        }
+      } else {
+        // For non-loop lines, reverse direction at endpoints
+        if (train.direction === 'forward' && nextNeighborhoodIndex >= line.neighborhoodIds.length - 1) {
+          updatedTrain.direction = 'backward';
+        } else if (train.direction === 'backward' && nextNeighborhoodIndex <= 0) {
+          updatedTrain.direction = 'forward';
+        }
       }
 
       // Calculate next arrival time and path

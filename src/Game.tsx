@@ -443,7 +443,12 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     }
     
     // Check if neighborhood is already on this line
-    if (line.neighborhoodIds.includes(neighborhood.id)) {
+    // Exception: allow adding the first station again at the end to create a loop
+    const isCreatingLoop = line.neighborhoodIds.length > 0 && 
+                           line.neighborhoodIds[0] === neighborhood.id && 
+                           !line.neighborhoodIds.slice(1).includes(neighborhood.id);
+    
+    if (line.neighborhoodIds.includes(neighborhood.id) && !isCreatingLoop) {
       return;
     }
 
@@ -571,7 +576,12 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       }
       
       // Check if neighborhood is already on this line
-      if (line.neighborhoodIds.includes(neighborhood.id)) {
+      // Exception: allow adding the first station again at the end to create a loop
+      const isCreatingLoop = line.neighborhoodIds.length > 0 && 
+                             line.neighborhoodIds[0] === neighborhood.id && 
+                             !line.neighborhoodIds.slice(1).includes(neighborhood.id);
+      
+      if (line.neighborhoodIds.includes(neighborhood.id) && !isCreatingLoop) {
         console.warn('Station is already on this line');
         return;
       }

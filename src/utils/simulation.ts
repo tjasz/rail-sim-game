@@ -476,11 +476,17 @@ export function updateCitizens(
       const line = lines.get(train.lineId);
       if (!line || !line.isActive) continue;
       
+      const isLoop = isLoopLine(line);
+      
       // Determine which neighborhoods this train will visit based on its direction
       const currentIndex = train.currentNeighborhoodIndex;
       const neighborhoodsAhead: string[] = [];
       
-      if (train.direction === 'forward') {
+      if (isLoop) {
+        // For loop lines, the train will eventually visit all stations on the line
+        // Include all neighborhoods except the current one
+        neighborhoodsAhead.push(...line.neighborhoodIds.filter((_, idx) => idx !== currentIndex));
+      } else if (train.direction === 'forward') {
         // Train is going forward through the line
         neighborhoodsAhead.push(...line.neighborhoodIds.slice(currentIndex + 1));
       } else {

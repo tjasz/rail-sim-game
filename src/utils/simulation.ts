@@ -529,10 +529,12 @@ import type { DayResult } from '../models';
  */
 export function calculateDayResult(gameState: GameState): DayResult {
   const budgetEarned = gameState.city.config.budgetBaseline;
+  const enginesEarned = gameState.city.config.enginesPerDay;
 
   return {
     day: gameState.city.currentDay,
     budgetEarned,
+    enginesEarned,
   };
 }
 
@@ -540,13 +542,32 @@ export function calculateDayResult(gameState: GameState): DayResult {
  * Roll over to the next day and calculate end-of-day statistics
  */
 export function rolloverToNextDay(gameState: GameState): GameState {
-  // Calculate budget earned
+  // Calculate budget earned and engines earned
   const budgetEarned = gameState.city.config.budgetBaseline;
+  const enginesEarned = gameState.city.config.enginesPerDay;
+
+  // Create new unassigned trains
+  const updatedTrains = new Map(gameState.railNetwork.trains);
+  for (let i = 0; i < enginesEarned; i++) {
+    const newTrainId = `train-${Date.now()}-${i}`;
+    const newTrain = {
+      id: newTrainId,
+      lineId: 'unassigned',
+      currentNeighborhoodIndex: 0,
+      direction: 'forward' as const,
+      position: { x: 0, y: 0 },
+      passengerIds: [],
+      capacity: gameState.city.config.trainCapacity,
+      speed: gameState.city.config.trainSpeed,
+    };
+    updatedTrains.set(newTrainId, newTrain);
+  }
 
   // Update statistics
   const updatedStats = {
     ...gameState.stats,
     totalMoneyEarned: gameState.stats.totalMoneyEarned + budgetEarned,
+    totalTrainsPurchased: gameState.stats.totalTrainsPurchased + enginesEarned,
   };
 
   const newDay = gameState.city.currentDay + 1;
@@ -557,6 +578,10 @@ export function rolloverToNextDay(gameState: GameState): GameState {
       ...gameState.city,
       currentDay: newDay,
       budget: gameState.city.budget + budgetEarned,
+    },
+    railNetwork: {
+      ...gameState.railNetwork,
+      trains: updatedTrains,
     },
     stats: updatedStats,
     simulationTime: gameState.simulationTime, // Continue tracking total time

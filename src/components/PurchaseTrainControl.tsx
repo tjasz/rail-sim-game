@@ -5,15 +5,11 @@ import './PurchaseTrainControl.css';
 import { iconPaths } from '../iconPaths';
 
 interface PurchaseTrainControlProps {
-  budget: number;
-  trainCost: number;
-  onPurchaseTrain: () => void;
+  unassignedTrainCount: number;
 }
 
 export function PurchaseTrainControl({
-  budget,
-  trainCost,
-  onPurchaseTrain,
+  unassignedTrainCount,
 }: PurchaseTrainControlProps) {
   const map = useMap();
   const controlRef = useRef<L.Control | null>(null);
@@ -53,22 +49,14 @@ export function PurchaseTrainControl({
     // Clear existing content
     container.innerHTML = '';
 
-    const canAfford = budget >= trainCost;
-
-    // Create purchase train button
-    const purchaseBtn = L.DomUtil.create('button', 'purchase-train-btn', container);
-    purchaseBtn.innerHTML = `<svg viewBox="0 0 15 15" width="20" height="20"><path d="${iconPaths['temaki-train']}"/></svg>`;
-    purchaseBtn.title = canAfford 
-      ? `Purchase train for $${trainCost.toLocaleString()}` 
-      : `Insufficient budget (need $${trainCost.toLocaleString()})`;
-    purchaseBtn.disabled = !canAfford;
-    purchaseBtn.onclick = (e) => {
-      e.stopPropagation();
-      if (canAfford) {
-        onPurchaseTrain();
-      }
-    };
-  }, [budget, trainCost, onPurchaseTrain]);
+    // Create display for unassigned train count
+    const displayDiv = L.DomUtil.create('div', 'unassigned-trains-display', container);
+    displayDiv.innerHTML = `
+      <svg viewBox="0 0 15 15" width="20" height="20"><path d="${iconPaths['temaki-train']}"/></svg>
+      <span class="train-count">${unassignedTrainCount}</span>
+    `;
+    displayDiv.title = `Unassigned trains: ${unassignedTrainCount}`;
+  }, [unassignedTrainCount]);
 
   return null;
 }

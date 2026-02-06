@@ -11,6 +11,22 @@ const neighborhoods = SeattleConfig.config.neighborhoods
     waitingCitizens: new Map(),
   }));
 
+// Create initial unassigned trains based on config
+const initialTrains = new Map();
+for (let i = 0; i < SeattleConfig.config.initialEngines; i++) {
+  const trainId = `train-initial-${i}`;
+  initialTrains.set(trainId, {
+    id: trainId,
+    lineId: 'unassigned',
+    currentNeighborhoodIndex: 0,
+    direction: 'forward' as const,
+    position: { x: 0, y: 0 },
+    passengerIds: [],
+    capacity: SeattleConfig.config.trainCapacity,
+    speed: SeattleConfig.config.trainSpeed,
+  });
+}
+
 export const baseGameState: GameState = {
   status: 'playing',
   city: {
@@ -22,7 +38,7 @@ export const baseGameState: GameState = {
   },
   railNetwork: {
     lines: new Map(),
-    trains: new Map(),
+    trains: initialTrains,
   },
   currentTripMatrix: undefined, // Will be populated by initializeDay
   citizens: new Map(), // Will be populated by initializeDay
@@ -36,6 +52,6 @@ export const baseGameState: GameState = {
     totalMoneySpent: 0,
     totalMoneyEarned: 0,
     totalStationsBuilt: 2,
-    totalTrainsPurchased: 1,
+    totalTrainsPurchased: SeattleConfig.config.initialEngines,
   },
 };

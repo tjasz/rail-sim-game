@@ -16,6 +16,8 @@ export interface CityConfig {
   // Economic settings
   initialBudget: number;
   budgetBaseline: number; // fixed amount per day
+  initialEngines: number; // number of trains to start with
+  enginesPerDay: number; // number of trains earned per day
   
   // Transit settings
   trainSpeed: number; // grid squares per minute

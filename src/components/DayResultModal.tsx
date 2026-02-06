@@ -23,6 +23,11 @@ export function DayResultModal({ result, onContinue }: DayResultModalProps) {
               <span className="stat-label">Budget Earned</span>
               <span className="stat-value success">${result.budgetEarned.toLocaleString()}</span>
             </div>
+            
+            <div className="result-stat">
+              <span className="stat-label">Trains Earned</span>
+              <span className="stat-value success">{result.enginesEarned}</span>
+            </div>
           </div>
         </div>
         

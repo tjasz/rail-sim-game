@@ -144,12 +144,31 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     setDayResult(null);
     // Trigger day rollover and initialize new day with citizens
     setGameState((prevState) => {
-      // Use budget earned from the day result
+      // Use budget earned and engines earned from the day result
       const budgetEarned = dayResult.budgetEarned;
+      const enginesEarned = dayResult.enginesEarned;
+
+      // Create new unassigned trains
+      const updatedTrains = new Map(prevState.railNetwork.trains);
+      for (let i = 0; i < enginesEarned; i++) {
+        const newTrainId = `train-${Date.now()}-${i}`;
+        const newTrain = {
+          id: newTrainId,
+          lineId: 'unassigned',
+          currentNeighborhoodIndex: 0,
+          direction: 'forward' as const,
+          position: { x: 0, y: 0 },
+          passengerIds: [],
+          capacity: prevState.city.config.trainCapacity,
+          speed: prevState.city.config.trainSpeed,
+        };
+        updatedTrains.set(newTrainId, newTrain);
+      }
       
       const updatedStats = {
         ...prevState.stats,
         totalMoneyEarned: prevState.stats.totalMoneyEarned + budgetEarned,
+        totalTrainsPurchased: prevState.stats.totalTrainsPurchased + enginesEarned,
       };
       
       const newDay = prevState.city.currentDay + 1;
@@ -160,6 +179,10 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           ...prevState.city,
           currentDay: newDay,
           budget: prevState.city.budget + budgetEarned,
+        },
+        railNetwork: {
+          ...prevState.railNetwork,
+          trains: updatedTrains,
         },
         stats: updatedStats,
         simulationTime: newDay * MINUTES_PER_DAY, // Start of new day
@@ -192,50 +215,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       });
     }
   }, [dayResult, gameState.activeNeighborhoodCount, gameState.city.config.neighborhoods]);
-
-  const handlePurchaseTrain = useCallback(() => {
-    setGameState((prevState) => {
-      const trainCost = prevState.city.config.costPerTrain;
-      
-      // Check if player can afford
-      if (prevState.city.budget < trainCost) {
-        return prevState;
-      }
-      
-      // Create new train with temporary "unassigned" lineId
-      const newTrainId = `train-${Date.now()}`;
-      const newTrain = {
-        id: newTrainId,
-        lineId: 'unassigned', // Special ID for unassigned trains
-        currentNeighborhoodIndex: 0,
-        direction: 'forward' as const,
-        position: { x: 0, y: 0 },
-        passengerIds: [],
-        capacity: prevState.city.config.trainCapacity,
-        speed: prevState.city.config.trainSpeed,
-      };
-      
-      const updatedTrains = new Map(prevState.railNetwork.trains);
-      updatedTrains.set(newTrainId, newTrain);
-      
-      return {
-        ...prevState,
-        city: {
-          ...prevState.city,
-          budget: prevState.city.budget - trainCost,
-        },
-        railNetwork: {
-          ...prevState.railNetwork,
-          trains: updatedTrains,
-        },
-        stats: {
-          ...prevState.stats,
-          totalTrainsPurchased: prevState.stats.totalTrainsPurchased + 1,
-          totalMoneySpent: prevState.stats.totalMoneySpent + trainCost,
-        },
-      };
-    });
-  }, []);
 
   const handleAssignTrainToLine = useCallback((trainId: string, lineId: string) => {
     setGameState((prevState) => {
@@ -1127,9 +1106,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               onDrawNewLine={handleDrawNewLine}
             />
             <PurchaseTrainControl
-              budget={gameState.city.budget}
-              trainCost={gameState.city.config.costPerTrain}
-              onPurchaseTrain={handlePurchaseTrain}
+              unassignedTrainCount={Array.from(gameState.railNetwork.trains.values()).filter(t => t.lineId === 'unassigned').length}
             />
             <PlaybackControl
               currentDay={gameState.city.currentDay}

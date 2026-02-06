@@ -42,4 +42,5 @@ export interface GameStats {
 export interface DayResult {
   day: number;
   budgetEarned: number;
+  enginesEarned: number;
 }

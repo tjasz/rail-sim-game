@@ -2,7 +2,7 @@ import type { Train, Line, Citizen, Neighborhood, CityConfig } from '../models';
 import { renderCitizenIcon } from './CitizenMarkers';
 import { PositionedDiv } from './PositionedDiv';
 
-const RIDER_SIZE = [0.2, 0.2]; // [width, height] in grid units
+const RIDER_SIZE = [0.15, 0.15]; // [width, height] in grid units
 const RIDER_MARGIN = 0.02; // margin between riders in grid units
 const RIDER_COLS = 2;
 

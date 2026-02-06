@@ -173,6 +173,64 @@ export function createStarPath(
 }
 
 /**
+ * Creates an SVG path string for a star with arcs between inner points
+ * 
+ * @param numberOfPoints - The number of outer points on the star
+ * @param radius - The distance from the center to the inner points
+ * @param strides - The number of points to skip when connecting inner points with arcs (default: 1 for adjacent inner points)
+ * @param center - The center point of the shape
+ * @param rotate - Optional rotation angle in degrees to rotate the entire star (default: 0)
+ * @returns SVG path string
+ * 
+ * @example
+ * // Creates a 5-pointed star with arcs, outer radius 10 and inner radius 5
+ * createArcStarPath(10, 5, 5)
+ */
+export function createArcStarPath(
+  numberOfPoints: number,
+  radius: number,
+  stride: number = 1,
+  center: { x: number; y: number },
+  rotate: number = 0
+): string {
+  if (numberOfPoints < 3) {
+    throw new Error('A star must have at least 3 points');
+  }
+
+  const points: { x: number; y: number }[] = [];
+  const angleStep = 360 / numberOfPoints;
+
+  for (let i = 0; i < numberOfPoints; i++) {
+    const angle = angleStep * i + rotate;
+    points.push(polarToCartesian(radius, angle));
+  }
+
+  // Start at the first inner point (index 1)
+  let path = `M ${center.x + points[0].x} ${center.y + points[0].y}`;
+  
+  // For each segment from inner point to inner point, create an arc through the outer point
+  for (let i = 0; i < points.length; i++) {
+    const nextInnerIndex = (i + 1) % points.length;
+    
+    // We need to calculate the arc that bridges between this inner point and the next inner point
+    const nextInnerPoint = points[nextInnerIndex];
+    
+    // Use the outer point as the control point for a quadratic bezier
+    if (i % stride === 0) {
+      path += ` A 1 1 0 1 1 ${center.x + nextInnerPoint.x} ${center.y + nextInnerPoint.y}`;
+    }
+    else {
+      path += ` L ${center.x + nextInnerPoint.x} ${center.y + nextInnerPoint.y}`;
+    }
+  }
+  
+  // Close the path
+  path += ' Z';
+
+  return path;
+}
+
+/**
  * Creates an SVG path string for either a polygon or star centered at [0,0]
  * 
  * @param numberOfPoints - The number of points (outer points for stars)

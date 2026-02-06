@@ -795,25 +795,43 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         return prevState;
       }
 
-      // Check if neighborhood is already on this line
-      if (line.neighborhoodIds.includes(neighborhoodId)) {
-        return prevState;
-      }
-
       // Check if neighborhood is active
       const neighborhoodIndex = prevState.city.config.neighborhoods.findIndex(n => n.id === neighborhoodId);
       if (neighborhoodIndex >= prevState.activeNeighborhoodCount) {
         return prevState;
       }
 
-      // Insert neighborhood into line at the specified position
       const newNeighborhoodIds = [...line.neighborhoodIds];
-      
-      // Special case: insertAfterIndex === -1 means insert at the beginning
-      if (insertAfterIndex === -1) {
-        newNeighborhoodIds.unshift(neighborhoodId);
-      } else {
-        newNeighborhoodIds.splice(insertAfterIndex + 1, 0, neighborhoodId);
+      let updatedNeighborhoods = prevState.city.config.neighborhoods.slice();
+
+      // Check if neighborhood is already on this line
+      if (line.neighborhoodIds.includes(neighborhoodId)) {
+        console.log('Neighborhood is already on this line, removing it');
+        // Remove neighborhood from current position
+        const currentIndex = newNeighborhoodIds.findIndex(id => id === neighborhoodId);
+        newNeighborhoodIds.splice(currentIndex, 1);
+
+        updatedNeighborhoods = prevState.city.config.neighborhoods.map(n =>
+          n.id === neighborhoodId
+            ? { ...n, lineIds: (n.lineIds ?? []).filter((id: string) => id !== lineId) }
+            : n
+        );
+      }
+      else {
+        // Insert neighborhood into line at the specified position
+        // Special case: insertAfterIndex === -1 means insert at the beginning
+        if (insertAfterIndex === -1) {
+          newNeighborhoodIds.unshift(neighborhoodId);
+        } else {
+          newNeighborhoodIds.splice(insertAfterIndex + 1, 0, neighborhoodId);
+        }
+
+        // Update neighborhood to include this line
+        updatedNeighborhoods = prevState.city.config.neighborhoods.map(n =>
+          n.id === neighborhoodId
+            ? { ...n, lineIds: [...(n.lineIds ?? []), lineId] }
+            : n
+        );
       }
 
       // Update line with new neighborhood order
@@ -822,13 +840,6 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         ...line,
         neighborhoodIds: newNeighborhoodIds,
       });
-
-      // Update neighborhood to include this line
-      const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n =>
-        n.id === neighborhoodId
-          ? { ...n, lineIds: [...(n.lineIds ?? []), lineId] }
-          : n
-      );
 
       const updatedRailNetwork = {
         ...prevState.railNetwork,

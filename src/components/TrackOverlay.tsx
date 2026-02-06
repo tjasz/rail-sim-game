@@ -97,8 +97,7 @@ export function TrackOverlay({ config, neighborhoods, lines, onInsertStation }: 
     if (closestNeighborhood !== null && minDistance < 1.0) {
       const line = lines.get(draggingSegment.lineId);
       const neighborhood: Neighborhood = closestNeighborhood;
-      // Check if neighborhood is not already on this line
-      if (line && !line.neighborhoodIds.includes(neighborhood.id)) {
+      if (line) {
         onInsertStation(draggingSegment.lineId, draggingSegment.segmentIndex, neighborhood.id);
       }
     }
@@ -134,8 +133,7 @@ export function TrackOverlay({ config, neighborhoods, lines, onInsertStation }: 
     if (closestNeighborhood !== null && minDistance < 1.0) {
       const line = lines.get(draggingSegment.lineId);
       const neighborhood: Neighborhood = closestNeighborhood;
-      // Check if neighborhood is not already on this line
-      if (line && !line.neighborhoodIds.includes(neighborhood.id)) {
+      if (line) {
         onInsertStation(draggingSegment.lineId, draggingSegment.segmentIndex, neighborhood.id);
       }
     }

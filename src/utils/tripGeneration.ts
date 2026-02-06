@@ -460,17 +460,58 @@ export function calculateCitizenRoutes(
   const updatedCitizens = new Map<string, Citizen>();
   
   citizens.forEach(citizen => {
-    const originNeighborhood = neighborhoodMap.get(citizen.originNeighborhoodId);
     const destNeighborhood = neighborhoodMap.get(citizen.destinationNeighborhoodId);
     
-    if (!originNeighborhood || !destNeighborhood) {
+    if (!destNeighborhood) {
+      updatedCitizens.set(citizen.id, citizen);
+      return;
+    }
+    
+    // Determine the starting position for route calculation
+    let startNeighborhood: Neighborhood | undefined;
+    
+    if (citizen.state === 'riding-train' && citizen.currentTrainId) {
+      // If riding a train, calculate from the train's next stop
+      const train = railNetwork.trains?.get(citizen.currentTrainId);
+      const line = train ? railNetwork.lines.get(train.lineId) : undefined;
+      
+      if (train && line) {
+        // Calculate the next neighborhood index based on direction
+        const nextIndex = train.direction === 'forward'
+          ? (train.currentNeighborhoodIndex + 1) % line.neighborhoodIds.length
+          : (train.currentNeighborhoodIndex - 1 + line.neighborhoodIds.length) % line.neighborhoodIds.length;
+        
+        // Get the next neighborhood ID if valid
+        if (nextIndex >= 0 && nextIndex < line.neighborhoodIds.length) {
+          const nextNeighborhoodId = line.neighborhoodIds[nextIndex];
+          startNeighborhood = neighborhoodMap.get(nextNeighborhoodId);
+        }
+      }
+      
+      // If we couldn't determine the train's next stop, fall back to current neighborhood or origin
+      if (!startNeighborhood) {
+        if (citizen.currentNeighborhoodId) {
+          startNeighborhood = neighborhoodMap.get(citizen.currentNeighborhoodId);
+        } else {
+          startNeighborhood = neighborhoodMap.get(citizen.originNeighborhoodId);
+        }
+      }
+    } else if (citizen.currentNeighborhoodId) {
+      // If at a station (waiting-at-station or waiting-at-origin), calculate from current neighborhood
+      startNeighborhood = neighborhoodMap.get(citizen.currentNeighborhoodId);
+    } else {
+      // Otherwise, calculate from the origin
+      startNeighborhood = neighborhoodMap.get(citizen.originNeighborhoodId);
+    }
+    
+    if (!startNeighborhood) {
       updatedCitizens.set(citizen.id, citizen);
       return;
     }
     
     // Calculate route with rail network
     const segments = calculateRoute(
-      originNeighborhood.position,
+      startNeighborhood.position,
       destNeighborhood.position,
       railNetwork,
       config.neighborhoods,

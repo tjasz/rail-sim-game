@@ -411,13 +411,11 @@ export function updateCitizens(
     
     for (const passengerId of train.passengerIds) {
       const citizen = updatedCitizens.get(passengerId);
-      if (!citizen || !citizen.route || citizen.route.segments.length === 0) continue;
+      if (!citizen || !citizen.route) continue;
       
-      const currentSegment = citizen.route.segments[0];
-      if (currentSegment.type !== 'ride') continue;
-      
+      const currentSegment = citizen.route.segments[0];      
       // Check if this is the destination neighborhood
-      if (currentSegment.toNeighborhoodId === trainNeighborhood.id) {
+      if ((currentSegment?.type === 'ride' && currentSegment.toNeighborhoodId === trainNeighborhood.id) || citizen.destinationNeighborhoodId === trainNeighborhood.id) {
         // Exit train
         const updatedCitizen = { ...citizen };
         updatedCitizen.currentPosition = { ...train.position };

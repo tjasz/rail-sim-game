@@ -88,7 +88,7 @@ export function createPolarRosePath(
  * Creates an SVG path string for a regular polygon centered at [0,0]
  * 
  * @param numberOfPoints - The number of vertices/sides of the polygon
- * @param outerRadius - The distance from the center to each vertex
+ * @param radius - The distance from the center to each vertex
  * @param center - The center point of the shape
  * @param rotate - Optional rotation angle in degrees to rotate the entire polygon (default: 0)
  * @returns SVG path string
@@ -97,7 +97,12 @@ export function createPolarRosePath(
  * // Creates a hexagon with radius 10
  * createPolygonPath(10, 6)
  */
-export function createPolygonPath(numberOfPoints: number, outerRadius: number, center: { x: number; y: number }, rotate: number = 0): string {
+export function createPolygonPath(
+  numberOfPoints: number,
+  radius: number | ((i: number) => number),
+  center: { x: number; y: number },
+  rotate: number = 0
+): string {
   if (numberOfPoints < 3) {
     throw new Error('A polygon must have at least 3 points');
   }
@@ -107,7 +112,8 @@ export function createPolygonPath(numberOfPoints: number, outerRadius: number, c
 
   for (let i = 0; i < numberOfPoints; i++) {
     const angle = angleStep * i + rotate;
-    points.push(polarToCartesian(outerRadius, angle));
+    const r = typeof radius === 'function' ? radius(i) : radius;
+    points.push(polarToCartesian(r, angle));
   }
 
   // Start at the first point

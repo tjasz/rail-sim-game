@@ -205,10 +205,11 @@ export function createArcStarPath(
 
   const points: { x: number; y: number }[] = [];
   const angleStep = 360 / numberOfPoints;
+  const innerRadius = radius / (Math.cos(Math.PI / numberOfPoints) + Math.sin(Math.PI / numberOfPoints));
 
   for (let i = 0; i < numberOfPoints; i++) {
     const angle = angleStep * i + rotate;
-    points.push(polarToCartesian(radius, angle));
+    points.push(polarToCartesian(innerRadius, angle));
   }
 
   // Start at the first inner point (index 1)

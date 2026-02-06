@@ -530,11 +530,13 @@ import type { DayResult } from '../models';
 export function calculateDayResult(gameState: GameState): DayResult {
   const budgetEarned = gameState.city.config.budgetBaseline;
   const enginesEarned = gameState.city.config.enginesPerDay;
+  const linesEarned = gameState.city.config.linesPerDay;
 
   return {
     day: gameState.city.currentDay,
     budgetEarned,
     enginesEarned,
+    linesEarned,
   };
 }
 
@@ -542,9 +544,10 @@ export function calculateDayResult(gameState: GameState): DayResult {
  * Roll over to the next day and calculate end-of-day statistics
  */
 export function rolloverToNextDay(gameState: GameState): GameState {
-  // Calculate budget earned and engines earned
+  // Calculate budget earned, engines earned, and lines earned
   const budgetEarned = gameState.city.config.budgetBaseline;
   const enginesEarned = gameState.city.config.enginesPerDay;
+  const linesEarned = gameState.city.config.linesPerDay;
 
   // Create new unassigned trains
   const updatedTrains = new Map(gameState.railNetwork.trains);
@@ -583,6 +586,7 @@ export function rolloverToNextDay(gameState: GameState): GameState {
       ...gameState.railNetwork,
       trains: updatedTrains,
     },
+    allowedLines: gameState.allowedLines + linesEarned,
     stats: updatedStats,
     simulationTime: gameState.simulationTime, // Continue tracking total time
     isSimulating: false, // Stop simulation

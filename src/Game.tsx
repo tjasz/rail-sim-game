@@ -144,9 +144,10 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     setDayResult(null);
     // Trigger day rollover and initialize new day with citizens
     setGameState((prevState) => {
-      // Use budget earned and engines earned from the day result
+      // Use budget earned, engines earned, and lines earned from the day result
       const budgetEarned = dayResult.budgetEarned;
       const enginesEarned = dayResult.enginesEarned;
+      const linesEarned = dayResult.linesEarned;
 
       // Create new unassigned trains
       const updatedTrains = new Map(prevState.railNetwork.trains);
@@ -184,6 +185,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           ...prevState.railNetwork,
           trains: updatedTrains,
         },
+        allowedLines: prevState.allowedLines + linesEarned,
         stats: updatedStats,
         simulationTime: newDay * MINUTES_PER_DAY, // Start of new day
         isSimulating: false,
@@ -852,6 +854,11 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     let newLineId: string;
     
     setGameState((prevState) => {
+      // Check if we've reached the line limit
+      if (prevState.railNetwork.lines.size >= prevState.allowedLines) {
+        return prevState;
+      }
+
       newLineId = `line-${Date.now()}`;
 
       const existingColors = Array.from(prevState.railNetwork.lines.values()).map(line => line.color);
@@ -906,7 +913,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
 
     // Start drawing the new line immediately
     setTimeout(() => {
-      setDrawingLineId(newLineId!);
+      if (newLineId!) {
+        setDrawingLineId(newLineId!);
+      }
     }, 50);
   }, []);
 
@@ -1099,6 +1108,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               lines={gameState.railNetwork.lines}
               trains={gameState.railNetwork.trains}
               drawingLineId={drawingLineId}
+              allowedLines={gameState.allowedLines}
               onAssignTrainToLine={handleAssignTrainToLine}
               onRemoveTrainFromLine={handleRemoveTrainFromLine}
               onStartDrawLine={handleStartDrawLine}

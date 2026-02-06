@@ -47,6 +47,7 @@ export const baseGameState: GameState = {
   simulationSpeed: 1,
   activeNeighborhoodCount: SeattleConfig.config.activeNeighborhoodsAtTime(0),
   totalTripsStarted: 0,
+  allowedLines: SeattleConfig.config.initialLines,
   stats: {
     totalCitizensTransported: 0,
     totalMoneySpent: 0,

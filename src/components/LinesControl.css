@@ -66,6 +66,18 @@
   background: #45a049 !important;
 }
 
+.lines-add-circle.disabled {
+  background: #ccc !important;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.lines-add-circle.disabled:hover {
+  background: #ccc !important;
+  transform: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
 /* Details Row (Top Row - Conditionally Visible) */
 .lines-details-row {
   display: flex;

@@ -23,6 +23,9 @@ export interface GameState {
   // Trip generation
   totalTripsStarted: number;
   
+  // Line limits
+  allowedLines: number; // number of lines the player is allowed to create
+  
   // Statistics
   stats: GameStats;
 }
@@ -43,4 +46,5 @@ export interface DayResult {
   day: number;
   budgetEarned: number;
   enginesEarned: number;
+  linesEarned: number;
 }

@@ -8,6 +8,7 @@ interface LinesControlProps {
   lines: Map<string, Line>;
   trains: Map<string, Train>;
   drawingLineId: string | null;
+  allowedLines: number;
   onAssignTrainToLine: (trainId: string, lineId: string) => void;
   onRemoveTrainFromLine: (trainId: string) => void;
   onStartDrawLine: (lineId: string) => void;
@@ -19,6 +20,7 @@ export function LinesControl({
   lines,
   trains,
   drawingLineId,
+  allowedLines,
   onAssignTrainToLine,
   onRemoveTrainFromLine,
   onStartDrawLine,
@@ -197,15 +199,25 @@ export function LinesControl({
     });
 
     // Add "+" circle
+    const canAddNewLine = lines.size < allowedLines;
     const addCircle = L.DomUtil.create('div', 'lines-circle lines-add-circle', circlesRow);
     addCircle.innerHTML = '+';
-    addCircle.title = 'Add new line';
+    addCircle.title = canAddNewLine 
+      ? 'Add new line' 
+      : `Line limit reached (${lines.size}/${allowedLines})`;
+    
+    if (!canAddNewLine) {
+      addCircle.classList.add('disabled');
+    }
+    
     addCircle.onclick = (e) => {
       e.stopPropagation();
-      handleAddNewLine();
+      if (canAddNewLine) {
+        handleAddNewLine();
+      }
     };
 
-  }, [lines, trains, drawingLineId, selectedLineId, onAssignTrainToLine, onRemoveTrainFromLine, onStartDrawLine, onStopDrawLine, onDrawNewLine]);
+  }, [lines, trains, drawingLineId, selectedLineId, allowedLines, onAssignTrainToLine, onRemoveTrainFromLine, onStartDrawLine, onStopDrawLine, onDrawNewLine]);
 
   // Auto-select newly created line when drawing starts
   useEffect(() => {

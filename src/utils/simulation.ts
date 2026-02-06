@@ -483,9 +483,15 @@ export function updateCitizens(
       const neighborhoodsAhead: string[] = [];
       
       if (isLoop) {
-        // For loop lines, the train will eventually visit all stations on the line
-        // Include all neighborhoods except the current one
-        neighborhoodsAhead.push(...line.neighborhoodIds.filter((_, idx) => idx !== currentIndex));
+        // For loop lines, only consider neighborhoods in the next half of the loop
+        const lineLength = line.neighborhoodIds.length;
+        const halfLength = Math.ceil(lineLength / 2);
+        const increment = train.direction === 'forward' ? 1 : -1;
+
+        for (let i = 1; i <= halfLength; i++) {
+          const nextIndex = (currentIndex + i * increment + lineLength) % lineLength;
+          neighborhoodsAhead.push(line.neighborhoodIds[nextIndex]);
+        }
       } else if (train.direction === 'forward') {
         // Train is going forward through the line
         neighborhoodsAhead.push(...line.neighborhoodIds.slice(currentIndex + 1));

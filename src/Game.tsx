@@ -110,6 +110,99 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     }
   }, [gameState.status, gameState.isSimulating]);
 
+  // Helper function to auto-assign an unassigned train to a line
+  const autoAssignTrainToLine = useCallback((lineId: string, prevState: GameState): GameState => {
+    const line = prevState.railNetwork.lines.get(lineId);
+    if (!line) return prevState;
+
+    // Only auto-assign if the line has no trains and has at least 2 neighborhoods
+    if (line.trainIds.length > 0 || line.neighborhoodIds.length < 2) {
+      return prevState;
+    }
+
+    // Find first unassigned train
+    const unassignedTrain = Array.from(prevState.railNetwork.trains.values()).find(
+      train => train.lineId === 'unassigned'
+    );
+
+    if (!unassignedTrain) {
+      return prevState;
+    }
+
+    // Assign the train to the line using the existing assignment logic
+    const train = unassignedTrain;
+    const numNeighborhoods = line.neighborhoodIds.length;
+    
+    // Initialize train properties (first train on the line)
+    const neighborhoodIndex = 0;
+    const direction = 'forward' as const;
+    
+    // Get current neighborhood
+    const currentNeighborhoodId = line.neighborhoodIds[neighborhoodIndex];
+    const currentNeighborhood = prevState.city.config.neighborhoods.find(n => n.id === currentNeighborhoodId);
+    
+    if (!currentNeighborhood) {
+      return prevState;
+    }
+    
+    // Calculate next neighborhood arrival time
+    const nextIndex = direction === 'forward' ? neighborhoodIndex + 1 : neighborhoodIndex - 1;
+    let nextNeighborhoodArrivalTime: number | undefined;
+    
+    if (nextIndex >= 0 && nextIndex < numNeighborhoods) {
+      const nextNeighborhoodId = line.neighborhoodIds[nextIndex];
+      const nextNeighborhood = prevState.city.config.neighborhoods.find(n => n.id === nextNeighborhoodId);
+      
+      if (nextNeighborhood) {
+        const distance = calculateDistance(currentNeighborhood.position, nextNeighborhood.position);
+        const travelTime = distance / train.speed;
+        nextNeighborhoodArrivalTime = prevState.simulationTime + travelTime + prevState.city.config.timePerStationStop;
+      }
+    }
+    
+    // Update train with new line assignment
+    const updatedTrains = new Map(prevState.railNetwork.trains);
+    updatedTrains.set(train.id, {
+      ...train,
+      lineId: lineId,
+      currentNeighborhoodIndex: neighborhoodIndex,
+      direction: direction,
+      position: { x: currentNeighborhood.position.x, y: currentNeighborhood.position.y },
+      passengerIds: [],
+      nextNeighborhoodArrivalTime: nextNeighborhoodArrivalTime,
+      currentPath: undefined,
+      currentPathIndex: undefined,
+    });
+    
+    // Add train to line's trainIds
+    const updatedLines = new Map(prevState.railNetwork.lines);
+    updatedLines.set(lineId, {
+      ...line,
+      trainIds: [train.id],
+      isActive: true,
+    });
+    
+    const updatedRailNetwork = {
+      ...prevState.railNetwork,
+      trains: updatedTrains,
+      lines: updatedLines,
+    };
+    
+    // Recalculate citizen routes with updated network
+    const updatedCitizens = calculateCitizenRoutes(
+      prevState.citizens,
+      prevState.city.config.neighborhoods,
+      prevState.city.config,
+      updatedRailNetwork
+    );
+    
+    return {
+      ...prevState,
+      railNetwork: updatedRailNetwork,
+      citizens: updatedCitizens,
+    };
+  }, []);
+
   // Simulation loop
   useEffect(() => {
     if (!gameState.isSimulating) return;
@@ -536,7 +629,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         updatedRailNetwork
       );
       
-      return {
+      let stateAfterUpdate = {
         ...prevState,
         city: {
           ...prevState.city,
@@ -548,8 +641,15 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         railNetwork: updatedRailNetwork,
         citizens: updatedCitizens,
       };
+
+      // Auto-assign a train if this is the second neighborhood being added
+      if (line.neighborhoodIds.length === 1) {
+        stateAfterUpdate = autoAssignTrainToLine(drawingLineId, stateAfterUpdate);
+      }
+
+      return stateAfterUpdate;
     });
-  }, [drawingLineId, gameState.city.config.neighborhoods, gameState.railNetwork, visitedNeighborhoodsInDrag]);
+  }, [drawingLineId, gameState.city.config.neighborhoods, gameState.railNetwork, visitedNeighborhoodsInDrag, autoAssignTrainToLine]);
 
   const handleDragEnd = useCallback(() => {
     // Clear visited neighborhoods when drag ends
@@ -657,7 +757,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           updatedRailNetwork
         );
         
-        return {
+        let stateAfterUpdate = {
           ...prevState,
           city: {
             ...prevState.city,
@@ -669,11 +769,18 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           railNetwork: updatedRailNetwork,
           citizens: updatedCitizens,
         };
+
+        // Auto-assign a train if this is the second neighborhood being added
+        if (line.neighborhoodIds.length === 1) {
+          stateAfterUpdate = autoAssignTrainToLine(drawingLineId, stateAfterUpdate);
+        }
+
+        return stateAfterUpdate;
       });
       
       return;
     }
-  }, [drawingLineId, gameState.city.config.neighborhoods, gameState.railNetwork]);
+  }, [drawingLineId, gameState.city.config.neighborhoods, gameState.railNetwork, autoAssignTrainToLine]);
 
   const handleAssignNeighborhoodToLine = useCallback((neighborhoodId: string, lineId: string) => {
     setGameState((prevState) => {
@@ -711,7 +818,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         updatedRailNetwork
       );
       
-      return {
+      let stateAfterUpdate = {
         ...prevState,
         city: {
           ...prevState.city,
@@ -723,8 +830,15 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         railNetwork: updatedRailNetwork,
         citizens: updatedCitizens,
       };
+
+      // Auto-assign a train if this is the second neighborhood being added
+      if (line.neighborhoodIds.length === 1) {
+        stateAfterUpdate = autoAssignTrainToLine(lineId, stateAfterUpdate);
+      }
+
+      return stateAfterUpdate;
     });
-  }, []);
+  }, [autoAssignTrainToLine]);
 
   const handleUnassignNeighborhoodFromLine = useCallback((neighborhoodId: string, lineId: string) => {
     setGameState((prevState) => {
@@ -845,7 +959,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         updatedRailNetwork
       );
       
-      return {
+      let stateAfterUpdate = {
         ...prevState,
         city: {
           ...prevState.city,
@@ -857,8 +971,16 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         railNetwork: updatedRailNetwork,
         citizens: updatedCitizens,
       };
+
+      // Auto-assign a train if we're adding a second neighborhood (line had 0 or 1, now has 2)
+      // This happens when inserting into a line that had 0 or 1 neighborhoods
+      if (line.neighborhoodIds.length <= 1 && newNeighborhoodIds.length === 2) {
+        stateAfterUpdate = autoAssignTrainToLine(lineId, stateAfterUpdate);
+      }
+
+      return stateAfterUpdate;
     });
-  }, []);
+  }, [autoAssignTrainToLine]);
 
   const handleDrawNewLine = useCallback(() => {
     let newLineId: string;
@@ -887,32 +1009,9 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       const updatedLines = new Map(prevState.railNetwork.lines);
       updatedLines.set(newLineId, newLine);
 
-      // Find first unassigned train
-      const unassignedTrain = Array.from(prevState.railNetwork.trains.values()).find(
-        train => train.lineId === 'unassigned'
-      );
-
-      let updatedTrains = prevState.railNetwork.trains;
-      let updatedLine = newLine;
-
-      // If there's an unassigned train, assign it to the new line
-      if (unassignedTrain) {
-        updatedTrains = new Map(prevState.railNetwork.trains);
-        updatedTrains.set(unassignedTrain.id, {
-          ...unassignedTrain,
-          lineId: newLineId,
-        });
-        updatedLine = {
-          ...newLine,
-          trainIds: [unassignedTrain.id],
-        };
-        updatedLines.set(newLineId, updatedLine);
-      }
-
       const updatedRailNetwork = {
         ...prevState.railNetwork,
         lines: updatedLines,
-        trains: updatedTrains,
       };
       
       return {

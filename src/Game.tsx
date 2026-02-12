@@ -515,95 +515,52 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       return;
     }
 
-    // Find neighborhood at this position
-    const neighborhood = gameState.city.config.neighborhoods.find(
-      n => n.position.x === x && n.position.y === y
-    );
-    
-    if (!neighborhood) {
-      return;
-    }
-
-    // Check if neighborhood is active
-    const neighborhoodIndex = gameState.city.config.neighborhoods.findIndex(n => n.id === neighborhood.id);
-    if (neighborhoodIndex >= gameState.activeNeighborhoodCount) {
-      return;
-    }
-    
-    const line = gameState.railNetwork.lines.get(drawingLineId);
-    if (!line) {
-      return;
-    }
-    
-    // Check if neighborhood is already on this line
-    // Exception: allow adding the first station again at the end to create a loop
-    const isCreatingLoop = line.neighborhoodIds.length > 0 && 
-                           line.neighborhoodIds[0] === neighborhood.id && 
-                           !line.neighborhoodIds.slice(1).includes(neighborhood.id);
-    
-    if (line.neighborhoodIds.includes(neighborhood.id) && !isCreatingLoop) {
-      return;
-    }
-
     // Check if we've already visited this neighborhood in the current drag
-    if (visitedNeighborhoodsInDrag.has(neighborhood.id)) {
+    const neighborhoodKey = `${x},${y}`;
+    if (visitedNeighborhoodsInDrag.has(neighborhoodKey)) {
       return;
     }
 
     // Mark as visited for this drag session
-    setVisitedNeighborhoodsInDrag(prev => new Set([...prev, neighborhood.id]));
+    setVisitedNeighborhoodsInDrag(prev => new Set([...prev, neighborhoodKey]));
     
     // Trigger haptic feedback
     if (navigator.vibrate) {
       navigator.vibrate(100);
     }
     
-    // If line has no neighborhoods yet, add this one directly
-    if (line.neighborhoodIds.length === 0) {
-      setGameState((prevState) => {
-        const existingLineIds = neighborhood.lineIds ?? [];
-        const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n => 
-          n.id === neighborhood.id 
-            ? { ...n, lineIds: existingLineIds.includes(drawingLineId) ? existingLineIds : [...existingLineIds, drawingLineId] } 
-            : n
-        );
-
-        const updatedLines = new Map(prevState.railNetwork.lines);
-        updatedLines.set(drawingLineId, {
-          ...line,
-          neighborhoodIds: [neighborhood.id],
-        });
-
-        const updatedRailNetwork = {
-          ...prevState.railNetwork,
-          lines: updatedLines,
-        };
-        
-        const updatedCitizens = calculateCitizenRoutes(
-          prevState.citizens,
-          updatedNeighborhoods,
-          prevState.city.config,
-          updatedRailNetwork
-        );
-        
-        return {
-          ...prevState,
-          city: {
-            ...prevState.city,
-            config: {
-              ...prevState.city.config,
-              neighborhoods: updatedNeighborhoods,
-            },
-          },
-          railNetwork: updatedRailNetwork,
-          citizens: updatedCitizens,
-        };
-      });
-      return;
-    }
-    
-    // Add the neighborhood to the line (no track pathfinding needed)
     setGameState((prevState) => {
+      // Find neighborhood at this position
+      const neighborhood = prevState.city.config.neighborhoods.find(
+        n => n.position.x === x && n.position.y === y
+      );
+      
+      if (!neighborhood) {
+        return prevState;
+      }
+
+      // Check if neighborhood is active
+      const neighborhoodIndex = prevState.city.config.neighborhoods.findIndex(n => n.id === neighborhood.id);
+      if (neighborhoodIndex >= prevState.activeNeighborhoodCount) {
+        return prevState;
+      }
+      
+      const line = prevState.railNetwork.lines.get(drawingLineId);
+      if (!line) {
+        return prevState;
+      }
+      
+      // Check if neighborhood is already on this line
+      // Exception: allow adding the first station again at the end to create a loop
+      const isCreatingLoop = line.neighborhoodIds.length > 0 && 
+                             line.neighborhoodIds[0] === neighborhood.id && 
+                             !line.neighborhoodIds.slice(1).includes(neighborhood.id);
+      
+      if (line.neighborhoodIds.includes(neighborhood.id) && !isCreatingLoop) {
+        return prevState;
+      }
+
+      // Add the neighborhood to the line
       const existingLineIds = neighborhood.lineIds ?? [];
       const updatedNeighborhoods = prevState.city.config.neighborhoods.map(n => 
         n.id === neighborhood.id 
@@ -612,11 +569,11 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       );
 
       const updatedLines = new Map(prevState.railNetwork.lines);
-      updatedLines.set(drawingLineId, {
+      const updatedLine = {
         ...line,
         neighborhoodIds: [...line.neighborhoodIds, neighborhood.id],
-      });
-
+      };
+      updatedLines.set(drawingLineId, updatedLine);
       const updatedRailNetwork = {
         ...prevState.railNetwork,
         lines: updatedLines,
@@ -643,13 +600,13 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       };
 
       // Auto-assign a train if this is the second neighborhood being added
-      if (line.neighborhoodIds.length === 1) {
+      if (line.neighborhoodIds.length === 1 && updatedLine.neighborhoodIds.length === 2) {
         stateAfterUpdate = autoAssignTrainToLine(drawingLineId, stateAfterUpdate);
       }
 
       return stateAfterUpdate;
     });
-  }, [drawingLineId, gameState.city.config.neighborhoods, gameState.railNetwork, visitedNeighborhoodsInDrag, autoAssignTrainToLine]);
+  }, [drawingLineId, visitedNeighborhoodsInDrag, autoAssignTrainToLine]);
 
   const handleDragEnd = useCallback(() => {
     // Clear visited neighborhoods when drag ends

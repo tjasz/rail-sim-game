@@ -43,6 +43,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
   const [visitedNeighborhoodsInDrag, setVisitedNeighborhoodsInDrag] = useState<Set<string>>(new Set());
   const prevDayRef = useRef<number>(initialGameState.city.currentDay);
   const prevSimulatingRef = useRef<boolean>(initialGameState.isSimulating);
+  const prevSpeedRef = useRef<number>(initialGameState.simulationSpeed);
 
   // Update local state when prop changes
   useEffect(() => {
@@ -87,7 +88,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     
     // Check if simulation just stopped (day ended)
     if (prevSimulatingRef.current && !gameState.isSimulating && gameState.simulationTime >= expectedDayEndTime - 1) {
-      // Day just ended, show result modal
+      // Day just ended, save the speed and show result modal
+      prevSpeedRef.current = gameState.simulationSpeed;
       const result = calculateDayResult(gameState);
       setDayResult(result);
     }
@@ -98,7 +100,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     }
     
     prevSimulatingRef.current = gameState.isSimulating;
-  }, [gameState.isSimulating, gameState.simulationTime, gameState.city.currentDay]);
+  }, [gameState.isSimulating, gameState.simulationTime, gameState.city.currentDay, gameState.simulationSpeed]);
 
   // Stop simulation when game is over
   useEffect(() => {
@@ -281,7 +283,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         allowedLines: prevState.allowedLines + linesEarned,
         stats: updatedStats,
         simulationTime: newDay * MINUTES_PER_DAY, // Start of new day
-        isSimulating: false,
+        isSimulating: true, // Resume simulation
+        simulationSpeed: prevSpeedRef.current, // Restore previous speed
         tripsGeneratedToday: 0,
       };
     });

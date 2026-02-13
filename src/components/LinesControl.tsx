@@ -183,6 +183,10 @@ export function LinesControl({
       const circle = L.DomUtil.create('div', 'lines-circle', circlesRow);
       circle.style.backgroundColor = line.color;
       circle.title = line.name;
+
+      if (line.neighborhoodIds.length < 2) {
+        circle.classList.add('inactive');
+      }
       
       if (selectedLineId === line.id) {
         circle.classList.add('selected');

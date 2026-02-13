@@ -561,9 +561,7 @@ import type { DayResult } from '../models';
  * Calculate the day result from current game state
  */
 export function calculateDayResult(gameState: GameState): DayResult {
-  const budgetEarned = gameState.city.config.budgetBaseline;
-  const enginesEarned = gameState.city.config.enginesPerDay;
-  const linesEarned = gameState.city.config.linesPerDay;
+  const { budgetEarned, enginesEarned, linesEarned } = gameState.city.config.reward(gameState.city.currentDay);
 
   return {
     day: gameState.city.currentDay,
@@ -578,9 +576,7 @@ export function calculateDayResult(gameState: GameState): DayResult {
  */
 export function rolloverToNextDay(gameState: GameState): GameState {
   // Calculate budget earned, engines earned, and lines earned
-  const budgetEarned = gameState.city.config.budgetBaseline;
-  const enginesEarned = gameState.city.config.enginesPerDay;
-  const linesEarned = gameState.city.config.linesPerDay;
+  const { budgetEarned, enginesEarned, linesEarned } = gameState.city.config.reward(gameState.city.currentDay);
 
   // Create new unassigned trains
   const updatedTrains = new Map(gameState.railNetwork.trains);

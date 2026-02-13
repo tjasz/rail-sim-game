@@ -15,11 +15,9 @@ export interface CityConfig {
   
   // Economic settings
   initialBudget: number;
-  budgetBaseline: number; // fixed amount per day
   initialEngines: number; // number of trains to start with
-  enginesPerDay: number; // number of trains earned per day
   initialLines: number; // number of lines to start with
-  linesPerDay: number; // number of lines earned per day
+  reward: (dayCompleted: number) => { budgetEarned: number; enginesEarned: number; linesEarned: number }; // function that computes rewards for completing a day (0-indexed)
   
   // Transit settings
   trainSpeed: number; // grid squares per minute

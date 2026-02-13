@@ -51,8 +51,19 @@ export const SeattleConfig : CityState = {
       initialEngines: 3,
       initialLines: 3,
       initialTrainCapacity: 4,
-      reward: (_dayCompleted: number) => ({ budgetEarned: 6, enginesEarned: 1, linesEarned: 1, trainCapacityEarned: 2 }),
-      trainSpeed: 0.25,
+      initialTrainSpeed: 0.25,
+      reward: (_dayCompleted: number) => {
+        // Always earn $6 and 1 engine per day
+        // Equal chance of earning one of: 1 line, 2 train capacity, or 0.05 train speed
+        const roll = Math.floor(Math.random() * 3);
+        return {
+          budgetEarned: 6,
+          enginesEarned: 1,
+          linesEarned: roll === 0 ? 1 : 0,
+          trainCapacityEarned: roll === 1 ? 2 : 0,
+          trainSpeedEarned: roll === 2 ? 0.05 : 0,
+        };
+      },
       timePerStationStop: 1,
       stationCapacity: 5,
       stationCrowdingTimeLimit: 60,

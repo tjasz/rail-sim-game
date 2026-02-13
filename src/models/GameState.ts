@@ -29,6 +29,9 @@ export interface GameState {
   // Train capacity (can increase over time)
   currentTrainCapacity: number;
   
+  // Train speed (can increase over time)
+  currentTrainSpeed: number;
+  
   // Statistics
   stats: GameStats;
 }
@@ -51,4 +54,5 @@ export interface DayResult {
   enginesEarned: number;
   linesEarned: number;
   trainCapacityEarned: number;
+  trainSpeedEarned: number;
 }

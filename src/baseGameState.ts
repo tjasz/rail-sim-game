@@ -23,7 +23,7 @@ for (let i = 0; i < SeattleConfig.config.initialEngines; i++) {
     position: { x: 0, y: 0 },
     passengerIds: [],
     capacity: SeattleConfig.config.initialTrainCapacity,
-    speed: SeattleConfig.config.trainSpeed,
+    speed: SeattleConfig.config.initialTrainSpeed,
   });
 }
 
@@ -49,6 +49,7 @@ export const baseGameState: GameState = {
   totalTripsStarted: 0,
   allowedLines: SeattleConfig.config.initialLines,
   currentTrainCapacity: SeattleConfig.config.initialTrainCapacity,
+  currentTrainSpeed: SeattleConfig.config.initialTrainSpeed,
   stats: {
     totalCitizensTransported: 0,
     totalMoneySpent: 0,

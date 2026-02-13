@@ -38,6 +38,11 @@ export function DayResultModal({ result, onContinue }: DayResultModalProps) {
               <span className="stat-label">Train Capacity Earned</span>
               <span className="stat-value success">+{result.trainCapacityEarned}</span>
             </div>
+            
+            <div className="result-stat">
+              <span className="stat-label">Train Speed Earned</span>
+              <span className="stat-value success">+{result.trainSpeedEarned.toFixed(2)}</span>
+            </div>
           </div>
         </div>
         

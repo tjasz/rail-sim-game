@@ -239,23 +239,26 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     setDayResult(null);
     // Trigger day rollover and initialize new day with citizens
     setGameState((prevState) => {
-      // Use budget earned, engines earned, lines earned, and train capacity earned from the day result
+      // Use budget earned, engines earned, lines earned, train capacity earned, and train speed earned from the day result
       const budgetEarned = dayResult.budgetEarned;
       const enginesEarned = dayResult.enginesEarned;
       const linesEarned = dayResult.linesEarned;
       const trainCapacityEarned = dayResult.trainCapacityEarned;
+      const trainSpeedEarned = dayResult.trainSpeedEarned;
       
-      // Calculate new train capacity
+      // Calculate new train capacity and speed
       const newTrainCapacity = prevState.currentTrainCapacity + trainCapacityEarned;
+      const newTrainSpeed = prevState.currentTrainSpeed + trainSpeedEarned;
 
-      // Update all existing trains with new capacity and create new unassigned trains
+      // Update all existing trains with new capacity and speed, and create new unassigned trains
       const updatedTrains = new Map(prevState.railNetwork.trains);
       
-      // Update capacity of all existing trains
+      // Update capacity and speed of all existing trains
       for (const [trainId, train] of updatedTrains) {
         updatedTrains.set(trainId, {
           ...train,
           capacity: newTrainCapacity,
+          speed: newTrainSpeed,
         });
       }
       
@@ -270,7 +273,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           position: { x: 0, y: 0 },
           passengerIds: [],
           capacity: newTrainCapacity,
-          speed: prevState.city.config.trainSpeed,
+          speed: newTrainSpeed,
         };
         updatedTrains.set(newTrainId, newTrain);
       }
@@ -296,6 +299,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         },
         allowedLines: prevState.allowedLines + linesEarned,
         currentTrainCapacity: newTrainCapacity,
+        currentTrainSpeed: newTrainSpeed,
         stats: updatedStats,
         simulationTime: newDay * MINUTES_PER_DAY, // Start of new day
         isSimulating: true, // Resume simulation

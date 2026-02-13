@@ -561,7 +561,7 @@ import type { DayResult } from '../models';
  * Calculate the day result from current game state
  */
 export function calculateDayResult(gameState: GameState): DayResult {
-  const { budgetEarned, enginesEarned, linesEarned, trainCapacityEarned } = gameState.city.config.reward(gameState.city.currentDay);
+  const { budgetEarned, enginesEarned, linesEarned, trainCapacityEarned, trainSpeedEarned } = gameState.city.config.reward(gameState.city.currentDay);
 
   return {
     day: gameState.city.currentDay,
@@ -569,6 +569,7 @@ export function calculateDayResult(gameState: GameState): DayResult {
     enginesEarned,
     linesEarned,
     trainCapacityEarned,
+    trainSpeedEarned,
   };
 }
 
@@ -576,20 +577,22 @@ export function calculateDayResult(gameState: GameState): DayResult {
  * Roll over to the next day and calculate end-of-day statistics
  */
 export function rolloverToNextDay(gameState: GameState): GameState {
-  // Calculate budget earned, engines earned, lines earned, and train capacity earned
-  const { budgetEarned, enginesEarned, linesEarned, trainCapacityEarned } = gameState.city.config.reward(gameState.city.currentDay);
+  // Calculate budget earned, engines earned, lines earned, train capacity earned, and train speed earned
+  const { budgetEarned, enginesEarned, linesEarned, trainCapacityEarned, trainSpeedEarned } = gameState.city.config.reward(gameState.city.currentDay);
 
-  // Calculate new train capacity
+  // Calculate new train capacity and speed
   const newTrainCapacity = gameState.currentTrainCapacity + trainCapacityEarned;
+  const newTrainSpeed = gameState.currentTrainSpeed + trainSpeedEarned;
 
-  // Update all existing trains with new capacity and create new unassigned trains
+  // Update all existing trains with new capacity and speed, and create new unassigned trains
   const updatedTrains = new Map(gameState.railNetwork.trains);
   
-  // Update capacity of all existing trains
+  // Update capacity and speed of all existing trains
   for (const [trainId, train] of updatedTrains) {
     updatedTrains.set(trainId, {
       ...train,
       capacity: newTrainCapacity,
+      speed: newTrainSpeed,
     });
   }
   
@@ -604,7 +607,7 @@ export function rolloverToNextDay(gameState: GameState): GameState {
       position: { x: 0, y: 0 },
       passengerIds: [],
       capacity: newTrainCapacity,
-      speed: gameState.city.config.trainSpeed,
+      speed: newTrainSpeed,
     };
     updatedTrains.set(newTrainId, newTrain);
   }
@@ -631,6 +634,7 @@ export function rolloverToNextDay(gameState: GameState): GameState {
     },
     allowedLines: gameState.allowedLines + linesEarned,
     currentTrainCapacity: newTrainCapacity,
+    currentTrainSpeed: newTrainSpeed,
     stats: updatedStats,
     simulationTime: gameState.simulationTime, // Continue tracking total time
     isSimulating: false, // Stop simulation
@@ -648,7 +652,8 @@ import { calculateRoute } from './pathfinding';
 function recalculateRoutesForCitizens(
   citizens: Map<string, Citizen>,
   config: CityConfig,
-  railNetwork: RailNetwork
+  railNetwork: RailNetwork,
+  currentTrainSpeed: number
 ): Map<string, Citizen> {
   const updatedCitizens = new Map<string, Citizen>();
   const neighborhoods = config.neighborhoods;
@@ -671,7 +676,7 @@ function recalculateRoutesForCitizens(
         destNeighborhood.position,
         railNetwork,
         config.neighborhoods,
-        config.trainSpeed,
+        currentTrainSpeed,
         config.timePerStationStop
       );
       
@@ -751,7 +756,7 @@ export function tickSimulation(
           destNeighborhood.position,
           gameState.railNetwork,
           activeNeighborhoods,
-          gameState.city.config.trainSpeed,
+          gameState.currentTrainSpeed,
           gameState.city.config.timePerStationStop,
         );
         
@@ -799,7 +804,8 @@ export function tickSimulation(
   updatedCitizens = recalculateRoutesForCitizens(
     updatedCitizens,
     gameState.city.config,
-    gameState.railNetwork
+    gameState.railNetwork,
+    gameState.currentTrainSpeed
   );
   
   // Update train passenger lists based on citizen states

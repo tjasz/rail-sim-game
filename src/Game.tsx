@@ -194,7 +194,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     const updatedCitizens = calculateCitizenRoutes(
       prevState.citizens,
       prevState.city.config.neighborhoods,
-      prevState.city.config,
+      prevState.currentTrainSpeed,
+      prevState.city.config.timePerStationStop,
       updatedRailNetwork
     );
     
@@ -459,7 +460,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       const updatedCitizens = calculateCitizenRoutes(
         prevState.citizens,
         prevState.city.config.neighborhoods,
-        prevState.city.config,
+        prevState.currentTrainSpeed,
+        prevState.city.config.timePerStationStop,
         updatedRailNetwork
       );
       
@@ -519,7 +521,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       const updatedCitizens = calculateCitizenRoutes(
         prevState.citizens,
         prevState.city.config.neighborhoods,
-        prevState.city.config,
+        prevState.currentTrainSpeed,
+        prevState.city.config.timePerStationStop,
         updatedRailNetwork
       );
       
@@ -604,7 +607,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       const updatedCitizens = calculateCitizenRoutes(
         prevState.citizens,
         updatedNeighborhoods,
-        prevState.city.config,
+        prevState.currentTrainSpeed,
+        prevState.city.config.timePerStationStop,
         updatedRailNetwork
       );
       
@@ -732,7 +736,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         const updatedCitizens = calculateCitizenRoutes(
           prevState.citizens,
           updatedNeighborhoods,
-          prevState.city.config,
+          prevState.currentTrainSpeed,
+          prevState.city.config.timePerStationStop,
           updatedRailNetwork
         );
         
@@ -793,7 +798,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       const updatedCitizens = calculateCitizenRoutes(
         prevState.citizens,
         updatedNeighborhoods,
-        prevState.city.config,
+        prevState.currentTrainSpeed,
+        prevState.city.config.timePerStationStop,
         updatedRailNetwork
       );
       
@@ -851,7 +857,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       const updatedCitizens = calculateCitizenRoutes(
         prevState.citizens,
         updatedNeighborhoods,
-        prevState.city.config,
+        prevState.currentTrainSpeed,
+        prevState.city.config.timePerStationStop,
         updatedRailNetwork
       );
       
@@ -934,7 +941,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       const updatedCitizens = calculateCitizenRoutes(
         prevState.citizens,
         updatedNeighborhoods,
-        prevState.city.config,
+        prevState.currentTrainSpeed,
+        prevState.city.config.timePerStationStop,
         updatedRailNetwork
       );
       
@@ -1043,7 +1051,8 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       const updatedCitizens = calculateCitizenRoutes(
         prevState.citizens,
         updatedNeighborhoods,
-        prevState.city.config,
+        prevState.currentTrainSpeed,
+        prevState.city.config.timePerStationStop,
         updatedRailNetwork
       );
       

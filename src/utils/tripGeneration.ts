@@ -453,7 +453,8 @@ export function createCitizensWithSchedules(
 export function calculateCitizenRoutes(
   citizens: Map<string, Citizen>,
   neighborhoods: Neighborhood[],
-  config: CityConfig,
+  trainSpeed: number,
+  timePerStationStop: number,
   railNetwork: RailNetwork
 ): Map<string, Citizen> {
   const neighborhoodMap = new Map(neighborhoods.map(n => [n.id, n]));
@@ -514,9 +515,9 @@ export function calculateCitizenRoutes(
       startNeighborhood.position,
       destNeighborhood.position,
       railNetwork,
-      config.neighborhoods,
-      config.trainSpeed,
-      config.timePerStationStop,
+      neighborhoods,
+      trainSpeed,
+      timePerStationStop,
     );
     
     const totalEstimatedTime = segments.reduce((sum: number, seg: any) => sum + seg.estimatedTime, 0);
@@ -542,7 +543,6 @@ export function initializeTrains(
   lines: Map<string, Line>,
   neighborhoods: Neighborhood[],
   currentTime: number,
-  trainSpeed: number
 ): Map<string, Train> {
   const updatedTrains = new Map<string, Train>();
   
@@ -636,7 +636,7 @@ export function initializeTrains(
         
         if (currentNeighborhood && nextNeighborhood) {
           const distance = calculateDistance(currentNeighborhood.position, nextNeighborhood.position);
-          const travelTime = distance / trainSpeed;
+          const travelTime = distance / updatedTrain.speed;
           // Add 1 minute for neighborhood stop time
           updatedTrain.nextNeighborhoodArrivalTime = currentTime + travelTime + 1;
         }
@@ -684,8 +684,7 @@ export function initializeDay(
     railNetwork.trains,
     railNetwork.lines,
     config.neighborhoods,
-    startTime,
-    config.trainSpeed
+    startTime
   );
   
   const updatedNetwork: RailNetwork = {

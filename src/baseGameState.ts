@@ -42,7 +42,7 @@ export const baseGameState: GameState = {
   },
   currentTripMatrix: undefined, // Will be populated by initializeDay
   citizens: new Map(), // Will be populated by initializeDay
-  isSimulating: false,
+  isSimulating: true,
   simulationTime: 0,
   simulationSpeed: 1,
   activeNeighborhoodCount: SeattleConfig.config.activeNeighborhoodsAtTime(0),

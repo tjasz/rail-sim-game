@@ -561,13 +561,14 @@ import type { DayResult } from '../models';
  * Calculate the day result from current game state
  */
 export function calculateDayResult(gameState: GameState): DayResult {
-  const { budgetEarned, enginesEarned, linesEarned } = gameState.city.config.reward(gameState.city.currentDay);
+  const { budgetEarned, enginesEarned, linesEarned, trainCapacityEarned } = gameState.city.config.reward(gameState.city.currentDay);
 
   return {
     day: gameState.city.currentDay,
     budgetEarned,
     enginesEarned,
     linesEarned,
+    trainCapacityEarned,
   };
 }
 
@@ -575,11 +576,24 @@ export function calculateDayResult(gameState: GameState): DayResult {
  * Roll over to the next day and calculate end-of-day statistics
  */
 export function rolloverToNextDay(gameState: GameState): GameState {
-  // Calculate budget earned, engines earned, and lines earned
-  const { budgetEarned, enginesEarned, linesEarned } = gameState.city.config.reward(gameState.city.currentDay);
+  // Calculate budget earned, engines earned, lines earned, and train capacity earned
+  const { budgetEarned, enginesEarned, linesEarned, trainCapacityEarned } = gameState.city.config.reward(gameState.city.currentDay);
 
-  // Create new unassigned trains
+  // Calculate new train capacity
+  const newTrainCapacity = gameState.currentTrainCapacity + trainCapacityEarned;
+
+  // Update all existing trains with new capacity and create new unassigned trains
   const updatedTrains = new Map(gameState.railNetwork.trains);
+  
+  // Update capacity of all existing trains
+  for (const [trainId, train] of updatedTrains) {
+    updatedTrains.set(trainId, {
+      ...train,
+      capacity: newTrainCapacity,
+    });
+  }
+  
+  // Create new unassigned trains
   for (let i = 0; i < enginesEarned; i++) {
     const newTrainId = `train-${Date.now()}-${i}`;
     const newTrain = {
@@ -589,7 +603,7 @@ export function rolloverToNextDay(gameState: GameState): GameState {
       direction: 'forward' as const,
       position: { x: 0, y: 0 },
       passengerIds: [],
-      capacity: gameState.city.config.trainCapacity,
+      capacity: newTrainCapacity,
       speed: gameState.city.config.trainSpeed,
     };
     updatedTrains.set(newTrainId, newTrain);
@@ -616,6 +630,7 @@ export function rolloverToNextDay(gameState: GameState): GameState {
       trains: updatedTrains,
     },
     allowedLines: gameState.allowedLines + linesEarned,
+    currentTrainCapacity: newTrainCapacity,
     stats: updatedStats,
     simulationTime: gameState.simulationTime, // Continue tracking total time
     isSimulating: false, // Stop simulation

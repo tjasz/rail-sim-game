@@ -239,13 +239,27 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
     setDayResult(null);
     // Trigger day rollover and initialize new day with citizens
     setGameState((prevState) => {
-      // Use budget earned, engines earned, and lines earned from the day result
+      // Use budget earned, engines earned, lines earned, and train capacity earned from the day result
       const budgetEarned = dayResult.budgetEarned;
       const enginesEarned = dayResult.enginesEarned;
       const linesEarned = dayResult.linesEarned;
+      const trainCapacityEarned = dayResult.trainCapacityEarned;
+      
+      // Calculate new train capacity
+      const newTrainCapacity = prevState.currentTrainCapacity + trainCapacityEarned;
 
-      // Create new unassigned trains
+      // Update all existing trains with new capacity and create new unassigned trains
       const updatedTrains = new Map(prevState.railNetwork.trains);
+      
+      // Update capacity of all existing trains
+      for (const [trainId, train] of updatedTrains) {
+        updatedTrains.set(trainId, {
+          ...train,
+          capacity: newTrainCapacity,
+        });
+      }
+      
+      // Create new unassigned trains
       for (let i = 0; i < enginesEarned; i++) {
         const newTrainId = `train-${Date.now()}-${i}`;
         const newTrain = {
@@ -255,7 +269,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           direction: 'forward' as const,
           position: { x: 0, y: 0 },
           passengerIds: [],
-          capacity: prevState.city.config.trainCapacity,
+          capacity: newTrainCapacity,
           speed: prevState.city.config.trainSpeed,
         };
         updatedTrains.set(newTrainId, newTrain);
@@ -281,6 +295,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
           trains: updatedTrains,
         },
         allowedLines: prevState.allowedLines + linesEarned,
+        currentTrainCapacity: newTrainCapacity,
         stats: updatedStats,
         simulationTime: newDay * MINUTES_PER_DAY, // Start of new day
         isSimulating: true, // Resume simulation

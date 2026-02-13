@@ -26,6 +26,9 @@ export interface GameState {
   // Line limits
   allowedLines: number; // number of lines the player is allowed to create
   
+  // Train capacity (can increase over time)
+  currentTrainCapacity: number;
+  
   // Statistics
   stats: GameStats;
 }
@@ -47,4 +50,5 @@ export interface DayResult {
   budgetEarned: number;
   enginesEarned: number;
   linesEarned: number;
+  trainCapacityEarned: number;
 }

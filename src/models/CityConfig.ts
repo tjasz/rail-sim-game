@@ -17,7 +17,8 @@ export interface CityConfig {
   initialBudget: number;
   initialEngines: number; // number of trains to start with
   initialLines: number; // number of lines to start with
-  reward: (dayCompleted: number) => { budgetEarned: number; enginesEarned: number; linesEarned: number }; // function that computes rewards for completing a day (0-indexed)
+  initialTrainCapacity: number; // initial capacity of trains
+  reward: (dayCompleted: number) => { budgetEarned: number; enginesEarned: number; linesEarned: number; trainCapacityEarned: number }; // function that computes rewards for completing a day (0-indexed)
   
   // Transit settings
   trainSpeed: number; // grid squares per minute
@@ -32,7 +33,6 @@ export interface CityConfig {
   costPerTrackMileLand: number;
   costPerTrackMileWater: number;
   costPerTrain: number;
-  trainCapacity: number;
 }
 
 export interface CityState {

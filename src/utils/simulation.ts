@@ -555,49 +555,43 @@ export function updateCitizens(
   return updatedCitizens;
 }
 
-import type { DayResult } from '../models';
+import type { DayResult, RewardPackage } from '../models';
+
+/** Standard reward packages the player can choose from */
+export const REWARD_PACKAGES: RewardPackage[] = [
+  { id: 'fast-small-2', label: '2× Fast Small', enginesEarned: 2, trainCapacity: 3, trainSpeed: 0.5 },
+  { id: 'med-2', label: '2× Medium', enginesEarned: 2, trainCapacity: 6, trainSpeed: 0.25 },
+  { id: 'slow-big-2', label: '2× Slow Large', enginesEarned: 2, trainCapacity: 12, trainSpeed: 0.125 },
+  { id: 'fast-small-1', label: '1× Fast Small', enginesEarned: 1, trainCapacity: 3, trainSpeed: 1 },
+  { id: 'med-1', label: '1× Medium', enginesEarned: 1, trainCapacity: 6, trainSpeed: 0.5 },
+  { id: 'slow-big-1', label: '1× Slow Large', enginesEarned: 1, trainCapacity: 12, trainSpeed: 0.25 },
+];
 
 /**
  * Calculate the day result from current game state
  */
 export function calculateDayResult(gameState: GameState): DayResult {
-  const { budgetEarned, enginesEarned, linesEarned, trainCapacityEarned, trainSpeedEarned } = gameState.city.config.reward(gameState.city.currentDay);
+  const { budgetEarned, linesEarned } = gameState.city.config.reward(gameState.city.currentDay);
 
   return {
     day: gameState.city.currentDay,
     budgetEarned,
-    enginesEarned,
     linesEarned,
-    trainCapacityEarned,
-    trainSpeedEarned,
+    rewardPackages: REWARD_PACKAGES,
   };
 }
 
 /**
  * Roll over to the next day and calculate end-of-day statistics
  */
-export function rolloverToNextDay(gameState: GameState): GameState {
-  // Calculate budget earned, engines earned, lines earned, train capacity earned, and train speed earned
-  const { budgetEarned, enginesEarned, linesEarned, trainCapacityEarned, trainSpeedEarned } = gameState.city.config.reward(gameState.city.currentDay);
+export function rolloverToNextDay(gameState: GameState, selectedPackage: RewardPackage): GameState {
+  const { budgetEarned, linesEarned } = gameState.city.config.reward(gameState.city.currentDay);
 
-  // Calculate new train capacity and speed
-  const newTrainCapacity = gameState.currentTrainCapacity + trainCapacityEarned;
-  const newTrainSpeed = gameState.currentTrainSpeed + trainSpeedEarned;
-
-  // Update all existing trains with new capacity and speed, and create new unassigned trains
+  // Existing trains keep their capacity and speed — only create new trains with the selected package stats
   const updatedTrains = new Map(gameState.railNetwork.trains);
   
-  // Update capacity and speed of all existing trains
-  for (const [trainId, train] of updatedTrains) {
-    updatedTrains.set(trainId, {
-      ...train,
-      capacity: newTrainCapacity,
-      speed: newTrainSpeed,
-    });
-  }
-  
-  // Create new unassigned trains
-  for (let i = 0; i < enginesEarned; i++) {
+  // Create new unassigned trains with the chosen package's stats
+  for (let i = 0; i < selectedPackage.enginesEarned; i++) {
     const newTrainId = `train-${Date.now()}-${i}`;
     const newTrain = {
       id: newTrainId,
@@ -606,8 +600,8 @@ export function rolloverToNextDay(gameState: GameState): GameState {
       direction: 'forward' as const,
       position: { x: 0, y: 0 },
       passengerIds: [],
-      capacity: newTrainCapacity,
-      speed: newTrainSpeed,
+      capacity: selectedPackage.trainCapacity,
+      speed: selectedPackage.trainSpeed,
     };
     updatedTrains.set(newTrainId, newTrain);
   }
@@ -616,7 +610,7 @@ export function rolloverToNextDay(gameState: GameState): GameState {
   const updatedStats = {
     ...gameState.stats,
     totalMoneyEarned: gameState.stats.totalMoneyEarned + budgetEarned,
-    totalTrainsPurchased: gameState.stats.totalTrainsPurchased + enginesEarned,
+    totalTrainsPurchased: gameState.stats.totalTrainsPurchased + selectedPackage.enginesEarned,
   };
 
   const newDay = gameState.city.currentDay + 1;
@@ -633,8 +627,6 @@ export function rolloverToNextDay(gameState: GameState): GameState {
       trains: updatedTrains,
     },
     allowedLines: gameState.allowedLines + linesEarned,
-    currentTrainCapacity: newTrainCapacity,
-    currentTrainSpeed: newTrainSpeed,
     stats: updatedStats,
     simulationTime: gameState.simulationTime, // Continue tracking total time
     isSimulating: false, // Stop simulation

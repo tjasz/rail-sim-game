@@ -20,5 +20,6 @@ export type {
   GameState, 
   GameStatus, 
   GameStats, 
-  DayResult 
+  DayResult,
+  RewardPackage 
 } from './GameState';

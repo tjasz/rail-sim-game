@@ -1,11 +1,14 @@
-import type { DayResult } from '../models';
+import { useState } from 'react';
+import type { DayResult, RewardPackage } from '../models';
 
 interface DayResultModalProps {
   result: DayResult;
-  onContinue: () => void;
+  onContinue: (selectedPackage: RewardPackage) => void;
 }
 
 export function DayResultModal({ result, onContinue }: DayResultModalProps) {
+  const [selectedPackage, setSelectedPackage] = useState<RewardPackage | null>(null);
+
   return (
     <div className="modal-overlay">
       <div className="modal-content day-result-modal">
@@ -24,29 +27,36 @@ export function DayResultModal({ result, onContinue }: DayResultModalProps) {
               <span className="stat-value success">${result.budgetEarned.toLocaleString()}</span>
             </div>
             
-            <div className="result-stat">
-              <span className="stat-label">Trains Earned</span>
-              <span className="stat-value success">{result.enginesEarned}</span>
-            </div>
-            
-            <div className="result-stat">
-              <span className="stat-label">Lines Earned</span>
-              <span className="stat-value success">{result.linesEarned}</span>
-            </div>
-            
-            <div className="result-stat">
-              <span className="stat-label">Train Capacity Earned</span>
-              <span className="stat-value success">+{result.trainCapacityEarned}</span>
-            </div>
-            
-            <div className="result-stat">
-              <span className="stat-label">Train Speed Earned</span>
-              <span className="stat-value success">+{result.trainSpeedEarned.toFixed(2)}</span>
-            </div>
+            {result.linesEarned > 0 && (
+              <div className="result-stat">
+                <span className="stat-label">Lines Earned</span>
+                <span className="stat-value success">+{result.linesEarned}</span>
+              </div>
+            )}
           </div>
         </div>
+
+        <h3 style={{ marginTop: '16px', marginBottom: '8px' }}>Choose your train reward:</h3>
+        <div className="reward-packages">
+          {result.rewardPackages.map((pkg) => (
+            <button
+              key={pkg.id}
+              className={`reward-package${selectedPackage?.id === pkg.id ? ' selected' : ''}`}
+              onClick={() => setSelectedPackage(pkg)}
+            >
+              <span className="pkg-label">{pkg.label}</span>
+              <span className="pkg-detail">
+                {pkg.enginesEarned} train{pkg.enginesEarned > 1 ? 's' : ''} · {pkg.trainCapacity} pax · {pkg.trainSpeed} spd
+              </span>
+            </button>
+          ))}
+        </div>
         
-        <button className="btn-large btn-primary" onClick={onContinue}>
+        <button
+          className="btn-large btn-primary"
+          disabled={!selectedPackage}
+          onClick={() => selectedPackage && onContinue(selectedPackage)}
+        >
           {'Continue to Next Day'}
         </button>
       </div>

@@ -48,11 +48,18 @@ export interface GameStats {
   totalTrainsPurchased: number;
 }
 
+export interface RewardPackage {
+  id: string;
+  label: string;
+  enginesEarned: number;
+  trainCapacity: number;
+  trainSpeed: number;
+}
+
 export interface DayResult {
   day: number;
   budgetEarned: number;
-  enginesEarned: number;
   linesEarned: number;
-  trainCapacityEarned: number;
-  trainSpeedEarned: number;
+  rewardPackages: RewardPackage[];
+  selectedPackage?: RewardPackage;
 }

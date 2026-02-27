@@ -559,12 +559,15 @@ import type { DayResult, RewardPackage } from '../models';
 
 /** Standard reward packages the player can choose from */
 export const REWARD_PACKAGES: RewardPackage[] = [
-  { id: 'fast-small-2', label: '2× Fast Small', enginesEarned: 2, trainCapacity: 3, trainSpeed: 0.5 },
-  { id: 'med-2', label: '2× Medium', enginesEarned: 2, trainCapacity: 6, trainSpeed: 0.25 },
-  { id: 'slow-big-2', label: '2× Slow Large', enginesEarned: 2, trainCapacity: 12, trainSpeed: 0.125 },
-  { id: 'fast-small-1', label: '1× Fast Small', enginesEarned: 1, trainCapacity: 3, trainSpeed: 1 },
-  { id: 'med-1', label: '1× Medium', enginesEarned: 1, trainCapacity: 6, trainSpeed: 0.5 },
-  { id: 'slow-big-1', label: '1× Slow Large', enginesEarned: 1, trainCapacity: 12, trainSpeed: 0.25 },
+  { id: 'small-slow', label: '6x Small Slow', enginesEarned: 6, trainCapacity: 4, trainSpeed: 0.125 },
+  { id: 'small', label: '3x Small', enginesEarned: 3, trainCapacity: 4, trainSpeed: 0.25 },
+  { id: 'small-fast', label: '2x Small Fast', enginesEarned: 2, trainCapacity: 4, trainSpeed: 0.375 },
+  { id: 'med-slow', label: '4x Medium Slow', enginesEarned: 4, trainCapacity: 6, trainSpeed: 0.125 },
+  { id: 'med', label: '2x Medium', enginesEarned: 2, trainCapacity: 6, trainSpeed: 0.25 },
+  { id: 'med-fast', label: '1x Medium Fast', enginesEarned: 1, trainCapacity: 6, trainSpeed: 0.375 },
+  { id: 'large-slow', label: '3x Large Slow', enginesEarned: 3, trainCapacity: 8, trainSpeed: 0.125 },
+  { id: 'large', label: '1x Large', enginesEarned: 1, trainCapacity: 8, trainSpeed: 0.25 },
+  { id: 'large-fast', label: '1x Large Fast', enginesEarned: 1, trainCapacity: 8, trainSpeed: 0.375 },
 ];
 
 /**

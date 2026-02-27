@@ -1231,6 +1231,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
               lines={gameState.railNetwork.lines}
               citizens={gameState.citizens}
               neighborhoods={neighborhoodMap}
+              onReassignTrain={handleAssignTrainToLine}
             />
             <MapClickHandler
               onMapClick={drawingLineId ? handleMapClick : undefined}

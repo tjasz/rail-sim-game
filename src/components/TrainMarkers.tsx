@@ -192,7 +192,7 @@ export function TrainMarkers({ trains, lines, citizens, neighborhoods, onReassig
                 )}
                 {/* Train body — previews target line color while dragging */}
                 <path
-                  d={`M ${-width/2} ${-height/2 + 0.04} L 0 ${-height/2} L ${width/2} ${-height/2 + 0.04} L ${width/2} ${height/2} L ${-width/2} ${height/2} Z`}
+                  d={`M ${-width/2} ${-height/2} L 0 ${-height/2 - train.speed/5} L ${width/2} ${-height/2} L ${width/2} ${height/2} L ${-width/2} ${height/2} Z`}
                   fill={targetLine ? targetLine.color : line.color}
                   stroke="none"
                   strokeWidth={0}

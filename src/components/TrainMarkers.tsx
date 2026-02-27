@@ -4,7 +4,6 @@ import { PositionedDiv } from './PositionedDiv';
 
 const RIDER_SIZE = [0.15, 0.15]; // [width, height] in grid units
 const RIDER_MARGIN = 0.02; // margin between riders in grid units
-const RIDER_COLS = 2;
 
 interface TrainMarkersProps {
   config: CityConfig;
@@ -15,12 +14,13 @@ interface TrainMarkersProps {
 }
 
 export function TrainMarkers({ trains, lines, citizens, neighborhoods }: TrainMarkersProps) {
-  const width = RIDER_SIZE[0] * RIDER_COLS + (RIDER_COLS + 1) * RIDER_MARGIN;
   
   return (
     <>
       {Array.from(trains.values()).map(train => {
-        const rider_rows = Math.ceil(train.capacity / RIDER_COLS);
+        const riderCols = (train.capacity % 2 === 0 && train.capacity > 3) ? 2 : 1; // if capacity is odd, use 1 column to avoid empty space
+        const width = RIDER_SIZE[0] * riderCols + (riderCols + 1) * RIDER_MARGIN;
+        const rider_rows = Math.ceil(train.capacity / riderCols);
         const height = RIDER_SIZE[1] * rider_rows + (rider_rows + 1) * RIDER_MARGIN;
 
         const line = lines.get(train.lineId);
@@ -53,8 +53,8 @@ export function TrainMarkers({ trains, lines, citizens, neighborhoods }: TrainMa
               />
               {/* Passengers */}
               {train.passengerIds.map((passengerId, idx) => {
-                const row = Math.floor(idx / RIDER_COLS);
-                const col = idx % RIDER_COLS;
+                const row = Math.floor(idx / riderCols);
+                const col = idx % riderCols;
                 const x = -width/2 + RIDER_MARGIN + col * (RIDER_SIZE[0] + RIDER_MARGIN);
                 const y = -height/2 + RIDER_MARGIN + row * (RIDER_SIZE[1] + RIDER_MARGIN);
                 const citizen = citizens.get(passengerId);

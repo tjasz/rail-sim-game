@@ -209,27 +209,24 @@ for (const hood of neighborhoods) {
   }
 
   // 2. Greedily pick the candidate within 3 Euclidean distance of any
-  //    selected neighborhood that most reduces total worker-weighted distance.
+  //    selected neighborhood that maximizes improvement / cost, where
+  //    improvement = total reduction in worker-weighted distance, and
+  //    cost = distance from candidate to nearest selected station.
   while (remaining.size > 0) {
     let bestCandidate = null;
-    let bestImprovement = -Infinity;
+    let bestScore = -Infinity;
 
     for (const id of remaining) {
       const candidate = idToHood.get(id);
 
       if (SeattleTiles[candidate.position.x][candidate.position.y] === 'w') continue; // Skip water tiles
 
-      // Check distance to any selected neighborhood
-      let withinRange = false;
+      // Check distance to any selected neighborhood and find nearest station distance
+      let minStationDist = Infinity;
       for (const sel of selected) {
-        const dx = Math.abs(candidate.position.x - sel.position.x);
-        const dy = Math.abs(candidate.position.y - sel.position.y);
-        if (dx * dx + dy * dy <= 4) {
-          withinRange = true;
-          break;
-        }
-      }
-      if (!withinRange) continue;
+        const d = dist(candidate, sel);
+        if (d < minStationDist) minStationDist = d;
+      }      if (minStationDist > 2) continue; // Must be within range
 
       // Calculate improvement: sum of reductions in weighted distance
       let improvement = 0;
@@ -241,8 +238,12 @@ for (const hood of neighborhoods) {
         }
       }
 
-      if (improvement > bestImprovement) {
-        bestImprovement = improvement;
+      // Normalize benefit by cost (distance to nearest station)
+      const cost = Math.max(minStationDist, 0.1); // avoid division by zero for adjacent
+      const score = improvement / cost;
+
+      if (score > bestScore) {
+        bestScore = score;
         bestCandidate = candidate;
       }
     }

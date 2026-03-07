@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const SeattleTiles = Array(20).fill(Array(20).fill('l'));
+const SeattleTiles = Array(40).fill(Array(40).fill('l'));
 
 // Read the GeoJSON file
 const inputFile = path.join(__dirname, 'joined-grid-2.geojson');
@@ -58,61 +58,111 @@ let neighborhoods = geojson.features.map(feature => {
     color: 'black',
     residents,
     proportionOfJobs,
-    availableShifts: 'DefaultShifts',
+    availableShifts: '[]',
     recreationalDemandCoefficient: 1.0
   };
 });
 
-neighborhoods = neighborhoods
-  .filter(n => 
-    SeattleTiles[n.position.x][n.position.y] !== 'w' && (n.residents > 0 || n.proportionOfJobs > 0)
-  );
-
-// Custom sort: balance residents and jobs
-const sortedNeighborhoods = [];
-const remaining = [...neighborhoods];
-
-// Start with the neighborhood with the most residents
-let maxResidentsIdx = 0;
-for (let i = 1; i < remaining.length; i++) {
-  if (remaining[i].residents > remaining[maxResidentsIdx].residents) {
-    maxResidentsIdx = i;
+// Calculate normalized worker count for each neighborhood
+// For each neighborhood, sum of (workers in every neighborhood / (1 + distance))
+for (const hood of neighborhoods) {
+  let normalizedWorkers = 0;
+  for (const other of neighborhoods) {
+    const dx = hood.position.x - other.position.x;
+    const dy = hood.position.y - other.position.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    normalizedWorkers += other.residents / (1 + distance);
   }
-}
-sortedNeighborhoods.push(remaining[maxResidentsIdx]);
-remaining.splice(maxResidentsIdx, 1);
-
-// For each subsequent neighborhood, balance residents and jobs
-let totalResidents = sortedNeighborhoods[0].residents;
-let totalJobs = sortedNeighborhoods[0].proportionOfJobs;
-
-while (remaining.length > 0) {
-  let nextIdx = 0;
-  
-  if (totalResidents > totalJobs) {
-    // Pick the neighborhood with the most jobs
-    for (let i = 1; i < remaining.length; i++) {
-      if (remaining[i].proportionOfJobs > remaining[nextIdx].proportionOfJobs) {
-        nextIdx = i;
-      }
-    }
-  } else {
-    // Pick the neighborhood with the most residents
-    for (let i = 1; i < remaining.length; i++) {
-      if (remaining[i].residents > remaining[nextIdx].residents) {
-        nextIdx = i;
-      }
-    }
-  }
-  
-  const next = remaining[nextIdx];
-  sortedNeighborhoods.push(next);
-  totalResidents += next.residents;
-  totalJobs += next.proportionOfJobs;
-  remaining.splice(nextIdx, 1);
+  hood.normalizedWorkers = Math.round(normalizedWorkers);
 }
 
-neighborhoods = sortedNeighborhoods;
+// Calculate topographic prominence based on worker count
+// Uses union-find with cells processed in descending worker order.
+// The global maximum gets prominence = its own worker count.
+// For others, prominence = workers - key_col, where key_col is the
+// lowest worker count on the optimal path to a higher-worker cell.
+{
+  // Build a grid lookup: (x,y) -> neighborhood
+  const grid = new Map();
+  for (const hood of neighborhoods) {
+    grid.set(`${hood.position.x},${hood.position.y}`, hood);
+  }
+
+  // Union-Find
+  const parent = new Map();
+  const rank = new Map();
+  const componentPeak = new Map(); // component root -> highest-worker hood in component
+
+  function find(id) {
+    if (parent.get(id) !== id) parent.set(id, find(parent.get(id)));
+    return parent.get(id);
+  }
+
+  function union(a, b) {
+    const ra = find(a), rb = find(b);
+    if (ra === rb) return ra;
+    const rankA = rank.get(ra) || 0;
+    const rankB = rank.get(rb) || 0;
+    let newRoot;
+    if (rankA < rankB) { parent.set(ra, rb); newRoot = rb; }
+    else if (rankA > rankB) { parent.set(rb, ra); newRoot = ra; }
+    else { parent.set(rb, ra); rank.set(ra, rankA + 1); newRoot = ra; }
+    // Keep track of the peak of the merged component
+    const peakA = componentPeak.get(ra);
+    const peakB = componentPeak.get(rb);
+    componentPeak.set(newRoot, peakA.residents >= peakB.residents ? peakA : peakB);
+    return newRoot;
+  }
+
+  // Sort cells descending by residents
+  const sorted = [...neighborhoods].sort((a, b) => b.residents - a.residents);
+  const processed = new Set();
+  const directions = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+
+  for (const hood of sorted) {
+    const id = hood.id;
+    parent.set(id, id);
+    rank.set(id, 0);
+    componentPeak.set(id, hood);
+    processed.add(id);
+
+    const neighborRoots = new Set();
+    for (const [dx, dy] of directions) {
+      const nx = hood.position.x + dx;
+      const ny = hood.position.y + dy;
+      const nKey = `${nx},${ny}`;
+      const neighbor = grid.get(nKey);
+      if (neighbor && processed.has(neighbor.id)) {
+        neighborRoots.add(find(neighbor.id));
+      }
+    }
+
+    // Merge with all neighboring components
+    const roots = [...neighborRoots];
+    for (const r of roots) {
+      const peakOfOther = componentPeak.get(r);
+      const peakOfSelf = componentPeak.get(find(id));
+      // Before merging: if peakOfOther != peakOfSelf, the col is the current cell
+      // The subordinate peak (the lower one) gets prominence set here
+      if (peakOfOther !== peakOfSelf) {
+        const lowerPeak = peakOfOther.residents <= peakOfSelf.residents ? peakOfOther : peakOfSelf;
+        if (lowerPeak.prominence == null) {
+          lowerPeak.prominence = lowerPeak.residents - hood.residents;
+        }
+      }
+      union(id, r);
+    }
+  }
+
+  // The global maximum: prominence = its resident count
+  const globalMax = sorted[0];
+  if (globalMax.prominence == null) {
+    globalMax.prominence = globalMax.residents;
+  }
+}
+
+// Sort by descending prominence
+neighborhoods.sort((a, b) => b.prominence - a.prominence);
 
 // Format as JavaScript code
 let output = '// Generated neighborhoods from GeoJSON\n';
@@ -123,10 +173,12 @@ neighborhoods.forEach((neighborhood, index) => {
   output += `    id: '${neighborhood.id}',\n`;
   output += `    name: '${neighborhood.name}',\n`;
   output += `    position: { x: ${neighborhood.position.x}, y: ${neighborhood.position.y} },\n`;
-  output += `    icon: Object.keys(iconPaths)[${horizontalSpan*neighborhood.position.x}+${neighborhood.position.y}],\n`;
+  output += `    icon: Object.keys(iconPaths)[${horizontalSpan*neighborhood.position.x}+${neighborhood.position.y} % Object.keys(iconPaths).length],\n`;
   output += `    color: '${neighborhood.color}',\n`;
   output += `    residents: ${neighborhood.residents},\n`;
   output += `    proportionOfJobs: ${neighborhood.proportionOfJobs},\n`;
+  output += `    normalizedWorkers: ${neighborhood.normalizedWorkers},\n`;
+  output += `    prominence: ${neighborhood.prominence},\n`;
   output += `    availableShifts: ${neighborhood.availableShifts},\n`;
   output += `    recreationalDemandCoefficient: ${neighborhood.recreationalDemandCoefficient},\n`;
   output += '  }';

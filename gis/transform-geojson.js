@@ -161,8 +161,62 @@ for (const hood of neighborhoods) {
   }
 }
 
-// Sort by descending prominence
-neighborhoods.sort((a, b) => b.prominence - a.prominence);
+// Sort by expanding frontier: start with most workers, then add
+// next-most-prominent neighborhoods within 4 units of any selected one.
+{
+  const remaining = new Set(neighborhoods.map(n => n.id));
+  const selected = [];
+  const idToHood = new Map(neighborhoods.map(n => [n.id, n]));
+
+  // 1. First pick: neighborhood with the most workers (residents)
+  let first = neighborhoods.reduce((best, n) => n.residents > best.residents ? n : best, neighborhoods[0]);
+  selected.push(first);
+  remaining.delete(first.id);
+
+  // 2. Repeatedly pick the most prominent remaining neighborhood
+  //    that is within 4 units of any already-selected neighborhood.
+  while (remaining.size > 0) {
+    let bestCandidate = null;
+    let bestProminence = -Infinity;
+
+    for (const id of remaining) {
+      const candidate = idToHood.get(id);
+      // Check distance to any selected neighborhood
+      let withinRange = false;
+      for (const sel of selected) {
+        const dx = candidate.position.x - sel.position.x;
+        const dy = candidate.position.y - sel.position.y;
+        if (Math.sqrt(dx * dx + dy * dy) <= 4) {
+          withinRange = true;
+          break;
+        }
+      }
+      if (withinRange && candidate.prominence > bestProminence) {
+        bestProminence = candidate.prominence;
+        bestCandidate = candidate;
+      }
+    }
+
+    if (bestCandidate) {
+      selected.push(bestCandidate);
+      remaining.delete(bestCandidate.id);
+    } else {
+      // No reachable candidate within 4 units — pick the most prominent
+      // remaining one to start a new cluster
+      let fallback = null;
+      for (const id of remaining) {
+        const candidate = idToHood.get(id);
+        if (!fallback || candidate.prominence > fallback.prominence) {
+          fallback = candidate;
+        }
+      }
+      selected.push(fallback);
+      remaining.delete(fallback.id);
+    }
+  }
+
+  neighborhoods = selected;
+}
 
 // Format as JavaScript code
 let output = '// Generated neighborhoods from GeoJSON\n';

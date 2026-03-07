@@ -48,10 +48,10 @@ export const SeattleConfig : CityState = {
       },
       activeNeighborhoodsAtTime : (elapsedMinutes: number) => Math.min(Math.floor(3.1 + elapsedMinutes / 100), 400),
       initialBudget: 20,
-      initialEngines: 2,
+      initialEngines: 3,
       initialLines: 2,
       initialTrainCapacity: 6,
-      initialTrainSpeed: 0.25,
+      initialTrainSpeed: 0.375,
       reward: (_dayCompleted: number) => {
         return {
           budgetEarned: 6,

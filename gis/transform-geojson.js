@@ -5,7 +5,28 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const SeattleTiles = Array(40).fill(Array(40).fill('l'));
+const SeattleTiles = [
+  [ "w", "w", "w", "w", "w", "w", "w", "w", "w", "w", "w", "w", "l", "w", "w", "w", "w", "w", "w", "w" ],
+  [ "w", "w", "w", "w", "w", "w", "l", "w", "w", "w", "w", "l", "l", "w", "w", "w", "w", "w", "w", "w" ],
+  [ "w", "w", "l", "l", "l", "l", "l", "l", "w", "w", "l", "l", "l", "l", "l", "l", "w", "w", "w", "l" ],
+  [ "w", "l", "l", "l", "l", "l", "l", "w", "w", "w", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "w", "l", "l", "l", "l", "w", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "w", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "w", "w", "l", "l", "w", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "w", "w", "w", "w", "w", "w", "w", "w", "l", "w", "w", "w", "w", "w", "l" ],
+  [ "l", "l", "w", "w", "w", "w", "l", "l", "w", "l", "l", "w", "w", "w", "w", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "w", "w", "l", "l", "l", "w", "w", "l", "l", "l", "w", "w", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "w", "w", "w", "w", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "w", "w", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "w", "w", "w", "w", "w", "w", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+  [ "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l", "l" ],
+];
 
 // Read the GeoJSON file
 const inputFile = path.join(__dirname, 'joined-grid-2.geojson');
@@ -161,38 +182,67 @@ for (const hood of neighborhoods) {
   }
 }
 
-// Sort by expanding frontier: start with most workers, then add
-// next-most-prominent neighborhoods within 4 units of any selected one.
+// Sort by expanding frontier: start with most workers, then greedily add
+// the neighborhood within 3 Euclidean distance of any selected neighborhood
+// worker-weighted distance to nearest station.
 {
   const remaining = new Set(neighborhoods.map(n => n.id));
   const selected = [];
   const idToHood = new Map(neighborhoods.map(n => [n.id, n]));
+
+  // Euclidean distance between two neighborhoods
+  function dist(a, b) {
+    const dx = a.position.x - b.position.x;
+    const dy = a.position.y - b.position.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
 
   // 1. First pick: neighborhood with the most workers (residents)
   let first = neighborhoods.reduce((best, n) => n.residents > best.residents ? n : best, neighborhoods[0]);
   selected.push(first);
   remaining.delete(first.id);
 
-  // 2. Repeatedly pick the most prominent remaining neighborhood
-  //    that is within 4 units of any already-selected neighborhood.
+  // Track current nearest-station distance for each neighborhood
+  const nearestDist = new Map();
+  for (const hood of neighborhoods) {
+    nearestDist.set(hood.id, dist(hood, first));
+  }
+
+  // 2. Greedily pick the candidate within 3 Euclidean distance of any
+  //    selected neighborhood that most reduces total worker-weighted distance.
   while (remaining.size > 0) {
     let bestCandidate = null;
-    let bestProminence = -Infinity;
+    let bestImprovement = -Infinity;
 
     for (const id of remaining) {
       const candidate = idToHood.get(id);
+
+      if (SeattleTiles[candidate.position.x][candidate.position.y] === 'w') continue; // Skip water tiles
+
       // Check distance to any selected neighborhood
       let withinRange = false;
       for (const sel of selected) {
-        const dx = candidate.position.x - sel.position.x;
-        const dy = candidate.position.y - sel.position.y;
-        if (Math.sqrt(dx * dx + dy * dy) <= 4) {
+        const dx = Math.abs(candidate.position.x - sel.position.x);
+        const dy = Math.abs(candidate.position.y - sel.position.y);
+        if (dx * dx + dy * dy <= 4) {
           withinRange = true;
           break;
         }
       }
-      if (withinRange && candidate.prominence > bestProminence) {
-        bestProminence = candidate.prominence;
+      if (!withinRange) continue;
+
+      // Calculate improvement: sum of reductions in weighted distance
+      let improvement = 0;
+      for (const hood of neighborhoods) {
+        const currentDist = nearestDist.get(hood.id);
+        const newDist = dist(hood, candidate);
+        if (newDist < currentDist) {
+          improvement += hood.residents * (currentDist - newDist);
+        }
+      }
+
+      if (improvement > bestImprovement) {
+        bestImprovement = improvement;
         bestCandidate = candidate;
       }
     }
@@ -200,18 +250,42 @@ for (const hood of neighborhoods) {
     if (bestCandidate) {
       selected.push(bestCandidate);
       remaining.delete(bestCandidate.id);
+      // Update nearest distances
+      for (const hood of neighborhoods) {
+        const d = dist(hood, bestCandidate);
+        if (d < nearestDist.get(hood.id)) {
+          nearestDist.set(hood.id, d);
+        }
+      }
     } else {
-      // No reachable candidate within 4 units — pick the most prominent
-      // remaining one to start a new cluster
+      // No reachable candidate — pick the one that would most reduce
+      // total weighted distance to start a new cluster
       let fallback = null;
+      let bestFallbackImprovement = -Infinity;
       for (const id of remaining) {
         const candidate = idToHood.get(id);
-        if (!fallback || candidate.prominence > fallback.prominence) {
+        let improvement = 0;
+        for (const hood of neighborhoods) {
+          const currentDist = nearestDist.get(hood.id);
+          const newDist = dist(hood, candidate);
+          if (newDist < currentDist) {
+            improvement += hood.residents * (currentDist - newDist);
+          }
+        }
+        if (improvement > bestFallbackImprovement) {
+          bestFallbackImprovement = improvement;
           fallback = candidate;
         }
       }
       selected.push(fallback);
       remaining.delete(fallback.id);
+      // Update nearest distances
+      for (const hood of neighborhoods) {
+        const d = dist(hood, fallback);
+        if (d < nearestDist.get(hood.id)) {
+          nearestDist.set(hood.id, d);
+        }
+      }
     }
   }
 

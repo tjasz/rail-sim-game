@@ -30,7 +30,7 @@ const SeattleTiles = [
 
 // Read the GeoJSON file
 const inputFile = path.join(__dirname, 'joined-grid-2.geojson');
-const outputFile = path.join(__dirname, 'transformed-neighborhoods.js');
+const outputFile = path.join(__dirname, '../src/transformed-neighborhoods.ts');
 
 const geojson = JSON.parse(fs.readFileSync(inputFile, 'utf8'));
 
@@ -88,13 +88,17 @@ let neighborhoods = geojson.features.map(feature => {
 // For each neighborhood, sum of (workers in every neighborhood / (1 + distance))
 for (const hood of neighborhoods) {
   let normalizedWorkers = 0;
+  let gravity = 0;
   for (const other of neighborhoods) {
     const dx = hood.position.x - other.position.x;
     const dy = hood.position.y - other.position.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
+    const distSq = dx * dx + dy * dy;
+    const distance = Math.sqrt(distSq);
     normalizedWorkers += other.residents / (1 + distance);
+    gravity += distSq > 0 ? hood.residents * other.residents / distSq : 0;
   }
   hood.normalizedWorkers = Math.round(normalizedWorkers);
+  hood.gravity = gravity;
 }
 
 // Calculate topographic prominence based on worker count
@@ -228,7 +232,7 @@ for (const hood of neighborhoods) {
         const d = dist(candidate, sel);
         if (d < minStationDist) minStationDist = d;
       }
-      if (minStationDist > 4) continue; // Must be within range
+      if (minStationDist <= 1) continue; // Must be within range
 
       // Calculate improvement: sum of reductions in weighted distance
       let improvement = 0;
@@ -241,9 +245,7 @@ for (const hood of neighborhoods) {
         }
       }
 
-      // Normalize benefit by cost (distance to nearest station)
-      const cost = (iteration % 6 === 7 ? 1 : Math.max(minStationDist, 0.1)); // avoid division by zero for adjacent
-      const score = improvement / cost;
+      const score = candidate.gravity;
 
       if (score > bestScore) {
         bestScore = score;
@@ -311,6 +313,7 @@ neighborhoods.forEach((neighborhood, index) => {
   output += `    proportionOfJobs: ${neighborhood.proportionOfJobs},\n`;
   output += `    normalizedWorkers: ${neighborhood.normalizedWorkers},\n`;
   output += `    prominence: ${neighborhood.prominence},\n`;
+  output += `    gravity: ${neighborhood.gravity},\n`;
   output += `    availableShifts: ${neighborhood.availableShifts},\n`;
   output += `    recreationalDemandCoefficient: ${neighborhood.recreationalDemandCoefficient},\n`;
   output += '  }';

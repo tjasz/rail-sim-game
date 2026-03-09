@@ -205,14 +205,15 @@ for (const hood of neighborhoods) {
   // Track current nearest-station distance for each neighborhood
   const nearestDist = new Map();
   for (const hood of neighborhoods) {
-    nearestDist.set(hood.id, dist(hood, first));
+    const firstDist = dist(hood, first);
+    nearestDist.set(hood.id, firstDist*firstDist);
   }
 
   // 2. Greedily pick the candidate within 3 Euclidean distance of any
   //    selected neighborhood that maximizes improvement / cost, where
   //    improvement = total reduction in worker-weighted distance, and
   //    cost = distance from candidate to nearest selected station.
-  while (remaining.size > 0) {
+  for (let iteration = 0; remaining.size > 0; iteration++) {
     let bestCandidate = null;
     let bestScore = -Infinity;
 
@@ -226,20 +227,22 @@ for (const hood of neighborhoods) {
       for (const sel of selected) {
         const d = dist(candidate, sel);
         if (d < minStationDist) minStationDist = d;
-      }      if (minStationDist > 2) continue; // Must be within range
+      }
+      if (minStationDist > 4) continue; // Must be within range
 
       // Calculate improvement: sum of reductions in weighted distance
       let improvement = 0;
       for (const hood of neighborhoods) {
         const currentDist = nearestDist.get(hood.id);
         const newDist = dist(hood, candidate);
-        if (newDist < currentDist) {
-          improvement += hood.residents * (currentDist - newDist);
+        if (newDist < currentDist) { // Only count improvement if it brings them within 2 distance
+          const distanceImprovement = currentDist - newDist;
+          improvement += hood.residents * distanceImprovement * distanceImprovement;
         }
       }
 
       // Normalize benefit by cost (distance to nearest station)
-      const cost = Math.max(minStationDist, 0.1); // avoid division by zero for adjacent
+      const cost = (iteration % 6 === 7 ? 1 : Math.max(minStationDist, 0.1)); // avoid division by zero for adjacent
       const score = improvement / cost;
 
       if (score > bestScore) {
@@ -294,7 +297,7 @@ for (const hood of neighborhoods) {
 }
 
 // Format as JavaScript code
-let output = '// Generated neighborhoods from GeoJSON\n';
+let output = 'import { iconPaths } from "./iconPaths";\n\n// Generated neighborhoods from GeoJSON\n';
 output += 'const neighborhoods = [\n';
 
 neighborhoods.forEach((neighborhood, index) => {

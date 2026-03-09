@@ -563,7 +563,7 @@ export const REWARD_PACKAGES: RewardPackage[] = [
   { id: 'small', label: '3x Small', enginesEarned: 3, trainCapacity: 4, trainSpeed: 0.25 },
   { id: 'small-fast', label: '2x Small Fast', enginesEarned: 2, trainCapacity: 4, trainSpeed: 0.375 },
   { id: 'med-slow', label: '4x Medium Slow', enginesEarned: 4, trainCapacity: 6, trainSpeed: 0.125 },
-  { id: 'med', label: '2x Medium', enginesEarned: 2, trainCapacity: 6, trainSpeed: 0.375 },
+  { id: 'med', label: '2x Medium', enginesEarned: 2, trainCapacity: 6, trainSpeed: 0.25 },
   { id: 'med-fast', label: '1x Medium Fast', enginesEarned: 1, trainCapacity: 6, trainSpeed: 0.375 },
   { id: 'large-slow', label: '3x Large Slow', enginesEarned: 3, trainCapacity: 8, trainSpeed: 0.125 },
   { id: 'large', label: '1x Large', enginesEarned: 1, trainCapacity: 8, trainSpeed: 0.25 },

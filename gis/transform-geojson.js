@@ -232,20 +232,20 @@ for (const hood of neighborhoods) {
         const d = dist(candidate, sel);
         if (d < minStationDist) minStationDist = d;
       }
-      if (minStationDist <= 1) continue; // Must be within range
+      //if (minStationDist <= 1) continue;
 
       // Calculate improvement: sum of reductions in weighted distance
       let improvement = 0;
       for (const hood of neighborhoods) {
         const currentDist = nearestDist.get(hood.id);
         const newDist = dist(hood, candidate);
-        if (newDist < currentDist) { // Only count improvement if it brings them within 2 distance
+        if (newDist < currentDist && currentDist > 0) {
           const distanceImprovement = currentDist - newDist;
-          improvement += hood.residents * distanceImprovement * distanceImprovement;
+          improvement += hood.residents * candidate.residents / (newDist * newDist + 1) - hood.residents * candidate.residents / (currentDist * currentDist + 1);
         }
       }
 
-      const score = candidate.gravity;
+      const score = improvement / minStationDist;
 
       if (score > bestScore) {
         bestScore = score;

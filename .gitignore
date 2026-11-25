@@ -22,4 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-gis
+.venv-osm/
+gis/*
+!gis/generate-osm.py
+!gis/requirements-osm.txt
+!gis/test_generate_osm.py

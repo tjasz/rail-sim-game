@@ -111,6 +111,72 @@ Each city configuration includes the following parameters:
 The game is a React TypeScript application running fully in the player's web browser client.
 It is built and run with vite.
 
+### Generate a map from OpenStreetMap
+
+The offline Python generator accepts a complete OSM XML (`.osm` / `.osm.xml`) or
+PBF (`.osm.pbf`) export. It does not need census data or make network requests.
+Install Python 3.10+ and the GIS dependencies in a virtual environment:
+
+```powershell
+python -m venv .venv-osm
+.\.venv-osm\Scripts\python.exe -m pip install -r .\gis\requirements-osm.txt
+```
+
+For a 20 by 20 grid with half-mile cells centered at 47.59794, -122.32975:
+
+```powershell
+.\.venv-osm\Scripts\python.exe .\gis\generate-osm.py "$env:USERPROFILE\Downloads\washington-261124.osm.pbf" --center 47.59794 -122.32975 --dimensions 20 20 --resolution 0.5 --output .\src\generated-city.ts
+```
+
+`--dimensions` is width then height; `--resolution` is the cell side length in
+miles. The grid uses a local azimuthal equidistant projection centered on the
+specified coordinates, with distances and areas calculated in meters.
+The export is streamed with a node-location cache; statewide files can require
+substantial memory. Complete way nodes and multipolygon relation members must be
+present, so do not crop an export without preserving referenced objects.
+Malformed area geometries are skipped with explicit warnings; review those warnings
+for missing buildings or water. Missing coastline geometry remains a fatal error.
+
+The generated TypeScript module exports `cityMap` (the map fields of `CityConfig`),
+`tiles`, `water`, `neighborhoods`, and `mapMetadata`. Import `cityMap` and spread it
+into a city's existing `config`, retaining its economic and simulation settings.
+This does not modify the currently playable city automatically. Adjust the
+activation limit to the generated neighborhood count. A sibling SVG file previews
+the water geometry.
+
+- Tiles are indexed `[x][y]`, with x increasing east and y increasing north.
+  Water SVG paths use the game's north-up display mapping.
+- Each cell's demand is the sum of building footprint area **within that cell**
+  multiplied by `building:levels`. Buildings crossing cells contribute to each;
+  courtyards are excluded and tagged multipolygon member ways are not counted twice.
+  Missing floors default to one; invalid/nonpositive floor tags warn and use one.
+  Only `building` footprints are counted, not separately tagged `building:part`
+  geometry, to avoid counting a building twice.
+- `residents` and `proportionOfJobs` both equal this floor-area score, in square
+  meters. These are **relative demand weights, not population estimates**. Both
+  distributions therefore have the same relative building density, normalized
+  by the game across active neighborhoods. Populated cells become neighborhoods,
+  sorted by descending demand, with deterministic icons and coordinate names.
+- Inland water includes `natural=water`, water-tagged areas, riverbanks, docks,
+  reservoirs and basins. Multipolygon holes preserve islands. Linear streams
+  without mapped area/width do not invent a water footprint.
+- Coastlines use OSM's land-on-left direction to infer ocean water. Incomplete or
+  inconsistent coastlines inside the grid fail explicitly rather than guess.
+  If no coastline crosses the grid, the background defaults to land; use
+  `--background water` for an entirely offshore grid or one enclosing only water
+  with no shoreline. OSM exports do not otherwise identify the ocean background.
+- A tile is water if at least half its area is water and it has no building demand.
+  Built-up shoreline cells remain land so their demand is usable. SVG paths show
+  actual clipped water geometry rather than blocky tile outlines.
+
+Generated data is derived from OpenStreetMap contributors and is subject to the
+[ODbL](https://www.openstreetmap.org/copyright); retain attribution when publishing.
+Run the generator tests with:
+
+```powershell
+.\.venv-osm\Scripts\python.exe -m unittest discover -s .\gis -p "test_generate_osm.py"
+```
+
 ### Progressive Web App (PWA)
 
 This application is configured as a Progressive Web App with offline capabilities. Key features:

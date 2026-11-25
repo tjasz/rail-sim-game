@@ -15,6 +15,8 @@ from shapely.geometry.polygon import orient
 from shapely.ops import polygonize, unary_union
 from shapely.validation import explain_validity
 
+from sort_city import sort_by_gravity
+
 
 METERS_PER_MILE = 1609.344
 
@@ -258,9 +260,9 @@ def build_map(grid, buildings, water_areas, coastlines, background="land"):
                 "availableShifts": [],
                 "recreationalDemandCoefficient": 1,
             })
-    neighborhoods.sort(key=lambda n: (-n["residents"], n["position"]["x"], n["position"]["y"]))
     if not neighborhoods:
         raise ValueError("No building demand found in the grid; check the export, center and resolution.")
+    sort_by_gravity(neighborhoods)
     return {
         "gridWidth": grid.width,
         "gridHeight": grid.height,

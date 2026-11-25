@@ -32,6 +32,10 @@ class OsmGeneratorTests(unittest.TestCase):
         self.assertTrue(all(len(column) == 2 for column in data["tiles"]))
         for neighborhood in data["neighborhoods"]:
             self.assertEqual(neighborhood["proportionOfJobs"], neighborhood["residents"])
+        self.assertEqual([n["id"] for n in data["neighborhoods"]], ["1-0", "1-1", "0-0"])
+        self.assertEqual(data["neighborhoods"][0]["gravity"], 93750000)
+        self.assertEqual(data["neighborhoods"][1]["gravity"], 75000000)
+        self.assertEqual(data["neighborhoods"][2]["gravity"], 56250000)
 
     def test_water_threshold_and_built_up_shoreline(self):
         water = [box(-150, -100, -50, 100), box(-50, -100, 50, -49)]

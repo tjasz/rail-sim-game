@@ -27,3 +27,5 @@ gis/*
 !gis/generate-osm.py
 !gis/requirements-osm.txt
 !gis/test_generate_osm.py
+!gis/sort_city.py
+!gis/test_sort_city.py

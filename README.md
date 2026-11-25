@@ -156,7 +156,10 @@ the water geometry.
   meters. These are **relative demand weights, not population estimates**. Both
   distributions therefore have the same relative building density, normalized
   by the game across active neighborhoods. Populated cells become neighborhoods,
-  sorted by descending demand, with deterministic icons and coordinate names.
+  sorted by descending gravity, with deterministic icons and coordinate names.
+  Gravity is `sum(area_i * area_j / distance_ij^2)` over all other neighborhoods,
+  using floor-area scores and Euclidean grid-cell distances (excluding self).
+  Equal gravity is ordered by descending floor area, then x and y.
 - Inland water includes `natural=water`, water-tagged areas, riverbanks, docks,
   reservoirs and basins. Multipolygon holes preserve islands. Linear streams
   without mapped area/width do not invent a water footprint.
@@ -171,10 +174,22 @@ the water geometry.
 
 Generated data is derived from OpenStreetMap contributors and is subject to the
 [ODbL](https://www.openstreetmap.org/copyright); retain attribution when publishing.
-Run the generator tests with:
+To recalculate gravity and sort an existing generated TypeScript city **in place**,
+without rereading OSM or installing GIS dependencies, use Python's standard library:
 
 ```powershell
-.\.venv-osm\Scripts\python.exe -m unittest discover -s .\gis -p "test_generate_osm.py"
+python .\gis\sort_city.py .\src\generated-seattle-1mi.ts
+```
+
+This adds or replaces each neighborhood's `gravity` and reorders the neighborhoods.
+Demand scores, tiles, water paths, metadata, imports and exports remain unchanged;
+the SVG does not need regeneration. It accepts the JSON-backed TypeScript modules
+produced by the OSM generator, not arbitrary hand-written TypeScript.
+
+Run the generator and gravity-sort tests with:
+
+```powershell
+.\.venv-osm\Scripts\python.exe -m unittest discover -s .\gis -p "test_*.py"
 ```
 
 ### Progressive Web App (PWA)

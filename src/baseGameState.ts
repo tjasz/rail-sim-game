@@ -1,10 +1,24 @@
 
 import { SeattleConfig } from './cities';
+import { cityMap } from './generated-seattle-1mi';
 import type { GameState } from './models';
+
+const CityConfig = {
+  ...SeattleConfig,
+  config: {
+    ...SeattleConfig.config,
+    ...cityMap,
+    activeNeighborhoodsAtTime: (elapsedMinutes: number) =>
+      Math.min(
+        SeattleConfig.config.activeNeighborhoodsAtTime(elapsedMinutes),
+        cityMap.neighborhoods.length,
+      ),
+  },
+};
 
 // Base game configuration (without citizens - they'll be generated)
 // Initialize all neighborhoods with station properties
-const neighborhoods = SeattleConfig.config.neighborhoods
+const neighborhoods = CityConfig.config.neighborhoods
   .map(n => ({
     ...n,
     lineIds: [],
@@ -13,7 +27,7 @@ const neighborhoods = SeattleConfig.config.neighborhoods
 
 // Create initial unassigned trains based on config
 const initialTrains = new Map();
-for (let i = 0; i < SeattleConfig.config.initialEngines; i++) {
+for (let i = 0; i < CityConfig.config.initialEngines; i++) {
   const trainId = `train-initial-${i}`;
   initialTrains.set(trainId, {
     id: trainId,
@@ -22,17 +36,17 @@ for (let i = 0; i < SeattleConfig.config.initialEngines; i++) {
     direction: 'forward' as const,
     position: { x: 0, y: 0 },
     passengerIds: [],
-    capacity: SeattleConfig.config.initialTrainCapacity,
-    speed: SeattleConfig.config.initialTrainSpeed,
+    capacity: CityConfig.config.initialTrainCapacity,
+    speed: CityConfig.config.initialTrainSpeed,
   });
 }
 
 export const baseGameState: GameState = {
   status: 'playing',
   city: {
-    ...SeattleConfig,
+    ...CityConfig,
     config: {
-      ...SeattleConfig.config,
+      ...CityConfig.config,
       neighborhoods,
     },
   },
@@ -45,16 +59,16 @@ export const baseGameState: GameState = {
   isSimulating: true,
   simulationTime: 0,
   simulationSpeed: 1,
-  activeNeighborhoodCount: SeattleConfig.config.activeNeighborhoodsAtTime(0),
+  activeNeighborhoodCount: CityConfig.config.activeNeighborhoodsAtTime(0),
   totalTripsStarted: 0,
-  allowedLines: SeattleConfig.config.initialLines,
-  currentTrainCapacity: SeattleConfig.config.initialTrainCapacity,
-  currentTrainSpeed: SeattleConfig.config.initialTrainSpeed,
+  allowedLines: CityConfig.config.initialLines,
+  currentTrainCapacity: CityConfig.config.initialTrainCapacity,
+  currentTrainSpeed: CityConfig.config.initialTrainSpeed,
   stats: {
     totalCitizensTransported: 0,
     totalMoneySpent: 0,
     totalMoneyEarned: 0,
     totalStationsBuilt: 2,
-    totalTrainsPurchased: SeattleConfig.config.initialEngines,
+    totalTrainsPurchased: CityConfig.config.initialEngines,
   },
 };

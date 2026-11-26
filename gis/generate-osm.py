@@ -15,7 +15,7 @@ from shapely.geometry.polygon import orient
 from shapely.ops import polygonize, unary_union
 from shapely.validation import explain_validity
 
-from sort_city import sort_by_gravity
+from sort_city import sort_by_gravity_improvement
 
 
 METERS_PER_MILE = 1609.344
@@ -231,7 +231,8 @@ def ocean_geometry(bounds, coastlines, background):
     return unary_union(water_faces).intersection(bounds)
 
 
-def build_map(grid, buildings, water_areas, coastlines, background="land"):
+def build_map(grid, buildings, water_areas, coastlines, background="land",
+              min_distance=0, max_distance=3):
     ocean = ocean_geometry(grid.bounds, coastlines, background)
     water = unary_union([ocean, *water_areas]).intersection(grid.bounds)
     scores = [[0.0 for _ in range(grid.height)] for _ in range(grid.width)]
@@ -262,7 +263,7 @@ def build_map(grid, buildings, water_areas, coastlines, background="land"):
             })
     if not neighborhoods:
         raise ValueError("No building demand found in the grid; check the export, center and resolution.")
-    sort_by_gravity(neighborhoods)
+    sort_by_gravity_improvement(neighborhoods, min_distance, max_distance)
     return {
         "gridWidth": grid.width,
         "gridHeight": grid.height,
@@ -342,6 +343,10 @@ def main():
     parser.add_argument("--background", choices=("land", "water"), default="land",
                         help="Background when no coastline crosses the grid (default: land)")
     parser.add_argument("--output", type=Path, default=Path("src") / "generated-city.ts")
+    parser.add_argument("--min-distance", type=float, default=0,
+                        help="Exclusive minimum distance for neighborhood ordering (default: 0)")
+    parser.add_argument("--max-distance", type=float, default=3,
+                        help="Inclusive maximum distance for neighborhood ordering (default: 3)")
     args = parser.parse_args()
     try:
         if not args.osm.is_file():
@@ -350,10 +355,14 @@ def main():
             raise ValueError("--output must be a .ts file.")
         if args.output.resolve() == args.osm.resolve():
             raise ValueError("Output must not overwrite the input.")
+        if (not math.isfinite(args.min_distance) or not math.isfinite(args.max_distance)
+                or not 0 <= args.min_distance < args.max_distance):
+            raise ValueError("Distances must be finite and satisfy 0 <= min distance < max distance.")
         grid = Grid(*args.center, *args.dimensions, args.resolution)
         print("Reading OSM export and assembling multipolygons...", file=sys.stderr)
         buildings, water_areas, coastlines = read_osm(args.osm, grid)
-        data = build_map(grid, buildings, water_areas, coastlines, args.background)
+        data = build_map(grid, buildings, water_areas, coastlines, args.background,
+                         args.min_distance, args.max_distance)
         write_outputs(args.output.resolve(), data, grid)
         print(f"Wrote {len(data['neighborhoods'])} neighborhoods and {len(data['water'])} water paths "
               f"to {args.output} and {args.output.with_suffix('.svg')}.")

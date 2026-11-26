@@ -1356,36 +1356,6 @@ const data = {
       "gravity": 28856103891488.695
     },
     {
-      "id": "8-11",
-      "name": "8-11",
-      "position": {
-        "x": 8,
-        "y": 11
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 1220650.2332717276,
-      "proportionOfJobs": 1220650.2332717276,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 14929134430119.943
-    },
-    {
-      "id": "16-11",
-      "name": "16-11",
-      "position": {
-        "x": 16,
-        "y": 11
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 1884450.368213811,
-      "proportionOfJobs": 1884450.368213811,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 13014212906663.545
-    },
-    {
       "id": "10-14",
       "name": "10-14",
       "position": {
@@ -1401,19 +1371,49 @@ const data = {
       "gravity": 13007453844581.334
     },
     {
-      "id": "9-12",
-      "name": "9-12",
+      "id": "10-15",
+      "name": "10-15",
       "position": {
-        "x": 9,
-        "y": 12
+        "x": 10,
+        "y": 15
       },
       "icon": "",
       "color": "black",
-      "residents": 758365.9890503213,
-      "proportionOfJobs": 758365.9890503213,
+      "residents": 886170.0544847578,
+      "proportionOfJobs": 886170.0544847578,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 10779114593147.746
+      "gravity": 7627308009373.561
+    },
+    {
+      "id": "10-17",
+      "name": "10-17",
+      "position": {
+        "x": 10,
+        "y": 17
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 1127443.4525555074,
+      "proportionOfJobs": 1127443.4525555074,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 7385650571703.647
+    },
+    {
+      "id": "8-11",
+      "name": "8-11",
+      "position": {
+        "x": 8,
+        "y": 11
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 1220650.2332717276,
+      "proportionOfJobs": 1220650.2332717276,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 14929134430119.943
     },
     {
       "id": "10-9",
@@ -1431,6 +1431,171 @@ const data = {
       "gravity": 9241195559050.395
     },
     {
+      "id": "10-8",
+      "name": "10-8",
+      "position": {
+        "x": 10,
+        "y": 8
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 597895.6669436122,
+      "proportionOfJobs": 597895.6669436122,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 5050895595892.861
+    },
+    {
+      "id": "9-14",
+      "name": "9-14",
+      "position": {
+        "x": 9,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 649689.5672614579,
+      "proportionOfJobs": 649689.5672614579,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 6237313269053.137
+    },
+    {
+      "id": "8-14",
+      "name": "8-14",
+      "position": {
+        "x": 8,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 636415.8222390624,
+      "proportionOfJobs": 636415.8222390624,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 5496726254987.204
+    },
+    {
+      "id": "7-14",
+      "name": "7-14",
+      "position": {
+        "x": 7,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 897257.6848517184,
+      "proportionOfJobs": 897257.6848517184,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 6256882114411.554
+    },
+    {
+      "id": "7-15",
+      "name": "7-15",
+      "position": {
+        "x": 7,
+        "y": 15
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 796876.9772229635,
+      "proportionOfJobs": 796876.9772229635,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 5313344139752.311
+    },
+    {
+      "id": "11-14",
+      "name": "11-14",
+      "position": {
+        "x": 11,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 752588.1469142153,
+      "proportionOfJobs": 752588.1469142153,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 6406212870748.324
+    },
+    {
+      "id": "10-7",
+      "name": "10-7",
+      "position": {
+        "x": 10,
+        "y": 7
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 445964.3155051823,
+      "proportionOfJobs": 445964.3155051823,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3330720838428.9707
+    },
+    {
+      "id": "10-6",
+      "name": "10-6",
+      "position": {
+        "x": 10,
+        "y": 6
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 558057.9862349939,
+      "proportionOfJobs": 558057.9862349939,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3672996509850.5073
+    },
+    {
+      "id": "11-11",
+      "name": "11-11",
+      "position": {
+        "x": 11,
+        "y": 11
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 752305.0907942236,
+      "proportionOfJobs": 752305.0907942236,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 7808101572709.808
+    },
+    {
+      "id": "12-5",
+      "name": "12-5",
+      "position": {
+        "x": 12,
+        "y": 5
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 604604.1593048254,
+      "proportionOfJobs": 604604.1593048254,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3363092914007.216
+    },
+    {
+      "id": "9-17",
+      "name": "9-17",
+      "position": {
+        "x": 9,
+        "y": 17
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 541599.6487741967,
+      "proportionOfJobs": 541599.6487741967,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3908645790534.6934
+    },
+    {
       "id": "10-13",
       "name": "10-13",
       "position": {
@@ -1446,19 +1611,49 @@ const data = {
       "gravity": 8855233472289.793
     },
     {
-      "id": "15-3",
-      "name": "15-3",
+      "id": "9-18",
+      "name": "9-18",
       "position": {
-        "x": 15,
-        "y": 3
+        "x": 9,
+        "y": 18
       },
       "icon": "",
       "color": "black",
-      "residents": 1684090.1311819004,
-      "proportionOfJobs": 1684090.1311819004,
+      "residents": 579946.5594572591,
+      "proportionOfJobs": 579946.5594572591,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 8819663078087.24
+      "gravity": 3344499121132.4736
+    },
+    {
+      "id": "7-7",
+      "name": "7-7",
+      "position": {
+        "x": 7,
+        "y": 7
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 684712.2912700761,
+      "proportionOfJobs": 684712.2912700761,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3686200197361.1206
+    },
+    {
+      "id": "7-6",
+      "name": "7-6",
+      "position": {
+        "x": 7,
+        "y": 6
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 549376.1383381954,
+      "proportionOfJobs": 549376.1383381954,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2827215420237.0454
     },
     {
       "id": "9-13",
@@ -1491,321 +1686,6 @@ const data = {
       "gravity": 7838884669363.053
     },
     {
-      "id": "11-11",
-      "name": "11-11",
-      "position": {
-        "x": 11,
-        "y": 11
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 752305.0907942236,
-      "proportionOfJobs": 752305.0907942236,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 7808101572709.808
-    },
-    {
-      "id": "15-11",
-      "name": "15-11",
-      "position": {
-        "x": 15,
-        "y": 11
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 1065659.1496029778,
-      "proportionOfJobs": 1065659.1496029778,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 7706461818443.43
-    },
-    {
-      "id": "10-15",
-      "name": "10-15",
-      "position": {
-        "x": 10,
-        "y": 15
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 886170.0544847578,
-      "proportionOfJobs": 886170.0544847578,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 7627308009373.561
-    },
-    {
-      "id": "11-10",
-      "name": "11-10",
-      "position": {
-        "x": 11,
-        "y": 10
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 707249.4923190629,
-      "proportionOfJobs": 707249.4923190629,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 7451873818948.564
-    },
-    {
-      "id": "10-17",
-      "name": "10-17",
-      "position": {
-        "x": 10,
-        "y": 17
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 1127443.4525555074,
-      "proportionOfJobs": 1127443.4525555074,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 7385650571703.647
-    },
-    {
-      "id": "10-12",
-      "name": "10-12",
-      "position": {
-        "x": 10,
-        "y": 12
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 546987.5596844241,
-      "proportionOfJobs": 546987.5596844241,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 6874922215243.035
-    },
-    {
-      "id": "9-9",
-      "name": "9-9",
-      "position": {
-        "x": 9,
-        "y": 9
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 566583.3463963579,
-      "proportionOfJobs": 566583.3463963579,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 6504438317989.692
-    },
-    {
-      "id": "11-14",
-      "name": "11-14",
-      "position": {
-        "x": 11,
-        "y": 14
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 752588.1469142153,
-      "proportionOfJobs": 752588.1469142153,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 6406212870748.324
-    },
-    {
-      "id": "7-14",
-      "name": "7-14",
-      "position": {
-        "x": 7,
-        "y": 14
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 897257.6848517184,
-      "proportionOfJobs": 897257.6848517184,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 6256882114411.554
-    },
-    {
-      "id": "9-14",
-      "name": "9-14",
-      "position": {
-        "x": 9,
-        "y": 14
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 649689.5672614579,
-      "proportionOfJobs": 649689.5672614579,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 6237313269053.137
-    },
-    {
-      "id": "16-10",
-      "name": "16-10",
-      "position": {
-        "x": 16,
-        "y": 10
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 770372.8621061246,
-      "proportionOfJobs": 770372.8621061246,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 5588278806137.081
-    },
-    {
-      "id": "8-14",
-      "name": "8-14",
-      "position": {
-        "x": 8,
-        "y": 14
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 636415.8222390624,
-      "proportionOfJobs": 636415.8222390624,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 5496726254987.204
-    },
-    {
-      "id": "7-15",
-      "name": "7-15",
-      "position": {
-        "x": 7,
-        "y": 15
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 796876.9772229635,
-      "proportionOfJobs": 796876.9772229635,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 5313344139752.311
-    },
-    {
-      "id": "8-13",
-      "name": "8-13",
-      "position": {
-        "x": 8,
-        "y": 13
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 551687.7111457365,
-      "proportionOfJobs": 551687.7111457365,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 5138999736214.907
-    },
-    {
-      "id": "8-15",
-      "name": "8-15",
-      "position": {
-        "x": 8,
-        "y": 15
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 651583.425317408,
-      "proportionOfJobs": 651583.425317408,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 5135045272333.173
-    },
-    {
-      "id": "10-8",
-      "name": "10-8",
-      "position": {
-        "x": 10,
-        "y": 8
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 597895.6669436122,
-      "proportionOfJobs": 597895.6669436122,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 5050895595892.861
-    },
-    {
-      "id": "11-9",
-      "name": "11-9",
-      "position": {
-        "x": 11,
-        "y": 9
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 565064.4912692588,
-      "proportionOfJobs": 565064.4912692588,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 4969468241597.172
-    },
-    {
-      "id": "9-16",
-      "name": "9-16",
-      "position": {
-        "x": 9,
-        "y": 16
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 651047.7326071536,
-      "proportionOfJobs": 651047.7326071536,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 4954773339226.986
-    },
-    {
-      "id": "17-11",
-      "name": "17-11",
-      "position": {
-        "x": 17,
-        "y": 11
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 638250.6806431597,
-      "proportionOfJobs": 638250.6806431597,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 4705581474005.967
-    },
-    {
-      "id": "19-15",
-      "name": "19-15",
-      "position": {
-        "x": 19,
-        "y": 15
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 1198427.044836286,
-      "proportionOfJobs": 1198427.044836286,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 4652378066240.906
-    },
-    {
-      "id": "8-16",
-      "name": "8-16",
-      "position": {
-        "x": 8,
-        "y": 16
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 661606.8923279434,
-      "proportionOfJobs": 661606.8923279434,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 4643641890477.58
-    },
-    {
       "id": "11-15",
       "name": "11-15",
       "position": {
@@ -1821,64 +1701,34 @@ const data = {
       "gravity": 4594608089019.108
     },
     {
-      "id": "10-16",
-      "name": "10-16",
+      "id": "14-3",
+      "name": "14-3",
       "position": {
-        "x": 10,
-        "y": 16
+        "x": 14,
+        "y": 3
       },
       "icon": "",
       "color": "black",
-      "residents": 519485.8000963637,
-      "proportionOfJobs": 519485.8000963637,
+      "residents": 370406.6507126042,
+      "proportionOfJobs": 370406.6507126042,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 4284682049145.7188
+      "gravity": 2310492047693.272
     },
     {
-      "id": "19-12",
-      "name": "19-12",
+      "id": "15-3",
+      "name": "15-3",
       "position": {
-        "x": 19,
-        "y": 12
+        "x": 15,
+        "y": 3
       },
       "icon": "",
       "color": "black",
-      "residents": 870828.4730711444,
-      "proportionOfJobs": 870828.4730711444,
+      "residents": 1684090.1311819004,
+      "proportionOfJobs": 1684090.1311819004,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 4274451541400.2783
-    },
-    {
-      "id": "9-17",
-      "name": "9-17",
-      "position": {
-        "x": 9,
-        "y": 17
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 541599.6487741967,
-      "proportionOfJobs": 541599.6487741967,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3908645790534.6934
-    },
-    {
-      "id": "11-8",
-      "name": "11-8",
-      "position": {
-        "x": 11,
-        "y": 8
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 519295.12683282176,
-      "proportionOfJobs": 519295.12683282176,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3905765703097.9707
+      "gravity": 8819663078087.24
     },
     {
       "id": "16-3",
@@ -1896,156 +1746,6 @@ const data = {
       "gravity": 3851792245263.411
     },
     {
-      "id": "9-8",
-      "name": "9-8",
-      "position": {
-        "x": 9,
-        "y": 8
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 470459.0180876579,
-      "proportionOfJobs": 470459.0180876579,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3782619670713.919
-    },
-    {
-      "id": "7-13",
-      "name": "7-13",
-      "position": {
-        "x": 7,
-        "y": 13
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 497276.8069448969,
-      "proportionOfJobs": 497276.8069448969,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3703223278417.7
-    },
-    {
-      "id": "7-7",
-      "name": "7-7",
-      "position": {
-        "x": 7,
-        "y": 7
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 684712.2912700761,
-      "proportionOfJobs": 684712.2912700761,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3686200197361.1206
-    },
-    {
-      "id": "10-6",
-      "name": "10-6",
-      "position": {
-        "x": 10,
-        "y": 6
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 558057.9862349939,
-      "proportionOfJobs": 558057.9862349939,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3672996509850.5073
-    },
-    {
-      "id": "11-16",
-      "name": "11-16",
-      "position": {
-        "x": 11,
-        "y": 16
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 510267.17364534235,
-      "proportionOfJobs": 510267.17364534235,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3654478700782.308
-    },
-    {
-      "id": "11-7",
-      "name": "11-7",
-      "position": {
-        "x": 11,
-        "y": 7
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 493602.5167098725,
-      "proportionOfJobs": 493602.5167098725,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3462839071078.8706
-    },
-    {
-      "id": "11-13",
-      "name": "11-13",
-      "position": {
-        "x": 11,
-        "y": 13
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 399092.5827120936,
-      "proportionOfJobs": 399092.5827120936,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3458775358205.7
-    },
-    {
-      "id": "11-12",
-      "name": "11-12",
-      "position": {
-        "x": 11,
-        "y": 12
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 364470.31788816117,
-      "proportionOfJobs": 364470.31788816117,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3376612569173.633
-    },
-    {
-      "id": "9-7",
-      "name": "9-7",
-      "position": {
-        "x": 9,
-        "y": 7
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 487635.19934087,
-      "proportionOfJobs": 487635.19934087,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3375167688728.9634
-    },
-    {
-      "id": "12-5",
-      "name": "12-5",
-      "position": {
-        "x": 12,
-        "y": 5
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 604604.1593048254,
-      "proportionOfJobs": 604604.1593048254,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3363092914007.216
-    },
-    {
       "id": "15-1",
       "name": "15-1",
       "position": {
@@ -2059,366 +1759,6 @@ const data = {
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
       "gravity": 3345762989084.361
-    },
-    {
-      "id": "9-18",
-      "name": "9-18",
-      "position": {
-        "x": 9,
-        "y": 18
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 579946.5594572591,
-      "proportionOfJobs": 579946.5594572591,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3344499121132.4736
-    },
-    {
-      "id": "12-6",
-      "name": "12-6",
-      "position": {
-        "x": 12,
-        "y": 6
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 558847.0042951598,
-      "proportionOfJobs": 558847.0042951598,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3334276363641.5664
-    },
-    {
-      "id": "10-7",
-      "name": "10-7",
-      "position": {
-        "x": 10,
-        "y": 7
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 445964.3155051823,
-      "proportionOfJobs": 445964.3155051823,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3330720838428.9707
-    },
-    {
-      "id": "7-16",
-      "name": "7-16",
-      "position": {
-        "x": 7,
-        "y": 16
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 579620.1327008668,
-      "proportionOfJobs": 579620.1327008668,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3309987520158.267
-    },
-    {
-      "id": "12-15",
-      "name": "12-15",
-      "position": {
-        "x": 12,
-        "y": 15
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 517054.2518460285,
-      "proportionOfJobs": 517054.2518460285,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3290918619762.5703
-    },
-    {
-      "id": "18-12",
-      "name": "18-12",
-      "position": {
-        "x": 18,
-        "y": 12
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 509168.67904882506,
-      "proportionOfJobs": 509168.67904882506,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3236449187511.6963
-    },
-    {
-      "id": "19-13",
-      "name": "19-13",
-      "position": {
-        "x": 19,
-        "y": 13
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 657515.5830400464,
-      "proportionOfJobs": 657515.5830400464,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3231613791871.362
-    },
-    {
-      "id": "15-2",
-      "name": "15-2",
-      "position": {
-        "x": 15,
-        "y": 2
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 481785.10333754745,
-      "proportionOfJobs": 481785.10333754745,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3200178341885.7686
-    },
-    {
-      "id": "16-15",
-      "name": "16-15",
-      "position": {
-        "x": 16,
-        "y": 15
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 580209.439539634,
-      "proportionOfJobs": 580209.439539634,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3169435457859.938
-    },
-    {
-      "id": "15-10",
-      "name": "15-10",
-      "position": {
-        "x": 15,
-        "y": 10
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 456022.3089316592,
-      "proportionOfJobs": 456022.3089316592,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3166860342577.6704
-    },
-    {
-      "id": "11-18",
-      "name": "11-18",
-      "position": {
-        "x": 11,
-        "y": 18
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 564583.0814552422,
-      "proportionOfJobs": 564583.0814552422,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 3005820840737.4785
-    },
-    {
-      "id": "12-14",
-      "name": "12-14",
-      "position": {
-        "x": 12,
-        "y": 14
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 459430.87657496246,
-      "proportionOfJobs": 459430.87657496246,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2997306818431.603
-    },
-    {
-      "id": "7-8",
-      "name": "7-8",
-      "position": {
-        "x": 7,
-        "y": 8
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 515827.06018001324,
-      "proportionOfJobs": 515827.06018001324,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2906695230139.1577
-    },
-    {
-      "id": "11-6",
-      "name": "11-6",
-      "position": {
-        "x": 11,
-        "y": 6
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 433589.5318479842,
-      "proportionOfJobs": 433589.5318479842,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2898885924253.906
-    },
-    {
-      "id": "11-17",
-      "name": "11-17",
-      "position": {
-        "x": 11,
-        "y": 17
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 431988.8868528049,
-      "proportionOfJobs": 431988.8868528049,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2895689860820.9697
-    },
-    {
-      "id": "8-17",
-      "name": "8-17",
-      "position": {
-        "x": 8,
-        "y": 17
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 476401.0408514762,
-      "proportionOfJobs": 476401.0408514762,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2871844645875.1084
-    },
-    {
-      "id": "18-11",
-      "name": "18-11",
-      "position": {
-        "x": 18,
-        "y": 11
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 452758.26070430415,
-      "proportionOfJobs": 452758.26070430415,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2863533318641.4014
-    },
-    {
-      "id": "15-12",
-      "name": "15-12",
-      "position": {
-        "x": 15,
-        "y": 12
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 419592.7294105232,
-      "proportionOfJobs": 419592.7294105232,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2858096252298.483
-    },
-    {
-      "id": "18-13",
-      "name": "18-13",
-      "position": {
-        "x": 18,
-        "y": 13
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 481030.92303671833,
-      "proportionOfJobs": 481030.92303671833,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2828201352060.158
-    },
-    {
-      "id": "7-6",
-      "name": "7-6",
-      "position": {
-        "x": 7,
-        "y": 6
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 549376.1383381954,
-      "proportionOfJobs": 549376.1383381954,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2827215420237.0454
-    },
-    {
-      "id": "17-8",
-      "name": "17-8",
-      "position": {
-        "x": 17,
-        "y": 8
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 542675.3589761461,
-      "proportionOfJobs": 542675.3589761461,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2823700176223.8633
-    },
-    {
-      "id": "19-11",
-      "name": "19-11",
-      "position": {
-        "x": 19,
-        "y": 11
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 553584.991270437,
-      "proportionOfJobs": 553584.991270437,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2772036364782.5264
-    },
-    {
-      "id": "16-12",
-      "name": "16-12",
-      "position": {
-        "x": 16,
-        "y": 12
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 359923.2049578637,
-      "proportionOfJobs": 359923.2049578637,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2747720197064.9946
-    },
-    {
-      "id": "12-7",
-      "name": "12-7",
-      "position": {
-        "x": 12,
-        "y": 7
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 452458.0489309619,
-      "proportionOfJobs": 452458.0489309619,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2708673637541.971
     },
     {
       "id": "13-0",
@@ -2436,64 +1776,49 @@ const data = {
       "gravity": 2705910102091.829
     },
     {
-      "id": "10-5",
-      "name": "10-5",
+      "id": "17-3",
+      "name": "17-3",
       "position": {
-        "x": 10,
+        "x": 17,
+        "y": 3
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 496006.5948913975,
+      "proportionOfJobs": 496006.5948913975,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2560750941094.4966
+    },
+    {
+      "id": "7-5",
+      "name": "7-5",
+      "position": {
+        "x": 7,
         "y": 5
       },
       "icon": "",
       "color": "black",
-      "residents": 444013.9794545783,
-      "proportionOfJobs": 444013.9794545783,
+      "residents": 477674.4048941211,
+      "proportionOfJobs": 477674.4048941211,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 2702745802884.408
+      "gravity": 2269809767326.377
     },
     {
-      "id": "17-12",
-      "name": "17-12",
+      "id": "11-18",
+      "name": "11-18",
       "position": {
-        "x": 17,
-        "y": 12
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 398580.468864986,
-      "proportionOfJobs": 398580.468864986,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2699935940832.8833
-    },
-    {
-      "id": "16-2",
-      "name": "16-2",
-      "position": {
-        "x": 16,
-        "y": 2
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 457077.83463388024,
-      "proportionOfJobs": 457077.83463388024,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2681366861609.8022
-    },
-    {
-      "id": "10-18",
-      "name": "10-18",
-      "position": {
-        "x": 10,
+        "x": 11,
         "y": 18
       },
       "icon": "",
       "color": "black",
-      "residents": 401529.4101130414,
-      "proportionOfJobs": 401529.4101130414,
+      "residents": 564583.0814552422,
+      "proportionOfJobs": 564583.0814552422,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 2588491098690.647
+      "gravity": 3005820840737.4785
     },
     {
       "id": "8-4",
@@ -2511,19 +1836,1114 @@ const data = {
       "gravity": 2577122421308.3267
     },
     {
-      "id": "17-3",
-      "name": "17-3",
+      "id": "9-12",
+      "name": "9-12",
       "position": {
-        "x": 17,
+        "x": 9,
+        "y": 12
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 758365.9890503213,
+      "proportionOfJobs": 758365.9890503213,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 10779114593147.746
+    },
+    {
+      "id": "8-15",
+      "name": "8-15",
+      "position": {
+        "x": 8,
+        "y": 15
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 651583.425317408,
+      "proportionOfJobs": 651583.425317408,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 5135045272333.173
+    },
+    {
+      "id": "12-6",
+      "name": "12-6",
+      "position": {
+        "x": 12,
+        "y": 6
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 558847.0042951598,
+      "proportionOfJobs": 558847.0042951598,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3334276363641.5664
+    },
+    {
+      "id": "11-10",
+      "name": "11-10",
+      "position": {
+        "x": 11,
+        "y": 10
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 707249.4923190629,
+      "proportionOfJobs": 707249.4923190629,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 7451873818948.564
+    },
+    {
+      "id": "12-15",
+      "name": "12-15",
+      "position": {
+        "x": 12,
+        "y": 15
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 517054.2518460285,
+      "proportionOfJobs": 517054.2518460285,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3290918619762.5703
+    },
+    {
+      "id": "8-16",
+      "name": "8-16",
+      "position": {
+        "x": 8,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 661606.8923279434,
+      "proportionOfJobs": 661606.8923279434,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 4643641890477.58
+    },
+    {
+      "id": "9-3",
+      "name": "9-3",
+      "position": {
+        "x": 9,
         "y": 3
       },
       "icon": "",
       "color": "black",
-      "residents": 496006.5948913975,
-      "proportionOfJobs": 496006.5948913975,
+      "residents": 418213.197388492,
+      "proportionOfJobs": 418213.197388492,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 2560750941094.4966
+      "gravity": 2115224662679.484
+    },
+    {
+      "id": "9-2",
+      "name": "9-2",
+      "position": {
+        "x": 9,
+        "y": 2
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 442929.8853977406,
+      "proportionOfJobs": 442929.8853977406,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1998126243311.8967
+    },
+    {
+      "id": "9-1",
+      "name": "9-1",
+      "position": {
+        "x": 9,
+        "y": 1
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 483361.48370169586,
+      "proportionOfJobs": 483361.48370169586,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1899472442019.1042
+    },
+    {
+      "id": "7-8",
+      "name": "7-8",
+      "position": {
+        "x": 7,
+        "y": 8
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 515827.06018001324,
+      "proportionOfJobs": 515827.06018001324,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2906695230139.1577
+    },
+    {
+      "id": "18-2",
+      "name": "18-2",
+      "position": {
+        "x": 18,
+        "y": 2
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 510925.25914806785,
+      "proportionOfJobs": 510925.25914806785,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2032783967496.5806
+    },
+    {
+      "id": "15-15",
+      "name": "15-15",
+      "position": {
+        "x": 15,
+        "y": 15
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 365096.7789801983,
+      "proportionOfJobs": 365096.7789801983,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1847749482085.9675
+    },
+    {
+      "id": "16-15",
+      "name": "16-15",
+      "position": {
+        "x": 16,
+        "y": 15
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 580209.439539634,
+      "proportionOfJobs": 580209.439539634,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3169435457859.938
+    },
+    {
+      "id": "19-15",
+      "name": "19-15",
+      "position": {
+        "x": 19,
+        "y": 15
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 1198427.044836286,
+      "proportionOfJobs": 1198427.044836286,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 4652378066240.906
+    },
+    {
+      "id": "19-12",
+      "name": "19-12",
+      "position": {
+        "x": 19,
+        "y": 12
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 870828.4730711444,
+      "proportionOfJobs": 870828.4730711444,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 4274451541400.2783
+    },
+    {
+      "id": "17-11",
+      "name": "17-11",
+      "position": {
+        "x": 17,
+        "y": 11
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 638250.6806431597,
+      "proportionOfJobs": 638250.6806431597,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 4705581474005.967
+    },
+    {
+      "id": "16-11",
+      "name": "16-11",
+      "position": {
+        "x": 16,
+        "y": 11
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 1884450.368213811,
+      "proportionOfJobs": 1884450.368213811,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 13014212906663.545
+    },
+    {
+      "id": "15-11",
+      "name": "15-11",
+      "position": {
+        "x": 15,
+        "y": 11
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 1065659.1496029778,
+      "proportionOfJobs": 1065659.1496029778,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 7706461818443.43
+    },
+    {
+      "id": "16-10",
+      "name": "16-10",
+      "position": {
+        "x": 16,
+        "y": 10
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 770372.8621061246,
+      "proportionOfJobs": 770372.8621061246,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 5588278806137.081
+    },
+    {
+      "id": "17-8",
+      "name": "17-8",
+      "position": {
+        "x": 17,
+        "y": 8
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 542675.3589761461,
+      "proportionOfJobs": 542675.3589761461,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2823700176223.8633
+    },
+    {
+      "id": "16-17",
+      "name": "16-17",
+      "position": {
+        "x": 16,
+        "y": 17
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 456317.55434650683,
+      "proportionOfJobs": 456317.55434650683,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2375793556257.7686
+    },
+    {
+      "id": "16-18",
+      "name": "16-18",
+      "position": {
+        "x": 16,
+        "y": 18
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 483848.88662917283,
+      "proportionOfJobs": 483848.88662917283,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2275008356845.5522
+    },
+    {
+      "id": "19-13",
+      "name": "19-13",
+      "position": {
+        "x": 19,
+        "y": 13
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 657515.5830400464,
+      "proportionOfJobs": 657515.5830400464,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3231613791871.362
+    },
+    {
+      "id": "19-11",
+      "name": "19-11",
+      "position": {
+        "x": 19,
+        "y": 11
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 553584.991270437,
+      "proportionOfJobs": 553584.991270437,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2772036364782.5264
+    },
+    {
+      "id": "9-16",
+      "name": "9-16",
+      "position": {
+        "x": 9,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 651047.7326071536,
+      "proportionOfJobs": 651047.7326071536,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 4954773339226.986
+    },
+    {
+      "id": "18-8",
+      "name": "18-8",
+      "position": {
+        "x": 18,
+        "y": 8
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 381792.5726374953,
+      "proportionOfJobs": 381792.5726374953,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1965163526801.627
+    },
+    {
+      "id": "7-16",
+      "name": "7-16",
+      "position": {
+        "x": 7,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 579620.1327008668,
+      "proportionOfJobs": 579620.1327008668,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3309987520158.267
+    },
+    {
+      "id": "15-18",
+      "name": "15-18",
+      "position": {
+        "x": 15,
+        "y": 18
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 419297.53629642475,
+      "proportionOfJobs": 419297.53629642475,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1969616236199.6775
+    },
+    {
+      "id": "18-7",
+      "name": "18-7",
+      "position": {
+        "x": 18,
+        "y": 7
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 400995.65637267794,
+      "proportionOfJobs": 400995.65637267794,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1914398827524.5493
+    },
+    {
+      "id": "7-13",
+      "name": "7-13",
+      "position": {
+        "x": 7,
+        "y": 13
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 497276.8069448969,
+      "proportionOfJobs": 497276.8069448969,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3703223278417.7
+    },
+    {
+      "id": "16-14",
+      "name": "16-14",
+      "position": {
+        "x": 16,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 414362.8794927406,
+      "proportionOfJobs": 414362.8794927406,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2354281991539.458
+    },
+    {
+      "id": "11-9",
+      "name": "11-9",
+      "position": {
+        "x": 11,
+        "y": 9
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 565064.4912692588,
+      "proportionOfJobs": 565064.4912692588,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 4969468241597.172
+    },
+    {
+      "id": "9-19",
+      "name": "9-19",
+      "position": {
+        "x": 9,
+        "y": 19
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 482349.759491161,
+      "proportionOfJobs": 482349.759491161,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1997024192989.6157
+    },
+    {
+      "id": "17-17",
+      "name": "17-17",
+      "position": {
+        "x": 17,
+        "y": 17
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 486456.39788609056,
+      "proportionOfJobs": 486456.39788609056,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2252906939418.4243
+    },
+    {
+      "id": "9-9",
+      "name": "9-9",
+      "position": {
+        "x": 9,
+        "y": 9
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 566583.3463963579,
+      "proportionOfJobs": 566583.3463963579,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 6504438317989.692
+    },
+    {
+      "id": "18-13",
+      "name": "18-13",
+      "position": {
+        "x": 18,
+        "y": 13
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 481030.92303671833,
+      "proportionOfJobs": 481030.92303671833,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2828201352060.158
+    },
+    {
+      "id": "15-10",
+      "name": "15-10",
+      "position": {
+        "x": 15,
+        "y": 10
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 456022.3089316592,
+      "proportionOfJobs": 456022.3089316592,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3166860342577.6704
+    },
+    {
+      "id": "12-4",
+      "name": "12-4",
+      "position": {
+        "x": 12,
+        "y": 4
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 374143.96141576493,
+      "proportionOfJobs": 374143.96141576493,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2070492031709.4082
+    },
+    {
+      "id": "8-13",
+      "name": "8-13",
+      "position": {
+        "x": 8,
+        "y": 13
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 551687.7111457365,
+      "proportionOfJobs": 551687.7111457365,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 5138999736214.907
+    },
+    {
+      "id": "10-5",
+      "name": "10-5",
+      "position": {
+        "x": 10,
+        "y": 5
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 444013.9794545783,
+      "proportionOfJobs": 444013.9794545783,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2702745802884.408
+    },
+    {
+      "id": "9-0",
+      "name": "9-0",
+      "position": {
+        "x": 9,
+        "y": 0
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 481590.31929007394,
+      "proportionOfJobs": 481590.31929007394,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1442333459465.3806
+    },
+    {
+      "id": "10-12",
+      "name": "10-12",
+      "position": {
+        "x": 10,
+        "y": 12
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 546987.5596844241,
+      "proportionOfJobs": 546987.5596844241,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 6874922215243.035
+    },
+    {
+      "id": "17-18",
+      "name": "17-18",
+      "position": {
+        "x": 17,
+        "y": 18
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 444335.8761011638,
+      "proportionOfJobs": 444335.8761011638,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1840915912290.395
+    },
+    {
+      "id": "11-8",
+      "name": "11-8",
+      "position": {
+        "x": 11,
+        "y": 8
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 519295.12683282176,
+      "proportionOfJobs": 519295.12683282176,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3905765703097.9707
+    },
+    {
+      "id": "14-9",
+      "name": "14-9",
+      "position": {
+        "x": 14,
+        "y": 9
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 409438.1884122526,
+      "proportionOfJobs": 409438.1884122526,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2147544951785.42
+    },
+    {
+      "id": "19-10",
+      "name": "19-10",
+      "position": {
+        "x": 19,
+        "y": 10
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 426671.23269801104,
+      "proportionOfJobs": 426671.23269801104,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1936231694351.9463
+    },
+    {
+      "id": "10-16",
+      "name": "10-16",
+      "position": {
+        "x": 10,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 519485.8000963637,
+      "proportionOfJobs": 519485.8000963637,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 4284682049145.7188
+    },
+    {
+      "id": "6-13",
+      "name": "6-13",
+      "position": {
+        "x": 6,
+        "y": 13
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 459196.618345055,
+      "proportionOfJobs": 459196.618345055,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2331835337908.3867
+    },
+    {
+      "id": "17-6",
+      "name": "17-6",
+      "position": {
+        "x": 17,
+        "y": 6
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 359385.2182363198,
+      "proportionOfJobs": 359385.2182363198,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1730522578751.7385
+    },
+    {
+      "id": "11-16",
+      "name": "11-16",
+      "position": {
+        "x": 11,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 510267.17364534235,
+      "proportionOfJobs": 510267.17364534235,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3654478700782.308
+    },
+    {
+      "id": "17-2",
+      "name": "17-2",
+      "position": {
+        "x": 17,
+        "y": 2
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 465655.01967778365,
+      "proportionOfJobs": 465655.01967778365,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2325972461195.0576
+    },
+    {
+      "id": "18-12",
+      "name": "18-12",
+      "position": {
+        "x": 18,
+        "y": 12
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 509168.67904882506,
+      "proportionOfJobs": 509168.67904882506,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3236449187511.6963
+    },
+    {
+      "id": "12-1",
+      "name": "12-1",
+      "position": {
+        "x": 12,
+        "y": 1
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 339773.4041608988,
+      "proportionOfJobs": 339773.4041608988,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1596697443453.168
+    },
+    {
+      "id": "15-12",
+      "name": "15-12",
+      "position": {
+        "x": 15,
+        "y": 12
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 419592.7294105232,
+      "proportionOfJobs": 419592.7294105232,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2858096252298.483
+    },
+    {
+      "id": "14-8",
+      "name": "14-8",
+      "position": {
+        "x": 14,
+        "y": 8
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 374556.51982965734,
+      "proportionOfJobs": 374556.51982965734,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1924145106498.2769
+    },
+    {
+      "id": "7-4",
+      "name": "7-4",
+      "position": {
+        "x": 7,
+        "y": 4
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 453760.78276704584,
+      "proportionOfJobs": 453760.78276704584,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1912066940949.1658
+    },
+    {
+      "id": "11-7",
+      "name": "11-7",
+      "position": {
+        "x": 11,
+        "y": 7
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 493602.5167098725,
+      "proportionOfJobs": 493602.5167098725,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3462839071078.8706
+    },
+    {
+      "id": "19-16",
+      "name": "19-16",
+      "position": {
+        "x": 19,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 388760.07083041454,
+      "proportionOfJobs": 388760.07083041454,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1618369520742.8252
+    },
+    {
+      "id": "9-7",
+      "name": "9-7",
+      "position": {
+        "x": 9,
+        "y": 7
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 487635.19934087,
+      "proportionOfJobs": 487635.19934087,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3375167688728.9634
+    },
+    {
+      "id": "15-17",
+      "name": "15-17",
+      "position": {
+        "x": 15,
+        "y": 17
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 431857.68753316795,
+      "proportionOfJobs": 431857.68753316795,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2156894265639.5232
+    },
+    {
+      "id": "8-18",
+      "name": "8-18",
+      "position": {
+        "x": 8,
+        "y": 18
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 473160.73707131494,
+      "proportionOfJobs": 473160.73707131494,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2220442804216.243
+    },
+    {
+      "id": "15-2",
+      "name": "15-2",
+      "position": {
+        "x": 15,
+        "y": 2
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 481785.10333754745,
+      "proportionOfJobs": 481785.10333754745,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3200178341885.7686
+    },
+    {
+      "id": "11-19",
+      "name": "11-19",
+      "position": {
+        "x": 11,
+        "y": 19
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 464905.3087616671,
+      "proportionOfJobs": 464905.3087616671,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1851959567234.1
+    },
+    {
+      "id": "12-14",
+      "name": "12-14",
+      "position": {
+        "x": 12,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 459430.87657496246,
+      "proportionOfJobs": 459430.87657496246,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2997306818431.603
+    },
+    {
+      "id": "8-17",
+      "name": "8-17",
+      "position": {
+        "x": 8,
+        "y": 17
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 476401.0408514762,
+      "proportionOfJobs": 476401.0408514762,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2871844645875.1084
+    },
+    {
+      "id": "11-17",
+      "name": "11-17",
+      "position": {
+        "x": 11,
+        "y": 17
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 431988.8868528049,
+      "proportionOfJobs": 431988.8868528049,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2895689860820.9697
+    },
+    {
+      "id": "11-1",
+      "name": "11-1",
+      "position": {
+        "x": 11,
+        "y": 1
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 366733.15533944004,
+      "proportionOfJobs": 366733.15533944004,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1636823875040.368
+    },
+    {
+      "id": "9-8",
+      "name": "9-8",
+      "position": {
+        "x": 9,
+        "y": 8
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 470459.0180876579,
+      "proportionOfJobs": 470459.0180876579,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 3782619670713.919
+    },
+    {
+      "id": "14-19",
+      "name": "14-19",
+      "position": {
+        "x": 14,
+        "y": 19
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 415487.6872420805,
+      "proportionOfJobs": 415487.6872420805,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1415479092820.3271
+    },
+    {
+      "id": "16-2",
+      "name": "16-2",
+      "position": {
+        "x": 16,
+        "y": 2
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 457077.83463388024,
+      "proportionOfJobs": 457077.83463388024,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2681366861609.8022
+    },
+    {
+      "id": "12-7",
+      "name": "12-7",
+      "position": {
+        "x": 12,
+        "y": 7
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 452458.0489309619,
+      "proportionOfJobs": 452458.0489309619,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2708673637541.971
+    },
+    {
+      "id": "18-11",
+      "name": "18-11",
+      "position": {
+        "x": 18,
+        "y": 11
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 452758.26070430415,
+      "proportionOfJobs": 452758.26070430415,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2863533318641.4014
+    },
+    {
+      "id": "15-0",
+      "name": "15-0",
+      "position": {
+        "x": 15,
+        "y": 0
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 393408.5987800684,
+      "proportionOfJobs": 393408.5987800684,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1607666389320.8906
+    },
+    {
+      "id": "16-0",
+      "name": "16-0",
+      "position": {
+        "x": 16,
+        "y": 0
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 372922.96868475294,
+      "proportionOfJobs": 372922.96868475294,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1352763770453.4094
     },
     {
       "id": "8-5",
@@ -2541,34 +2961,64 @@ const data = {
       "gravity": 2536580484566.614
     },
     {
-      "id": "9-6",
-      "name": "9-6",
+      "id": "17-5",
+      "name": "17-5",
       "position": {
-        "x": 9,
-        "y": 6
+        "x": 17,
+        "y": 5
       },
       "icon": "",
       "color": "black",
-      "residents": 386745.75112062,
-      "proportionOfJobs": 386745.75112062,
+      "residents": 379921.14806363295,
+      "proportionOfJobs": 379921.14806363295,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 2510983619327.282
+      "gravity": 1738350699701.6616
     },
     {
-      "id": "9-15",
-      "name": "9-15",
+      "id": "10-19",
+      "name": "10-19",
       "position": {
-        "x": 9,
-        "y": 15
+        "x": 10,
+        "y": 19
       },
       "icon": "",
       "color": "black",
-      "residents": 276015.66040763987,
-      "proportionOfJobs": 276015.66040763987,
+      "residents": 445127.737780528,
+      "proportionOfJobs": 445127.737780528,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 2483165536376.1294
+      "gravity": 1970446728787.5947
+    },
+    {
+      "id": "19-7",
+      "name": "19-7",
+      "position": {
+        "x": 19,
+        "y": 7
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 390029.08599239046,
+      "proportionOfJobs": 390029.08599239046,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1466961022049.0547
+    },
+    {
+      "id": "11-2",
+      "name": "11-2",
+      "position": {
+        "x": 11,
+        "y": 2
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 377489.3998131929,
+      "proportionOfJobs": 377489.3998131929,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1867821544189.3315
     },
     {
       "id": "17-15",
@@ -2601,19 +3051,19 @@ const data = {
       "gravity": 2466480985648.615
     },
     {
-      "id": "7-12",
-      "name": "7-12",
+      "id": "11-6",
+      "name": "11-6",
       "position": {
-        "x": 7,
-        "y": 12
+        "x": 11,
+        "y": 6
       },
       "icon": "",
       "color": "black",
-      "residents": 337374.7749795606,
-      "proportionOfJobs": 337374.7749795606,
+      "residents": 433589.5318479842,
+      "proportionOfJobs": 433589.5318479842,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 2461555303510.767
+      "gravity": 2898885924253.906
     },
     {
       "id": "18-14",
@@ -2631,576 +3081,6 @@ const data = {
       "gravity": 2424530908821.9546
     },
     {
-      "id": "16-17",
-      "name": "16-17",
-      "position": {
-        "x": 16,
-        "y": 17
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 456317.55434650683,
-      "proportionOfJobs": 456317.55434650683,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2375793556257.7686
-    },
-    {
-      "id": "16-14",
-      "name": "16-14",
-      "position": {
-        "x": 16,
-        "y": 14
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 414362.8794927406,
-      "proportionOfJobs": 414362.8794927406,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2354281991539.458
-    },
-    {
-      "id": "6-13",
-      "name": "6-13",
-      "position": {
-        "x": 6,
-        "y": 13
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 459196.618345055,
-      "proportionOfJobs": 459196.618345055,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2331835337908.3867
-    },
-    {
-      "id": "17-2",
-      "name": "17-2",
-      "position": {
-        "x": 17,
-        "y": 2
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 465655.01967778365,
-      "proportionOfJobs": 465655.01967778365,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2325972461195.0576
-    },
-    {
-      "id": "14-3",
-      "name": "14-3",
-      "position": {
-        "x": 14,
-        "y": 3
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 370406.6507126042,
-      "proportionOfJobs": 370406.6507126042,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2310492047693.272
-    },
-    {
-      "id": "10-4",
-      "name": "10-4",
-      "position": {
-        "x": 10,
-        "y": 4
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 406237.971193852,
-      "proportionOfJobs": 406237.971193852,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2275579530969.1865
-    },
-    {
-      "id": "16-18",
-      "name": "16-18",
-      "position": {
-        "x": 16,
-        "y": 18
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 483848.88662917283,
-      "proportionOfJobs": 483848.88662917283,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2275008356845.5522
-    },
-    {
-      "id": "7-5",
-      "name": "7-5",
-      "position": {
-        "x": 7,
-        "y": 5
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 477674.4048941211,
-      "proportionOfJobs": 477674.4048941211,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2269809767326.377
-    },
-    {
-      "id": "17-17",
-      "name": "17-17",
-      "position": {
-        "x": 17,
-        "y": 17
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 486456.39788609056,
-      "proportionOfJobs": 486456.39788609056,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2252906939418.4243
-    },
-    {
-      "id": "8-18",
-      "name": "8-18",
-      "position": {
-        "x": 8,
-        "y": 18
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 473160.73707131494,
-      "proportionOfJobs": 473160.73707131494,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2220442804216.243
-    },
-    {
-      "id": "18-10",
-      "name": "18-10",
-      "position": {
-        "x": 18,
-        "y": 10
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 381590.46980761143,
-      "proportionOfJobs": 381590.46980761143,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2172017430247.989
-    },
-    {
-      "id": "15-17",
-      "name": "15-17",
-      "position": {
-        "x": 15,
-        "y": 17
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 431857.68753316795,
-      "proportionOfJobs": 431857.68753316795,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2156894265639.5232
-    },
-    {
-      "id": "14-9",
-      "name": "14-9",
-      "position": {
-        "x": 14,
-        "y": 9
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 409438.1884122526,
-      "proportionOfJobs": 409438.1884122526,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2147544951785.42
-    },
-    {
-      "id": "9-3",
-      "name": "9-3",
-      "position": {
-        "x": 9,
-        "y": 3
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 418213.197388492,
-      "proportionOfJobs": 418213.197388492,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2115224662679.484
-    },
-    {
-      "id": "17-9",
-      "name": "17-9",
-      "position": {
-        "x": 17,
-        "y": 9
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 360313.6513193435,
-      "proportionOfJobs": 360313.6513193435,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2081534449180.0615
-    },
-    {
-      "id": "12-4",
-      "name": "12-4",
-      "position": {
-        "x": 12,
-        "y": 4
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 374143.96141576493,
-      "proportionOfJobs": 374143.96141576493,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2070492031709.4082
-    },
-    {
-      "id": "11-3",
-      "name": "11-3",
-      "position": {
-        "x": 11,
-        "y": 3
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 396597.85579959064,
-      "proportionOfJobs": 396597.85579959064,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2066810742645.4287
-    },
-    {
-      "id": "17-14",
-      "name": "17-14",
-      "position": {
-        "x": 17,
-        "y": 14
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 356954.0187561865,
-      "proportionOfJobs": 356954.0187561865,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2061448484990.371
-    },
-    {
-      "id": "8-6",
-      "name": "8-6",
-      "position": {
-        "x": 8,
-        "y": 6
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 332249.0359376067,
-      "proportionOfJobs": 332249.0359376067,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2042802420131.5874
-    },
-    {
-      "id": "18-2",
-      "name": "18-2",
-      "position": {
-        "x": 18,
-        "y": 2
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 510925.25914806785,
-      "proportionOfJobs": 510925.25914806785,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2032783967496.5806
-    },
-    {
-      "id": "14-2",
-      "name": "14-2",
-      "position": {
-        "x": 14,
-        "y": 2
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 347301.55912042496,
-      "proportionOfJobs": 347301.55912042496,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 2030598666023.7622
-    },
-    {
-      "id": "9-2",
-      "name": "9-2",
-      "position": {
-        "x": 9,
-        "y": 2
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 442929.8853977406,
-      "proportionOfJobs": 442929.8853977406,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1998126243311.8967
-    },
-    {
-      "id": "9-19",
-      "name": "9-19",
-      "position": {
-        "x": 9,
-        "y": 19
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 482349.759491161,
-      "proportionOfJobs": 482349.759491161,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1997024192989.6157
-    },
-    {
-      "id": "16-13",
-      "name": "16-13",
-      "position": {
-        "x": 16,
-        "y": 13
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 334375.23958863434,
-      "proportionOfJobs": 334375.23958863434,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1982479546393.7522
-    },
-    {
-      "id": "10-19",
-      "name": "10-19",
-      "position": {
-        "x": 10,
-        "y": 19
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 445127.737780528,
-      "proportionOfJobs": 445127.737780528,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1970446728787.5947
-    },
-    {
-      "id": "15-18",
-      "name": "15-18",
-      "position": {
-        "x": 15,
-        "y": 18
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 419297.53629642475,
-      "proportionOfJobs": 419297.53629642475,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1969616236199.6775
-    },
-    {
-      "id": "18-8",
-      "name": "18-8",
-      "position": {
-        "x": 18,
-        "y": 8
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 381792.5726374953,
-      "proportionOfJobs": 381792.5726374953,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1965163526801.627
-    },
-    {
-      "id": "18-9",
-      "name": "18-9",
-      "position": {
-        "x": 18,
-        "y": 9
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 367161.6481313434,
-      "proportionOfJobs": 367161.6481313434,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1950634932253.5442
-    },
-    {
-      "id": "16-16",
-      "name": "16-16",
-      "position": {
-        "x": 16,
-        "y": 16
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 352157.6718724092,
-      "proportionOfJobs": 352157.6718724092,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1947191240359.595
-    },
-    {
-      "id": "12-16",
-      "name": "12-16",
-      "position": {
-        "x": 12,
-        "y": 16
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 327775.74332250655,
-      "proportionOfJobs": 327775.74332250655,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1943744781812.729
-    },
-    {
-      "id": "19-10",
-      "name": "19-10",
-      "position": {
-        "x": 19,
-        "y": 10
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 426671.23269801104,
-      "proportionOfJobs": 426671.23269801104,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1936231694351.9463
-    },
-    {
-      "id": "13-3",
-      "name": "13-3",
-      "position": {
-        "x": 13,
-        "y": 3
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 366112.7445663483,
-      "proportionOfJobs": 366112.7445663483,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1927663003350.3843
-    },
-    {
-      "id": "14-8",
-      "name": "14-8",
-      "position": {
-        "x": 14,
-        "y": 8
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 374556.51982965734,
-      "proportionOfJobs": 374556.51982965734,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1924145106498.2769
-    },
-    {
-      "id": "11-4",
-      "name": "11-4",
-      "position": {
-        "x": 11,
-        "y": 4
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 334863.8115731854,
-      "proportionOfJobs": 334863.8115731854,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1917515978004.9607
-    },
-    {
-      "id": "18-7",
-      "name": "18-7",
-      "position": {
-        "x": 18,
-        "y": 7
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 400995.65637267794,
-      "proportionOfJobs": 400995.65637267794,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1914398827524.5493
-    },
-    {
-      "id": "7-4",
-      "name": "7-4",
-      "position": {
-        "x": 7,
-        "y": 4
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 453760.78276704584,
-      "proportionOfJobs": 453760.78276704584,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1912066940949.1658
-    },
-    {
-      "id": "17-16",
-      "name": "17-16",
-      "position": {
-        "x": 17,
-        "y": 16
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 362995.9845983861,
-      "proportionOfJobs": 362995.9845983861,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1908394846512.2434
-    },
-    {
-      "id": "9-1",
-      "name": "9-1",
-      "position": {
-        "x": 9,
-        "y": 1
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 483361.48370169586,
-      "proportionOfJobs": 483361.48370169586,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1899472442019.1042
-    },
-    {
       "id": "8-3",
       "name": "8-3",
       "position": {
@@ -3214,201 +3094,6 @@ const data = {
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
       "gravity": 1893551493339.2783
-    },
-    {
-      "id": "9-5",
-      "name": "9-5",
-      "position": {
-        "x": 9,
-        "y": 5
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 308008.23812361807,
-      "proportionOfJobs": 308008.23812361807,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1876277534183.5825
-    },
-    {
-      "id": "8-7",
-      "name": "8-7",
-      "position": {
-        "x": 8,
-        "y": 7
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 283441.7928872055,
-      "proportionOfJobs": 283441.7928872055,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1868615337270.501
-    },
-    {
-      "id": "11-2",
-      "name": "11-2",
-      "position": {
-        "x": 11,
-        "y": 2
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 377489.3998131929,
-      "proportionOfJobs": 377489.3998131929,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1867821544189.3315
-    },
-    {
-      "id": "11-19",
-      "name": "11-19",
-      "position": {
-        "x": 11,
-        "y": 19
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 464905.3087616671,
-      "proportionOfJobs": 464905.3087616671,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1851959567234.1
-    },
-    {
-      "id": "15-15",
-      "name": "15-15",
-      "position": {
-        "x": 15,
-        "y": 15
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 365096.7789801983,
-      "proportionOfJobs": 365096.7789801983,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1847749482085.9675
-    },
-    {
-      "id": "17-7",
-      "name": "17-7",
-      "position": {
-        "x": 17,
-        "y": 7
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 359469.20487348974,
-      "proportionOfJobs": 359469.20487348974,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1842848771410.0251
-    },
-    {
-      "id": "17-18",
-      "name": "17-18",
-      "position": {
-        "x": 17,
-        "y": 18
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 444335.8761011638,
-      "proportionOfJobs": 444335.8761011638,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1840915912290.395
-    },
-    {
-      "id": "14-1",
-      "name": "14-1",
-      "position": {
-        "x": 14,
-        "y": 1
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 341576.2012169801,
-      "proportionOfJobs": 341576.2012169801,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1808738954668.0164
-    },
-    {
-      "id": "16-4",
-      "name": "16-4",
-      "position": {
-        "x": 16,
-        "y": 4
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 317324.3339748727,
-      "proportionOfJobs": 317324.3339748727,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1772280319430.375
-    },
-    {
-      "id": "9-4",
-      "name": "9-4",
-      "position": {
-        "x": 9,
-        "y": 4
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 308613.1403278985,
-      "proportionOfJobs": 308613.1403278985,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1755092283067.3318
-    },
-    {
-      "id": "17-5",
-      "name": "17-5",
-      "position": {
-        "x": 17,
-        "y": 5
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 379921.14806363295,
-      "proportionOfJobs": 379921.14806363295,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1738350699701.6616
-    },
-    {
-      "id": "15-8",
-      "name": "15-8",
-      "position": {
-        "x": 15,
-        "y": 8
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 334732.52572382387,
-      "proportionOfJobs": 334732.52572382387,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1738265744485.0942
-    },
-    {
-      "id": "17-6",
-      "name": "17-6",
-      "position": {
-        "x": 17,
-        "y": 6
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 359385.2182363198,
-      "proportionOfJobs": 359385.2182363198,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1730522578751.7385
     },
     {
       "id": "6-8",
@@ -3426,214 +3111,34 @@ const data = {
       "gravity": 1676059132365.2375
     },
     {
-      "id": "14-0",
-      "name": "14-0",
-      "position": {
-        "x": 14,
-        "y": 0
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 395799.89884269156,
-      "proportionOfJobs": 395799.89884269156,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1672586874677.8591
-    },
-    {
-      "id": "14-11",
-      "name": "14-11",
-      "position": {
-        "x": 14,
-        "y": 11
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 267637.77773231943,
-      "proportionOfJobs": 267637.77773231943,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1643337526958.37
-    },
-    {
-      "id": "11-1",
-      "name": "11-1",
-      "position": {
-        "x": 11,
-        "y": 1
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 366733.15533944004,
-      "proportionOfJobs": 366733.15533944004,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1636823875040.368
-    },
-    {
-      "id": "19-14",
-      "name": "19-14",
-      "position": {
-        "x": 19,
-        "y": 14
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 308056.3124758188,
-      "proportionOfJobs": 308056.3124758188,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1633100032344.777
-    },
-    {
-      "id": "12-2",
-      "name": "12-2",
-      "position": {
-        "x": 12,
-        "y": 2
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 323849.69142117293,
-      "proportionOfJobs": 323849.69142117293,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1632014874016.5642
-    },
-    {
-      "id": "19-16",
-      "name": "19-16",
-      "position": {
-        "x": 19,
-        "y": 16
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 388760.07083041454,
-      "proportionOfJobs": 388760.07083041454,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1618369520742.8252
-    },
-    {
-      "id": "15-0",
-      "name": "15-0",
-      "position": {
-        "x": 15,
-        "y": 0
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 393408.5987800684,
-      "proportionOfJobs": 393408.5987800684,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1607666389320.8906
-    },
-    {
-      "id": "12-1",
-      "name": "12-1",
-      "position": {
-        "x": 12,
-        "y": 1
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 339773.4041608988,
-      "proportionOfJobs": 339773.4041608988,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1596697443453.168
-    },
-    {
-      "id": "12-12",
-      "name": "12-12",
-      "position": {
-        "x": 12,
-        "y": 12
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 243083.58393740206,
-      "proportionOfJobs": 243083.58393740206,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1587023878960.4832
-    },
-    {
-      "id": "14-5",
-      "name": "14-5",
-      "position": {
-        "x": 14,
-        "y": 5
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 325588.5496718325,
-      "proportionOfJobs": 325588.5496718325,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1547140160157.8853
-    },
-    {
-      "id": "8-8",
-      "name": "8-8",
-      "position": {
-        "x": 8,
-        "y": 8
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 220666.99041061476,
-      "proportionOfJobs": 220666.99041061476,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1541805102510.15
-    },
-    {
-      "id": "11-5",
-      "name": "11-5",
-      "position": {
-        "x": 11,
-        "y": 5
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 237984.45156808538,
-      "proportionOfJobs": 237984.45156808538,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1525565534971.6113
-    },
-    {
-      "id": "13-2",
-      "name": "13-2",
+      "id": "13-3",
+      "name": "13-3",
       "position": {
         "x": 13,
-        "y": 2
+        "y": 3
       },
       "icon": "",
       "color": "black",
-      "residents": 289971.96220403846,
-      "proportionOfJobs": 289971.96220403846,
+      "residents": 366112.7445663483,
+      "proportionOfJobs": 366112.7445663483,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 1525265908522.6628
+      "gravity": 1927663003350.3843
     },
     {
-      "id": "14-17",
-      "name": "14-17",
+      "id": "10-4",
+      "name": "10-4",
       "position": {
-        "x": 14,
-        "y": 17
+        "x": 10,
+        "y": 4
       },
       "icon": "",
       "color": "black",
-      "residents": 339440.05974051205,
-      "proportionOfJobs": 339440.05974051205,
+      "residents": 406237.971193852,
+      "proportionOfJobs": 406237.971193852,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 1514542453408.7146
+      "gravity": 2275579530969.1865
     },
     {
       "id": "18-3",
@@ -3651,259 +3156,184 @@ const data = {
       "gravity": 1495888831889.652
     },
     {
-      "id": "15-16",
-      "name": "15-16",
+      "id": "11-12",
+      "name": "11-12",
       "position": {
-        "x": 15,
-        "y": 16
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 289784.97381387453,
-      "proportionOfJobs": 289784.97381387453,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1476917582712.2173
-    },
-    {
-      "id": "7-9",
-      "name": "7-9",
-      "position": {
-        "x": 7,
-        "y": 9
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 264355.9846686704,
-      "proportionOfJobs": 264355.9846686704,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1473892250283.0347
-    },
-    {
-      "id": "19-7",
-      "name": "19-7",
-      "position": {
-        "x": 19,
-        "y": 7
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 390029.08599239046,
-      "proportionOfJobs": 390029.08599239046,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1466961022049.0547
-    },
-    {
-      "id": "9-0",
-      "name": "9-0",
-      "position": {
-        "x": 9,
-        "y": 0
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 481590.31929007394,
-      "proportionOfJobs": 481590.31929007394,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1442333459465.3806
-    },
-    {
-      "id": "12-17",
-      "name": "12-17",
-      "position": {
-        "x": 12,
-        "y": 17
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 274913.31078208203,
-      "proportionOfJobs": 274913.31078208203,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1438524135198.3809
-    },
-    {
-      "id": "6-15",
-      "name": "6-15",
-      "position": {
-        "x": 6,
-        "y": 15
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 291702.05935513205,
-      "proportionOfJobs": 291702.05935513205,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1436788043128.8188
-    },
-    {
-      "id": "14-12",
-      "name": "14-12",
-      "position": {
-        "x": 14,
+        "x": 11,
         "y": 12
       },
       "icon": "",
       "color": "black",
-      "residents": 253853.4134907778,
-      "proportionOfJobs": 253853.4134907778,
+      "residents": 364470.31788816117,
+      "proportionOfJobs": 364470.31788816117,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 1430017804008.5122
+      "gravity": 3376612569173.633
     },
     {
-      "id": "6-14",
-      "name": "6-14",
+      "id": "10-18",
+      "name": "10-18",
       "position": {
-        "x": 6,
-        "y": 14
+        "x": 10,
+        "y": 18
       },
       "icon": "",
       "color": "black",
-      "residents": 257522.06721806157,
-      "proportionOfJobs": 257522.06721806157,
+      "residents": 401529.4101130414,
+      "proportionOfJobs": 401529.4101130414,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 1424259877040.7917
+      "gravity": 2588491098690.647
     },
     {
-      "id": "14-19",
-      "name": "14-19",
+      "id": "11-13",
+      "name": "11-13",
       "position": {
-        "x": 14,
-        "y": 19
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 415487.6872420805,
-      "proportionOfJobs": 415487.6872420805,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1415479092820.3271
-    },
-    {
-      "id": "16-9",
-      "name": "16-9",
-      "position": {
-        "x": 16,
-        "y": 9
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 229637.66098665923,
-      "proportionOfJobs": 229637.66098665923,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1408184245541.45
-    },
-    {
-      "id": "15-13",
-      "name": "15-13",
-      "position": {
-        "x": 15,
+        "x": 11,
         "y": 13
       },
       "icon": "",
       "color": "black",
-      "residents": 248627.63237930235,
-      "proportionOfJobs": 248627.63237930235,
+      "residents": 399092.5827120936,
+      "proportionOfJobs": 399092.5827120936,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 1402869273194.2983
+      "gravity": 3458775358205.7
     },
     {
-      "id": "16-6",
-      "name": "16-6",
+      "id": "17-12",
+      "name": "17-12",
       "position": {
-        "x": 16,
-        "y": 6
+        "x": 17,
+        "y": 12
       },
       "icon": "",
       "color": "black",
-      "residents": 284828.48419808695,
-      "proportionOfJobs": 284828.48419808695,
+      "residents": 398580.468864986,
+      "proportionOfJobs": 398580.468864986,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 1384219549505.1162
+      "gravity": 2699935940832.8833
     },
     {
-      "id": "10-2",
-      "name": "10-2",
+      "id": "11-3",
+      "name": "11-3",
       "position": {
-        "x": 10,
-        "y": 2
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 279144.32126949384,
-      "proportionOfJobs": 279144.32126949384,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1374961343718.3745
-    },
-    {
-      "id": "16-5",
-      "name": "16-5",
-      "position": {
-        "x": 16,
-        "y": 5
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 274344.79492131283,
-      "proportionOfJobs": 274344.79492131283,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1374656384158.997
-    },
-    {
-      "id": "19-9",
-      "name": "19-9",
-      "position": {
-        "x": 19,
-        "y": 9
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 322445.60558267223,
-      "proportionOfJobs": 322445.60558267223,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1374266966623.3176
-    },
-    {
-      "id": "16-0",
-      "name": "16-0",
-      "position": {
-        "x": 16,
-        "y": 0
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 372922.96868475294,
-      "proportionOfJobs": 372922.96868475294,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1352763770453.4094
-    },
-    {
-      "id": "10-3",
-      "name": "10-3",
-      "position": {
-        "x": 10,
+        "x": 11,
         "y": 3
       },
       "icon": "",
       "color": "black",
-      "residents": 248349.64804561166,
-      "proportionOfJobs": 248349.64804561166,
+      "residents": 396597.85579959064,
+      "proportionOfJobs": 396597.85579959064,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 1345896301802.1501
+      "gravity": 2066810742645.4287
+    },
+    {
+      "id": "14-0",
+      "name": "14-0",
+      "position": {
+        "x": 14,
+        "y": 0
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 395799.89884269156,
+      "proportionOfJobs": 395799.89884269156,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1672586874677.8591
+    },
+    {
+      "id": "9-6",
+      "name": "9-6",
+      "position": {
+        "x": 9,
+        "y": 6
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 386745.75112062,
+      "proportionOfJobs": 386745.75112062,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2510983619327.282
+    },
+    {
+      "id": "17-0",
+      "name": "17-0",
+      "position": {
+        "x": 17,
+        "y": 0
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 319066.3647252227,
+      "proportionOfJobs": 319066.3647252227,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1010263652829.6511
+    },
+    {
+      "id": "18-10",
+      "name": "18-10",
+      "position": {
+        "x": 18,
+        "y": 10
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 381590.46980761143,
+      "proportionOfJobs": 381590.46980761143,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2172017430247.989
+    },
+    {
+      "id": "17-7",
+      "name": "17-7",
+      "position": {
+        "x": 17,
+        "y": 7
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 359469.20487348974,
+      "proportionOfJobs": 359469.20487348974,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1842848771410.0251
+    },
+    {
+      "id": "11-0",
+      "name": "11-0",
+      "position": {
+        "x": 11,
+        "y": 0
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 370214.5347579085,
+      "proportionOfJobs": 370214.5347579085,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1263881100586.6968
+    },
+    {
+      "id": "15-8",
+      "name": "15-8",
+      "position": {
+        "x": 15,
+        "y": 8
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 334732.52572382387,
+      "proportionOfJobs": 334732.52572382387,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1738265744485.0942
     },
     {
       "id": "16-19",
@@ -3921,6 +3351,291 @@ const data = {
       "gravity": 1341333852946.588
     },
     {
+      "id": "17-19",
+      "name": "17-19",
+      "position": {
+        "x": 17,
+        "y": 19
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 327960.5461136315,
+      "proportionOfJobs": 327960.5461136315,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1072613932100.7882
+    },
+    {
+      "id": "18-9",
+      "name": "18-9",
+      "position": {
+        "x": 18,
+        "y": 9
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 367161.6481313434,
+      "proportionOfJobs": 367161.6481313434,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1950634932253.5442
+    },
+    {
+      "id": "14-5",
+      "name": "14-5",
+      "position": {
+        "x": 14,
+        "y": 5
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 325588.5496718325,
+      "proportionOfJobs": 325588.5496718325,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1547140160157.8853
+    },
+    {
+      "id": "17-16",
+      "name": "17-16",
+      "position": {
+        "x": 17,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 362995.9845983861,
+      "proportionOfJobs": 362995.9845983861,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1908394846512.2434
+    },
+    {
+      "id": "17-9",
+      "name": "17-9",
+      "position": {
+        "x": 17,
+        "y": 9
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 360313.6513193435,
+      "proportionOfJobs": 360313.6513193435,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2081534449180.0615
+    },
+    {
+      "id": "16-12",
+      "name": "16-12",
+      "position": {
+        "x": 16,
+        "y": 12
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 359923.2049578637,
+      "proportionOfJobs": 359923.2049578637,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2747720197064.9946
+    },
+    {
+      "id": "17-14",
+      "name": "17-14",
+      "position": {
+        "x": 17,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 356954.0187561865,
+      "proportionOfJobs": 356954.0187561865,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2061448484990.371
+    },
+    {
+      "id": "14-17",
+      "name": "14-17",
+      "position": {
+        "x": 14,
+        "y": 17
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 339440.05974051205,
+      "proportionOfJobs": 339440.05974051205,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1514542453408.7146
+    },
+    {
+      "id": "16-16",
+      "name": "16-16",
+      "position": {
+        "x": 16,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 352157.6718724092,
+      "proportionOfJobs": 352157.6718724092,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1947191240359.595
+    },
+    {
+      "id": "14-2",
+      "name": "14-2",
+      "position": {
+        "x": 14,
+        "y": 2
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 347301.55912042496,
+      "proportionOfJobs": 347301.55912042496,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2030598666023.7622
+    },
+    {
+      "id": "14-1",
+      "name": "14-1",
+      "position": {
+        "x": 14,
+        "y": 1
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 341576.2012169801,
+      "proportionOfJobs": 341576.2012169801,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1808738954668.0164
+    },
+    {
+      "id": "12-16",
+      "name": "12-16",
+      "position": {
+        "x": 12,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 327775.74332250655,
+      "proportionOfJobs": 327775.74332250655,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1943744781812.729
+    },
+    {
+      "id": "7-12",
+      "name": "7-12",
+      "position": {
+        "x": 7,
+        "y": 12
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 337374.7749795606,
+      "proportionOfJobs": 337374.7749795606,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2461555303510.767
+    },
+    {
+      "id": "11-4",
+      "name": "11-4",
+      "position": {
+        "x": 11,
+        "y": 4
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 334863.8115731854,
+      "proportionOfJobs": 334863.8115731854,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1917515978004.9607
+    },
+    {
+      "id": "16-13",
+      "name": "16-13",
+      "position": {
+        "x": 16,
+        "y": 13
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 334375.23958863434,
+      "proportionOfJobs": 334375.23958863434,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1982479546393.7522
+    },
+    {
+      "id": "19-6",
+      "name": "19-6",
+      "position": {
+        "x": 19,
+        "y": 6
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 317969.70586553344,
+      "proportionOfJobs": 317969.70586553344,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1059161115940.7906
+    },
+    {
+      "id": "8-6",
+      "name": "8-6",
+      "position": {
+        "x": 8,
+        "y": 6
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 332249.0359376067,
+      "proportionOfJobs": 332249.0359376067,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2042802420131.5874
+    },
+    {
+      "id": "19-1",
+      "name": "19-1",
+      "position": {
+        "x": 19,
+        "y": 1
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 304501.26850263315,
+      "proportionOfJobs": 304501.26850263315,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 801586456957.0446
+    },
+    {
+      "id": "15-19",
+      "name": "15-19",
+      "position": {
+        "x": 15,
+        "y": 19
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 329073.7147658866,
+      "proportionOfJobs": 329073.7147658866,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1237795813650.8044
+    },
+    {
       "id": "19-8",
       "name": "19-8",
       "position": {
@@ -3936,19 +3651,79 @@ const data = {
       "gravity": 1329680212060.541
     },
     {
-      "id": "13-4",
-      "name": "13-4",
+      "id": "12-2",
+      "name": "12-2",
       "position": {
-        "x": 13,
+        "x": 12,
+        "y": 2
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 323849.69142117293,
+      "proportionOfJobs": 323849.69142117293,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1632014874016.5642
+    },
+    {
+      "id": "19-9",
+      "name": "19-9",
+      "position": {
+        "x": 19,
+        "y": 9
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 322445.60558267223,
+      "proportionOfJobs": 322445.60558267223,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1374266966623.3176
+    },
+    {
+      "id": "16-4",
+      "name": "16-4",
+      "position": {
+        "x": 16,
         "y": 4
       },
       "icon": "",
       "color": "black",
-      "residents": 246490.77944524333,
-      "proportionOfJobs": 246490.77944524333,
+      "residents": 317324.3339748727,
+      "proportionOfJobs": 317324.3339748727,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 1293188320062.5015
+      "gravity": 1772280319430.375
+    },
+    {
+      "id": "8-0",
+      "name": "8-0",
+      "position": {
+        "x": 8,
+        "y": 0
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 313043.87531878,
+      "proportionOfJobs": 313043.87531878,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 799777757951.9329
+    },
+    {
+      "id": "16-6",
+      "name": "16-6",
+      "position": {
+        "x": 16,
+        "y": 6
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 284828.48419808695,
+      "proportionOfJobs": 284828.48419808695,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1384219549505.1162
     },
     {
       "id": "14-18",
@@ -3966,19 +3741,364 @@ const data = {
       "gravity": 1276887489938.7102
     },
     {
-      "id": "11-0",
-      "name": "11-0",
+      "id": "9-4",
+      "name": "9-4",
       "position": {
-        "x": 11,
+        "x": 9,
+        "y": 4
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 308613.1403278985,
+      "proportionOfJobs": 308613.1403278985,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1755092283067.3318
+    },
+    {
+      "id": "19-14",
+      "name": "19-14",
+      "position": {
+        "x": 19,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 308056.3124758188,
+      "proportionOfJobs": 308056.3124758188,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1633100032344.777
+    },
+    {
+      "id": "9-5",
+      "name": "9-5",
+      "position": {
+        "x": 9,
+        "y": 5
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 308008.23812361807,
+      "proportionOfJobs": 308008.23812361807,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1876277534183.5825
+    },
+    {
+      "id": "12-0",
+      "name": "12-0",
+      "position": {
+        "x": 12,
         "y": 0
       },
       "icon": "",
       "color": "black",
-      "residents": 370214.5347579085,
-      "proportionOfJobs": 370214.5347579085,
+      "residents": 298666.52017805213,
+      "proportionOfJobs": 298666.52017805213,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 1263881100586.6968
+      "gravity": 1197825916072.3276
+    },
+    {
+      "id": "6-15",
+      "name": "6-15",
+      "position": {
+        "x": 6,
+        "y": 15
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 291702.05935513205,
+      "proportionOfJobs": 291702.05935513205,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1436788043128.8188
+    },
+    {
+      "id": "13-2",
+      "name": "13-2",
+      "position": {
+        "x": 13,
+        "y": 2
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 289971.96220403846,
+      "proportionOfJobs": 289971.96220403846,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1525265908522.6628
+    },
+    {
+      "id": "15-16",
+      "name": "15-16",
+      "position": {
+        "x": 15,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 289784.97381387453,
+      "proportionOfJobs": 289784.97381387453,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1476917582712.2173
+    },
+    {
+      "id": "19-17",
+      "name": "19-17",
+      "position": {
+        "x": 19,
+        "y": 17
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 274046.70576388616,
+      "proportionOfJobs": 274046.70576388616,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 818574835767.9321
+    },
+    {
+      "id": "8-7",
+      "name": "8-7",
+      "position": {
+        "x": 8,
+        "y": 7
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 283441.7928872055,
+      "proportionOfJobs": 283441.7928872055,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1868615337270.501
+    },
+    {
+      "id": "10-2",
+      "name": "10-2",
+      "position": {
+        "x": 10,
+        "y": 2
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 279144.32126949384,
+      "proportionOfJobs": 279144.32126949384,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1374961343718.3745
+    },
+    {
+      "id": "9-15",
+      "name": "9-15",
+      "position": {
+        "x": 9,
+        "y": 15
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 276015.66040763987,
+      "proportionOfJobs": 276015.66040763987,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 2483165536376.1294
+    },
+    {
+      "id": "12-17",
+      "name": "12-17",
+      "position": {
+        "x": 12,
+        "y": 17
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 274913.31078208203,
+      "proportionOfJobs": 274913.31078208203,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1438524135198.3809
+    },
+    {
+      "id": "16-5",
+      "name": "16-5",
+      "position": {
+        "x": 16,
+        "y": 5
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 274344.79492131283,
+      "proportionOfJobs": 274344.79492131283,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1374656384158.997
+    },
+    {
+      "id": "14-11",
+      "name": "14-11",
+      "position": {
+        "x": 14,
+        "y": 11
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 267637.77773231943,
+      "proportionOfJobs": 267637.77773231943,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1643337526958.37
+    },
+    {
+      "id": "18-6",
+      "name": "18-6",
+      "position": {
+        "x": 18,
+        "y": 6
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 267029.9941048915,
+      "proportionOfJobs": 267029.9941048915,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1182785360142.464
+    },
+    {
+      "id": "6-14",
+      "name": "6-14",
+      "position": {
+        "x": 6,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 257522.06721806157,
+      "proportionOfJobs": 257522.06721806157,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1424259877040.7917
+    },
+    {
+      "id": "7-9",
+      "name": "7-9",
+      "position": {
+        "x": 7,
+        "y": 9
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 264355.9846686704,
+      "proportionOfJobs": 264355.9846686704,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1473892250283.0347
+    },
+    {
+      "id": "18-19",
+      "name": "18-19",
+      "position": {
+        "x": 18,
+        "y": 19
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 252257.98875327245,
+      "proportionOfJobs": 252257.98875327245,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 626338455249.0338
+    },
+    {
+      "id": "14-12",
+      "name": "14-12",
+      "position": {
+        "x": 14,
+        "y": 12
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 253853.4134907778,
+      "proportionOfJobs": 253853.4134907778,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1430017804008.5122
+    },
+    {
+      "id": "14-6",
+      "name": "14-6",
+      "position": {
+        "x": 14,
+        "y": 6
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 252632.81935689817,
+      "proportionOfJobs": 252632.81935689817,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1232568766909.032
+    },
+    {
+      "id": "7-3",
+      "name": "7-3",
+      "position": {
+        "x": 7,
+        "y": 3
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 250121.60021265998,
+      "proportionOfJobs": 250121.60021265998,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 898097376580.457
+    },
+    {
+      "id": "15-13",
+      "name": "15-13",
+      "position": {
+        "x": 15,
+        "y": 13
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 248627.63237930235,
+      "proportionOfJobs": 248627.63237930235,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1402869273194.2983
+    },
+    {
+      "id": "10-3",
+      "name": "10-3",
+      "position": {
+        "x": 10,
+        "y": 3
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 248349.64804561166,
+      "proportionOfJobs": 248349.64804561166,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1345896301802.1501
+    },
+    {
+      "id": "13-4",
+      "name": "13-4",
+      "position": {
+        "x": 13,
+        "y": 4
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 246490.77944524333,
+      "proportionOfJobs": 246490.77944524333,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1293188320062.5015
     },
     {
       "id": "13-1",
@@ -4011,169 +4131,19 @@ const data = {
       "gravity": 1245972560540.6963
     },
     {
-      "id": "15-14",
-      "name": "15-14",
-      "position": {
-        "x": 15,
-        "y": 14
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 235785.2685971076,
-      "proportionOfJobs": 235785.2685971076,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1242793423439.8508
-    },
-    {
-      "id": "15-19",
-      "name": "15-19",
-      "position": {
-        "x": 15,
-        "y": 19
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 329073.7147658866,
-      "proportionOfJobs": 329073.7147658866,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1237795813650.8044
-    },
-    {
-      "id": "14-6",
-      "name": "14-6",
-      "position": {
-        "x": 14,
-        "y": 6
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 252632.81935689817,
-      "proportionOfJobs": 252632.81935689817,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1232568766909.032
-    },
-    {
-      "id": "12-0",
-      "name": "12-0",
+      "id": "12-12",
+      "name": "12-12",
       "position": {
         "x": 12,
-        "y": 0
+        "y": 12
       },
       "icon": "",
       "color": "black",
-      "residents": 298666.52017805213,
-      "proportionOfJobs": 298666.52017805213,
+      "residents": 243083.58393740206,
+      "proportionOfJobs": 243083.58393740206,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 1197825916072.3276
-    },
-    {
-      "id": "18-6",
-      "name": "18-6",
-      "position": {
-        "x": 18,
-        "y": 6
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 267029.9941048915,
-      "proportionOfJobs": 267029.9941048915,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1182785360142.464
-    },
-    {
-      "id": "17-4",
-      "name": "17-4",
-      "position": {
-        "x": 17,
-        "y": 4
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 234868.99441843564,
-      "proportionOfJobs": 234868.99441843564,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1176507532081.1975
-    },
-    {
-      "id": "15-7",
-      "name": "15-7",
-      "position": {
-        "x": 15,
-        "y": 7
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 223084.21220670547,
-      "proportionOfJobs": 223084.21220670547,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1107767412596.998
-    },
-    {
-      "id": "12-3",
-      "name": "12-3",
-      "position": {
-        "x": 12,
-        "y": 3
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 198093.75650502075,
-      "proportionOfJobs": 198093.75650502075,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1087209097749.8796
-    },
-    {
-      "id": "17-19",
-      "name": "17-19",
-      "position": {
-        "x": 17,
-        "y": 19
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 327960.5461136315,
-      "proportionOfJobs": 327960.5461136315,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1072613932100.7882
-    },
-    {
-      "id": "13-15",
-      "name": "13-15",
-      "position": {
-        "x": 13,
-        "y": 15
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 211412.97390068718,
-      "proportionOfJobs": 211412.97390068718,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1070684829072.4451
-    },
-    {
-      "id": "19-6",
-      "name": "19-6",
-      "position": {
-        "x": 19,
-        "y": 6
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 317969.70586553344,
-      "proportionOfJobs": 317969.70586553344,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1059161115940.7906
+      "gravity": 1587023878960.4832
     },
     {
       "id": "6-7",
@@ -4191,49 +4161,49 @@ const data = {
       "gravity": 1056413409105.6738
     },
     {
-      "id": "18-16",
-      "name": "18-16",
+      "id": "11-5",
+      "name": "11-5",
       "position": {
-        "x": 18,
-        "y": 16
+        "x": 11,
+        "y": 5
       },
       "icon": "",
       "color": "black",
-      "residents": 209830.7851033746,
-      "proportionOfJobs": 209830.7851033746,
+      "residents": 237984.45156808538,
+      "proportionOfJobs": 237984.45156808538,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 1038710772327.797
+      "gravity": 1525565534971.6113
     },
     {
-      "id": "17-10",
-      "name": "17-10",
-      "position": {
-        "x": 17,
-        "y": 10
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 145895.8427874248,
-      "proportionOfJobs": 145895.8427874248,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1030725812806.5627
-    },
-    {
-      "id": "15-4",
-      "name": "15-4",
+      "id": "15-14",
+      "name": "15-14",
       "position": {
         "x": 15,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 235785.2685971076,
+      "proportionOfJobs": 235785.2685971076,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1242793423439.8508
+    },
+    {
+      "id": "17-4",
+      "name": "17-4",
+      "position": {
+        "x": 17,
         "y": 4
       },
       "icon": "",
       "color": "black",
-      "residents": 165813.92677054787,
-      "proportionOfJobs": 165813.92677054787,
+      "residents": 234868.99441843564,
+      "proportionOfJobs": 234868.99441843564,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 1024069310923.6787
+      "gravity": 1176507532081.1975
     },
     {
       "id": "10-1",
@@ -4251,124 +4221,19 @@ const data = {
       "gravity": 1017162455756.3296
     },
     {
-      "id": "17-0",
-      "name": "17-0",
-      "position": {
-        "x": 17,
-        "y": 0
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 319066.3647252227,
-      "proportionOfJobs": 319066.3647252227,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 1010263652829.6511
-    },
-    {
-      "id": "16-8",
-      "name": "16-8",
+      "id": "16-9",
+      "name": "16-9",
       "position": {
         "x": 16,
-        "y": 8
+        "y": 9
       },
       "icon": "",
       "color": "black",
-      "residents": 181500.63246619274,
-      "proportionOfJobs": 181500.63246619274,
+      "residents": 229637.66098665923,
+      "proportionOfJobs": 229637.66098665923,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 996644878229.1885
-    },
-    {
-      "id": "6-12",
-      "name": "6-12",
-      "position": {
-        "x": 6,
-        "y": 12
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 194319.03645310723,
-      "proportionOfJobs": 194319.03645310723,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 947041184211.141
-    },
-    {
-      "id": "17-1",
-      "name": "17-1",
-      "position": {
-        "x": 17,
-        "y": 1
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 213640.1299332997,
-      "proportionOfJobs": 213640.1299332997,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 936441680591.7484
-    },
-    {
-      "id": "7-17",
-      "name": "7-17",
-      "position": {
-        "x": 7,
-        "y": 17
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 192577.27482118143,
-      "proportionOfJobs": 192577.27482118143,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 901126425064.3408
-    },
-    {
-      "id": "12-11",
-      "name": "12-11",
-      "position": {
-        "x": 12,
-        "y": 11
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 126544.66396466413,
-      "proportionOfJobs": 126544.66396466413,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 898669634502.5554
-    },
-    {
-      "id": "7-3",
-      "name": "7-3",
-      "position": {
-        "x": 7,
-        "y": 3
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 250121.60021265998,
-      "proportionOfJobs": 250121.60021265998,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 898097376580.457
-    },
-    {
-      "id": "15-6",
-      "name": "15-6",
-      "position": {
-        "x": 15,
-        "y": 6
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 179582.63846150943,
-      "proportionOfJobs": 179582.63846150943,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 885501838288.7611
+      "gravity": 1408184245541.45
     },
     {
       "id": "18-1",
@@ -4386,81 +4251,6 @@ const data = {
       "gravity": 858969655515.3019
     },
     {
-      "id": "15-5",
-      "name": "15-5",
-      "position": {
-        "x": 15,
-        "y": 5
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 165659.24647387632,
-      "proportionOfJobs": 165659.24647387632,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 839571135951.7932
-    },
-    {
-      "id": "19-17",
-      "name": "19-17",
-      "position": {
-        "x": 19,
-        "y": 17
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 274046.70576388616,
-      "proportionOfJobs": 274046.70576388616,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 818574835767.9321
-    },
-    {
-      "id": "13-6",
-      "name": "13-6",
-      "position": {
-        "x": 13,
-        "y": 6
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 149742.75802311738,
-      "proportionOfJobs": 149742.75802311738,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 813137490974.1377
-    },
-    {
-      "id": "19-1",
-      "name": "19-1",
-      "position": {
-        "x": 19,
-        "y": 1
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 304501.26850263315,
-      "proportionOfJobs": 304501.26850263315,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 801586456957.0446
-    },
-    {
-      "id": "8-0",
-      "name": "8-0",
-      "position": {
-        "x": 8,
-        "y": 0
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 313043.87531878,
-      "proportionOfJobs": 313043.87531878,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 799777757951.9329
-    },
-    {
       "id": "8-19",
       "name": "8-19",
       "position": {
@@ -4476,139 +4266,34 @@ const data = {
       "gravity": 798333152825.001
     },
     {
-      "id": "14-7",
-      "name": "14-7",
-      "position": {
-        "x": 14,
-        "y": 7
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 155678.03149729432,
-      "proportionOfJobs": 155678.03149729432,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 791937634506.0895
-    },
-    {
-      "id": "15-9",
-      "name": "15-9",
+      "id": "15-7",
+      "name": "15-7",
       "position": {
         "x": 15,
-        "y": 9
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 129604.69195251162,
-      "proportionOfJobs": 129604.69195251162,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 789021978200.1383
-    },
-    {
-      "id": "18-4",
-      "name": "18-4",
-      "position": {
-        "x": 18,
-        "y": 4
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 190742.6819912983,
-      "proportionOfJobs": 190742.6819912983,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 747194166543.8557
-    },
-    {
-      "id": "17-13",
-      "name": "17-13",
-      "position": {
-        "x": 17,
-        "y": 13
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 116729.8555667689,
-      "proportionOfJobs": 116729.8555667689,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 732678018786.5923
-    },
-    {
-      "id": "13-9",
-      "name": "13-9",
-      "position": {
-        "x": 13,
-        "y": 9
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 128771.48692000417,
-      "proportionOfJobs": 128771.48692000417,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 696129098294.5292
-    },
-    {
-      "id": "16-7",
-      "name": "16-7",
-      "position": {
-        "x": 16,
         "y": 7
       },
       "icon": "",
       "color": "black",
-      "residents": 131012.61339932511,
-      "proportionOfJobs": 131012.61339932511,
+      "residents": 223084.21220670547,
+      "proportionOfJobs": 223084.21220670547,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 678556146097.5295
+      "gravity": 1107767412596.998
     },
     {
-      "id": "12-8",
-      "name": "12-8",
+      "id": "8-8",
+      "name": "8-8",
       "position": {
-        "x": 12,
+        "x": 8,
         "y": 8
       },
       "icon": "",
       "color": "black",
-      "residents": 106952.06239775594,
-      "proportionOfJobs": 106952.06239775594,
+      "residents": 220666.99041061476,
+      "proportionOfJobs": 220666.99041061476,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 677354999062.623
-    },
-    {
-      "id": "8-2",
-      "name": "8-2",
-      "position": {
-        "x": 8,
-        "y": 2
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 169935.78149519753,
-      "proportionOfJobs": 169935.78149519753,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 675924866510.1608
-    },
-    {
-      "id": "13-19",
-      "name": "13-19",
-      "position": {
-        "x": 13,
-        "y": 19
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 200367.7090194417,
-      "proportionOfJobs": 200367.7090194417,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 675087460061.9116
+      "gravity": 1541805102510.15
     },
     {
       "id": "19-2",
@@ -4626,66 +4311,6 @@ const data = {
       "gravity": 673022115899.8352
     },
     {
-      "id": "12-18",
-      "name": "12-18",
-      "position": {
-        "x": 12,
-        "y": 18
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 142465.15071843707,
-      "proportionOfJobs": 142465.15071843707,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 670389182893.5742
-    },
-    {
-      "id": "18-19",
-      "name": "18-19",
-      "position": {
-        "x": 18,
-        "y": 19
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 252257.98875327245,
-      "proportionOfJobs": 252257.98875327245,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 626338455249.0338
-    },
-    {
-      "id": "18-5",
-      "name": "18-5",
-      "position": {
-        "x": 18,
-        "y": 5
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 151670.89933217136,
-      "proportionOfJobs": 151670.89933217136,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 614194034206.3043
-    },
-    {
-      "id": "13-18",
-      "name": "13-18",
-      "position": {
-        "x": 13,
-        "y": 18
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 145968.96448597548,
-      "proportionOfJobs": 145968.96448597548,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 609134910030.0953
-    },
-    {
       "id": "18-0",
       "name": "18-0",
       "position": {
@@ -4701,139 +4326,154 @@ const data = {
       "gravity": 607259921558.7832
     },
     {
-      "id": "12-13",
-      "name": "12-13",
+      "id": "17-1",
+      "name": "17-1",
       "position": {
-        "x": 12,
-        "y": 13
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 88338.11937501648,
-      "proportionOfJobs": 88338.11937501648,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 590575337340.1455
-    },
-    {
-      "id": "6-16",
-      "name": "6-16",
-      "position": {
-        "x": 6,
-        "y": 16
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 138119.23134666512,
-      "proportionOfJobs": 138119.23134666512,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 577741812527.4868
-    },
-    {
-      "id": "8-1",
-      "name": "8-1",
-      "position": {
-        "x": 8,
+        "x": 17,
         "y": 1
       },
       "icon": "",
       "color": "black",
-      "residents": 163996.93346704173,
-      "proportionOfJobs": 163996.93346704173,
+      "residents": 213640.1299332997,
+      "proportionOfJobs": 213640.1299332997,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 559446356597.3967
+      "gravity": 936441680591.7484
     },
     {
-      "id": "1-12",
-      "name": "1-12",
+      "id": "13-15",
+      "name": "13-15",
       "position": {
-        "x": 1,
+        "x": 13,
+        "y": 15
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 211412.97390068718,
+      "proportionOfJobs": 211412.97390068718,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1070684829072.4451
+    },
+    {
+      "id": "18-16",
+      "name": "18-16",
+      "position": {
+        "x": 18,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 209830.7851033746,
+      "proportionOfJobs": 209830.7851033746,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1038710772327.797
+    },
+    {
+      "id": "13-19",
+      "name": "13-19",
+      "position": {
+        "x": 13,
+        "y": 19
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 200367.7090194417,
+      "proportionOfJobs": 200367.7090194417,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 675087460061.9116
+    },
+    {
+      "id": "12-3",
+      "name": "12-3",
+      "position": {
+        "x": 12,
+        "y": 3
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 198093.75650502075,
+      "proportionOfJobs": 198093.75650502075,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1087209097749.8796
+    },
+    {
+      "id": "6-12",
+      "name": "6-12",
+      "position": {
+        "x": 6,
         "y": 12
       },
       "icon": "",
       "color": "black",
-      "residents": 293002.31919643807,
-      "proportionOfJobs": 293002.31919643807,
+      "residents": 194319.03645310723,
+      "proportionOfJobs": 194319.03645310723,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 507878240447.845
+      "gravity": 947041184211.141
     },
     {
-      "id": "12-10",
-      "name": "12-10",
+      "id": "7-17",
+      "name": "7-17",
       "position": {
-        "x": 12,
-        "y": 10
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 66867.72190193698,
-      "proportionOfJobs": 66867.72190193698,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 469081772247.99194
-    },
-    {
-      "id": "10-0",
-      "name": "10-0",
-      "position": {
-        "x": 10,
-        "y": 0
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 109661.80944736987,
-      "proportionOfJobs": 109661.80944736987,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 394016645102.8729
-    },
-    {
-      "id": "18-17",
-      "name": "18-17",
-      "position": {
-        "x": 18,
+        "x": 7,
         "y": 17
       },
       "icon": "",
       "color": "black",
-      "residents": 94114.23979591517,
-      "proportionOfJobs": 94114.23979591517,
+      "residents": 192577.27482118143,
+      "proportionOfJobs": 192577.27482118143,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 391386740058.07214
+      "gravity": 901126425064.3408
     },
     {
-      "id": "8-9",
-      "name": "8-9",
+      "id": "18-4",
+      "name": "18-4",
       "position": {
-        "x": 8,
-        "y": 9
+        "x": 18,
+        "y": 4
       },
       "icon": "",
       "color": "black",
-      "residents": 46161.63524501146,
-      "proportionOfJobs": 46161.63524501146,
+      "residents": 190742.6819912983,
+      "proportionOfJobs": 190742.6819912983,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 385555540795.75494
+      "gravity": 747194166543.8557
     },
     {
-      "id": "6-6",
-      "name": "6-6",
+      "id": "16-8",
+      "name": "16-8",
       "position": {
-        "x": 6,
+        "x": 16,
+        "y": 8
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 181500.63246619274,
+      "proportionOfJobs": 181500.63246619274,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 996644878229.1885
+    },
+    {
+      "id": "15-6",
+      "name": "15-6",
+      "position": {
+        "x": 15,
         "y": 6
       },
       "icon": "",
       "color": "black",
-      "residents": 92677.33001462255,
-      "proportionOfJobs": 92677.33001462255,
+      "residents": 179582.63846150943,
+      "proportionOfJobs": 179582.63846150943,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 371629570113.7545
+      "gravity": 885501838288.7611
     },
     {
       "id": "19-0",
@@ -4851,6 +4491,366 @@ const data = {
       "gravity": 370398488924.1936
     },
     {
+      "id": "8-2",
+      "name": "8-2",
+      "position": {
+        "x": 8,
+        "y": 2
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 169935.78149519753,
+      "proportionOfJobs": 169935.78149519753,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 675924866510.1608
+    },
+    {
+      "id": "15-4",
+      "name": "15-4",
+      "position": {
+        "x": 15,
+        "y": 4
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 165813.92677054787,
+      "proportionOfJobs": 165813.92677054787,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1024069310923.6787
+    },
+    {
+      "id": "15-5",
+      "name": "15-5",
+      "position": {
+        "x": 15,
+        "y": 5
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 165659.24647387632,
+      "proportionOfJobs": 165659.24647387632,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 839571135951.7932
+    },
+    {
+      "id": "8-1",
+      "name": "8-1",
+      "position": {
+        "x": 8,
+        "y": 1
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 163996.93346704173,
+      "proportionOfJobs": 163996.93346704173,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 559446356597.3967
+    },
+    {
+      "id": "14-7",
+      "name": "14-7",
+      "position": {
+        "x": 14,
+        "y": 7
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 155678.03149729432,
+      "proportionOfJobs": 155678.03149729432,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 791937634506.0895
+    },
+    {
+      "id": "18-5",
+      "name": "18-5",
+      "position": {
+        "x": 18,
+        "y": 5
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 151670.89933217136,
+      "proportionOfJobs": 151670.89933217136,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 614194034206.3043
+    },
+    {
+      "id": "13-6",
+      "name": "13-6",
+      "position": {
+        "x": 13,
+        "y": 6
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 149742.75802311738,
+      "proportionOfJobs": 149742.75802311738,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 813137490974.1377
+    },
+    {
+      "id": "13-18",
+      "name": "13-18",
+      "position": {
+        "x": 13,
+        "y": 18
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 145968.96448597548,
+      "proportionOfJobs": 145968.96448597548,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 609134910030.0953
+    },
+    {
+      "id": "17-10",
+      "name": "17-10",
+      "position": {
+        "x": 17,
+        "y": 10
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 145895.8427874248,
+      "proportionOfJobs": 145895.8427874248,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1030725812806.5627
+    },
+    {
+      "id": "12-18",
+      "name": "12-18",
+      "position": {
+        "x": 12,
+        "y": 18
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 142465.15071843707,
+      "proportionOfJobs": 142465.15071843707,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 670389182893.5742
+    },
+    {
+      "id": "6-16",
+      "name": "6-16",
+      "position": {
+        "x": 6,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 138119.23134666512,
+      "proportionOfJobs": 138119.23134666512,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 577741812527.4868
+    },
+    {
+      "id": "16-7",
+      "name": "16-7",
+      "position": {
+        "x": 16,
+        "y": 7
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 131012.61339932511,
+      "proportionOfJobs": 131012.61339932511,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 678556146097.5295
+    },
+    {
+      "id": "15-9",
+      "name": "15-9",
+      "position": {
+        "x": 15,
+        "y": 9
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 129604.69195251162,
+      "proportionOfJobs": 129604.69195251162,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 789021978200.1383
+    },
+    {
+      "id": "13-9",
+      "name": "13-9",
+      "position": {
+        "x": 13,
+        "y": 9
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 128771.48692000417,
+      "proportionOfJobs": 128771.48692000417,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 696129098294.5292
+    },
+    {
+      "id": "12-11",
+      "name": "12-11",
+      "position": {
+        "x": 12,
+        "y": 11
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 126544.66396466413,
+      "proportionOfJobs": 126544.66396466413,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 898669634502.5554
+    },
+    {
+      "id": "17-13",
+      "name": "17-13",
+      "position": {
+        "x": 17,
+        "y": 13
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 116729.8555667689,
+      "proportionOfJobs": 116729.8555667689,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 732678018786.5923
+    },
+    {
+      "id": "10-0",
+      "name": "10-0",
+      "position": {
+        "x": 10,
+        "y": 0
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 109661.80944736987,
+      "proportionOfJobs": 109661.80944736987,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 394016645102.8729
+    },
+    {
+      "id": "12-8",
+      "name": "12-8",
+      "position": {
+        "x": 12,
+        "y": 8
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 106952.06239775594,
+      "proportionOfJobs": 106952.06239775594,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 677354999062.623
+    },
+    {
+      "id": "18-17",
+      "name": "18-17",
+      "position": {
+        "x": 18,
+        "y": 17
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 94114.23979591517,
+      "proportionOfJobs": 94114.23979591517,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 391386740058.07214
+    },
+    {
+      "id": "6-6",
+      "name": "6-6",
+      "position": {
+        "x": 6,
+        "y": 6
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 92677.33001462255,
+      "proportionOfJobs": 92677.33001462255,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 371629570113.7545
+    },
+    {
+      "id": "12-13",
+      "name": "12-13",
+      "position": {
+        "x": 12,
+        "y": 13
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 88338.11937501648,
+      "proportionOfJobs": 88338.11937501648,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 590575337340.1455
+    },
+    {
+      "id": "19-3",
+      "name": "19-3",
+      "position": {
+        "x": 19,
+        "y": 3
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 79361.40872539845,
+      "proportionOfJobs": 79361.40872539845,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 241559047127.20444
+    },
+    {
+      "id": "12-10",
+      "name": "12-10",
+      "position": {
+        "x": 12,
+        "y": 10
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 66867.72190193698,
+      "proportionOfJobs": 66867.72190193698,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 469081772247.99194
+    },
+    {
+      "id": "18-18",
+      "name": "18-18",
+      "position": {
+        "x": 18,
+        "y": 18
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 66314.98705507768,
+      "proportionOfJobs": 66314.98705507768,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 231027086261.05295
+    },
+    {
       "id": "13-5",
       "name": "13-5",
       "position": {
@@ -4866,19 +4866,34 @@ const data = {
       "gravity": 359277091182.4673
     },
     {
-      "id": "0-12",
-      "name": "0-12",
+      "id": "12-19",
+      "name": "12-19",
       "position": {
-        "x": 0,
-        "y": 12
+        "x": 12,
+        "y": 19
       },
       "icon": "",
       "color": "black",
-      "residents": 227951.26174469804,
-      "proportionOfJobs": 227951.26174469804,
+      "residents": 59002.266875901616,
+      "proportionOfJobs": 59002.266875901616,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 356326383277.2765
+      "gravity": 222178253231.96362
+    },
+    {
+      "id": "13-16",
+      "name": "13-16",
+      "position": {
+        "x": 13,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 58672.5335097007,
+      "proportionOfJobs": 58672.5335097007,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 290376175258.97095
     },
     {
       "id": "13-8",
@@ -4911,154 +4926,19 @@ const data = {
       "gravity": 297955700005.9712
     },
     {
-      "id": "13-16",
-      "name": "13-16",
+      "id": "5-14",
+      "name": "5-14",
       "position": {
-        "x": 13,
-        "y": 16
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 58672.5335097007,
-      "proportionOfJobs": 58672.5335097007,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 290376175258.97095
-    },
-    {
-      "id": "1-11",
-      "name": "1-11",
-      "position": {
-        "x": 1,
-        "y": 11
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 148026.25738100166,
-      "proportionOfJobs": 148026.25738100166,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 264240435358.4497
-    },
-    {
-      "id": "19-3",
-      "name": "19-3",
-      "position": {
-        "x": 19,
-        "y": 3
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 79361.40872539845,
-      "proportionOfJobs": 79361.40872539845,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 241559047127.20444
-    },
-    {
-      "id": "18-18",
-      "name": "18-18",
-      "position": {
-        "x": 18,
-        "y": 18
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 66314.98705507768,
-      "proportionOfJobs": 66314.98705507768,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 231027086261.05295
-    },
-    {
-      "id": "12-19",
-      "name": "12-19",
-      "position": {
-        "x": 12,
-        "y": 19
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 59002.266875901616,
-      "proportionOfJobs": 59002.266875901616,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 222178253231.96362
-    },
-    {
-      "id": "13-17",
-      "name": "13-17",
-      "position": {
-        "x": 13,
-        "y": 17
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 44929.34624764935,
-      "proportionOfJobs": 44929.34624764935,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 211626072083.1784
-    },
-    {
-      "id": "13-14",
-      "name": "13-14",
-      "position": {
-        "x": 13,
+        "x": 5,
         "y": 14
       },
       "icon": "",
       "color": "black",
-      "residents": 36408.77058811995,
-      "proportionOfJobs": 36408.77058811995,
+      "residents": 44611.57251212356,
+      "proportionOfJobs": 44611.57251212356,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 193933509590.8092
-    },
-    {
-      "id": "1-14",
-      "name": "1-14",
-      "position": {
-        "x": 1,
-        "y": 14
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 127024.01773403496,
-      "proportionOfJobs": 127024.01773403496,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 185675209398.28748
-    },
-    {
-      "id": "0-11",
-      "name": "0-11",
-      "position": {
-        "x": 0,
-        "y": 11
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 107826.23725471369,
-      "proportionOfJobs": 107826.23725471369,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 170270079843.5073
-    },
-    {
-      "id": "6-9",
-      "name": "6-9",
-      "position": {
-        "x": 6,
-        "y": 9
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 39405.84346072516,
-      "proportionOfJobs": 39405.84346072516,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 168142085538.30383
+      "gravity": 153031359559.64816
     },
     {
       "id": "19-5",
@@ -5076,66 +4956,6 @@ const data = {
       "gravity": 162440345530.94562
     },
     {
-      "id": "5-14",
-      "name": "5-14",
-      "position": {
-        "x": 5,
-        "y": 14
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 44611.57251212356,
-      "proportionOfJobs": 44611.57251212356,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 153031359559.64816
-    },
-    {
-      "id": "13-7",
-      "name": "13-7",
-      "position": {
-        "x": 13,
-        "y": 7
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 27771.62692023163,
-      "proportionOfJobs": 27771.62692023163,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 152410787734.29825
-    },
-    {
-      "id": "0-13",
-      "name": "0-13",
-      "position": {
-        "x": 0,
-        "y": 13
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 96050.35104431861,
-      "proportionOfJobs": 96050.35104431861,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 147140327556.4853
-    },
-    {
-      "id": "14-10",
-      "name": "14-10",
-      "position": {
-        "x": 14,
-        "y": 10
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 20550.37500649675,
-      "proportionOfJobs": 20550.37500649675,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 125284392203.15146
-    },
-    {
       "id": "19-18",
       "name": "19-18",
       "position": {
@@ -5151,214 +4971,34 @@ const data = {
       "gravity": 123802668201.97153
     },
     {
-      "id": "1-13",
-      "name": "1-13",
+      "id": "8-9",
+      "name": "8-9",
       "position": {
-        "x": 1,
-        "y": 13
+        "x": 8,
+        "y": 9
       },
       "icon": "",
       "color": "black",
-      "residents": 66059.50531411308,
-      "proportionOfJobs": 66059.50531411308,
+      "residents": 46161.63524501146,
+      "proportionOfJobs": 46161.63524501146,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 119988049059.04169
+      "gravity": 385555540795.75494
     },
     {
-      "id": "5-13",
-      "name": "5-13",
+      "id": "13-17",
+      "name": "13-17",
       "position": {
-        "x": 5,
-        "y": 13
+        "x": 13,
+        "y": 17
       },
       "icon": "",
       "color": "black",
-      "residents": 32986.814655273854,
-      "proportionOfJobs": 32986.814655273854,
+      "residents": 44929.34624764935,
+      "proportionOfJobs": 44929.34624764935,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 117527467977.41786
-    },
-    {
-      "id": "2-12",
-      "name": "2-12",
-      "position": {
-        "x": 2,
-        "y": 12
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 61361.08594920844,
-      "proportionOfJobs": 61361.08594920844,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 113554031170.0137
-    },
-    {
-      "id": "1-10",
-      "name": "1-10",
-      "position": {
-        "x": 1,
-        "y": 10
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 71069.37487989834,
-      "proportionOfJobs": 71069.37487989834,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 111071843314.09654
-    },
-    {
-      "id": "14-16",
-      "name": "14-16",
-      "position": {
-        "x": 14,
-        "y": 16
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 22133.539902225293,
-      "proportionOfJobs": 22133.539902225293,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 105838375488.39117
-    },
-    {
-      "id": "6-4",
-      "name": "6-4",
-      "position": {
-        "x": 6,
-        "y": 4
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 33589.124221631406,
-      "proportionOfJobs": 33589.124221631406,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 104326181379.11458
-    },
-    {
-      "id": "0-15",
-      "name": "0-15",
-      "position": {
-        "x": 0,
-        "y": 15
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 84739.55073474497,
-      "proportionOfJobs": 84739.55073474497,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 101232602647.02477
-    },
-    {
-      "id": "7-18",
-      "name": "7-18",
-      "position": {
-        "x": 7,
-        "y": 18
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 27528.494929301425,
-      "proportionOfJobs": 27528.494929301425,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 99971841297.00381
-    },
-    {
-      "id": "0-14",
-      "name": "0-14",
-      "position": {
-        "x": 0,
-        "y": 14
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 70109.6425730853,
-      "proportionOfJobs": 70109.6425730853,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 95760160076.39871
-    },
-    {
-      "id": "0-10",
-      "name": "0-10",
-      "position": {
-        "x": 0,
-        "y": 10
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 71744.68802601704,
-      "proportionOfJobs": 71744.68802601704,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 95111941479.87073
-    },
-    {
-      "id": "1-15",
-      "name": "1-15",
-      "position": {
-        "x": 1,
-        "y": 15
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 67459.02309140684,
-      "proportionOfJobs": 67459.02309140684,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 94814872728.01108
-    },
-    {
-      "id": "3-3",
-      "name": "3-3",
-      "position": {
-        "x": 3,
-        "y": 3
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 80346.51758459992,
-      "proportionOfJobs": 80346.51758459992,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 92220399685.0261
-    },
-    {
-      "id": "1-16",
-      "name": "1-16",
-      "position": {
-        "x": 1,
-        "y": 16
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 76444.12526949489,
-      "proportionOfJobs": 76444.12526949489,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 92080838466.03561
-    },
-    {
-      "id": "5-8",
-      "name": "5-8",
-      "position": {
-        "x": 5,
-        "y": 8
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 27432.3082519131,
-      "proportionOfJobs": 27432.3082519131,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 83462286799.36983
+      "gravity": 211626072083.1784
     },
     {
       "id": "19-19",
@@ -5376,34 +5016,304 @@ const data = {
       "gravity": 80174530627.6379
     },
     {
-      "id": "12-9",
-      "name": "12-9",
+      "id": "6-9",
+      "name": "6-9",
       "position": {
-        "x": 12,
+        "x": 6,
         "y": 9
       },
       "icon": "",
       "color": "black",
-      "residents": 11583.319125516866,
-      "proportionOfJobs": 11583.319125516866,
+      "residents": 39405.84346072516,
+      "proportionOfJobs": 39405.84346072516,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 77239555018.70113
+      "gravity": 168142085538.30383
     },
     {
-      "id": "6-5",
-      "name": "6-5",
+      "id": "5-13",
+      "name": "5-13",
       "position": {
-        "x": 6,
-        "y": 5
+        "x": 5,
+        "y": 13
       },
       "icon": "",
       "color": "black",
-      "residents": 19960.31635379565,
-      "proportionOfJobs": 19960.31635379565,
+      "residents": 32986.814655273854,
+      "proportionOfJobs": 32986.814655273854,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 71481000295.31511
+      "gravity": 117527467977.41786
+    },
+    {
+      "id": "6-4",
+      "name": "6-4",
+      "position": {
+        "x": 6,
+        "y": 4
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 33589.124221631406,
+      "proportionOfJobs": 33589.124221631406,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 104326181379.11458
+    },
+    {
+      "id": "13-14",
+      "name": "13-14",
+      "position": {
+        "x": 13,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 36408.77058811995,
+      "proportionOfJobs": 36408.77058811995,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 193933509590.8092
+    },
+    {
+      "id": "5-8",
+      "name": "5-8",
+      "position": {
+        "x": 5,
+        "y": 8
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 27432.3082519131,
+      "proportionOfJobs": 27432.3082519131,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 83462286799.36983
+    },
+    {
+      "id": "13-7",
+      "name": "13-7",
+      "position": {
+        "x": 13,
+        "y": 7
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 27771.62692023163,
+      "proportionOfJobs": 27771.62692023163,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 152410787734.29825
+    },
+    {
+      "id": "7-18",
+      "name": "7-18",
+      "position": {
+        "x": 7,
+        "y": 18
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 27528.494929301425,
+      "proportionOfJobs": 27528.494929301425,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 99971841297.00381
+    },
+    {
+      "id": "2-8",
+      "name": "2-8",
+      "position": {
+        "x": 2,
+        "y": 8
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 10705.995049966888,
+      "proportionOfJobs": 10705.995049966888,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 14842067483.014969
+    },
+    {
+      "id": "1-10",
+      "name": "1-10",
+      "position": {
+        "x": 1,
+        "y": 10
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 71069.37487989834,
+      "proportionOfJobs": 71069.37487989834,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 111071843314.09654
+    },
+    {
+      "id": "1-12",
+      "name": "1-12",
+      "position": {
+        "x": 1,
+        "y": 12
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 293002.31919643807,
+      "proportionOfJobs": 293002.31919643807,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 507878240447.845
+    },
+    {
+      "id": "0-12",
+      "name": "0-12",
+      "position": {
+        "x": 0,
+        "y": 12
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 227951.26174469804,
+      "proportionOfJobs": 227951.26174469804,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 356326383277.2765
+    },
+    {
+      "id": "1-14",
+      "name": "1-14",
+      "position": {
+        "x": 1,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 127024.01773403496,
+      "proportionOfJobs": 127024.01773403496,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 185675209398.28748
+    },
+    {
+      "id": "1-11",
+      "name": "1-11",
+      "position": {
+        "x": 1,
+        "y": 11
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 148026.25738100166,
+      "proportionOfJobs": 148026.25738100166,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 264240435358.4497
+    },
+    {
+      "id": "1-15",
+      "name": "1-15",
+      "position": {
+        "x": 1,
+        "y": 15
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 67459.02309140684,
+      "proportionOfJobs": 67459.02309140684,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 94814872728.01108
+    },
+    {
+      "id": "0-11",
+      "name": "0-11",
+      "position": {
+        "x": 0,
+        "y": 11
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 107826.23725471369,
+      "proportionOfJobs": 107826.23725471369,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 170270079843.5073
+    },
+    {
+      "id": "1-16",
+      "name": "1-16",
+      "position": {
+        "x": 1,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 76444.12526949489,
+      "proportionOfJobs": 76444.12526949489,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 92080838466.03561
+    },
+    {
+      "id": "0-13",
+      "name": "0-13",
+      "position": {
+        "x": 0,
+        "y": 13
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 96050.35104431861,
+      "proportionOfJobs": 96050.35104431861,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 147140327556.4853
+    },
+    {
+      "id": "0-15",
+      "name": "0-15",
+      "position": {
+        "x": 0,
+        "y": 15
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 84739.55073474497,
+      "proportionOfJobs": 84739.55073474497,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 101232602647.02477
+    },
+    {
+      "id": "0-10",
+      "name": "0-10",
+      "position": {
+        "x": 0,
+        "y": 10
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 71744.68802601704,
+      "proportionOfJobs": 71744.68802601704,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 95111941479.87073
+    },
+    {
+      "id": "0-14",
+      "name": "0-14",
+      "position": {
+        "x": 0,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 70109.6425730853,
+      "proportionOfJobs": 70109.6425730853,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 95760160076.39871
     },
     {
       "id": "1-8",
@@ -5421,19 +5331,19 @@ const data = {
       "gravity": 71464804500.40196
     },
     {
-      "id": "1-9",
-      "name": "1-9",
+      "id": "1-13",
+      "name": "1-13",
       "position": {
         "x": 1,
-        "y": 9
+        "y": 13
       },
       "icon": "",
       "color": "black",
-      "residents": 51674.90815306644,
-      "proportionOfJobs": 51674.90815306644,
+      "residents": 66059.50531411308,
+      "proportionOfJobs": 66059.50531411308,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 70481714308.38342
+      "gravity": 119988049059.04169
     },
     {
       "id": "0-16",
@@ -5451,19 +5361,34 @@ const data = {
       "gravity": 61980505722.69659
     },
     {
-      "id": "14-4",
-      "name": "14-4",
+      "id": "2-12",
+      "name": "2-12",
       "position": {
-        "x": 14,
-        "y": 4
+        "x": 2,
+        "y": 12
       },
       "icon": "",
       "color": "black",
-      "residents": 9565.67842861673,
-      "proportionOfJobs": 9565.67842861673,
+      "residents": 61361.08594920844,
+      "proportionOfJobs": 61361.08594920844,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 54499307327.67624
+      "gravity": 113554031170.0137
+    },
+    {
+      "id": "1-9",
+      "name": "1-9",
+      "position": {
+        "x": 1,
+        "y": 9
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 51674.90815306644,
+      "proportionOfJobs": 51674.90815306644,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 70481714308.38342
     },
     {
       "id": "0-17",
@@ -5481,6 +5406,36 @@ const data = {
       "gravity": 43741872198.0384
     },
     {
+      "id": "1-17",
+      "name": "1-17",
+      "position": {
+        "x": 1,
+        "y": 17
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 40010.40310534903,
+      "proportionOfJobs": 40010.40310534903,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 42099708953.07294
+    },
+    {
+      "id": "0-6",
+      "name": "0-6",
+      "position": {
+        "x": 0,
+        "y": 6
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 33397.57343290713,
+      "proportionOfJobs": 33397.57343290713,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 28529301235.597694
+    },
+    {
       "id": "1-4",
       "name": "1-4",
       "position": {
@@ -5496,19 +5451,19 @@ const data = {
       "gravity": 43300194023.09192
     },
     {
-      "id": "1-17",
-      "name": "1-17",
+      "id": "3-3",
+      "name": "3-3",
       "position": {
-        "x": 1,
-        "y": 17
+        "x": 3,
+        "y": 3
       },
       "icon": "",
       "color": "black",
-      "residents": 40010.40310534903,
-      "proportionOfJobs": 40010.40310534903,
+      "residents": 80346.51758459992,
+      "proportionOfJobs": 80346.51758459992,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 42099708953.07294
+      "gravity": 92220399685.0261
     },
     {
       "id": "3-0",
@@ -5526,64 +5481,19 @@ const data = {
       "gravity": 38518658865.2774
     },
     {
-      "id": "2-11",
-      "name": "2-11",
+      "id": "2-0",
+      "name": "2-0",
       "position": {
         "x": 2,
-        "y": 11
+        "y": 0
       },
       "icon": "",
       "color": "black",
-      "residents": 20663.634813924327,
-      "proportionOfJobs": 20663.634813924327,
+      "residents": 44202.31839814567,
+      "proportionOfJobs": 44202.31839814567,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 37519649324.05569
-    },
-    {
-      "id": "2-10",
-      "name": "2-10",
-      "position": {
-        "x": 2,
-        "y": 10
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 23041.913128168675,
-      "proportionOfJobs": 23041.913128168675,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 37385766765.00062
-    },
-    {
-      "id": "7-19",
-      "name": "7-19",
-      "position": {
-        "x": 7,
-        "y": 19
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 13958.3074828045,
-      "proportionOfJobs": 13958.3074828045,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 36489701945.810684
-    },
-    {
-      "id": "0-9",
-      "name": "0-9",
-      "position": {
-        "x": 0,
-        "y": 9
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 30715.38875382603,
-      "proportionOfJobs": 30715.38875382603,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 36059617086.26646
+      "gravity": 35261243126.439865
     },
     {
       "id": "4-0",
@@ -5601,34 +5511,34 @@ const data = {
       "gravity": 36020433038.036736
     },
     {
-      "id": "2-0",
-      "name": "2-0",
+      "id": "0-9",
+      "name": "0-9",
       "position": {
-        "x": 2,
-        "y": 0
+        "x": 0,
+        "y": 9
       },
       "icon": "",
       "color": "black",
-      "residents": 44202.31839814567,
-      "proportionOfJobs": 44202.31839814567,
+      "residents": 30715.38875382603,
+      "proportionOfJobs": 30715.38875382603,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 35261243126.439865
+      "gravity": 36059617086.26646
     },
     {
-      "id": "19-4",
-      "name": "19-4",
+      "id": "2-1",
+      "name": "2-1",
       "position": {
-        "x": 19,
-        "y": 4
+        "x": 2,
+        "y": 1
       },
       "icon": "",
       "color": "black",
-      "residents": 11260.646043109662,
-      "proportionOfJobs": 11260.646043109662,
+      "residents": 28471.248633642335,
+      "proportionOfJobs": 28471.248633642335,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 32707459597.90312
+      "gravity": 25304196572.410316
     },
     {
       "id": "4-1",
@@ -5644,21 +5554,6 @@ const data = {
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
       "gravity": 30365903679.44435
-    },
-    {
-      "id": "0-6",
-      "name": "0-6",
-      "position": {
-        "x": 0,
-        "y": 6
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 33397.57343290713,
-      "proportionOfJobs": 33397.57343290713,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 28529301235.597694
     },
     {
       "id": "3-2",
@@ -5691,34 +5586,34 @@ const data = {
       "gravity": 25384340747.03638
     },
     {
-      "id": "2-1",
-      "name": "2-1",
+      "id": "2-10",
+      "name": "2-10",
       "position": {
         "x": 2,
-        "y": 1
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 28471.248633642335,
-      "proportionOfJobs": 28471.248633642335,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 25304196572.410316
-    },
-    {
-      "id": "8-10",
-      "name": "8-10",
-      "position": {
-        "x": 8,
         "y": 10
       },
       "icon": "",
       "color": "black",
-      "residents": 1844.3321204550107,
-      "proportionOfJobs": 1844.3321204550107,
+      "residents": 23041.913128168675,
+      "proportionOfJobs": 23041.913128168675,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 21961985096.94297
+      "gravity": 37385766765.00062
+    },
+    {
+      "id": "14-16",
+      "name": "14-16",
+      "position": {
+        "x": 14,
+        "y": 16
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 22133.539902225293,
+      "proportionOfJobs": 22133.539902225293,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 105838375488.39117
     },
     {
       "id": "0-7",
@@ -5736,94 +5631,49 @@ const data = {
       "gravity": 19516267257.102734
     },
     {
-      "id": "2-9",
-      "name": "2-9",
+      "id": "2-11",
+      "name": "2-11",
       "position": {
         "x": 2,
-        "y": 9
+        "y": 11
       },
       "icon": "",
       "color": "black",
-      "residents": 11920.815925884031,
-      "proportionOfJobs": 11920.815925884031,
+      "residents": 20663.634813924327,
+      "proportionOfJobs": 20663.634813924327,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 17902722661.128223
+      "gravity": 37519649324.05569
     },
     {
-      "id": "6-17",
-      "name": "6-17",
+      "id": "14-10",
+      "name": "14-10",
+      "position": {
+        "x": 14,
+        "y": 10
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 20550.37500649675,
+      "proportionOfJobs": 20550.37500649675,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 125284392203.15146
+    },
+    {
+      "id": "6-5",
+      "name": "6-5",
       "position": {
         "x": 6,
-        "y": 17
+        "y": 5
       },
       "icon": "",
       "color": "black",
-      "residents": 5048.340922761956,
-      "proportionOfJobs": 5048.340922761956,
+      "residents": 19960.31635379565,
+      "proportionOfJobs": 19960.31635379565,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 16300276568.409376
-    },
-    {
-      "id": "7-0",
-      "name": "7-0",
-      "position": {
-        "x": 7,
-        "y": 0
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 7596.383235937622,
-      "proportionOfJobs": 7596.383235937622,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 15147146575.72611
-    },
-    {
-      "id": "2-8",
-      "name": "2-8",
-      "position": {
-        "x": 2,
-        "y": 8
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 10705.995049966888,
-      "proportionOfJobs": 10705.995049966888,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 14842067483.014969
-    },
-    {
-      "id": "7-2",
-      "name": "7-2",
-      "position": {
-        "x": 7,
-        "y": 2
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 4567.382094263462,
-      "proportionOfJobs": 4567.382094263462,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 13460435487.025282
-    },
-    {
-      "id": "0-8",
-      "name": "0-8",
-      "position": {
-        "x": 0,
-        "y": 8
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 11943.873181537308,
-      "proportionOfJobs": 11943.873181537308,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 12687426179.683939
+      "gravity": 71481000295.31511
     },
     {
       "id": "1-0",
@@ -5841,6 +5691,96 @@ const data = {
       "gravity": 10832465963.048225
     },
     {
+      "id": "7-19",
+      "name": "7-19",
+      "position": {
+        "x": 7,
+        "y": 19
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 13958.3074828045,
+      "proportionOfJobs": 13958.3074828045,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 36489701945.810684
+    },
+    {
+      "id": "0-8",
+      "name": "0-8",
+      "position": {
+        "x": 0,
+        "y": 8
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 11943.873181537308,
+      "proportionOfJobs": 11943.873181537308,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 12687426179.683939
+    },
+    {
+      "id": "2-9",
+      "name": "2-9",
+      "position": {
+        "x": 2,
+        "y": 9
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 11920.815925884031,
+      "proportionOfJobs": 11920.815925884031,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 17902722661.128223
+    },
+    {
+      "id": "12-9",
+      "name": "12-9",
+      "position": {
+        "x": 12,
+        "y": 9
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 11583.319125516866,
+      "proportionOfJobs": 11583.319125516866,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 77239555018.70113
+    },
+    {
+      "id": "19-4",
+      "name": "19-4",
+      "position": {
+        "x": 19,
+        "y": 4
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 11260.646043109662,
+      "proportionOfJobs": 11260.646043109662,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 32707459597.90312
+    },
+    {
+      "id": "14-4",
+      "name": "14-4",
+      "position": {
+        "x": 14,
+        "y": 4
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 9565.67842861673,
+      "proportionOfJobs": 9565.67842861673,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 54499307327.67624
+    },
+    {
       "id": "2-3",
       "name": "2-3",
       "position": {
@@ -5854,6 +5794,51 @@ const data = {
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
       "gravity": 8668421454.00631
+    },
+    {
+      "id": "1-3",
+      "name": "1-3",
+      "position": {
+        "x": 1,
+        "y": 3
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 6796.127357415819,
+      "proportionOfJobs": 6796.127357415819,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 5946175027.507454
+    },
+    {
+      "id": "7-0",
+      "name": "7-0",
+      "position": {
+        "x": 7,
+        "y": 0
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 7596.383235937622,
+      "proportionOfJobs": 7596.383235937622,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 15147146575.72611
+    },
+    {
+      "id": "0-3",
+      "name": "0-3",
+      "position": {
+        "x": 0,
+        "y": 3
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 6911.1964620525,
+      "proportionOfJobs": 6911.1964620525,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 4989186569.489144
     },
     {
       "id": "4-3",
@@ -5871,19 +5856,34 @@ const data = {
       "gravity": 8622064206.123096
     },
     {
-      "id": "1-3",
-      "name": "1-3",
+      "id": "0-4",
+      "name": "0-4",
       "position": {
-        "x": 1,
-        "y": 3
+        "x": 0,
+        "y": 4
       },
       "icon": "",
       "color": "black",
-      "residents": 6796.127357415819,
-      "proportionOfJobs": 6796.127357415819,
+      "residents": 5932.28965129768,
+      "proportionOfJobs": 5932.28965129768,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 5946175027.507454
+      "gravity": 4706290249.294812
+    },
+    {
+      "id": "6-17",
+      "name": "6-17",
+      "position": {
+        "x": 6,
+        "y": 17
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 5048.340922761956,
+      "proportionOfJobs": 5048.340922761956,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 16300276568.409376
     },
     {
       "id": "2-4",
@@ -5916,49 +5916,19 @@ const data = {
       "gravity": 5366470030.825214
     },
     {
-      "id": "0-3",
-      "name": "0-3",
+      "id": "7-2",
+      "name": "7-2",
       "position": {
-        "x": 0,
-        "y": 3
+        "x": 7,
+        "y": 2
       },
       "icon": "",
       "color": "black",
-      "residents": 6911.1964620525,
-      "proportionOfJobs": 6911.1964620525,
+      "residents": 4567.382094263462,
+      "proportionOfJobs": 4567.382094263462,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 4989186569.489144
-    },
-    {
-      "id": "0-4",
-      "name": "0-4",
-      "position": {
-        "x": 0,
-        "y": 4
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 5932.28965129768,
-      "proportionOfJobs": 5932.28965129768,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 4706290249.294812
-    },
-    {
-      "id": "2-14",
-      "name": "2-14",
-      "position": {
-        "x": 2,
-        "y": 14
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 2811.9854341028745,
-      "proportionOfJobs": 2811.9854341028745,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 4498938302.471398
+      "gravity": 13460435487.025282
     },
     {
       "id": "2-2",
@@ -5991,6 +5961,21 @@ const data = {
       "gravity": 3506325869.2675266
     },
     {
+      "id": "2-14",
+      "name": "2-14",
+      "position": {
+        "x": 2,
+        "y": 14
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 2811.9854341028745,
+      "proportionOfJobs": 2811.9854341028745,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 4498938302.471398
+    },
+    {
       "id": "2-6",
       "name": "2-6",
       "position": {
@@ -6006,19 +5991,19 @@ const data = {
       "gravity": 3364264254.7522693
     },
     {
-      "id": "7-11",
-      "name": "7-11",
+      "id": "8-10",
+      "name": "8-10",
       "position": {
-        "x": 7,
-        "y": 11
+        "x": 8,
+        "y": 10
       },
       "icon": "",
       "color": "black",
-      "residents": 184.41076746339235,
-      "proportionOfJobs": 184.41076746339235,
+      "residents": 1844.3321204550107,
+      "proportionOfJobs": 1844.3321204550107,
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
-      "gravity": 1355533194.6740434
+      "gravity": 21961985096.94297
     },
     {
       "id": "3-4",
@@ -6066,6 +6051,21 @@ const data = {
       "gravity": 255485198.3421474
     },
     {
+      "id": "7-11",
+      "name": "7-11",
+      "position": {
+        "x": 7,
+        "y": 11
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 184.41076746339235,
+      "proportionOfJobs": 184.41076746339235,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 1355533194.6740434
+    },
+    {
       "id": "6-3",
       "name": "6-3",
       "position": {
@@ -6079,21 +6079,6 @@ const data = {
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
       "gravity": 155202242.69010857
-    },
-    {
-      "id": "7-10",
-      "name": "7-10",
-      "position": {
-        "x": 7,
-        "y": 10
-      },
-      "icon": "",
-      "color": "black",
-      "residents": 14.014201668481233,
-      "proportionOfJobs": 14.014201668481233,
-      "availableShifts": [],
-      "recreationalDemandCoefficient": 1,
-      "gravity": 87191249.20717962
     },
     {
       "id": "0-18",
@@ -6124,6 +6109,21 @@ const data = {
       "availableShifts": [],
       "recreationalDemandCoefficient": 1,
       "gravity": 25657586.292448364
+    },
+    {
+      "id": "7-10",
+      "name": "7-10",
+      "position": {
+        "x": 7,
+        "y": 10
+      },
+      "icon": "",
+      "color": "black",
+      "residents": 14.014201668481233,
+      "proportionOfJobs": 14.014201668481233,
+      "availableShifts": [],
+      "recreationalDemandCoefficient": 1,
+      "gravity": 87191249.20717962
     }
   ]
 };

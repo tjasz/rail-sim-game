@@ -122,10 +122,16 @@ python -m venv .venv-osm
 .\.venv-osm\Scripts\python.exe -m pip install -r .\gis\requirements-osm.txt
 ```
 
-For a 20 by 20 grid with half-mile cells centered at 47.59794, -122.32975:
+For a 20 by 20 grid with half-mile cells centered at 47.59794, -122.32975 (Seattle CID):
 
 ```powershell
 .\.venv-osm\Scripts\python.exe .\gis\generate-osm.py "$env:USERPROFILE\Downloads\washington-261124.osm.pbf" --center 47.59794 -122.32975 --dimensions 20 20 --resolution 0.5 --output .\src\generated-city.ts
+```
+
+For a similar grid centered on Salt Lake City Central:
+
+```powershell
+.\.venv-osm\Scripts\python.exe .\gis\generate-osm.py "$env:USERPROFILE\Downloads\utah-261124.osm.pbf" --center 40.76158 -111.90899 --dimensions 20 20 --resolution 1 --output .\src\generated-slc-1mi.ts
 ```
 
 `--dimensions` is width then height; `--resolution` is the cell side length in
@@ -156,10 +162,17 @@ the water geometry.
   meters. These are **relative demand weights, not population estimates**. Both
   distributions therefore have the same relative building density, normalized
   by the game across active neighborhoods. Populated cells become neighborhoods,
-  sorted by descending gravity, with deterministic icons and coordinate names.
-  Gravity is `sum(area_i * area_j / distance_ij^2)` over all other neighborhoods,
-  using floor-area scores and Euclidean grid-cell distances (excluding self).
-  Equal gravity is ordered by descending floor area, then x and y.
+  ordered by gravity improvement, with deterministic icons and coordinate names.
+  Start with the highest floor-area cell, then choose the candidate maximizing
+  `sum(area_i * area_candidate * (1/(new_distance_i^2+1) - 1/(current_distance_i^2+1)))`
+  divided by its distance to the nearest selected cell. Only cells whose nearest
+  distance improves contribute. Distances are Euclidean grid-cell units.
+  Candidates must be farther than `--min-distance` (default 0) and within
+  `--max-distance` (default 3) of the selected cells. If none qualify, start a new
+  cluster with the candidate maximizing `sum(area_i * distance_reduction_i)`,
+  retaining every neighborhood. Ties use descending floor area, then x and y.
+  Each cell also retains its raw `gravity = sum(area_i * area_j / distance_ij^2)`
+  (excluding self), but raw gravity does not determine activation order.
 - Inland water includes `natural=water`, water-tagged areas, riverbanks, docks,
   reservoirs and basins. Multipolygon holes preserve islands. Linear streams
   without mapped area/width do not invent a water footprint.
@@ -178,10 +191,12 @@ To recalculate gravity and sort an existing generated TypeScript city **in place
 without rereading OSM or installing GIS dependencies, use Python's standard library:
 
 ```powershell
-python .\gis\sort_city.py .\src\generated-seattle-1mi.ts
+python .\gis\sort_city.py .\src\generated-seattle-1mi.ts --min-distance 0 --max-distance 3
 ```
 
-This adds or replaces each neighborhood's `gravity` and reorders the neighborhoods.
+This adds or replaces each neighborhood's raw `gravity` and reorders the
+neighborhoods by constrained gravity improvement, using the same algorithm as the
+OSM generator. Both scripts accept the same distance options.
 Demand scores, tiles, water paths, metadata, imports and exports remain unchanged;
 the SVG does not need regeneration. It accepts the JSON-backed TypeScript modules
 produced by the OSM generator, not arbitrary hand-written TypeScript.

@@ -129,13 +129,13 @@ python -m venv .venv-osm
 For a 20 by 20 grid with half-mile cells centered at 47.59794, -122.32975 (Seattle CID):
 
 ```powershell
-.\.venv-osm\Scripts\python.exe .\gis\generate-osm.py "$env:USERPROFILE\Downloads\washington-261124.osm.pbf" --center 47.59794 -122.32975 --dimensions 20 20 --resolution 0.5 --output .\src\generated-seattle-1mi.ts
+.\.venv-osm\Scripts\python.exe .\gis\generate-osm.py "$env:USERPROFILE\Downloads\washington-261124.osm.pbf" --center 47.59794 -122.32975 --dimensions 20 20 --resolution 0.5 --output .\src\cities\generated-seattle-1mi.ts
 ```
 
 For a similar grid centered on Salt Lake City Central:
 
 ```powershell
-.\.venv-osm\Scripts\python.exe .\gis\generate-osm.py "$env:USERPROFILE\Downloads\utah-261124.osm.pbf" --center 40.76158 -111.90899 --dimensions 20 20 --resolution 1 --output .\src\generated-slc-1mi.ts
+.\.venv-osm\Scripts\python.exe .\gis\generate-osm.py "$env:USERPROFILE\Downloads\utah-261124.osm.pbf" --center 40.76158 -111.90899 --dimensions 20 20 --resolution 1 --output .\src\cities\generated-slc-1mi.ts
 ```
 
 `--dimensions` is width then height; `--resolution` is the cell side length in

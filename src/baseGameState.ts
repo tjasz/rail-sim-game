@@ -1,6 +1,6 @@
 
 import { SeattleConfig } from './cities';
-import { cityMap } from './generated-seattle-1mi';
+import { cityMap } from './cities/generated-seattle-1mi';
 import type { GameState } from './models';
 import {
   createArcStarPath,

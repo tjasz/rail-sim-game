@@ -22,19 +22,19 @@ import {
   MINUTES_PER_DAY,
   calculateDistance,
   calculateCitizenRoutes,
-  generateLineColor,
-  initializeDay
+  generateLineColor
 } from './utils';
 import './Game.css';
-import { baseGameState } from './baseGameState';
+import { createGameState } from './baseGameState';
 import { LeafletSvgOverlay } from './components/LeafletSvgOverlay';
 
 interface GameProps {
   gameState: GameState;
   onGameStateChange?: (newState: GameState) => void;
+  onExit?: () => void;
 }
 
-export function Game({ gameState: initialGameState, onGameStateChange }: GameProps) {
+export function Game({ gameState: initialGameState, onGameStateChange, onExit }: GameProps) {
   const [gameState, setGameState] = useState<GameState>(initialGameState);
   const [dayResult, setDayResult] = useState<DayResult | null>(null);
   const [selectedStationForAssignment, setSelectedStationForAssignment] = useState<string | null>(null);
@@ -1095,31 +1095,21 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
   }, []);
 
   const handleRetry = useCallback(() => {
-    // Reset to base game state with initialized day
-
-    // Initialize the first day
-    const { tripMatrix, citizens, updatedNetwork } = initializeDay(
-      baseGameState.city.config,
-      baseGameState.city.currentDay,
-      baseGameState.activeNeighborhoodCount,
-      baseGameState.railNetwork,
-    );
-
-    setGameState({
-      ...baseGameState,
-      currentTripMatrix: tripMatrix,
-      citizens,
-      railNetwork: updatedNetwork,
-    });
+    const freshGameState = createGameState(initialGameState.city);
+    setGameState(freshGameState);
+    prevDayRef.current = freshGameState.city.currentDay;
+    prevSimulatingRef.current = freshGameState.isSimulating;
+    prevSpeedRef.current = freshGameState.simulationSpeed;
 
     // Reset other UI state
     setDayResult(null);
     setSelectedStationForAssignment(null);
     setDrawingLineId(null);
+    setVisitedNeighborhoodsInDrag(new Set());
 
     // Reset map bounds
-    const activeCount = baseGameState.activeNeighborhoodCount;
-    const relevantNeighborhoods = baseGameState.city.config.neighborhoods.slice(0, Math.min(activeCount + 5, baseGameState.city.config.neighborhoods.length));
+    const activeCount = freshGameState.activeNeighborhoodCount;
+    const relevantNeighborhoods = freshGameState.city.config.neighborhoods.slice(0, Math.min(activeCount + 5, freshGameState.city.config.neighborhoods.length));
     
     if (relevantNeighborhoods.length > 0) {
       let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
@@ -1138,7 +1128,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
         maxY: maxY + 1.5,
       });
     }
-  }, []);
+  }, [initialGameState.city]);
 
   const handleContinueEndless = useCallback(() => {
     // Continue game in endless mode with modified config
@@ -1170,6 +1160,7 @@ export function Game({ gameState: initialGameState, onGameStateChange }: GamePro
       <div className="game-container">
         <div className="game-header">
           <h1 onContextMenu={() => console.log(gameState)}>Rails Game</h1>
+          {onExit && <button className="btn-secondary" onClick={onExit}>Change map</button>}
         </div>
       
       <div className="game-content">

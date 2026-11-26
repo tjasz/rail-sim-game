@@ -38,6 +38,8 @@ export default defineConfig({
         ]
       },
       workbox: {
+        // The bundle includes detailed geometry for all five offline city maps.
+        maximumFileSizeToCacheInBytes: 12 * 1024 * 1024,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,geojson,tsv,cpg,dbf,prj,shp,shx}'],
         runtimeCaching: [
           {

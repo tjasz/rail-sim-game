@@ -5,6 +5,14 @@ where the player is in charge of establishing a metro system for a growing city 
 
 ## Game Play
 
+Choose a map from the front menu: Seattle 0.5mi, 1mi, or 2mi, or SLC 1mi or
+2mi. The distance is the grid cell size. All maps use the same gameplay rules.
+Use **Change map** to return to the menu (discarding the current game);
+retrying after game over starts a fresh game on the same map.
+The playable map registry is in `src/cities/index.ts`.
+All five maps are bundled for offline play; the PWA precache allows assets up to
+12 MiB to accommodate their generated geometry.
+
 The city map is divided into a grid of neighborhoods.
 Each neighborhood is responsible for a certain percentage of the city's "origin" travel demand and a certain percentage of the city's "destination" travel demand.
 
@@ -126,10 +134,10 @@ python -m venv .venv-osm
 .\.venv-osm\Scripts\python.exe -m pip install -r .\gis\requirements-osm.txt
 ```
 
-For a 20 by 20 grid with half-mile cells centered at 47.59794, -122.32975 (Seattle CID):
+For a 20 by 20 grid with 1-mile cells centered at 47.59794, -122.32975 (Seattle CID):
 
 ```powershell
-.\.venv-osm\Scripts\python.exe .\gis\generate-osm.py "$env:USERPROFILE\Downloads\washington-261124.osm.pbf" --center 47.59794 -122.32975 --dimensions 20 20 --resolution 0.5 --output .\src\cities\generated-seattle-1mi.ts
+.\.venv-osm\Scripts\python.exe .\gis\generate-osm.py "$env:USERPROFILE\Downloads\washington-261124.osm.pbf" --center 47.59794 -122.32975 --dimensions 20 20 --resolution 1 --output .\src\cities\generated-seattle-1mi.ts
 ```
 
 For a similar grid centered on Salt Lake City Central:

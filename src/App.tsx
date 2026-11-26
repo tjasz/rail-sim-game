@@ -1,25 +1,36 @@
+import { useState } from 'react';
 import { Game } from './Game';
-import { initializeDay } from './utils';
+import type { GameState } from './models';
+import { cities } from './cities/index';
 import './App.css';
-import { baseGameState } from './baseGameState';
+import { createGameState } from './baseGameState';
 
 function App() {
-  // Initialize the first day with continuous trip generation
-  const { tripMatrix, citizens, updatedNetwork } = initializeDay(
-    baseGameState.city.config,
-    baseGameState.city.currentDay,
-    baseGameState.activeNeighborhoodCount,
-    baseGameState.railNetwork,
-  );
-  
-  const gameState = {
-    ...baseGameState,
-    currentTripMatrix: tripMatrix,
-    citizens,
-    railNetwork: updatedNetwork,
-  };
+  const [gameState, setGameState] = useState<GameState | null>(null);
 
-  return <Game gameState={gameState} />;
+  if (gameState) {
+    return <Game gameState={gameState} onExit={() => setGameState(null)} />;
+  }
+
+  return (
+    <main className="front-menu">
+      <section className="front-menu-card" aria-labelledby="menu-title">
+        <h1 id="menu-title">Rails Game</h1>
+        <p>Choose a city map to build your metro system.</p>
+        <div className="city-options">
+          {cities.map(city => (
+            <button
+              key={city.config.id}
+              className="city-option"
+              onClick={() => setGameState(createGameState(city))}
+            >
+              {city.config.name}
+            </button>
+          ))}
+        </div>
+      </section>
+    </main>
+  );
 }
 
 export default App;

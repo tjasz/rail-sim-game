@@ -74,6 +74,10 @@ The city is represented with a very minimal map.
 A square grid overlays the city, with each square being either land or water.
 Each land square can hold a neighborhood, which is represented by a colored square with the neighborhood's icon.
 Neighborhood icons come from the "maki" or "temaki" icon sets.
+At game initialization, the first 24 neighborhoods in configuration order use a
+fixed sequence of geometric SVG shapes instead, regardless of configured icons.
+Later neighborhoods keep their configured icons; passengers use the same overridden
+icons as their destination neighborhoods.
 
 Each passenger is represented by a smaller version of the neighborhood icon corresponding to their destination at that time.
 

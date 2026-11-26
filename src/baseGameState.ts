@@ -2,6 +2,13 @@
 import { SeattleConfig } from './cities';
 import { cityMap } from './generated-seattle-1mi';
 import type { GameState } from './models';
+import {
+  createArcStarPath,
+  createCirclePath,
+  createPolarRosePath,
+  createPolygonPath,
+  createStarPath,
+} from './utils/svgShapes';
 
 const CityConfig = {
   ...SeattleConfig,
@@ -18,9 +25,41 @@ const CityConfig = {
 
 // Base game configuration (without citizens - they'll be generated)
 // Initialize all neighborhoods with station properties
+const iconCenter = { x: 7.5, y: 7.5 };
+const initialNeighborhoodIcons = [
+  createCirclePath(7.5, iconCenter),
+  createPolygonPath(3, 7.5, iconCenter),
+  createPolygonPath(4, 7.5, iconCenter),
+  createPolygonPath(5, 7.5, iconCenter),
+  createPolygonPath(6, 7.5, iconCenter),
+  createStarPath(3, 7.5, 2, iconCenter),
+  createStarPath(4, 7.5, 3, iconCenter),
+  createStarPath(5, 7.5, 3, iconCenter),
+  createStarPath(8, 7.5, 4, iconCenter),
+  createPolarRosePath(3, 7.5, 0.25, iconCenter, 30)
+    + createCirclePath(2, iconCenter, true),
+  createPolarRosePath(4, 7.5, 0.25, iconCenter, 22.5)
+    + createCirclePath(3, iconCenter, true),
+  createPolarRosePath(5, 7.5, 0.25, iconCenter, 18)
+    + createCirclePath(4, iconCenter, true),
+  createPolygonPath(4, 7.5, iconCenter, 45),
+  createPolarRosePath(2, 7.5, 0.25, iconCenter, 45)
+    + createCirclePath(2, iconCenter, true),
+  createArcStarPath(3, 7.5, 3, iconCenter, -60),
+  createArcStarPath(4, 7.5, 2, iconCenter),
+  createArcStarPath(4, 7.5, 3, iconCenter),
+  createArcStarPath(4, 7.5, 4, iconCenter, 135),
+  createArcStarPath(5, 7.5, 2, iconCenter, 90),
+  createArcStarPath(5, 7.5, 3, iconCenter, 36),
+  createArcStarPath(5, 7.5, 4, iconCenter, 0),
+  createArcStarPath(5, 7.5, 5, iconCenter, -36),
+  createPolygonPath(4, i => (i < 2) ? 4 : 7.5, iconCenter, -45),
+  createPolygonPath(5, i => (i === 1 || i === 4) ? 5 : 7.5, iconCenter),
+];
 const neighborhoods = CityConfig.config.neighborhoods
-  .map(n => ({
+  .map((n, index) => ({
     ...n,
+    icon: initialNeighborhoodIcons[index] ?? n.icon,
     lineIds: [],
     waitingCitizens: new Map(),
   }));

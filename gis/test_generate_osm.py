@@ -37,13 +37,23 @@ class OsmGeneratorTests(unittest.TestCase):
         self.assertEqual(data["neighborhoods"][1]["gravity"], 75000000)
         self.assertEqual(data["neighborhoods"][2]["gravity"], 56250000)
 
-    def test_water_threshold_and_built_up_shoreline(self):
-        water = [box(-150, -100, -50, 100), box(-50, -100, 50, -49)]
-        data = generator.build_map(self.grid, [(box(-145, 25, -135, 35), 1)], water, [])
-        self.assertEqual(data["tiles"][0], ["w", "l"])
-        self.assertEqual(data["tiles"][1], ["w", "l"])
+    def test_water_threshold_ignores_buildings(self):
+        water = [
+            box(-150, -100, -100, 0),  # Exactly 50% of cell 0-0.
+            box(-150, 0, -99, 100),  # 51% of cell 0-1.
+            box(-50, -100, -1, 0),  # 49% of cell 1-0.
+        ]
+        buildings = [
+            (box(-80, -75, -70, -65), 1),
+            (box(-80, 25, -70, 35), 1),
+            (box(20, -75, 30, -65), 1),
+        ]
+        data = generator.build_map(self.grid, buildings, water, [])
+        self.assertEqual(data["tiles"][0], ["w", "w"])
+        self.assertEqual(data["tiles"][1], ["l", "l"])
         self.assertEqual(data["tiles"][2], ["l", "l"])
-        self.assertEqual(data["neighborhoods"][0]["position"], {"x": 0, "y": 1})
+        self.assertEqual([n["id"] for n in data["neighborhoods"]], ["1-0"])
+        self.assertEqual(data["neighborhoods"][0]["residents"], 100)
 
     def test_coastline_direction_and_closed_island(self):
         bounds = box(0, 0, 10, 10)

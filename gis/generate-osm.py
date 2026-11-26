@@ -241,8 +241,7 @@ def build_map(grid, buildings, water_areas, coastlines, background="land",
             scores[x][y] += footprint.intersection(cell).area * floors
     tiles = [["l" for _ in range(grid.height)] for _ in range(grid.width)]
     for x, y, cell in grid.cells_intersecting(water):
-        # A built-up shoreline cell remains usable even if mostly water.
-        if scores[x][y] == 0 and water.intersection(cell).area >= cell.area / 2:
+        if water.intersection(cell).area >= cell.area / 2:
             tiles[x][y] = "w"
     neighborhoods = []
     for x in range(grid.width):

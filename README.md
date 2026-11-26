@@ -125,7 +125,7 @@ python -m venv .venv-osm
 For a 20 by 20 grid with half-mile cells centered at 47.59794, -122.32975 (Seattle CID):
 
 ```powershell
-.\.venv-osm\Scripts\python.exe .\gis\generate-osm.py "$env:USERPROFILE\Downloads\washington-261124.osm.pbf" --center 47.59794 -122.32975 --dimensions 20 20 --resolution 0.5 --output .\src\generated-city.ts
+.\.venv-osm\Scripts\python.exe .\gis\generate-osm.py "$env:USERPROFILE\Downloads\washington-261124.osm.pbf" --center 47.59794 -122.32975 --dimensions 20 20 --resolution 0.5 --output .\src\generated-seattle-1mi.ts
 ```
 
 For a similar grid centered on Salt Lake City Central:
@@ -181,8 +181,8 @@ the water geometry.
   If no coastline crosses the grid, the background defaults to land; use
   `--background water` for an entirely offshore grid or one enclosing only water
   with no shoreline. OSM exports do not otherwise identify the ocean background.
-- A tile is water if at least half its area is water and it has no building demand.
-  Built-up shoreline cells remain land so their demand is usable. SVG paths show
+- A tile is water if at least half its area is water, regardless of buildings.
+  Water tiles do not generate neighborhoods or contribute demand. SVG paths show
   actual clipped water geometry rather than blocky tile outlines.
 
 Generated data is derived from OpenStreetMap contributors and is subject to the

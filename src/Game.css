@@ -774,6 +774,11 @@
   .game-header {
     display: none;
   }
+
+  .game-header.has-map-menu {
+    display: flex;
+    padding: 0.5rem 1rem;
+  }
   
   .stats-grid {
     grid-template-columns: 1fr;

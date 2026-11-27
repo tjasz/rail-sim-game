@@ -1158,7 +1158,7 @@ export function Game({ gameState: initialGameState, onGameStateChange, onExit }:
   return (
     <SelectionProvider>
       <div className="game-container">
-        <div className="game-header">
+        <div className={`game-header${onExit ? ' has-map-menu' : ''}`}>
           <h1 onContextMenu={() => console.log(gameState)}>Rails Game</h1>
           {onExit && <button className="btn-secondary" onClick={onExit}>Change map</button>}
         </div>

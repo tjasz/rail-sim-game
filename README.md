@@ -146,6 +146,14 @@ For a similar grid centered on Salt Lake City Central:
 .\.venv-osm\Scripts\python.exe .\gis\generate-osm.py "$env:USERPROFILE\Downloads\utah-261124.osm.pbf" --center 40.76158 -111.90899 --dimensions 20 20 --resolution 1 --output .\src\cities\generated-slc-1mi.ts
 ```
 
+For a similar grid centered on Tacoma Dome:
+
+```powershell
+.\.venv-osm\Scripts\python.exe .\gis\generate-osm.py "$env:USERPROFILE\Downloads\washington-261124.osm.pbf" --center 47.23961 -122.42817 --dimensions 20 20 --resolution 1 --output .\src\cities\generated-tacoma-1mi.ts
+```
+
+47.23961, -122.42817
+
 `--dimensions` is width then height; `--resolution` is the cell side length in
 miles. The grid uses a local azimuthal equidistant projection centered on the
 specified coordinates, with distances and areas calculated in meters.
